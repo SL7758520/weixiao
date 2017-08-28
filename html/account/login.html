@@ -21,13 +21,13 @@
 			}
 			
 			.mui-input-group label {
-				width: 22%;
+				width: 28%;
 			}
 			
 			.mui-input-row label~input,
 			.mui-input-row label~select,
 			.mui-input-row label~textarea {
-				width: 78%;
+				width: 72%;
 			}
 			
 			.mui-checkbox input[type=checkbox],
@@ -117,7 +117,8 @@
 				<button id='login' class="mui-btn mui-btn-block mui-btn-primary">登录</button>
 				<div class="link-area">
 					<a id='reg'>注册账号</a> <span class="spliter">|</span>
-					<a id='forgetPassword'>忘记密码</a>
+					<a id='forgetPassword'>忘记密码</a><span class="spliter">|</span>
+					<a id='quick_login'>快速登录</a>
 				</div>
 			</div>
 			<div class="mui-content-padded oauth-area">
@@ -173,6 +174,9 @@
 					}
 					plus.screen.lockOrientation("portrait-primary");
 					var settings = app.getSettings();
+					if(!settings.autoLogin){
+						settings.autoLogin=true;
+					}
 					var state = app.getState();
 					var mainPage = $.preload({
 						"id": 'main',
