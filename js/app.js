@@ -7,6 +7,8 @@
 	/**
 	 * 用户登录
 	 **/
+	var _dataAccess=new DataAccess();
+	
 	owner.login = function(loginInfo, callback) {
 		callback = callback || $.noop;
 		loginInfo = loginInfo || {};
@@ -18,22 +20,23 @@
 		if (loginInfo.password.length < 6) {
 			return callback('密码最短为 6 个字符');
 		}
-		var users = JSON.parse(localStorage.getItem('$users') || '[]');
-		var authed = users.some(function(user) {
-			return loginInfo.account == user.account && loginInfo.password == user.password;
-		});
-		if (authed) {
-			return owner.createState(loginInfo.account, callback);
-		} else {
-			return callback('用户名或密码错误');
-		}
+//		var users = JSON.parse(localStorage.getItem('$users') || '[]');
+//		var authed = users.some(function(user) {
+//			return loginInfo.account == user.account && loginInfo.password == user.password;
+//		});
+//		if (authed) {
+			return owner.createState(loginInfo, callback);
+//		} else {
+//			return callback('用户名或密码错误');
+//		}
 	};
 
-	owner.createState = function(name, callback) {
-		var state = owner.getState();
-		state.account = name;
-		state.token = "token123456789";
-		owner.setState(state);
+	owner.createState = function(loginInfo, callback) {
+//		var state = owner.getState();
+//		state.account = name;
+//		state.token = "token123456789";
+//		owner.setState(state);
+		
 		return callback();
 	};
 

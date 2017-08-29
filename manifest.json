@@ -295,7 +295,8 @@
 					"main.html",
 					"guid.html",
 					"html/account/forget_password.html",
-					"html/account/reg.html"
+					"html/account/reg.html",
+					"html/account/quick_login_1.html"
 				],
 				"priority": 0
 			},
@@ -312,6 +313,16 @@
 					"js/feedback-page.js",
 					"libs/easymob-webim-sdk/strophe-custom-2.0.0.js",
 					"js/mui.view.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/account/quick_login_1.html": {
+				"resources": [
+					"fonts/mui.ttf",
+					"js/mui.min.js",
+					"css/mui.min.css",
+					"css/style.css"
 				],
 				"refer": [],
 				"priority": 0
