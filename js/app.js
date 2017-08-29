@@ -7,19 +7,13 @@
 	/**
 	 * 用户登录
 	 **/
-	var _dataAccess=new DataAccess();
 	
 	owner.login = function(loginInfo, callback) {
 		callback = callback || $.noop;
 		loginInfo = loginInfo || {};
 		loginInfo.account = loginInfo.account || '';
 		loginInfo.password = loginInfo.password || '';
-		if (loginInfo.account.length < 5) {
-			return callback('账号最短为 5 个字符');
-		}
-		if (loginInfo.password.length < 6) {
-			return callback('密码最短为 6 个字符');
-		}
+		
 //		var users = JSON.parse(localStorage.getItem('$users') || '[]');
 //		var authed = users.some(function(user) {
 //			return loginInfo.account == user.account && loginInfo.password == user.password;
@@ -36,7 +30,8 @@
 //		state.account = name;
 //		state.token = "token123456789";
 //		owner.setState(state);
-		
+		var _dataAccess=new DataAccess();
+		_dataAccess.Login(loginInfo,callback);
 		return callback();
 	};
 
@@ -86,6 +81,24 @@
 		email = email || '';
 		return (email.length > 3 && email.indexOf('@') > -1);
 	};
+	
+	owner.gotoHtml =function(u,datas){
+		$.openWindow({
+				url: u,
+				id: u,
+
+				show: {
+					aniShow: 'pop-in'
+				},
+				waiting: {
+					autoShow: true, //自动显示等待框，默认为true
+					title: '正在加载...', //等待对话框上显示的提示内容
+				},
+				extras: {
+					data: datas,
+				}
+			});
+	}
 
 	/**
 	 * 找回密码

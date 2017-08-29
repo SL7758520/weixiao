@@ -1,6 +1,6 @@
 var DataAccess = (function() {
-	var _db=new LocalDatabase();
-	var API_URL_FAULT = globals.apiUrl + 'Fault.ashx';
+	var _db = new LocalDatabase();
+	var API_LOGIN = globals.apiUrl + 'Account/';
 	var API_URL_ACTION = globals.apiUrl + 'Action.ashx';
 	var API_URL_ACTION_ = globals.apiUrl + 'Action_.ashx';
 	var API_URL = globals.apiUrl + "Service.ashx";
@@ -45,260 +45,332 @@ var DataAccess = (function() {
 		this.setReading = function(datas) {
 			_db.setReading(datas);
 		};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		//账号密码登录
+		this.Login = function(loginInfo, callback) {
+			if(!_getNetwork()) {
+				mui.toast("没有网络连接，请稍后再试！");
+				return;
+			}
+			var user = _db.getUser();
+			AsyncPost(API_LOGIN+"Login", "mobile=" + loginInfo.mobile + "&password=" + loginInfo.password,
+				function(result) {
+					if(callback) {
+						console.log('接口返回数据：' + JSON.stringify(result));
+						callback.call(this, result);
+					}
+				},
+				function() {
+					console.log('请求失败：');
+				});
+		};
+		
+		//快速登录获取图片验证码
+		this.LoginBySmsImgCode = function(mobile, callback) {
+			if(!_getNetwork()) {
+				mui.toast("没有网络连接，请稍后再试！");
+				return;
+			}
+			var user = _db.getUser();
+			AsyncPost(API_LOGIN+"LoginBySmsImgCode", "mobile=" + mobile,
+				function(result) {
+					if(callback) {
+						console.log('接口返回数据：' + JSON.stringify(result));
+						callback.call(this, result);
+					}
+				},
+				function() {
+					console.log('请求失败：');
+				});
+		};
+		
+		//快速登录图片验证码认证
+		this.LoginBySms_GetCode = function(mobile,imgCode, callback) {
+			if(!_getNetwork()) {
+				mui.toast("没有网络连接，请稍后再试！");
+				return;
+			}
+			var user = _db.getUser();
+			AsyncPost(API_LOGIN+"LoginBySms_GetCode", "mobile=" + mobile+"&imgCode="+imgCode,
+				function(result) {
+					if(callback) {
+						console.log('接口返回数据：' + JSON.stringify(result));
+						callback.call(this, result);
+					}
+				},
+				function() {
+					console.log('请求失败：');
+				});
+		};
+		//第三方认证登录
+		this.Auth = function(authType, openId,token,nickName,callback) {
+			if(!_getNetwork()) {
+				mui.toast("没有网络连接，请稍后再试！");
+				return;
+			}
+			var user = _db.getUser();
+			AsyncPosts(API_LOGIN+"Auth", "authType=" + authType+"&openId=" + openId+"&token=" + token+"&nickName=" + nickName,
+				function(result) {
+					if(callback) {
+						console.log('接口返回数据：' + JSON.stringify(result));
+						callback.call(this, result);
+					}
+				},
+				function() {
+					console.log('请求失败：');
+				});
+		};
+
 	}
 	return access;
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	this.Login=function(loginInfo,callback){
-		
-	}
 })();

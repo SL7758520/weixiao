@@ -1,6 +1,6 @@
 //var globals={apiUrl:'http://128.23.60.253:3221/WebService/App/'};//app接口地址//OMP.Web 
 //var globals={apiUrl:'http://128.23.60.253/OMP.Web/WebService/App/',domain:'http://hop.gdxinyue.net'};//app接口地址//OMP.Web 
-var globals={apiUrl:'http://oa.gdxinyue.net:1002/WebService/App/',domain:'http://oa.gdxinyue.net:1002'};//app接口地址//OMP.Web
+var globals={apiUrl:'http://www.jeffsoft.cn:9801/Api/',domain:'http://oa.gdxinyue.net:1002'};//app接口地址//OMP.Web
 //var globals={apiUrl:'http://128.23.51.5:1002/WebService/App/',domain:'http://128.23.51.5:1002'};//app接口地址//OMP.Web
 //var globals={apiUrl:'http://hop.gdxinyue.net/WebService/App/',domain:'http://hop.gdxinyue.net'};//app接口地址//OMP.Web
 function postData(apiUrl,isAsync, dataStr, onSuccess,waitingMsg) {
@@ -8,7 +8,7 @@ function postData(apiUrl,isAsync, dataStr, onSuccess,waitingMsg) {
     mui.ajax(apiUrl,{  
         data:dataStr, 
         dataType:'json',  
-        type:'post',
+        type:'get',
         async:isAsync,
         timeout:10000, 
         success:function(data){
@@ -38,7 +38,7 @@ function _postData(apiUrl,isAsync, dataStr, onSuccess,onError){
         data:dataStr, 
         //text
         dataType:'json',  
-        type:'post',
+        type:'GET',
         async:isAsync,
         timeout:10000,  
         success:function(data){
@@ -52,11 +52,11 @@ function _postData(apiUrl,isAsync, dataStr, onSuccess,onError){
     });  
 }
 function _postDatas(apiUrl,isAsync, dataStr, onSuccess,onError){
-//	console.log('url路径是：'+apiUrl+'?'+dataStr);
+	console.log('url路径是：'+apiUrl+'?'+dataStr);
 	mui.ajax(apiUrl,{  
         data:dataStr, 
         //text
-        dataType:'text',  
+        dataType:'json',  
         type:'post',
         async:isAsync,
         timeout:10000,  
@@ -64,7 +64,8 @@ function _postDatas(apiUrl,isAsync, dataStr, onSuccess,onError){
         	onSuccess.call(this,data);
         },
         error:function(xhr,type,errorThrown){  
-           
+            console.log('++++++++++'+errorThrown+'++++'+xhr+"++++++++++"+type);
+            console.log(xhr.responseText);
         	onError.call(this);
         }   
     });  

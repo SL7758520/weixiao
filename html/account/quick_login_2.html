@@ -11,7 +11,7 @@
 		<style>
 			.mui-input-row {
 				width: 90%;
-				margin: 10px auto;
+				margin: 8px auto;
 				margin-top: 40px;
 				color: #fff;
 				text-align: center;
@@ -25,6 +25,7 @@
 				padding-left: 5px;
 				height: 40px;
 				border: none;
+				padding-top: 25px;
 				border-bottom: 1px solid #8F8F94;
 				-webkit-border-radius: 0px;
 				border-radius: 0px;
@@ -38,7 +39,7 @@
 			.mui-input-row .yz_img {
 				position: absolute;
 				z-index: 2;
-				top: 10px;
+				top: 5px;
 				right: 0px;
 				width: 70px;
 				height: 30px;
@@ -68,9 +69,8 @@
 		</header>
 		<div class="mui-content">
 			<div class="mui-input-row" id="divVCode">
-				<div class="input_name">验证码</div>
 				<div class="yz_img"><img id="yz_code" /></div>
-				<input type="text" class="mui-input-clear mui-input" id='vcode'>
+				<input type="text" class="mui-input-clear mui-input" id='vcode' placeholder="请输入验证码">
 			</div>
 
 			<div class="mui-content-padded">
@@ -78,8 +78,31 @@
 			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/post.js"></script>
+		<script src="../../js/localDatabase.js"></script>
+		<script src="../../js/dao.js"></script>
+		<script src="../../js/mui.enterfocus.js"></script>
+		<script src="../../js/app.js"></script>
 		<script type="text/javascript">
-			mui.init()
+			mui.init();
+			var _self;
+			var tel;
+			var _dataAccess=new DataAccess();
+			var src;
+			mui.plusReady(function () {
+			    _self=plus.webview.currentWebview();
+			    tel=_self.data;
+			    console.log(tel);
+			    src=globals.apiUrl+"Account/LoginBySmsImgCode?mobile="+tel;
+			    document.getElementById('yz_code').src=src+"&date="+new Date();
+			    document.getElementById("sendMail").addEventListener("tap",function(event){
+			    	var code = document.getElementById("vcode").value;
+					console.log(code);
+					_dataAccess.LoginBySms_GetCode(tel,code,function(data){
+						
+					});
+			    });
+			})
 		</script>
 	</body>
 

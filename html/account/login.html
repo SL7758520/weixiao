@@ -96,7 +96,7 @@
 			<form id='login-form' class="mui-input-group">
 				<div class="mui-input-row">
 					<label>手机号</label>
-					<input id='account' type="text" class="mui-input-clear mui-input" placeholder="请输入手机号码">
+					<input id='account' type="number" class="mui-input-clear mui-input" placeholder="请输入手机号码">
 				</div>
 				<div class="mui-input-row">
 					<label>密码</label>
@@ -136,12 +136,12 @@
 				$.init({
 					statusBarBackground: '#f7f7f7'
 				});
-				var _dataAccess;
+				var _dataAccess = new DataAccess();
 				$.plusReady(function() {
 					//读取本地存储，检查是否为首次启动
-//					var showGuide = plus.storage.getItem("lauchFlag");
-					var showGuide ='aaa';
-					_dataAccess=new DataAccess();
+					var showGuide = plus.storage.getItem("lauchFlag");
+//					var showGuide = 'aaa';
+
 					console.log(JSON.stringify(_dataAccess.getUser()));
 					//仅支持竖屏显示
 					plus.screen.lockOrientation("portrait-primary");
@@ -155,8 +155,8 @@
 					} else {
 						//显示启动导航
 						mui.openWindow({
-							id: 'guid',
-							url: '../../guid.html',
+							id: 'splash',
+							url: '../../splash.html',
 							styles: {
 								popGesture: "none"
 							},
@@ -174,8 +174,8 @@
 					}
 					plus.screen.lockOrientation("portrait-primary");
 					var settings = app.getSettings();
-					if(!settings.autoLogin){
-						settings.autoLogin=true;
+					if(!settings.autoLogin) {
+						settings.autoLogin = true;
 					}
 					var state = app.getState();
 					var mainPage = $.preload({
@@ -209,7 +209,7 @@
 					//							}
 					//						});
 					//					} else
-					if(_dataAccess.getUser()) {
+					if(JSON.stringify(_dataAccess.getUser()) != '{}' && settings.autoLogin) {
 						toMain();
 					} else {
 						app.setState(null);
@@ -244,10 +244,19 @@
 									auth.getUserInfo(function() {
 										plus.nativeUI.toast("获取用户信息成功");
 										console.log(JSON.stringify(auth));
+										var authType = auth.id;
+										var token = auth.authResult.access_token;
+										var openid;
+										if(authType == "weixin") {
+											openid = auth.userInfo.unionid;
+										} else {
+											openid = auth.authResult.openid;
+										}
 										var name = auth.userInfo.nickname || auth.userInfo.name;
-										app.createState(name, function() {
-											toMain();
+										_dataAccess.Auth(authType, openid, token, name, function(datas) {
+
 										});
+
 									}, function(e) {
 										plus.nativeUI.toast("获取用户信息失败：" + e.message);
 									});
@@ -275,15 +284,24 @@
 					var forgetButton = doc.getElementById('forgetPassword');
 					loginButton.addEventListener('tap', function(event) {
 						var loginInfo = {
-							account: accountBox.value,
+							mobile: accountBox.value,
 							password: passwordBox.value
 						};
-						app.login(loginInfo, function(err) {
-							if(err) {
-								plus.nativeUI.toast(err);
-								return;
+						if(loginInfo.mobile.length < 11) {
+							mui.toast('账号最短为 5 个字符');
+							return;
+						}
+						if(loginInfo.password.length < 6) {
+							mui.toast('密码最短为 6 个字符');
+							return;
+						}
+						_dataAccess.Login(loginInfo, function(datas) {
+							if(datas.status == 1) {
+								mui.toast("登录成功!");
+								var user = datas.result;
+								_dataAccess.setUser(user);
+								toMain();
 							}
-							toMain();
 						});
 					});
 					$.enterfocus('#login-form input', function() {
@@ -297,7 +315,7 @@
 							app.setSettings(settings);
 						}, 50);
 					}, false);
-					document.getElementById("quick_login").addEventListener("tap",function(event){
+					document.getElementById("quick_login").addEventListener("tap", function(event) {
 						$.openWindow({
 							url: 'quick_login_1.html',
 							id: 'quick_login_1',
@@ -312,7 +330,7 @@
 								autoShow: false
 							}
 						});
-					},false);
+					}, false);
 					regButton.addEventListener('tap', function(event) {
 						$.openWindow({
 							url: 'reg.html',

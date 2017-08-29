@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<div class="mui-content">
+			<img src="images/cbd.jpg" />
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			mui.plusReady(function() {
+				console.log("AAAAAAAAAAAAAAAAA");
+				setTimeout(function() {
+					console.log("AAAAAAAAAAAAAAAAA");
+					mui.openWindow({
+							url: 'html/account/login.html',
+							id: 'login',
+							preload: true,
+							show: {
+								aniShow: 'pop-in'
+							},
+							styles: {
+								popGesture: 'hide'
+							},
+							waiting: {
+								autoShow: false
+							}
+						});
+				}, 5000);
+			})
+		</script>
+	</body>
+
+</html>
