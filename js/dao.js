@@ -45,6 +45,10 @@ var DataAccess = (function() {
 		this.setReading = function(datas) {
 			_db.setReading(datas);
 		};
+		
+		
+		
+		
 
 
 
