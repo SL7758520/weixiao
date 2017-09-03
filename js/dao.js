@@ -46,6 +46,40 @@ var DataAccess = (function() {
 			_db.setReading(datas);
 		};
 		
+		//注册第二步
+		this.RegisterByMobile_GetSmsCode = function(mobile,imgCode, callback) {
+			if(!_getNetwork()) {
+				mui.toast("没有网络连接，请稍后再试！");
+				return;
+			}
+			var user = _db.getUser();
+			AsyncPost(API_LOGIN+"RegisterByMobile_GetSmsCode", "mobile=" + mobile + "&imgCode=" +imgCode,
+				function(result) {
+					if(callback) {
+						callback.call(this, result);
+					}
+				},
+				function() {
+					console.log('请求失败：');
+				});
+		};
+		//注册第三步，验证短信验证码RegisterByMobile_VerifySmsCode
+		this.RegisterByMobile_VerifySmsCode = function(mobile,password,smsCode, callback) {
+			if(!_getNetwork()) {
+				mui.toast("没有网络连接，请稍后再试！");
+				return;
+			}
+			var user = _db.getUser();
+			AsyncPost(API_LOGIN+"RegisterByMobile_VerifySmsCode", "mobile=" + mobile + "&password=" +password + "&smsCode=" +smsCode,
+				function(result) {
+					if(callback) {
+						callback.call(this, result);
+					}
+				},
+				function() {
+					console.log('请求失败：');
+				});
+		};
 		
 		
 		
