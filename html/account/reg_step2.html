@@ -57,7 +57,7 @@
 		<div class="mui-content">
 			<form>
 				<div class="mui-input-row">
-					<div class="yz_img"><img id="yz_code" /></div>
+					<div class="yz_img" id="codepic"><img id="yz_code" /></div>
 					<input type="text" class="mui-input-clear mui-input" id='vcode' placeholder="输入右侧图中验证码">
 				</div>
 			</form>
@@ -82,6 +82,10 @@
 				codeimg = document.getElementById('yz_code');
 				vcode = document.getElementById('vcode');
 				initpages();
+				document.getElementById('codepic').addEventListener('tap',function(){
+					console.log('=======');
+					initpages();
+				});
 				regButton.addEventListener('tap', function(event) {
 					if(vcode.value == undefined || vcode.value == '' || vcode.value.length != 4) {
 						mui.toast('请输入正确的验证码');
@@ -111,7 +115,7 @@
 			});
 			function initpages(){
 				vcode.value = '';
-				codeimg.src = globals.apiUrl + 'Account/' + 'RegisterByMobileImgCode?' + 'mobile=' + mobile;
+				codeimg.src = globals.apiUrl + 'Account/' + 'RegisterByMobileImgCode?' + 'mobile=' + mobile+"&date="+new Date();;
 			}
 		</script>
 	</body>
