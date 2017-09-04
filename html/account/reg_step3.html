@@ -87,9 +87,31 @@
 					mui.fire(task,'Init',{});
 					mui.back();
 				});
+				var mainPage = mui.preload({
+						"id": 'main',
+						"url": '../../main.html'
+				});
+				var toMain = function() {
+						mui.fire(mainPage, 'show', null);
+						setTimeout(function() {
+							mui.openWindow({
+								id: 'main',
+								show: {
+									aniShow: 'pop-in'
+								},
+								waiting: {
+									autoShow: false
+								}
+							});
+						}, 0);
+					};
 				regButton.addEventListener('tap', function(event) {
 					if (smscode.value==undefined||smscode.value=='') {
 						mui.toast('请输入完整的验证码');
+						return;
+					}
+					if (passw.value.length<6) {
+						mui.toast('请输入至少6位数的密码');
 						return;
 					}
 					if (passw.value!=conpw.value) {
@@ -97,33 +119,17 @@
 						return;
 					}
 					_dataAccess.RegisterByMobile_VerifySmsCode(mobile,passw.value,smscode.value,function(result){
-						if (result.status==1) {
-							plus.webview.getWebviewById()
-						} else{
-							
-						}
 						console.log(JSON.stringify(result));
-//							mui.openWindow({
-//							url: 'reg_step4.html',
-//							id: 'reg_step4.html',
-//							show: {
-//								aniShow: 'pop-in'
-//							},
-//							extras:{
-//								mobile:mobile
-//							}
-//						});
+						if (result.status==1) {
+							mui.toast("注册成功!");
+							var user = result.result;
+							_dataAccess.setUser(user);
+            				toMain();
+						} else{
+							mui.toast(result.message);
+						}
+						
 					});
-//					mui.openWindow({
-//							url: 'reg_step2.html',
-//							id: 'reg_step2.html',
-//							show: {
-//								aniShow: 'pop-in'
-//							},
-//							extras:{
-//								data:accountBox.value
-//							}
-//						});
 				});
 			})
 		</script>
