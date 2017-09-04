@@ -7,11 +7,10 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/style.css" rel="stylesheet" />
-		<!--<link href="../../css/login.css" rel="stylesheet" />-->
-		<style>
+		<style type="text/css">
 			.mui-input-row {
 				width: 90%;
-				margin: 8px auto;
+				margin: 10px auto;
 				margin-top: 40px;
 				color: #fff;
 				text-align: center;
@@ -25,12 +24,10 @@
 				padding-left: 5px;
 				height: 40px;
 				border: none;
-				padding-top: 25px;
 				border-bottom: 1px solid #8F8F94;
 				-webkit-border-radius: 0px;
 				border-radius: 0px;
 			}
-
 			
 			.mui-input-row {
 				position: relative;
@@ -39,7 +36,7 @@
 			.mui-input-row .yz_img {
 				position: absolute;
 				z-index: 2;
-				top: 5px;
+				top: 10px;
 				right: 0px;
 				width: 70px;
 				height: 30px;
@@ -69,12 +66,10 @@
 		</header>
 		<div class="mui-content">
 			<div class="mui-input-row" id="divVCode">
-				<div class="yz_img"><img id="yz_code" /></div>
-				<input type="text" class="mui-input-clear mui-input" id='vcode' placeholder="请输入验证码">
+				<input type="number" class="mui-input-clear mui-input" id='vcode' placeholder="请输入短信验证码">
 			</div>
-
 			<div class="mui-content-padded">
-				<button id='sendMail' class="mui-btn mui-btn-block mui-btn-primary">下一步</button>
+				<button id='sendMail' class="mui-btn mui-btn-block mui-btn-primary">登录</button>
 			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
@@ -87,28 +82,37 @@
 			mui.init();
 			var _self;
 			var tel;
-			var _dataAccess=new DataAccess();
-			var src;
-			mui.plusReady(function () {
-			    _self=plus.webview.currentWebview();
-			    tel=_self.data;
-			    console.log(tel);
-			    src=globals.apiUrl+"Account/LoginBySmsImgCode?mobile="+tel; 
-			     console.log(src);
-			    document.getElementById('yz_code').src=src+"&date="+new Date();
-			    document.getElementById("sendMail").addEventListener("tap",function(event){
-			    	var code = document.getElementById("vcode").value;
-					console.log(code);
-					_dataAccess.LoginBySms_GetCode(tel,code,function(data){
+			var _dataAccess = new DataAccess();
+			mui.plusReady(function() {
+				_self = plus.webview.currentWebview();
+				tel = _self.data;
+				console.log(tel);
+				document.getElementById("sendMail").addEventListener("tap", function(event) {
+					var smscode = document.getElementById("vcode").value;
+					console.log(smscode);
+					_dataAccess.LoginBySms_Verify(tel,smscode,function(data){
 						if(data.status == 1){
-							app.gotoHtml("quick_login_3.html",tel);
-						}else{
-							mui.toast(data.message);
-							mui.back();
+							_dataAccess.setUser(data.result);
+							toMain();
 						}
 					});
-			    });
-			})
+
+				});
+			});
+			var toMain = function() {
+				//						mui.fire(mainPage, 'show', null);
+				setTimeout(function() {
+					mui.openWindow({
+						id: 'main',
+						show: {
+							aniShow: 'pop-in'
+						},
+						waiting: {
+							autoShow: false
+						}
+					});
+				}, 0);
+			};
 		</script>
 	</body>
 

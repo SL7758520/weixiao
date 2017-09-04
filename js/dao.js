@@ -390,6 +390,25 @@ var DataAccess = (function() {
 					console.log('请求失败：');
 				});
 		};
+		
+		//快速登录短信验证码认证
+		this.LoginBySms_Verify = function(mobile,smsCode, callback) {
+			if(!_getNetwork()) {
+				mui.toast("没有网络连接，请稍后再试！");
+				return;
+			}
+			var user = _db.getUser();
+			AsyncPost(API_LOGIN+"LoginBySms_Verify", "mobile=" + mobile+"&smsCode="+smsCode,
+				function(result) {
+					if(callback) {
+						console.log('接口返回数据：' + JSON.stringify(result));
+						callback.call(this, result);
+					}
+				},
+				function() {
+					console.log('请求失败：');
+				});
+		};
 		//第三方认证登录
 		this.Auth = function(authType, openId,token,nickName,callback) {
 			if(!_getNetwork()) {

@@ -255,7 +255,7 @@
 										var name = auth.userInfo.nickname || auth.userInfo.name;
 										_dataAccess.Auth(authType, openid, token, name, function(datas) {
 
-										});
+							  			});
 
 									}, function(e) {
 										plus.nativeUI.toast("获取用户信息失败：" + e.message);

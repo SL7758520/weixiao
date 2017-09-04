@@ -359,7 +359,9 @@
 					"js/mui.enterfocus.js",
 					"js/post.js"
 				],
-				"refer": [],
+				"refer": [
+					"html/account/quick_login_3.html"
+				],
 				"priority": 0
 			},
 			"member.html": {
@@ -393,6 +395,21 @@
 				"refer": [
 					"html/account/login.html"
 				],
+				"priority": 0
+			},
+			"html/account/quick_login_3.html": {
+				"resources": [
+					"js/localDatabase.js",
+					"js/app.js",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"js/dao.js",
+					"css/mui.min.css",
+					"css/style.css",
+					"js/mui.enterfocus.js",
+					"js/post.js"
+				],
+				"refer": [],
 				"priority": 0
 			},
 			"home.html": {
