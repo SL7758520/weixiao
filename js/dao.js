@@ -416,7 +416,7 @@ var DataAccess = (function() {
 				return;
 			}
 			var user = _db.getUser();
-			AsyncPosts(API_LOGIN+"Auth", "authType=" + authType+"&openId=" + openId+"&token=" + token+"&nickName=" + nickName,
+			AsyncPost(API_LOGIN+"Auth", "authType=" + authType+"&openId=" + openId+"&token=" + token+"&nickName=" + nickName,
 				function(result) {
 					if(callback) {
 						console.log('接口返回数据：' + JSON.stringify(result));

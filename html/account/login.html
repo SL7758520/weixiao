@@ -140,7 +140,7 @@
 				$.plusReady(function() {
 					//读取本地存储，检查是否为首次启动
 					var showGuide = plus.storage.getItem("lauchFlag");
-//					var showGuide = 'aaa';
+					//					var showGuide = 'aaa';
 
 					console.log(JSON.stringify(_dataAccess.getUser()));
 					//仅支持竖屏显示
@@ -209,6 +209,8 @@
 					//							}
 					//						});
 					//					} else
+					console.log(JSON.stringify(_dataAccess.getUser()) + "--------" + settings.autoLogin);
+					settings.autoLogin = false;
 					if(JSON.stringify(_dataAccess.getUser()) != '{}' && settings.autoLogin) {
 						toMain();
 					} else {
@@ -242,20 +244,28 @@
 									waiting.close();
 									plus.nativeUI.toast("登录认证成功");
 									auth.getUserInfo(function() {
-										plus.nativeUI.toast("获取用户信息成功");
+//										plus.nativeUI.toast("获取用户信息成功");
 										console.log(JSON.stringify(auth));
 										var authType = auth.id;
 										var token = auth.authResult.access_token;
 										var openid;
 										if(authType == "weixin") {
+											authType='wechat';
 											openid = auth.userInfo.unionid;
 										} else {
 											openid = auth.authResult.openid;
 										}
 										var name = auth.userInfo.nickname || auth.userInfo.name;
 										_dataAccess.Auth(authType, openid, token, name, function(datas) {
-
-							  			});
+											if(datas.status == 1) {
+												mui.toast(datas.message);
+												var user = datas.result;
+												_dataAccess.setUser(user);
+												toMain();
+											}else{
+												mui.toast(datas.message);
+											}
+										});
 
 									}, function(e) {
 										plus.nativeUI.toast("获取用户信息失败：" + e.message);
