@@ -105,6 +105,9 @@
 			"js/dao.js",
 			"js/mui.enterfocus.js",
 			"js/post.js"
+		],
+		"refer": [
+			"html/account/quick_login_3.html"
 		]
 	},
 	"member.html": {
@@ -131,6 +134,19 @@
 		],
 		"refer": [
 			"html/account/login.html"
+		]
+	},
+	"html/account/quick_login_3.html": {
+		"resources": [
+			"js/localDatabase.js",
+			"js/app.js",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"js/dao.js",
+			"css/mui.min.css",
+			"css/style.css",
+			"js/mui.enterfocus.js",
+			"js/post.js"
 		]
 	}
 }
