@@ -221,7 +221,8 @@
 					"html/member/setting.html",
 					"member.html",
 					"shop.html",
-					"health.html"
+					"health.html",
+					"person_center.html"
 				],
 				"priority": 1
 			},
@@ -368,7 +369,9 @@
 			},
 			"member.html": {
 				"resources": [
-					"fonts/mui.ttf"
+					"fonts/mui.ttf",
+					"js/mui.min.js",
+					"css/mui.min.css"
 				],
 				"refer": [],
 				"priority": 0
@@ -453,6 +456,16 @@
 			"splash.html": {
 				"resources": [
 					"css/mui.min.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"person_center.html": {
+				"resources": [
+					"fonts/mui.ttf",
+					"css/mui.min.css",
+					"js/mui.min.js",
+					"images/user-photo2.png"
 				],
 				"refer": [],
 				"priority": 0

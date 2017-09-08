@@ -6,7 +6,8 @@
 			"home.html",
 			"member.html",
 			"shop.html",
-			"health.html"
+			"health.html",
+			"person_center.html"
 		],
 		"resources": [
 			"js/app.js",
@@ -114,7 +115,9 @@
 	},
 	"member.html": {
 		"resources": [
-			"fonts/mui.ttf"
+			"fonts/mui.ttf",
+			"js/mui.min.js",
+			"css/mui.min.css"
 		]
 	},
 	"shop.html": {
@@ -149,6 +152,14 @@
 			"css/style.css",
 			"js/mui.enterfocus.js",
 			"js/post.js"
+		]
+	},
+	"person_center.html": {
+		"resources": [
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"js/mui.min.js",
+			"images/user-photo2.png"
 		]
 	}
 }
