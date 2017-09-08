@@ -76,6 +76,7 @@
 		<script src="../../js/post.js"></script>
 		<script src="../../js/localDatabase.js"></script>
 		<script src="../../js/dao.js"></script>
+		<script src="../../js/account.js"></script>
 		<script src="../../js/mui.enterfocus.js"></script>
 		<script src="../../js/app.js"></script>
 		<script type="text/javascript">
@@ -83,6 +84,7 @@
 			var _self;
 			var tel;
 			var _dataAccess = new DataAccess();
+			var _account=new Account();
 			mui.plusReady(function() {
 				_self = plus.webview.currentWebview();
 				tel = _self.data;
@@ -90,7 +92,7 @@
 				document.getElementById("sendMail").addEventListener("tap", function(event) {
 					var smscode = document.getElementById("vcode").value;
 					console.log(smscode);
-					_dataAccess.LoginBySms_Verify(tel,smscode,function(data){
+					_account.LoginBySms_Verify(tel,smscode,function(data){
 						if(data.status == 1){
 							_dataAccess.setUser(data.result);
 							toMain();

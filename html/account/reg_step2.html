@@ -70,8 +70,10 @@
 		<script src="../../js/localDatabase.js"></script>
 		<script src="../../js/post.js"></script>
 		<script src="../../js/dao.js"></script>
+		<script src="../../js/account.js"></script>
 		<script>
 			var vcode,codeimg,regButton,mobile;
+			var _account=new Account();
 			mui.init();
 			
 			mui.plusReady(function() {
@@ -91,7 +93,7 @@
 						mui.toast('请输入正确的验证码');
 						return;
 					}
-					_dataAccess.RegisterByMobile_GetSmsCode(mobile, vcode.value, function(result) {
+					_account.RegisterByMobile_GetSmsCode(mobile, vcode.value, function(result) {
 						if(result.status == 1) {
 							mui.openWindow({
 								url: 'reg_step3.html',

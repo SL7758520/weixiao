@@ -82,7 +82,7 @@
 		"Webview": {},
 		"NativeUI": {},
 		"Navigator": {},
-		"NativeObj": {},"Share":{},"OAuth":{},"Device":{}
+		"NativeObj": {},"OAuth":{},"Device":{}
 	},
 	"plus": {
 		"splashscreen": {
@@ -300,7 +300,8 @@
 					"js/dao.js",
 					"js/localDatabase.js",
 					"js/post.js",
-					"fonts/mui.ttf"
+					"fonts/mui.ttf",
+					"js/account.js"
 				],
 				"refer": [
 					"main.html",
@@ -357,7 +358,8 @@
 					"js/app.js",
 					"js/dao.js",
 					"js/mui.enterfocus.js",
-					"js/post.js"
+					"js/post.js",
+					"js/account.js"
 				],
 				"refer": [
 					"html/account/quick_login_3.html"

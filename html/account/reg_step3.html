@@ -71,8 +71,10 @@
 		<script src="../../js/localDatabase.js"></script>
 		<script src="../../js/post.js"></script>
 		<script src="../../js/dao.js"></script>
+		<script src="../../js/account.js"></script>
 		<script>
 			mui.init();
+			var _account=new Account();
 			mui.plusReady(function() {
 				var _dataAccess = new DataAccess();
 				var _self = plus.webview.currentWebview();
@@ -118,7 +120,7 @@
 						mui.toast('请输入前后一致的密码');
 						return;
 					}
-					_dataAccess.RegisterByMobile_VerifySmsCode(mobile,passw.value,smscode.value,function(result){
+					_account.RegisterByMobile_VerifySmsCode(mobile,passw.value,smscode.value,function(result){
 						console.log(JSON.stringify(result));
 						if (result.status==1) {
 							mui.toast("注册成功!");

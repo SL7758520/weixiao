@@ -91,9 +91,11 @@
 		<script src="../../js/localDatabase.js" ></script>
 		<script src="../../js/post.js" ></script>
 		<script src="../../js/dao.js" ></script>
+		<script src="../../js/account.js"></script>
 		<script>
 			mui.init();
 			var _dataAccess = new DataAccess();
+			var _account=new Account();
 			mui.plusReady(function() {
 				var settings = app.getSettings();
 				var regButton = document.getElementById('reg');

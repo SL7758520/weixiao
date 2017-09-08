@@ -129,6 +129,7 @@
 		<script src="../../js/post.js"></script>
 		<script src="../../js/localDatabase.js"></script>
 		<script src="../../js/dao.js"></script>
+		<script src="../../js/account.js"></script>
 		<script src="../../js/mui.enterfocus.js"></script>
 		<script src="../../js/app.js"></script>
 		<script>
@@ -137,6 +138,7 @@
 					statusBarBackground: '#f7f7f7'
 				});
 				var _dataAccess = new DataAccess();
+				var _account=new Account();
 				$.plusReady(function() {
 					//读取本地存储，检查是否为首次启动
 					var showGuide = plus.storage.getItem("lauchFlag");
@@ -256,7 +258,7 @@
 											openid = auth.authResult.openid;
 										}
 										var name = auth.userInfo.nickname || auth.userInfo.name;
-										_dataAccess.Auth(authType, openid, token, name, function(datas) {
+										_account.Auth(authType, openid, token, name, function(datas) {
 											if(datas.status == 1) {
 												mui.toast(datas.message);
 												var user = datas.result;
@@ -305,7 +307,7 @@
 							mui.toast('密码最短为 6 个字符');
 							return;
 						}
-						_dataAccess.Login(loginInfo, function(datas) {
+						_account.Login(loginInfo, function(datas) {
 							if(datas.status == 1) {
 								mui.toast("登录成功!");
 								var user = datas.result;
