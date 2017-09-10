@@ -1,38 +1,221 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="utf-8">
-		<title>Hello MUI</title>
+		<title>旅居</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
-
-		<link rel="stylesheet" href="css/mui.min.css">
-		<style>
-			html,body {
-				background-color: #efeff4;
-			}
-			.title{
-				margin: 20px 15px 10px;
-				color: #6d6d72;
-				font-size: 15px;
-			}
-		</style>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/appfont.css" rel="stylesheet" />
+		<link href="css/main.css" rel="stylesheet" />
 	</head>
+
 	<body>
-		<div class="mui-content">
-			<div class="title">
-				<p>这是webview模式选项卡的第1个子页面</p>
-				<p>何谓webview模式？其实就是每个选项卡内容都是一个独立的webview，彼此之间互相独立、互不影响；
-					对于较为复杂的业务系统，推荐使用该模式。</p>
-				<p>基于webview模式的选项卡，支持原生加速的下拉刷新，点击第二个选项卡（“消息”），切换选项卡，体验下拉刷新；</p>
+		<!--主界面部分-->
+
+		<div id="slider" class="mui-slider">
+			<div class="mui-slider-group mui-slider-loop">
+				<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
+				<div class="mui-slider-item mui-slider-item-duplicate">
+					<a href="#">
+						<img src="images/yuantiao.jpg" id="img0">
+					</a>
+				</div>
+				<!-- 第一张 -->
+				<div class="mui-slider-item">
+					<a href="#">
+						<img src="images/shuijiao.jpg" id="img1">
+					</a>
+				</div>
+				<!-- 第二张 -->
+				<div class="mui-slider-item">
+					<a href="#">
+						<img src="images/muwu.jpg" id="img2">
+					</a>
+				</div>
+				<!-- 第三张 -->
+				<div class="mui-slider-item">
+					<a href="#">
+						<img src="images/cbd.jpg" id="img3">
+					</a>
+				</div>
+				<!-- 第四张 -->
+				<div class="mui-slider-item">
+					<a href="#">
+						<img src="images/yuantiao.jpg" id="img4">
+					</a>
+				</div>
+				<!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播)-->
+				<div class="mui-slider-item mui-slider-item-duplicate">
+					<a href="#">
+						<img src="images/shuijiao.jpg" id="img5">
+					</a>
+				</div>
+			</div>
+
+			<div class="mui-slider-indicator">
+				<div class="mui-indicator mui-active"></div>
+				<div class="mui-indicator"></div>
+				<div class="mui-indicator"></div>
+				<div class="mui-indicator"></div>
+			</div>
+		</div>
+		<div id="slider" class="mui-segmented-control mui-segmented-control-inverted">
+			<div id="sliderSegmentedControl" class="mui-segmented-control mui-segmented-control-inverted">
+				<a class="mui-control-item mui-active" href="#item1mobile">新闻</a>
+				<a class="mui-control-item" href="#item2mobile">培训</a>
+			</div>
+			<!--<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-6"></div>-->
+			<div class="mui-slider-group">
+				<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
+					<div id="scroll1">
+						<ul id='ulNews' class="mui-table-view"></ul>
+					</div>
+				</div>
+				<div id="item2mobile" class="mui-slider-item mui-control-content" style="border-bottom: none;">
+					<div id="scroll2">
+						<ul id='ulEvents' class="mui-table-view"></ul>
+					</div>
+				</div>
 			</div>
 		</div>
 	</body>
 	<script src="js/mui.min.js"></script>
+	<script src="js/post.js"></script>
+	<script src="js/localDatabase.js"></script>
+	<script src="js/dao.js"></script>
 	<script>
-		mui.init({
-			swipeBack:true //启用右滑关闭功能
+		var _dataAccess = new DataAccess();
+		mui.init();
+		mui.plusReady(function() {
+			//获得slider插件对象
+			var gallery = mui('.mui-slider');
+			gallery.slider({
+				interval: 3000 //自动轮播周期，若为0则不自动播放，默认为0；
+			});
+//			_dataAccess.getArticleImg(function(datas){
+//				if (datas&&datas.length>0) {
+//					document.getElementById('img5').src = datas[0].imgUrl;
+////					document.getElementById('img5').addEventListener('tap',function(){
+////						openWindowExtras('wxarticle', '/pages/wx_article.html', datas[0].url);
+////					});
+//					if (datas.length>3) {
+//						document.getElementById('img0').src = datas[3].imgUrl;
+////						document.getElementById('img0').addEventListener('tap',function(){
+////						openWindowExtras('wxarticle', '/pages/wx_article.html', datas[3].url);
+////					});
+//					}
+//					for (var i = 1;i<datas.length+1;i++) {
+//						console.log('img'+i+"     "+JSON.stringify(datas[i-1]));
+//						document.getElementById('img'+i).src = datas[i-1].imgUrl;
+//						document.getElementById('img'+i).setAttribute("data-value", datas[i-1].url);
+////						document.getElementById('img'+i).addEventListener('tap',function(){
+////						openWindowExtras('wxarticle', '/pages/wx_article.html', this.getAttribute('data-value'));
+////					});
+//					}
+//				}
+//			});
+//			_dataAccess.getClassList(function(datas){
+//				eventempty = true;
+//				if (datas && datas.length > 0) {
+//					for (var i = 0; i < datas.length; i++) {
+//						if (datas[i].time==''||datas[i].time==undefined) {
+//							datas[i].time = "2017年7月1日"; 
+//						}
+//						var li = document.createElement("li");
+//						li.className = "mui-table-view-cell mui-media";
+//						li.setAttribute("data-value", datas[i].url);
+//						if (datas[i].isPic!="false") {
+//							li.innerHTML = '<a href="javascript:;"><img class="mui-media-object mui-pull-right" src="' + datas[i].imgUrl + '"><div class="mui-media-body"><div class="news_title_2">' + datas[i].title + '</div><p class="news_time">' + datas[i].time + '</p></div></a>';
+//						} else{
+//							li.innerHTML = '<a href="javascript:;"><div class="mui-media-body"><div class="news_title_2">' + datas[i].title + '</div><p style="margin-top: 2px">' + datas[i].description + '</p><p class="news_time">' + datas[i].time + '</p></div></a>';
+//						}
+//						eventempty = false;
+//						document.getElementById("ulEvents").appendChild(li);
+//					}
+//				}
+//				if(eventempty) {
+//						document.getElementById("ulEvents").classList.add('no_border_bottom');
+//						document.getElementById("ulEvents").innerHTML = '<div class="no_news">暂无培训内容</div>';
+//					}
+//			});
+//			_dataAccess.getArticleList("news", function(datas) {
+//				document.getElementById("ulNews").classList.remove('no_border_bottom');
+//				document.getElementById("ulEvents").classList.remove('no_border_bottom');
+//				newsempty = true;
+//				if(datas && datas.length > 0) {
+//					for(var i = 0; i < datas.length; i++) {
+//						var time = datas[i].description.substring(0, datas[i].description.indexOf('日') + 1);
+//						var li = document.createElement("li");
+//						li.className = "mui-table-view-cell mui-media";
+//						li.setAttribute("data-value", datas[i].url);
+//						li.innerHTML = '<a href="javascript:;"><img class="mui-media-object mui-pull-right" src="' + datas[i].imgUrl + '"><div class="mui-media-body"><div class="news_title_2">' + datas[i].title + '</div><p class="news_time">' + time + '</p></div></a>';
+////						if(datas[i].type == "news") {
+//							newsempty = false;
+//							document.getElementById("ulNews").appendChild(li);
+////						} else {
+////							eventempty = false;
+////							document.getElementById("ulEvents").appendChild(li);
+////						}
+//					}
+//				}
+//				if(newsempty) {
+//						document.getElementById("ulNews").classList.add('no_border_bottom');
+//						document.getElementById("ulNews").innerHTML = '<div class="no_news">暂无事件内容</div>';
+//					}
+//			});
+//
+//			mui('#ulNews').on('tap', 'li', function(e) {
+//				var targetUrl = this.getAttribute('data-value');
+//				if(targetUrl == "#") {
+//					return;
+//				};
+//				//localStorage.setItem("wxarticle",targetUrl);
+//				//openWindow('wxarticle', '/pages/wx_article.html');
+//				openWindowExtras('wxarticle', '/pages/wx_article.html', targetUrl);
+//				//openWindow('wxarticle', '/pages/wx_article.html?targetUrl=' + targetUrl);
+//			});
+//			mui('#ulEvents').on('tap', 'li', function(e) {
+//				var targetUrl = this.getAttribute('data-value');
+//				if(targetUrl == "#") {
+//					return;
+//				};
+//				//				openWindow('article', '/pages/article.html?id=' + targetUrl);
+//				openWindowExtras('wxarticle', '/pages/wx_article.html', targetUrl);
+//			});
+			
 		});
+
+		function openWindow(id, href) {
+			mui.openWindow({
+				url: href,
+				id: id,
+				show: {
+					aniShow: 'pop-in'
+				},
+				waiting: {
+					autoShow: true
+				}
+			});
+		}
+
+		function openWindowExtras(id, href, targetUrl) {
+			mui.openWindow({
+				url: href,
+				id: id,
+				show: {
+					aniShow: 'pop-in'
+				},
+				waiting: {
+					autoShow: true
+				},
+				extras: {
+					data: targetUrl
+				}
+			});
+		}
 	</script>
+
 </html>

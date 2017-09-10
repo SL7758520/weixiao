@@ -419,7 +419,12 @@
 			},
 			"home.html": {
 				"resources": [
-					"css/mui.min.css"
+					"css/mui.min.css",
+					"css/main.css",
+					"css/appfont.css",
+					"images/muwu.jpg",
+					"images/yuantiao.jpg",
+					"images/shuijiao.jpg"
 				],
 				"refer": [],
 				"priority": 0
@@ -465,7 +470,8 @@
 					"fonts/mui.ttf",
 					"css/mui.min.css",
 					"js/mui.min.js",
-					"images/user-photo2.png"
+					"images/user-photo2.png",
+					"css/main.css"
 				],
 				"refer": [],
 				"priority": 0
