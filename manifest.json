@@ -379,7 +379,16 @@
 			"shop.html": {
 				"resources": [
 					"js/mui.min.js",
-					"css/mui.min.css"
+					"css/mui.min.css",
+					"images/cbd.jpg",
+					"images/muwu.jpg",
+					"images/yuantiao.jpg",
+					"images/shuijiao.jpg",
+					"js/localDatabase.js",
+					"js/dao.js",
+					"js/shop.js",
+					"js/post.js",
+					"css/app.css"
 				],
 				"refer": [],
 				"priority": 0
@@ -424,7 +433,12 @@
 					"css/appfont.css",
 					"images/muwu.jpg",
 					"images/yuantiao.jpg",
-					"images/shuijiao.jpg"
+					"images/shuijiao.jpg",
+					"js/localDatabase.js",
+					"images/cbd.jpg",
+					"js/mui.min.js",
+					"js/dao.js",
+					"js/post.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -471,7 +485,11 @@
 					"css/mui.min.css",
 					"js/mui.min.js",
 					"images/user-photo2.png",
-					"css/main.css"
+					"css/main.css",
+					"js/localDatabase.js",
+					"js/app.js",
+					"js/dao.js",
+					"js/post.js"
 				],
 				"refer": [],
 				"priority": 0

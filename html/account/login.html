@@ -144,7 +144,7 @@
 					var showGuide = plus.storage.getItem("lauchFlag");
 					//					var showGuide = 'aaa';
 
-					console.log(JSON.stringify(_dataAccess.getUser()));
+//					console.log(JSON.stringify(_dataAccess.getUser()));
 					//仅支持竖屏显示
 					plus.screen.lockOrientation("portrait-primary");
 					console.log(showGuide);
@@ -212,7 +212,7 @@
 					//						});
 					//					} else
 					console.log(JSON.stringify(_dataAccess.getUser()) + "--------" + settings.autoLogin);
-					settings.autoLogin = false;
+//					settings.autoLogin = false;
 					if(JSON.stringify(_dataAccess.getUser()) != '{}' && settings.autoLogin) {
 						toMain();
 					} else {
@@ -294,6 +294,7 @@
 					var autoLoginButton = doc.getElementById("autoLogin");
 					var regButton = doc.getElementById('reg');
 					var forgetButton = doc.getElementById('forgetPassword');
+//					settings.autoLogin = true;
 					loginButton.addEventListener('tap', function(event) {
 						var loginInfo = {
 							mobile: accountBox.value,

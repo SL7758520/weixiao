@@ -31,7 +31,7 @@ var DataAccess = (function() {
 		};
 		this.logOutUser = function() {
 			_db.setUser({});
-			_db.setSetting({});
+//			_db.setSetting({});
 		};
 		this.getSetting = function() {
 			return _db.getSetting();

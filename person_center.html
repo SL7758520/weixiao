@@ -34,10 +34,12 @@
 				border-radius: 50%;
 				border: 1px solid #e7e7e7;
 			}
+			
 			.user_img img {
 				width: 100%;
 				height: 100%;
 			}
+			
 			.mui-page .mui-table-view:first-child {
 				margin-top: 15px;
 			}
@@ -94,50 +96,89 @@
 			</div>-->
 			<div class="mui-form" style="margin-top: 2em;">
 				<ul>
-					<li><a href="#">性别<span id="sex">男</span></a></li>
-					<li><a href="#">生日<span id="birthday">1990-01-01</span></a></li>
-					<li><a href="#">邮箱<span id="email">ceshi@163.com</span></a></li>
-					<li><a href="#">居住地<span id="address">迪拜皇宫</span></a></li>
+					<li>
+						<a href="#">性别<span id="sex">男</span></a>
+					</li>
+					<li>
+						<a href="#">生日<span id="birthday">1990-01-01</span></a>
+					</li>
+					<li>
+						<a href="#">邮箱<span id="email">ceshi@163.com</span></a>
+					</li>
+					<li>
+						<a href="#">居住地<span id="address">迪拜皇宫</span></a>
+					</li>
 				</ul>
-				
+
 			</div>
 			<div class="mui-form" style="margin-top: 5px;">
 				<ul>
-				<li style="border-top: 1px solid #e8e8e8;"><a href="#" >修改密码<span ></span></a></li>
+					<li style="border-top: 1px solid #e8e8e8;">
+						<a href="#">修改密码<span></span></a>
+					</li>
 				</ul>
 			</div>
 		</div>
-		<ul class="mui-table-view" style="margin-top: 50px;"> 
-							<li class="mui-table-view-cell" style="text-align: center;">
-								<a id="btnLogout" style="color: red;">退出登录</a>
-							</li>
-						</ul>
+		<ul class="mui-table-view" style="margin-top: 50px;">
+			<li class="mui-table-view-cell" style="text-align: center;">
+				<a id="btnLogout" style="color: red;">退出登录</a>
+			</li>
+		</ul>
 		<script src="js/mui.min.js"></script>
 		<script src="js/localDatabase.js"></script>
 		<script src="js/post.js"></script>
 		<script src="js/dao.js"></script>
+		<script src="js/app.js"></script>
 		<script type="text/javascript">
 			var _dataAccess = new DataAccess();
+			var settings = app.getSettings();
 			mui.init();
-			mui.plusReady(function(){
+			mui.plusReady(function() {
 				initpage();
+				document.getElementById("btnLogout").addEventListener("tap", function() {
+					var btnArray = ['是', '否'];
+					mui.confirm('您确定要退出登录吗?', '', btnArray, function(e) {
+						if(e.index == 0) {
+							_dataAccess.logOutUser();
+							if(mui.os.ios || mui.os.ipad || mui.os.iphone) {
+								// 获取所有Webview窗口
+								var curr = plus.webview.currentWebview();
+								var wvs = plus.webview.all();
+								for(var i = 0, len = wvs.length; i < len; i++) {
+									//关闭除setting页面外的其他页面
+									if(wvs[i].getURL() == curr.getURL())
+										continue;
+									plus.webview.close(wvs[i]);
+								}
+								//打开main页面后再关闭当前页面
+								plus.webview.open('../main.html');
+								curr.close();
+							} else {
+								_dataAccess.logOutUser();
+								plus.runtime.restart();
+								//								plus.webview.open('../login.html');
+							}
+						}
+					});
+				});
 			});
-			function initpage(){
-				var users =_dataAccess.getUser();
-				setelementhtml('username',users.NikeName);
-				setelementhtml('mobile',users.Mobile);
-				setelementhtml('sex',users.Sex);
-				setelementhtml('email',users.Mail);
-				if (users.IconUrl!=undefined&&users.IconUrl!='') {
+
+			function initpage() {
+				var users = _dataAccess.getUser();
+				setelementhtml('username', users.NikeName);
+				setelementhtml('mobile', users.Mobile);
+				setelementhtml('sex', users.Sex);
+				setelementhtml('email', users.Mail);
+				if(users.IconUrl != undefined && users.IconUrl != '') {
 					//待修改
-//					document.getElementById('head-img').src = users.IconUrl;
+					//					document.getElementById('head-img').src = users.IconUrl;
 				};
-//				setelementhtml('居住地',users.Address);
+				//				setelementhtml('居住地',users.Address);
 				console.log(JSON.stringify(users));
 			}
-			
-			function setelementhtml(ElementId,value){
-				if (value==undefined) {
+
+			function setelementhtml(ElementId, value) {
+				if(value == undefined) {
 					value = '';
 				}
 				document.getElementById(ElementId).innerHTML = value;

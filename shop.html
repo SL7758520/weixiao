@@ -8,148 +8,175 @@
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 
+		<!--标准mui.css-->
 		<link rel="stylesheet" href="css/mui.min.css">
-		<style>
-			html,body {
-				background-color: #efeff4;
-			}
-			.title{
-				margin: 20px 15px 10px;
-				color: #6d6d72;
-				font-size: 15px;
-			}
-			 .oa-contact-cell.mui-table .mui-table-cell {
-				padding: 11px 0;
-				vertical-align: middle;
+		<!--App自定义的css-->
+		<!--<link rel="stylesheet" type="text/css" href="css/app.css" />-->
+		<style type="text/css">
+			.mui-bar {
+				background-color: #f3f3f3;
+				border-top: 1px solid #e0e0e0;
+				-webkit-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+				box-shadow: 0 0 0 rgba(0, 0, 0, 0);
 			}
 			
-			.oa-contact-cell {
-				position: relative;
-				margin: -11px 0;
+			.mui-bar-nav {
+				background: #283a8c;
+				border: none;
+				-webkit-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+				box-shadow: 0 0 0 rgba(0, 0, 0, 0);
 			}
-	
-			.oa-contact-avatar {
-				width: 75px;
-			}
-			.oa-contact-avatar img {
-				border-radius: 50%;
-			}
-			.oa-contact-content {
-				width: 100%;
-			}
-			.oa-contact-name {
-				margin-right: 20px;
-			}
-			.oa-contact-name, oa-contact-position {
-				float: left;
+			
+			.mui-bar .mui-title {
+				color: #fff;
 			}
 		</style>
 	</head>
 
 	<body>
+		<header class="mui-bar mui-bar-nav">
+			<!--<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>-->
+			<h1 id="title" class="mui-title">微孝养老</h1>
+		</header>
 		<div class="mui-content">
-			<div class="title">
-				这是webview模式选项卡中的第3个子页面，该页面展示一个通讯录示例
-			</div>
+			<div id="slider" class="mui-slider">
+				<div class="mui-slider-group mui-slider-loop">
+					<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
+					<div class="mui-slider-item mui-slider-item-duplicate">
+						<a href="#">
+							<img src="images/yuantiao.jpg" id="img0">
+						</a>
+					</div>
+					<!-- 第一张 -->
+					<div class="mui-slider-item">
+						<a href="#">
+							<img src="images/shuijiao.jpg" id="img1">
+						</a>
+					</div>
+					<!-- 第二张 -->
+					<div class="mui-slider-item">
+						<a href="#">
+							<img src="images/muwu.jpg" id="img2">
+						</a>
+					</div>
+					<!-- 第三张 -->
+					<div class="mui-slider-item">
+						<a href="#">
+							<img src="images/cbd.jpg" id="img3">
+						</a>
+					</div>
+					<!-- 第四张 -->
+					<div class="mui-slider-item">
+						<a href="#">
+							<img src="images/yuantiao.jpg" id="img4">
+						</a>
+					</div>
+					<!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播)-->
+					<div class="mui-slider-item mui-slider-item-duplicate">
+						<a href="#">
+							<img src="images/shuijiao.jpg" id="img5">
+						</a>
+					</div>
+				</div>
 
-			<ul class="mui-table-view mui-table-view-striped mui-table-view-condensed">
-				<li class="mui-table-view-cell">
-					<div class="mui-slider-cell">
-						<div class="oa-contact-cell mui-table">
-							<div class="oa-contact-avatar mui-table-cell">
-								<img src="http://placehold.it/60x60" />
-							</div>
-							<div class="oa-contact-content mui-table-cell">
-								<div class="mui-clearfix">
-									<h4 class="oa-contact-name">叶文洁</h4>
-									<span class="oa-contact-position mui-h6">董事长</span>
-								</div>
-								<p class="oa-contact-email mui-h6">
-									yewenjie@sina.com
-								</p>
-							</div>
-						</div>
-					</div>
-				</li>
-				<li class="mui-table-view-cell">
-					<div class="mui-slider-cell">
-						<div class="oa-contact-cell mui-table">
-							<div class="oa-contact-avatar mui-table-cell">
-								<img src="http://placehold.it/60x60" />
-							</div>
-							<div class="oa-contact-content mui-table-cell">
-								<div class="mui-clearfix">
-									<h4 class="oa-contact-name">艾AA</h4>
-									<span class="oa-contact-position mui-h6">总经理</span>
-								</div>
-								<p class="oa-contact-email mui-h6">
-									aaa@163.com
-								</p>
+				<div class="mui-slider-indicator">
+					<div class="mui-indicator mui-active"></div>
+					<div class="mui-indicator"></div>
+					<div class="mui-indicator"></div>
+					<div class="mui-indicator"></div>
+				</div>
+			</div>
+			<div id="scroll0" class="mui-scroll">
+				<ul id="shopList" class="mui-table-view">
+					<!--<div class="mui-card">
+
+						<div class="mui-card-header mui-card-media" style="height:40vw;background-image:url(images/cbd.jpg)"></div>
+						<div class="mui-card-content">
+							<div class="mui-card-content-inner">
+								<p>Posted on January 18, 2016</p>
+								<p style="color: #333;">这里显示文章摘要，让读者对文章内容有个粗略的概念...</p>
 							</div>
 						</div>
-					</div>
-				</li>
-				<li class="mui-table-view-cell">
-					<div class="mui-slider-cell">
-						<div class="oa-contact-cell mui-table">
-							<div class="oa-contact-avatar mui-table-cell">
-								<img src="http://placehold.it/60x60" />
-							</div>
-							<div class="oa-contact-content mui-table-cell">
-								<div class="mui-clearfix">
-									<h4 class="oa-contact-name">罗辑</h4>
-									<span class="oa-contact-position mui-h6">员工</span>
-								</div>
-								<p class="oa-contact-email mui-h6">
-									luoji@126.com
-								</p>
-							</div>
+						<div class="mui-card-footer">
+							<a class="mui-card-link">Like</a>
+							<a class="mui-card-link">Read more</a>
 						</div>
-					</div>
-				</li>
-				<li class="mui-table-view-cell">
-					<div class="mui-slider-cell">
-						<div class="oa-contact-cell mui-table">
-							<div class="oa-contact-avatar mui-table-cell">
-								<img src="http://placehold.it/60x60" />
-							</div>
-							<div class="oa-contact-content mui-table-cell">
-								<div class="mui-clearfix">
-									<h4 class="oa-contact-name">云天明</h4>
-									<span class="oa-contact-position mui-h6">员工</span>
-								</div>
-								<p class="oa-contact-email mui-h6">
-									ytm@163.com
-								</p>
-							</div>
-						</div>
-					</div>
-				</li>
-				<li class="mui-table-view-cell">
-					<div class="mui-slider-cell">
-						<div class="oa-contact-cell mui-table">
-							<div class="oa-contact-avatar mui-table-cell">
-								<img src="http://placehold.it/60x60" />
-							</div>
-							<div class="oa-contact-content mui-table-cell">
-								<div class="mui-clearfix">
-									<h4 class="oa-contact-name">史强</h4>
-									<span class="oa-contact-position mui-h6">员工</span>
-								</div>
-								<p class="oa-contact-email mui-h6">
-									shiqiang@gmail.com
-								</p>
-							</div>
-						</div>
-					</div>
-				</li>
-			</ul>
+					</div>-->
+				</ul>
+			</div>
 		</div>
 	</body>
 	<script src="js/mui.min.js"></script>
+	<script src="js/localDatabase.js"></script>
+	<script src="js/post.js"></script>
+	<script src="js/dao.js"></script>
+	<script src="js/shop.js"></script>
 	<script>
 		mui.init({
-			swipeBack:true //启用右滑关闭功能
+			swipeBack: true //启用右滑关闭功能
 		});
+		var _dataAccess = new DataAccess();
+		var _shop = new Shop();
+		var user;
+		var shopId;
+		var shopName;
+		var div;
+		var pageIndex = 1;
+		var pageSize = 10;
+		var cityId = 6107;
+		var shopList;
+		mui.plusReady(function() {
+			//获得slider插件对象
+			var gallery = mui('.mui-slider');
+			gallery.slider({
+				interval: 3000 //自动轮播周期，若为0则不自动播放，默认为0；
+			});
+			user = _dataAccess.getUser();
+			shopId = user.ShopId;
+			shopName = user.ShopName;
+			div = document.getElementById("shopList");
+			if(shopName != '') {
+				document.getElementById('title').innerHTML = shopName;
+			}
+			if(shopId == null) {
+				_shop.GetShopsByCityId(pageIndex, pageSize, cityId, function(datas) {
+
+				});
+			} else {
+				_shop.GetShopsByShopId(pageIndex, pageSize, shopId, cityId, function(datas) {
+					if(datas.status == 1) {
+						shopList = datas.result;
+						console.log(JSON.stringify(shopList));
+						addList(shopList);
+					} else {
+						mui.toast(datas.message);
+					}
+				});
+			}
+
+		});
+
+		function addList(datas) {
+			div.innerHTML = "";
+			for(var i = 0; i < datas.length; i++) {
+				div.appendChild(creatCard(datas[i]));
+			}
+		}
+
+		function creatCard(entity) {
+			//			console.log("AAAAAAAAAAA");
+			var li = document.createElement("div");
+			li.className = 'mui-card';
+			var description;
+			if(entity.ShortDescription == null){
+				description="该店铺暂无描述";
+			}else{
+				description=entity.ShortDescription;
+			}
+			console.log(globals.apiUrl+entity.PhotoUrl);
+			li.innerHTML = '<div class="mui-card-header mui-card-media" style="height:40vw;background-image:url('+entity.PhotoUrl+')"></div><div class="mui-card-content"><div class="mui-card-content-inner"><p>'+entity.Name+'</p><p style="color: #333;">'+description+'</p></div></div><div class="mui-card-footer"><a class="mui-card-link">类型:'+entity.TypeName+'</a><a class="mui-card-link">详细..</a></div>';
+			return li;
+		}
 	</script>
+
 </html>
