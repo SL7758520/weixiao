@@ -180,15 +180,16 @@
 						settings.autoLogin = true;
 					}
 					var state = app.getState();
-					var mainPage = $.preload({
-						"id": 'main',
-						"url": '../../main.html'
-					});
+//					var mainPage = $.preload({
+//						"id": 'main',
+//						"url": '../../main.html'
+//					});
 					var toMain = function() {
-						$.fire(mainPage, 'show', null);
+//						$.fire(mainPage, 'show', null);
 						setTimeout(function() {
 							$.openWindow({
-								id: 'main',
+								id: 'main.html',
+								url:'../../main.html',
 								show: {
 									aniShow: 'pop-in'
 								},
@@ -214,8 +215,10 @@
 					console.log(JSON.stringify(_dataAccess.getUser()) + "--------" + settings.autoLogin);
 //					settings.autoLogin = false;
 					if(JSON.stringify(_dataAccess.getUser()) != '{}' && settings.autoLogin) {
+						console.log("CCCCCCC");
 						toMain();
 					} else {
+						console.log("BBBBBBBBBBBB");
 						app.setState(null);
 						//第三方登录
 						var authBtns = ['qihoo', 'weixin', 'sinaweibo', 'qq']; //配置业务支持的第三方登录

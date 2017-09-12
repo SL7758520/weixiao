@@ -30,6 +30,64 @@
 			.mui-bar .mui-title {
 				color: #fff;
 			}
+			
+			img {
+				width: 100%;
+				height: 100%;
+			}
+			
+			.img:first-of-type {
+				padding-top: 0;
+			}
+			
+			.img {
+				height: 180px;
+				padding-top: 10px;
+				background-color: #F4F4F4;
+				position: relative;
+				margin-left: 0px;
+			}
+			
+			.content {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+			}
+			
+			.detail {
+				width: 70%;
+				padding: 5px 10px;
+				color: #A4A4A4;
+				font-size: 13px;
+				line-height: 20px;
+				/*border-bottom: 1px solid #EDEDED;*/
+				margin-left: 0px;
+			}
+			
+			.detail:first-line {
+				color: #000000;
+				font-size: 16px;
+			}
+			
+			.price {
+				width: 30%;
+				font-size: 16px;
+				padding-right: 10px;
+				/*border-bottom: 1px solid #EDEDED;*/
+				-webkit-box-flex: 1;
+				line-height: 25px;
+				margin-left: 0px;
+			}
+			
+			.newPrice {
+				color: #F67570;
+			}
+			
+			.oldPrice {
+				color: #999999;
+				font-size: 10px;
+				margin-left: 15px;
+			}
 		</style>
 	</head>
 
@@ -86,22 +144,8 @@
 					<div class="mui-indicator"></div>
 				</div>
 			</div>
-			<div id="scroll0" class="mui-scroll">
+			<div id="scroll0" class="mui-scroll" style="margin-top: 10px;">
 				<ul id="shopList" class="mui-table-view">
-					<!--<div class="mui-card">
-
-						<div class="mui-card-header mui-card-media" style="height:40vw;background-image:url(images/cbd.jpg)"></div>
-						<div class="mui-card-content">
-							<div class="mui-card-content-inner">
-								<p>Posted on January 18, 2016</p>
-								<p style="color: #333;">这里显示文章摘要，让读者对文章内容有个粗略的概念...</p>
-							</div>
-						</div>
-						<div class="mui-card-footer">
-							<a class="mui-card-link">Like</a>
-							<a class="mui-card-link">Read more</a>
-						</div>
-					</div>-->
 				</ul>
 			</div>
 		</div>
@@ -168,14 +212,38 @@
 			var li = document.createElement("div");
 			li.className = 'mui-card';
 			var description;
-			if(entity.ShortDescription == null){
-				description="该店铺暂无描述";
-			}else{
-				description=entity.ShortDescription;
+			if(entity.ShortDescription == null) {
+				description = "该店铺暂无描述";
+			} else {
+				description = entity.ShortDescription;
 			}
-			console.log(globals.apiUrl+entity.PhotoUrl);
-			li.innerHTML = '<div class="mui-card-header mui-card-media" style="height:40vw;background-image:url('+entity.PhotoUrl+')"></div><div class="mui-card-content"><div class="mui-card-content-inner"><p>'+entity.Name+'</p><p style="color: #333;">'+description+'</p></div></div><div class="mui-card-footer"><a class="mui-card-link">类型:'+entity.TypeName+'</a><a class="mui-card-link">详细..</a></div>';
+			console.log(globals.apiUrl + entity.PhotoUrl);
+//			li.innerHTML = '<div class="mui-card-header mui-card-media" style="height:40vw;background-image:url(' + entity.PhotoUrl + ')"></div><div class="mui-card-content"><div class="mui-card-content-inner"><p>' + entity.Name + '</p><p style="color: #333;">' + description + '</p></div></div><div class="mui-card-footer"><a class="mui-card-link">类型:' + entity.TypeName + '</a><a class="mui-card-link">详细..</a></div>';
+			li.innerHTML = '<dd class="img"><img src="images/t5.jpg"></dd><div class="content"><dd class="detail">'+entity.Name+'<br>'+ description+'</dd><dd class="price"><span class="newPrice">￥'+entity.BottomPrice+'/月起</span></dd></div>';	
+			li.addEventListener("tap",function(event){
+//				console.log("AAAAAAAAAAA"); 
+				gotoHtml("html/shop/product.html",null);
+			});
+			
 			return li;
+		}
+		
+		function gotoHtml(u, datas) {
+			mui.openWindow({
+				url: u,
+				id: u,
+
+				show: {
+					aniShow: 'pop-in'
+				},
+				waiting: {
+					autoShow: true, //自动显示等待框，默认为true
+					title: '正在加载...', //等待对话框上显示的提示内容
+				},
+				extras: {
+					data: datas,
+				}
+			});
 		}
 	</script>
 

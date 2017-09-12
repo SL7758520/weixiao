@@ -132,12 +132,17 @@
 			"js/dao.js",
 			"js/shop.js",
 			"js/post.js",
-			"css/app.css"
+			"css/app.css",
+			"images/t5.jpg"
+		],
+		"refer": [
+			"html/shop/product.html"
 		]
 	},
 	"health.html": {
 		"resources": [
-			"fonts/mui.ttf"
+			"fonts/mui.ttf",
+			"css/mui.min.css"
 		]
 	},
 	"start.html": {
@@ -189,6 +194,18 @@
 			"js/mui.min.js",
 			"js/dao.js",
 			"js/post.js"
+		]
+	},
+	"splash.html": {
+		"resources": [
+			"css/mui.min.css"
+		]
+	},
+	"html/shop/product.html": {
+		"resources": [
+			"css/mui.min.css",
+			"js/mui.zoom.js",
+			"js/mui.previewimage.js"
 		]
 	}
 }

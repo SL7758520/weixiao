@@ -388,14 +388,18 @@
 					"js/dao.js",
 					"js/shop.js",
 					"js/post.js",
-					"css/app.css"
+					"css/app.css",
+					"images/t5.jpg"
 				],
-				"refer": [],
+				"refer": [
+					"html/shop/product.html"
+				],
 				"priority": 0
 			},
 			"health.html": {
 				"resources": [
-					"fonts/mui.ttf"
+					"fonts/mui.ttf",
+					"css/mui.min.css"
 				],
 				"refer": [],
 				"priority": 0
@@ -490,6 +494,15 @@
 					"js/app.js",
 					"js/dao.js",
 					"js/post.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/shop/product.html": {
+				"resources": [
+					"css/mui.min.css",
+					"js/mui.zoom.js",
+					"js/mui.previewimage.js"
 				],
 				"refer": [],
 				"priority": 0
