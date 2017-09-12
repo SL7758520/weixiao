@@ -178,7 +178,17 @@
 			"js/localDatabase.js",
 			"js/app.js",
 			"js/dao.js",
-			"js/post.js"
+			"js/post.js",
+			"css/common.css",
+			"css/api.css",
+			"images/t1.jpg",
+			"images/user_menu_comment@2x.png",
+			"images/user_menu_subscribe@2x.png",
+			"images/user_menu_message@2x.png",
+			"images/user_menu_update@2x.png",
+			"images/user_menu_favorite@2x.png",
+			"images/user_menu_setting@2x.png",
+			"images/user_menu_bankcard@2x.png"
 		]
 	},
 	"home.html": {
