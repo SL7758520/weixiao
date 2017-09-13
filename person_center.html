@@ -10,6 +10,10 @@
 		<link rel="stylesheet" href="css/main.css" />
 		<link href="css/mui.min.css" rel="stylesheet" />
 		<style>
+		html, body {
+   			 min-width: 320px;
+   			 background-color: #E7E7E7;
+			}
 			.unlogin {
 				border-bottom: 1px solid #9D8C7B;
 			}
@@ -35,6 +39,7 @@
 			.user-img img {
 				width: 100%;
 				height: 100%;
+				border-radius:75px;
 			}
 			
 			.login {
@@ -145,42 +150,59 @@
 			.update {
 				background-image: url("images/user_menu_update@2x.png");
 			}
+			.linecss{
+				padding: 15px;
+				background-color: #FFFFFF;
+/*				border-bottom: .5px solid #e7e7e7;*/			
+			}
+			.loginout{
+				border: 1px solid red;
+				background-color: red;
+			}
 		</style>
 	</head>
 
 	<body>
-		<div class="unlogin" tapmode="" onclick="login()">
+		<div class="unlogin" tapmode="" >
 			<img src="images/t1.jpg">
-			<button class="login">立即登录</button>
+			<button class="login" id="changepic">修改头像</button>
 		</div>
 		<div class="user-img">
-			<img src="images/user-photo2.png">
+			<img id="userpic" src="images/user-photo2.png">
 		</div>
 		<div class="mui-page-content">
-			<div class="mui-form" style="margin-top: 2em;">
+			<div class="mui-form">
 				<ul>
 					<li>
-						<a href="#">性别<span id="sex">男</span></a>
+						<a href="#" class="linecss">用户名<span id="sex">好少年前途似锦</span></a>
 					</li>
 					<li>
-						<a href="#">生日<span id="birthday">1990-01-01</span></a>
+						<a href="#" class="linecss">性别<span id="sex">男</span></a>
 					</li>
 					<li>
-						<a href="#">邮箱<span id="email">ceshi@163.com</span></a>
+						<a href="#" class="linecss">生日<span id="birthday">1990-01-01</span></a>
 					</li>
 					<li>
-						<a href="#">居住地<span id="address">迪拜皇宫</span></a>
+						<a href="#" class="linecss">邮箱<span id="email">ceshi@163.com</span></a>
+					</li>
+					<li>
+						<a href="#" class="linecss">居住地<span id="address">迪拜皇宫</span></a>
+					</li>
+					<li >
+						<a href="#" class="linecss">修改密码<span></span></a>
 					</li>
 				</ul>
-
+				<div id="popover_save" class="mui-content-padded">
+				<button id="btnSave" type="button" class="mui-btn mui-btn-primary mui-btn-block loginout">退出登录</button>
 			</div>
-			<div class="mui-form" style="margin-top: 5px;">
-				<ul>
-					<li style="border-top: 1px solid #e8e8e8;">
+			</div>
+			<!--<div class="mui-form" style="margin-top: 5px;">
+				<ul>-->
+					<!--<li style="border-top: 1px solid #e8e8e8;">
 						<a href="#">修改密码<span></span></a>
-					</li>
-				</ul>
-			</div>
+					</li>-->
+				<!--</ul>
+			</div>-->
 		</div>
 	</body>
 	<script src="js/mui.min.js"></script>
@@ -196,7 +218,81 @@
 		var isLogin =false;
 		mui.plusReady(function() {
 			isLogin = getLogin();	
+			if (isLogin) {
+				document.getElementById('btnSave').innerHTML = '退出登录';
+			} else{
+				document.getElementById('btnSave').innerHTML = '登录';
+			}
+			document.getElementById('btnSave').addEventListener('tap',function(){
+				if(getLogin()) {
+					var btnArray = ['是', '否'];
+					mui.confirm('您确定要退出登录吗?', '', btnArray, function(e) {
+						if(e.index == 0) {
+							_dataAccess.logOutUser();
+//			 				plus.runtime.restart();
+							if(mui.os.ios || mui.os.ipad || mui.os.iphone) {
+								// 获取所有Webview窗口
+								var curr = plus.webview.currentWebview();
+								var wvs = plus.webview.all();
+								for(var i = 0, len = wvs.length; i < len; i++) {
+									//关闭除setting页面外的其他页面
+									if(wvs[i].getURL() == curr.getURL())
+										continue;
+									plus.webview.close(wvs[i]);
+								}
+								//打开main页面后再关闭当前页面
+								plus.webview.open('main.html');
+								curr.close();
+							} else {
+								plus.runtime.restart();
+//								plus.webview.open('../login.html');
+							}
+						}
+					});
+				} else {
+					mui.openWindow({
+						id: 'login',
+						url: 'html/account/login.html',
+						show: {
+							aniShow: 'slide-in-bottom'
+						},
+						waiting: {
+							autoShow: true,
+							title: '正在加载...'
+						}
+					});
+				}
+			});
+			
+			document.getElementById("changepic").addEventListener('tap', function() {
+				if(mui.os.plus) {
+					var a = [{
+						title: "拍照"
+					}, {
+						title: "从手机相册选择"
+					}];
+					plus.nativeUI.actionSheet({
+						title: "修改头像",
+						cancel: "取消",
+						buttons: a
+					}, function(b) {
+						switch(b.index) {
+							case 0:
+								break;
+							case 1:
+								getImage();
+								break;
+							case 2:
+								galleryImg();
+								break;
+							default:
+								break
+						}
+					})
+				}
+			});
 		});
+		
 		function getLogin(){
 			if (_dataAccess.getUser()!='{}') {
 				return true;
@@ -204,6 +300,63 @@
 				return false;
 			}
 		}
+		
+			function getImage() {
+				var c = plus.camera.getCamera();
+				c.captureImage(function(e) {
+					plus.io.resolveLocalFileSystemURL(e, function(entry) {
+						//将拍照的目录路径变成本地URL路径，如：file:///之类。
+						var s = entry.toLocalURL() + "?version=" + new Date().getTime();
+						//					console.log('设置里面拍摄的图片是++++++++++++++++++' + s);
+						document.getElementById("userpic").src = s;
+//						upload(s);暂未有接口
+						//目前仅有一张图片，暂时如此处理，后续需要通过标准组件实现
+						//						document.querySelector("#__mui-imageview__group .mui-slider-item img").src = s /*+ "?version=" + new Date().getTime()*/ ;
+
+					}, function(e) {});
+				}, function(s) {}, {
+					filename: "_doc/" + _dataAccess.getSetting().HeadUrl
+				})
+			}
+
+			function galleryImg() {
+				plus.gallery.pick(function(a) {
+					plus.io.resolveLocalFileSystemURL(a, function(entry) {
+						var e = entry.fullPath + "?version=" + new Date().getTime();
+						console.log(e);
+						document.getElementById("userpic").src = e;
+						//						document.querySelector("#__mui-imageview__group .mui-slider-item img").src = e;
+//						upload(e);暂未有接口
+					}, function(e) {});
+				}, function(a) {}, {
+					filter: "image"
+				})
+			};
+			// 上传文件
+			function upload(file) {
+				var task = plus.uploader.createUpload(globals.apiUrl + 'Users.ashx', {
+					method: 'post',
+					timeout: 5000,
+				}, function(t, status) {
+					var rsp = JSON.parse(t.responseText);
+					// 上传完成
+					if(status == 200) {
+						if(rsp.Result) {
+							//更新用户信息
+							upDateUserInfo();
+							//				console.log(JSON.stringify(rsp));
+						}
+					} else {
+						self._refreshPlaceholder(file, 3);
+					}
+				});
+				task.addData("Token", _db.getUser().Token);
+				task.addData("action", "uploadHeadPic");
+				task.addFile(file, {
+					key: file
+				});
+				task.start();
+			}
 	</script>
 
 </html>

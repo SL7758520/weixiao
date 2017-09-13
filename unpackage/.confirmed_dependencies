@@ -188,7 +188,9 @@
       "images/user_menu_update@2x.png",
       "images/user_menu_favorite@2x.png",
       "images/user_menu_setting@2x.png",
-      "images/user_menu_bankcard@2x.png"
+      "images/user_menu_bankcard@2x.png",
+      "js/account.js",
+      "js/mui.enterfocus.js"
     ]
   },
   "home.html": {
