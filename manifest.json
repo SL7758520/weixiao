@@ -507,7 +507,9 @@
 					"js/account.js",
 					"js/mui.enterfocus.js"
 				],
-				"refer": [],
+				"refer": [
+					"html/member/member_modify.html"
+				],
 				"priority": 0
 			},
 			"html/shop/product.html": {
@@ -515,6 +517,15 @@
 					"css/mui.min.css",
 					"js/mui.zoom.js",
 					"js/mui.previewimage.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/member/member_modify.html": {
+				"resources": [
+					"css/mui.min.css",
+					"css/style.css",
+					"js/member.js"
 				],
 				"refer": [],
 				"priority": 0

@@ -65,6 +65,10 @@ var Account = (function() {
 				function(result) {
 					if(callback) {
 						console.log('接口返回数据：' + JSON.stringify(result));
+//						console.log(globals.apiUrl+'Member/GetMemberInfo?memberId='+result.result.MemberId);
+//						AsyncPost(globals.apiUrl+'Member/GetMemberInfo?memberId='+result.result.MemberId,function(result){
+//							console.log(JSON.stringify(result));
+//						});
 						callback.call(this, result);
 					}
 				},

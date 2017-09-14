@@ -312,6 +312,7 @@
 							return;
 						}
 						_account.Login(loginInfo, function(datas) {
+							console.log(JSON.stringify(datas));
 							if(datas.status == 1) {
 								mui.toast("登录成功!");
 								var user = datas.result;
