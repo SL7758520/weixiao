@@ -1,145 +1,235 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 
 	<head>
-		<meta charset="UTF-8">
-		<title></title>
-		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<link href="css/mui.min.css" rel="stylesheet" />
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+		<title>user</title>
+		<link rel="stylesheet" type="text/css" href="css/api.css" />
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
 		<link rel="stylesheet" href="css/main.css" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<style>
+		html, body {
+   			 min-width: 320px;
+   			 background-color: #E7E7E7;
+			}
+			.unlogin {
+				border-bottom: 1px solid #9D8C7B;
+			}
+			
+			.unlogin img {
+				width: 100%;
+				-webkit-filter: blur(8px);
+				opacity: .7;
+			}
+			
+			.user-img {
+				position: absolute;
+				top: 20px;
+				width: 75px;
+				height: 75px;
+				left: 0;
+				right: 0;
+				margin: auto;
+				border: 5px solid #9F9887;
+				border-radius: 100%;
+			}
+			
+			.user-img img {
+				width: 100%;
+				height: 100%;
+				border-radius:75px;
+			}
+			
+			.login {
+				width: 90px;
+				padding: 5px 10px;
+				position: absolute;
+				top: 110px;
+				left: 0;
+				right: 0;
+				margin: auto;
+				background-color: #3BBB65;
+				color: #FFFFFF;
+			}
+			
+			.category {
+				margin-top: 5px;
+				border-bottom: 1px solid #bebebe;
+			}
+			
+			.category li {
+				display: inline-block;
+				width: 24%;
+				text-align: center;
+				padding: 20px 0 10px;
+				background-size: 30px;
+				background-repeat: no-repeat;
+				background-position: top;
+			}
+			
+			.category li span {
+				margin: 15px 10px 0 10px;
+			}
+			
+			.order {
+				background-image: url("../image/user_menu_order@2x.png");
+			}
+			
+			.chat {
+				background-image: url("../image/user_menu_chat@2x.png");
+			}
+			
+			.snap_up {
+				background-image: url("../image/user_menu_snap_up@2x.png");
+			}
+			
+			.coupon {
+				background-image: url("../image/user_menu_coupon@2x.png");
+			}
+			
+			.user-setting li:not(:last-child) {
+				position: relative;
+				padding: 3px 10px;
+				background-size: 20px;
+				background-repeat: no-repeat;
+				background-position: 95%;
+				background-image: url("../image/arrow_grey_right_normal.png");
+			}
+			
+			.user-setting li:last-child {
+				position: relative;
+				padding: 3px 10px;
+			}
+			
+			.user-setting li:last-child span {
+				padding: 10px 0 10px 50px;
+			}
+			
+			.user-setting li:last-child div {
+				position: absolute;
+				right: 5%;
+				top: 13px;
+				color: #e6e6e6;
+				font-size: 10px;
+			}
+			
+			.user-setting li span {
+				display: block;
+				padding: 10px 50px;
+				background-size: 20px;
+				background-repeat: no-repeat;
+				background-position: 5%;
+			}
+			
+			.subscribe {
+				background-image: url("images/user_menu_subscribe@2x.png");
+			}
+			
+			.favorite {
+				background-image: url("images/user_menu_favorite@2x.png");
+			}
+			
+			.comment {
+				background-image: url("images/user_menu_comment@2x.png");
+			}
+			
+			.bankcard {
+				background-image: url("images/user_menu_bankcard@2x.png");
+			}
+			
+			.message {
+				background-image: url("images/user_menu_message@2x.png");
+			}
+			
+			.setting {
+				background-image: url("images/user_menu_setting@2x.png");
+			}
+			
+			.update {
+				background-image: url("images/user_menu_update@2x.png");
+			}
+			.linecss{
+				padding: 15px;
+				background-color: #FFFFFF;
+/*				border-bottom: .5px solid #e7e7e7;*/			
+			}
+			.loginout{
+				border: 1px solid red;
+				background-color: red;
+			}
+		</style>
 	</head>
 
 	<body>
-		<style type="text/css">
-			.user_wkj {
-				max-width: 136px;
-				max-height: 136px;
-				margin: 5% auto 10px auto;
-				padding: 8px;
-				background-color: rgba(255, 255, 255, 0.3);
-				-webkit-border-radius: 50%;
-				border-radius: 50%;
-				clear: both;
-			}
-			
-			.user_img {
-				max-width: 120px;
-				max-height: 120px;
-				/*background-image: url(../images/user-photo.png);*/
-				background-size: cover;
-				background-repeat: no-repeat;
-				background-color: #fff;
-				overflow: hidden;
-				-webkit-border-radius: 50%;
-				border-radius: 50%;
-				border: 1px solid #e7e7e7;
-			}
-			
-			.user_img img {
-				width: 100%;
-				height: 100%;
-			}
-			
-			.mui-page .mui-table-view:first-child {
-				margin-top: 15px;
-			}
-		</style>
-		<div class="mui-page-content">
-			<ul class="mui-table-view">
-				<li class="mui-table-view-cell mui-media" id="device">
-					<a href="javascript:;" style="display: flex;flex-direction: row;align-items: center;">
-						<div class="sms_media user_img"><img id="head-img" src="images/user-photo2.png" /></div>
-						<div class="mui-media-body" id="systembody">
-							<div class="sms_title" id="username">
-								<!--<span class="sms_time">5月3日</span>--></div>
-							<p class='mui-ellipsis' id="mobile"></p>
-						</div>
-					</a>
-				</li>
-			</ul>
-			<!--<div class="mui-scroll-wrapper">
-				<div class="mui-scroll">
-					<ul class="mui-table-view mui-table-view-chevron" style="margin-top: 44px;">
-						<li class="mui-table-view-cell mui-media" style="line-height: 10px;display: flex;flex-direction: row;align-items: center;">
-							<div style="width: 30%;">
-								<div class="user_wkj">
-									<div class="user_img"><img id="head-img" src="images/user-photo2.png" /></div>
-								</div>
-							</div>
-							<ul style="width:68%;">
-								<li>用户名</li>
-								<li>18720930840</li>
-							</ul>
-						</li>
-					</ul>
-					<ul class="mui-table-view mui-table-view-chevron">
-
-					</ul>
-					<ul class="mui-table-view mui-table-view-chevron" id='ulVersion_Android' style="display: none;">
-						<li class="mui-table-view-cell" id="update">
-							<a class="mui-navigate-right">检查新版本 <i class="mui-pull-right update" id="vAndroid"></i></a>
-						</li>
-					</ul>
-
-					<ul class="mui-table-view" id='ulVersion_iOS' style="display: none;">
-						<li class="mui-table-view-cell">
-							<a>当前版本<span class="mui-pull-right" id='viOS'>1.0.0</span></a>
-						</li>
-					</ul>
-
-					<ul class="mui-table-view" style="margin-top: 2em;">
-						<li class="mui-table-view-cell" style="text-align: center;">
-							<a id="btnLogout" style="color: red;">退出登录</a>
-						</li>
-					</ul>
-				</div>
-			</div>-->
-			<div class="mui-form" style="margin-top: 2em;">
-				<ul>
-					<li>
-						<a href="#">性别<span id="sex">男</span></a>
-					</li>
-					<li>
-						<a href="#">生日<span id="birthday">1990-01-01</span></a>
-					</li>
-					<li>
-						<a href="#">邮箱<span id="email">ceshi@163.com</span></a>
-					</li>
-					<li>
-						<a href="#">居住地<span id="address">迪拜皇宫</span></a>
-					</li>
-				</ul>
-
-			</div>
-			<div class="mui-form" style="margin-top: 5px;">
-				<ul>
-					<li style="border-top: 1px solid #e8e8e8;">
-						<a href="#">修改密码<span></span></a>
-					</li>
-				</ul>
-			</div>
+		<div class="unlogin" tapmode="" >
+			<img src="images/t1.jpg">
+			<button class="login" id="changepic">修改头像</button>
 		</div>
-		<ul class="mui-table-view" style="margin-top: 50px;">
-			<li class="mui-table-view-cell" style="text-align: center;">
-				<a id="btnLogout" style="color: red;">退出登录</a>
-			</li>
-		</ul>
-		<script src="js/mui.min.js"></script>
-		<script src="js/localDatabase.js"></script>
-		<script src="js/post.js"></script>
-		<script src="js/dao.js"></script>
-		<script src="js/app.js"></script>
-		<script type="text/javascript">
-			var _dataAccess = new DataAccess();
-			var settings = app.getSettings();
-			mui.init();
-			mui.plusReady(function() {
-				initpage();
-				document.getElementById("btnLogout").addEventListener("tap", function() {
+		<div class="user-img">
+			<img id="userpic" src="images/user-photo2.png">
+		</div>
+		<div class="mui-page-content">
+			<div class="mui-form">
+				<ul>
+					<li>
+						<a href="#" class="linecss">用户名<span id="sex">好少年前途似锦</span></a>
+					</li>
+					<li>
+						<a href="#" class="linecss">性别<span id="sex">男</span></a>
+					</li>
+					<li>
+						<a href="#" class="linecss">生日<span id="birthday">1990-01-01</span></a>
+					</li>
+					<li>
+						<a href="#" class="linecss">邮箱<span id="email">ceshi@163.com</span></a>
+					</li>
+					<li>
+						<a href="#" class="linecss">居住地<span id="address">迪拜皇宫</span></a>
+					</li>
+					<li >
+						<a href="#" class="linecss">修改密码<span></span></a>
+					</li>
+				</ul>
+				<div id="popover_save" class="mui-content-padded">
+				<button id="btnSave" type="button" class="mui-btn mui-btn-primary mui-btn-block loginout">退出登录</button>
+			</div>
+			</div>
+			<!--<div class="mui-form" style="margin-top: 5px;">
+				<ul>-->
+					<!--<li style="border-top: 1px solid #e8e8e8;">
+						<a href="#">修改密码<span></span></a>
+					</li>-->
+				<!--</ul>
+			</div>-->
+		</div>
+	</body>
+	<script src="js/mui.min.js"></script>
+	<script src="js/post.js"></script>
+	<script src="js/localDatabase.js"></script>
+	<script src="js/dao.js"></script>
+	<script src="js/account.js"></script>
+	<script src="js/mui.enterfocus.js"></script>
+	<script src="js/app.js"></script>
+	<script>
+		mui.init();
+		var _dataAccess = new DataAccess();
+		var isLogin =false;
+		mui.plusReady(function() {
+			isLogin = getLogin();	
+			if (isLogin) {
+				document.getElementById('btnSave').innerHTML = '退出登录';
+			} else{
+				document.getElementById('btnSave').innerHTML = '登录';
+			}
+			document.getElementById('btnSave').addEventListener('tap',function(){
+				if(getLogin()) {
 					var btnArray = ['是', '否'];
 					mui.confirm('您确定要退出登录吗?', '', btnArray, function(e) {
 						if(e.index == 0) {
 							_dataAccess.logOutUser();
+//			 				plus.runtime.restart();
 							if(mui.os.ios || mui.os.ipad || mui.os.iphone) {
 								// 获取所有Webview窗口
 								var curr = plus.webview.currentWebview();
@@ -151,39 +241,122 @@
 									plus.webview.close(wvs[i]);
 								}
 								//打开main页面后再关闭当前页面
-								plus.webview.open('../main.html');
+								plus.webview.open('main.html');
 								curr.close();
 							} else {
-								_dataAccess.logOutUser();
 								plus.runtime.restart();
-								//								plus.webview.open('../login.html');
+//								plus.webview.open('../login.html');
 							}
 						}
 					});
-				});
-			});
-
-			function initpage() {
-				var users = _dataAccess.getUser();
-				setelementhtml('username', users.NikeName);
-				setelementhtml('mobile', users.Mobile);
-				setelementhtml('sex', users.Sex);
-				setelementhtml('email', users.Mail);
-				if(users.IconUrl != undefined && users.IconUrl != '') {
-					//待修改
-					//					document.getElementById('head-img').src = users.IconUrl;
-				};
-				//				setelementhtml('居住地',users.Address);
-				console.log(JSON.stringify(users));
-			}
-
-			function setelementhtml(ElementId, value) {
-				if(value == undefined) {
-					value = '';
+				} else {
+					mui.openWindow({
+						id: 'login',
+						url: 'html/account/login.html',
+						show: {
+							aniShow: 'slide-in-bottom'
+						},
+						waiting: {
+							autoShow: true,
+							title: '正在加载...'
+						}
+					});
 				}
-				document.getElementById(ElementId).innerHTML = value;
+			});
+			
+			document.getElementById("changepic").addEventListener('tap', function() {
+				if(mui.os.plus) {
+					var a = [{
+						title: "拍照"
+					}, {
+						title: "从手机相册选择"
+					}];
+					plus.nativeUI.actionSheet({
+						title: "修改头像",
+						cancel: "取消",
+						buttons: a
+					}, function(b) {
+						switch(b.index) {
+							case 0:
+								break;
+							case 1:
+								getImage();
+								break;
+							case 2:
+								galleryImg();
+								break;
+							default:
+								break
+						}
+					})
+				}
+			});
+		});
+		
+		function getLogin(){
+			if (_dataAccess.getUser()!='{}') {
+				return true;
+			} else{
+				return false;
 			}
-		</script>
-	</body>
+		}
+		
+			function getImage() {
+				var c = plus.camera.getCamera();
+				c.captureImage(function(e) {
+					plus.io.resolveLocalFileSystemURL(e, function(entry) {
+						//将拍照的目录路径变成本地URL路径，如：file:///之类。
+						var s = entry.toLocalURL() + "?version=" + new Date().getTime();
+						//					console.log('设置里面拍摄的图片是++++++++++++++++++' + s);
+						document.getElementById("userpic").src = s;
+//						upload(s);暂未有接口
+						//目前仅有一张图片，暂时如此处理，后续需要通过标准组件实现
+						//						document.querySelector("#__mui-imageview__group .mui-slider-item img").src = s /*+ "?version=" + new Date().getTime()*/ ;
+
+					}, function(e) {});
+				}, function(s) {}, {
+					filename: "_doc/" + _dataAccess.getSetting().HeadUrl
+				})
+			}
+
+			function galleryImg() {
+				plus.gallery.pick(function(a) {
+					plus.io.resolveLocalFileSystemURL(a, function(entry) {
+						var e = entry.fullPath + "?version=" + new Date().getTime();
+						console.log(e);
+						document.getElementById("userpic").src = e;
+						//						document.querySelector("#__mui-imageview__group .mui-slider-item img").src = e;
+//						upload(e);暂未有接口
+					}, function(e) {});
+				}, function(a) {}, {
+					filter: "image"
+				})
+			};
+			// 上传文件
+			function upload(file) {
+				var task = plus.uploader.createUpload(globals.apiUrl + 'Users.ashx', {
+					method: 'post',
+					timeout: 5000,
+				}, function(t, status) {
+					var rsp = JSON.parse(t.responseText);
+					// 上传完成
+					if(status == 200) {
+						if(rsp.Result) {
+							//更新用户信息
+							upDateUserInfo();
+							//				console.log(JSON.stringify(rsp));
+						}
+					} else {
+						self._refreshPlaceholder(file, 3);
+					}
+				});
+				task.addData("Token", _db.getUser().Token);
+				task.addData("action", "uploadHeadPic");
+				task.addFile(file, {
+					key: file
+				});
+				task.start();
+			}
+	</script>
 
 </html>

@@ -1,0 +1,189 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/main.css" />
+	</head>
+
+	<body>
+		<style type="text/css">
+			.user_wkj {
+				max-width: 136px;
+				max-height: 136px;
+				margin: 5% auto 10px auto;
+				padding: 8px;
+				background-color: rgba(255, 255, 255, 0.3);
+				-webkit-border-radius: 50%;
+				border-radius: 50%;
+				clear: both;
+			}
+			
+			.user_img {
+				max-width: 120px;
+				max-height: 120px;
+				/*background-image: url(../images/user-photo.png);*/
+				background-size: cover;
+				background-repeat: no-repeat;
+				background-color: #fff;
+				overflow: hidden;
+				-webkit-border-radius: 50%;
+				border-radius: 50%;
+				border: 1px solid #e7e7e7;
+			}
+			
+			.user_img img {
+				width: 100%;
+				height: 100%;
+			}
+			
+			.mui-page .mui-table-view:first-child {
+				margin-top: 15px;
+			}
+		</style>
+		<div class="mui-page-content">
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell mui-media" id="device">
+					<a href="javascript:;" style="display: flex;flex-direction: row;align-items: center;">
+						<div class="sms_media user_img"><img id="head-img" src="images/user-photo2.png" /></div>
+						<div class="mui-media-body" id="systembody">
+							<div class="sms_title" id="username">用户名
+								<!--<span class="sms_time">5月3日</span>--></div>
+							<p class='mui-ellipsis' id="mobile">18720930840</p>
+						</div>
+					</a>
+				</li>
+			</ul>
+			<!--<div class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<ul class="mui-table-view mui-table-view-chevron" style="margin-top: 44px;">
+						<li class="mui-table-view-cell mui-media" style="line-height: 10px;display: flex;flex-direction: row;align-items: center;">
+							<div style="width: 30%;">
+								<div class="user_wkj">
+									<div class="user_img"><img id="head-img" src="images/user-photo2.png" /></div>
+								</div>
+							</div>
+							<ul style="width:68%;">
+								<li>用户名</li>
+								<li>18720930840</li>
+							</ul>
+						</li>
+					</ul>
+					<ul class="mui-table-view mui-table-view-chevron">
+
+					</ul>
+					<ul class="mui-table-view mui-table-view-chevron" id='ulVersion_Android' style="display: none;">
+						<li class="mui-table-view-cell" id="update">
+							<a class="mui-navigate-right">检查新版本 <i class="mui-pull-right update" id="vAndroid"></i></a>
+						</li>
+					</ul>
+
+					<ul class="mui-table-view" id='ulVersion_iOS' style="display: none;">
+						<li class="mui-table-view-cell">
+							<a>当前版本<span class="mui-pull-right" id='viOS'>1.0.0</span></a>
+						</li>
+					</ul>
+
+					<ul class="mui-table-view" style="margin-top: 2em;">
+						<li class="mui-table-view-cell" style="text-align: center;">
+							<a id="btnLogout" style="color: red;">退出登录</a>
+						</li>
+					</ul>
+				</div>
+			</div>-->
+			<div class="mui-form" style="margin-top: 2em;">
+				<ul>
+					<li>
+						<a href="#">性别<span id="sex">男</span></a>
+					</li>
+					<li>
+						<a href="#">生日<span id="birthday">1990-01-01</span></a>
+					</li>
+					<li>
+						<a href="#">邮箱<span id="email">ceshi@163.com</span></a>
+					</li>
+					<li>
+						<a href="#">居住地<span id="address">迪拜皇宫</span></a>
+					</li>
+				</ul>
+
+			</div>
+			<div class="mui-form" style="margin-top: 5px;">
+				<ul>
+					<li style="border-top: 1px solid #e8e8e8;">
+						<a href="#">修改密码<span></span></a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<ul class="mui-table-view" style="margin-top: 50px;">
+			<li class="mui-table-view-cell" style="text-align: center;">
+				<a id="btnLogout" style="color: red;">退出登录</a>
+			</li>
+		</ul>
+		<script src="js/mui.min.js"></script>
+		<script src="js/localDatabase.js"></script>
+		<script src="js/post.js"></script>
+		<script src="js/dao.js"></script>
+		<script src="js/app.js"></script>
+		<script type="text/javascript">
+			var _dataAccess = new DataAccess();
+			var settings = app.getSettings();
+			mui.init();
+			mui.plusReady(function() {
+				initpage();
+				document.getElementById("btnLogout").addEventListener("tap", function() {
+					var btnArray = ['是', '否'];
+					mui.confirm('您确定要退出登录吗?', '', btnArray, function(e) {
+						if(e.index == 0) {
+							_dataAccess.logOutUser();
+							if(mui.os.ios || mui.os.ipad || mui.os.iphone) {
+								// 获取所有Webview窗口
+								var curr = plus.webview.currentWebview();
+								var wvs = plus.webview.all();
+								for(var i = 0, len = wvs.length; i < len; i++) {
+									//关闭除setting页面外的其他页面
+									if(wvs[i].getURL() == curr.getURL())
+										continue;
+									plus.webview.close(wvs[i]);
+								}
+								//打开main页面后再关闭当前页面
+								plus.webview.open('../main.html');
+								curr.close();
+							} else {
+								_dataAccess.logOutUser();
+								plus.runtime.restart();
+								//								plus.webview.open('../login.html');
+							}
+						}
+					});
+				});
+			});
+
+			function initpage() {
+				var users = _dataAccess.getUser();
+				setelementhtml('username', users.NikeName);
+				setelementhtml('mobile', users.Mobile);
+				setelementhtml('sex', users.Sex);
+				setelementhtml('email', users.Mail);
+				if(users.IconUrl != undefined && users.IconUrl != '') {
+					//待修改
+					//					document.getElementById('head-img').src = users.IconUrl;
+				};
+				//				setelementhtml('居住地',users.Address);
+				console.log(JSON.stringify(users));
+			}
+
+			function setelementhtml(ElementId, value) {
+				if(value == undefined) {
+					value = '';
+				}
+				document.getElementById(ElementId).innerHTML = value;
+			}
+		</script>
+	</body>
+
+</html>

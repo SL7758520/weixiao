@@ -82,7 +82,7 @@
 		"Webview": {},
 		"NativeUI": {},
 		"Navigator": {},
-		"NativeObj": {},"OAuth":{},"Device":{}
+		"NativeObj": {},"OAuth":{},"Device":{},"Camera":{}
 	},
 	"plus": {
 		"splashscreen": {
@@ -105,7 +105,7 @@
 				"keystore": "",/*Android应用打包使用的密钥库文件*/
 				"password": "",/*Android应用打包使用密钥库中证书的密码*/
 				"aliasname": "",/*Android应用打包使用密钥库中证书的别名*/
-				"permissions": ["<uses-permission android:name=\"com.android.launcher.permission.INSTALL_SHORTCUT\"/>","<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>","<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>","<uses-permission android:name=\"android.permission.VIBRATE\"/>","<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>","<uses-permission android:name=\"android.permission.CALL_PHONE\"/>","<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>","<uses-permission android:name=\"com.android.launcher.permission.UNINSTALL_SHORTCUT\"/>"]
+				"permissions": ["<uses-feature android:name=\"android.hardware.camera\"/>","<uses-permission android:name=\"com.android.launcher.permission.INSTALL_SHORTCUT\"/>","<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>","<uses-permission android:name=\"android.permission.VIBRATE\"/>","<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>","<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>","<uses-permission android:name=\"android.permission.CALL_PHONE\"/>","<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>","<uses-permission android:name=\"com.android.launcher.permission.UNINSTALL_SHORTCUT\"/>","<uses-permission android:name=\"android.permission.CAMERA\"/>"]
 			},
 			"orientation": [
 				"portrait-primary",
@@ -493,7 +493,19 @@
 					"js/localDatabase.js",
 					"js/app.js",
 					"js/dao.js",
-					"js/post.js"
+					"js/post.js",
+					"css/common.css",
+					"css/api.css",
+					"images/t1.jpg",
+					"images/user_menu_comment@2x.png",
+					"images/user_menu_subscribe@2x.png",
+					"images/user_menu_message@2x.png",
+					"images/user_menu_update@2x.png",
+					"images/user_menu_favorite@2x.png",
+					"images/user_menu_setting@2x.png",
+					"images/user_menu_bankcard@2x.png",
+					"js/account.js",
+					"js/mui.enterfocus.js"
 				],
 				"refer": [],
 				"priority": 0
