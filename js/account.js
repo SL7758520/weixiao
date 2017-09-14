@@ -69,7 +69,7 @@ var Account = (function() {
 					}
 				},
 				function() {
-					console.log('请求失败：');
+					mui.toast("没有网络连接，请稍后再试！");
 				});
 		};
 		

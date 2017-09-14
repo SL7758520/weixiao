@@ -1,6 +1,7 @@
 var DataAccess = (function() {
 	var _db = new LocalDatabase();
 	var API_LOGIN = globals.apiUrl + 'Account/';
+	
 	var API_URL_ACTION = globals.apiUrl + 'Action.ashx';
 	var API_URL_ACTION_ = globals.apiUrl + 'Action_.ashx';
 	var API_URL = globals.apiUrl + "Service.ashx";
@@ -31,7 +32,7 @@ var DataAccess = (function() {
 		};
 		this.logOutUser = function() {
 			_db.setUser({});
-//			_db.setSetting({});
+			//			_db.setSetting({});
 		};
 		this.getSetting = function() {
 			return _db.getSetting();
@@ -45,6 +46,7 @@ var DataAccess = (function() {
 		this.setReading = function(datas) {
 			_db.setReading(datas);
 		};
+		
 
 	}
 	return access;

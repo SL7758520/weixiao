@@ -205,7 +205,11 @@
 		"resources": [
 			"css/mui.min.css",
 			"js/mui.zoom.js",
-			"js/mui.previewimage.js"
+			"js/mui.previewimage.js",
+			"images/heart@2x.png",
+			"images/t0-3.jpg",
+			"css/appfont.css",
+			"css/list-to-detail.css"
 		]
 	}
 }
