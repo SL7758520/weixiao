@@ -5,233 +5,156 @@
 		<meta charset="UTF-8">
 		<title></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/main.css" rel="stylesheet" />
+		<link href="../../css/appfont.css" rel="stylesheet" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<style type="text/css">
-			.mui-bar {
-				background-color: #f3f3f3;
-				border-top: 1px solid #e0e0e0;
-				-webkit-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
-				box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+			html,
+			body {
+				background-color: #efeff4;
 			}
+			/*list列表*/
 			
-			.mui-bar-nav {
-				background: #283a8c;
-				border: none;
-				-webkit-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
-				box-shadow: 0 0 0 rgba(0, 0, 0, 0);
-			}
-			
-			.mui-bar .mui-title {
-				color: #fff;
-			}
-			.mui-preview-image.mui-fullscreen {
-				position: fixed;
-				z-index: 20;
-				background-color: #000;
-			}
-			.mui-preview-header,
-			.mui-preview-footer {
-				position: absolute;
-				width: 100%;
-				left: 0;
-				z-index: 10;
-			}
-			.mui-preview-header {
-				height: 44px;
-				top: 0;
-			}
-			.mui-preview-footer {
-				height: 50px;
-				bottom: 0px;
-			}
-			.mui-preview-header .mui-preview-indicator {
-				display: block;
-				line-height: 25px;
-				color: #fff;
-				text-align: center;
-				margin: 15px auto 4;
-				width: 70px;
-				background-color: rgba(0, 0, 0, 0.4);
-				border-radius: 12px;
-				font-size: 16px;
-			}
-			.mui-preview-image {
-				display: none;
-				-webkit-animation-duration: 0.5s;
-				animation-duration: 0.5s;
-				-webkit-animation-fill-mode: both;
-				animation-fill-mode: both;
-			}
-			.mui-preview-image.mui-preview-in {
-				-webkit-animation-name: fadeIn;
-				animation-name: fadeIn;
-			}
-			.mui-preview-image.mui-preview-out {
-				background: none;
-				-webkit-animation-name: fadeOut;
-				animation-name: fadeOut;
-			}
-			.mui-preview-image.mui-preview-out .mui-preview-header,
-			.mui-preview-image.mui-preview-out .mui-preview-footer {
-				display: none;
-			}
-			.mui-zoom-scroller {
-				position: absolute;
+			.item {
 				display: -webkit-box;
-				display: -webkit-flex;
-				display: flex;
-				-webkit-box-align: center;
-				-webkit-align-items: center;
-				align-items: center;
-				-webkit-box-pack: center;
-				-webkit-justify-content: center;
-				justify-content: center;
-				left: 0;
-				right: 0;
-				bottom: 0;
-				top: 0;
+			}
+			
+			.img {
+				margin-top: 5px;
+				width: 80px;
+				height: 80px;
+			}
+			
+			img {
 				width: 100%;
-				height: 100%;
-				margin: 0;
-				-webkit-backface-visibility: hidden;
-			}
-			.mui-zoom {
-				-webkit-transform-style: preserve-3d;
-				transform-style: preserve-3d;
-			}
-			.mui-slider .mui-slider-group .mui-slider-item img {
-				width: auto;
-				height: auto;
-				max-width: 100%;
-				max-height: 100%;
-			}
-			.mui-android-4-1 .mui-slider .mui-slider-group .mui-slider-item img {
-				width: 100%;
-			}
-			.mui-android-4-1 .mui-slider.mui-preview-image .mui-slider-group .mui-slider-item {
-				display: inline-table;
-			}
-			.mui-android-4-1 .mui-slider.mui-preview-image .mui-zoom-scroller img {
-				display: table-cell;
-				vertical-align: middle;
-			}
-			.mui-preview-loading {
-				position: absolute;
-				width: 100%;
-				height: 100%;
-				top: 0;
-				left: 0;
-				display: none;
-			}
-			.mui-preview-loading.mui-active {
 				display: block;
 			}
-			.mui-preview-loading .mui-spinner-white {
-				position: absolute;
-				top: 50%;
-				left: 50%;
-				margin-left: -25px;
-				margin-top: -25px;
-				height: 50px;
-				width: 50px;
+			
+			.text {
+				width: 75%;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
 			}
-			.mui-preview-image img.mui-transitioning {
-				-webkit-transition: -webkit-transform 0.5s ease, opacity 0.5s ease;
-				transition: transform 0.5s ease, opacity 0.5s ease;
+			
+			.information {
+				width: 65%;
+				margin-left: 5px;
 			}
-			@-webkit-keyframes fadeIn {
-				0% {
-					opacity: 0;
-				}
-				100% {
-					opacity: 1;
-				}
+			
+			.price {
+				width: 35%;
+				margin-left: 5px;
 			}
-			@keyframes fadeIn {
-				0% {
-					opacity: 0;
-				}
-				100% {
-					opacity: 1;
-				}
+			
+			.new-price {
+				font-size: 16px;
+				color: #ff7c70;
+				font-family: Impact, Arail, sans-serif;
+				font-weight: bold;
 			}
-			@-webkit-keyframes fadeOut {
-				0% {
-					opacity: 1;
-				}
-				100% {
-					opacity: 0;
-				}
+			
+			.mui-table-view-cell {
+				padding: 5px 5px;
 			}
-			@keyframes fadeOut {
-				0% {
-					opacity: 1;
-				}
-				100% {
-					opacity: 0;
-				}
+			
+			.flex {
+				display: flex;
+				flex-flow: row nowrap;
+				justify-content: space-between;
 			}
-			p img {
-				max-width: 100%;
-				height: auto;
+			
+			.flex-cell1 {
+				-webkit-box-flex: 1.5;
+				-moz-box-flex: 1.5;
+				box-flex: 1.5;
+				flex: 1.5;
+			}
+			
+			.flex-cell2 {
+				-webkit-box-flex: 2;
+				-moz-box-flex: 2;
+				box-flex: 2;
+				flex: 2;
+			}
+			
+			.flex-cell3 {
+				-webkit-box-flex: 3;
+				-moz-box-flex: 3;
+				box-flex: 3;
+				flex: 3;
+			}
+			
+			.flex-cell4 {
+				-webkit-box-flex: 4;
+				-moz-box-flex: 4;
+				box-flex: 4;
+				flex: 4;
+			}
+			
+			.flex-cell5 {
+				-webkit-box-flex: 5;
+				-moz-box-flex: 5;
+				box-flex: 5;
+				flex: 5;
+			}
+			
+			.info {
+				padding-top: 5px;
+				padding-left: 5px;
+			}
+			.Desc{
+				padding-left: 15px;
 			}
 		</style>
 	</head>
 
 	<body>
-		<header class="mui-bar mui-bar-nav">
-			<!--<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>-->
-			<h1 id="title" class="mui-title">微孝养老</h1>
+		<!--<!--<header id="header" class="mui-bar mui-bar-transparent">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">导航栏</h1>
+		</header>-->
+		<header class="mui-bar mui-bar-transparent" style="border-top-width: 0px;">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 id="title" class="mui-title" style="color: #007AFF;">微孝养老</h1>
+			<button id="Selectall" type="button" class="mui-btn mui-btn-link mui-pull-right color_white">收藏</button>
 		</header>
 		<div class="mui-content">
-			<div id="slider" class="mui-slider">
-				<div class="mui-slider-group mui-slider-loop">
-					<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
-					<div class="mui-slider-item mui-slider-item-duplicate">
-						<a href="#">
-							<img src="../../images/yuantiao.jpg" id="img0" data-preview-src="" data-preview-group="1">
-						</a>
-					</div>
-					<!-- 第一张 -->
-					<div class="mui-slider-item">
-						<a href="#">
-							<img src="../../images/shuijiao.jpg" id="img1" data-preview-src="" data-preview-group="1">
-						</a>
-					</div>
-					<!-- 第二张 -->
-					<div class="mui-slider-item">
-						<a href="#">
-							<img src="../../images/muwu.jpg" id="img2" data-preview-src="" data-preview-group="1">
-						</a>
-					</div>
-					<!-- 第三张 -->
-					<div class="mui-slider-item">
-						<a href="#">
-							<img src="../../images/cbd.jpg" id="img3" data-preview-src="" data-preview-group="1">
-						</a>
-					</div>
-					<!-- 第四张 -->
-					<div class="mui-slider-item">
-						<a href="#">
-							<img src="../../images/yuantiao.jpg" id="img4" data-preview-src="" data-preview-group="1">
-						</a>
-					</div>
-					<!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播)-->
-					<div class="mui-slider-item mui-slider-item-duplicate">
-						<a href="#">
-							<img src="../../images/shuijiao.jpg" id="img5" data-preview-src="" data-preview-group="1">
-						</a>
-					</div>
-				</div>
-
-				<div class="mui-slider-indicator">
-					<div class="mui-indicator mui-active"></div>
-					<div class="mui-indicator"></div>
-					<div class="mui-indicator"></div>
-					<div class="mui-indicator"></div>
-				</div>
+			<!--静态图片-->
+			<img id="img1" src="../../images/cbd.jpg" />
+			<div class="fg_title">
+				基本信息
 			</div>
-
+			<div id="info" class="info"></div>
+			<div class="fg_title">
+				床位清单
+			</div>
+			<ul id="productList" class="mui-table-view content">
+			</ul>
+			<div class="fg_title">
+				环境配套
+			</div>
+			<div id="CourtyardFacilityDesc" class="Desc">
+				
+			</div>
+			<div class="fg_title">
+				交通配套
+			</div>
+			<div class="fg_title">
+				医院配套
+			</div>
+			<div class="fg_title">
+				购物配套
+			</div>
+			<div class="fg_title">
+				旅游配套
+			</div>
+			<div class="fg_title">
+				公共配套
+			</div>
+			<div class="fg_title">
+				教育配套
+			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/localDatabase.js"></script>
@@ -242,6 +165,20 @@
 		<script src="../../js/mui.previewimage.js"></script>
 		<script type="text/javascript">
 			mui.init();
+		var _dataAccess = new DataAccess();
+		var _shop = new Shop();
+		var user;
+		var shopId;
+		var shopName;
+		var div;
+		var pageIndex = 1;
+		var pageSize = 10;
+		var cityId = 6201;
+		var photoUrl;
+		var shopInfo;
+		var productList;
+		var _self;
+		var div=document.getElementById("productList");
 			mui.plusReady(function() {
 				mui.previewImage();
 				//获得slider插件对象
@@ -249,7 +186,76 @@
 				gallery.slider({
 					interval: 3000 //自动轮播周期，若为0则不自动播放，默认为0；
 				});
-			})
+				_self=plus.webview.currentWebview();
+				shopId=_self.data;
+				console.log(shopId);
+				_shop.GetShopModel(shopId,function(datas){
+					if(datas.status == 1){
+						shopInfo=datas.result;
+						document.getElementById("title").innerHTML=shopInfo.Name;
+						document.getElementById("info").innerHTML=shopInfo.Intro;
+						document.getElementById("CourtyardFacilityDesc").innerHTML=shopInfo.CourtyardFacilityDesc;
+					}else{
+						mui.toast(datas.message);
+					}
+				});
+//				photoUrl= _dataAccess.getPhotoUrl();
+				_shop.getPhotoUrl(function(datas){
+					photoUrl=datas;
+				});
+				
+				_shop.GetProducts(pageIndex,pageSize,1,1,function(datas){
+					if(datas.status == 1){
+						productList=datas.result;
+						addList(productList);
+					}else{
+						mui.toast(datas.message);
+					}
+				});
+			});
+			function addList(datas) {
+			div.innerHTML = "";
+			for(var i = 0; i < datas.length; i++) {
+				div.appendChild(creatCard(datas[i]));
+			}
+		}
+
+		function creatCard(entity) {
+			//			console.log("AAAAAAAAAAA");
+			var li = document.createElement("li");
+			li.className = 'mui-table-view-cell';
+			var HasPickUp;
+			if(entity.HasPickUp){
+				HasPickUp="可接送";
+			}else{
+				HasPickUp="不可接送";
+			}
+			li.innerHTML = '<div class="item"><div class="img"><img src="../../images/t0-3.jpg"></div><div class="text"><div class="information"><h4>'+entity.CategoryName+'</h4><h5>'+HasPickUp+'</h5><h5 class="mui-ellipsis">'+entity.ShortDescription+'</h5></div><div class="price"><span class="new-price">￥'+entity.Price+'/月</span><div id="" style="display: flex;align-items: center;margin-top: 5px;"><img src="../../images/heart@2x.png" style="width: 15px;height: 15px;margin-left: 5px;" /><h5 style="margin-left: 5px;">'+entity.CollectCounts+'人关注</h5></div></div></div></div>';
+			li.addEventListener("tap", function(event) {
+				//				console.log("AAAAAAAAAAA"); 
+				gotoHtml("product_details.html", entity.Id);
+			});
+
+			return li;
+		}
+
+		function gotoHtml(u, datas) {
+			mui.openWindow({
+				url: u,
+				id: u,
+
+				show: {
+					aniShow: 'pop-in'
+				},
+				waiting: {
+					autoShow: true, //自动显示等待框，默认为true
+					title: '正在加载...', //等待对话框上显示的提示内容
+				},
+				extras: {
+					data: datas,
+				}
+			});
+		}
 		</script>
 	</body>
 

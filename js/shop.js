@@ -1,6 +1,7 @@
 var Shop = (function() {
 	var _db = new LocalDatabase();
 	var API_SHOP = globals.apiUrl + 'Shop/';
+	var API_PHOTO = globals.apiUrl + 'Shop/';
 	var API_URL_ACTION = globals.apiUrl + 'Action.ashx';
 	var API_URL_ACTION_ = globals.apiUrl + 'Action_.ashx';
 	var API_URL = globals.apiUrl + "Service.ashx";
@@ -53,6 +54,134 @@ var Shop = (function() {
 				},
 				function() {
 					console.log('请求失败：');
+				});
+		};
+		
+		//获取店铺详细信息
+		this.GetShopModel = function( shopId,callback) {
+			if(!_getNetwork()) {
+				mui.toast("没有网络连接，请稍后再试！");
+				return;
+			}
+			var user = _db.getUser();
+			AsyncPost(API_SHOP+"GetShopModel","shopId=" + shopId ,
+				function(result) {
+					if(callback) {
+						console.log('接口返回数据：' + JSON.stringify(result));
+						callback.call(this, result);
+					}
+				},
+				function() {
+					console.log('请求失败：');
+				});
+		};
+		
+		//获取Shop下的所有床位列表
+		this.GetProducts = function(pageIndex,pageSize, shopId,categoryId,callback) {
+			if(!_getNetwork()) {
+				mui.toast("没有网络连接，请稍后再试！");
+				return;
+			}
+			var user = _db.getUser();
+			AsyncPost(API_SHOP+"GetProducts", "pageIndex=" + pageIndex + "&pageSize=" +pageSize+"&shopId=" + shopId + "&categoryId=" +categoryId,
+				function(result) {
+					if(callback) {
+						console.log('接口返回数据：' + JSON.stringify(result));
+						callback.call(this, result);
+					}
+				},
+				function() {
+					console.log('请求失败：');
+				});
+		};
+		//获取Shop下的所有床位列表
+		this.GetProducts = function(pageIndex,pageSize, shopId,categoryId,callback) {
+			if(!_getNetwork()) {
+				mui.toast("没有网络连接，请稍后再试！");
+				return;
+			}
+			var user = _db.getUser();
+			AsyncPost(API_SHOP+"GetProducts", "pageIndex=" + pageIndex + "&pageSize=" +pageSize+"&shopId=" + shopId + "&categoryId=" +categoryId,
+				function(result) {
+					if(callback) {
+						console.log('接口返回数据：' + JSON.stringify(result));
+						callback.call(this, result);
+					}
+				},
+				function() {
+					console.log('请求失败：');
+				});
+		};
+		//获取Shop下的所有床位详细信息
+		this.GetProductModel = function( id,callback) {
+			if(!_getNetwork()) {
+				mui.toast("没有网络连接，请稍后再试！");
+				return;
+			}
+			var user = _db.getUser();
+			AsyncPost(API_SHOP+"GetProductModel","id=" + id ,
+				function(result) {
+					if(callback) {
+						console.log('接口返回数据：' + JSON.stringify(result));
+						callback.call(this, result);
+					}
+				},
+				function() {
+					console.log('请求失败：');
+				});
+		};
+		//获取店铺图片类型
+		this.GetShopPhotoTypes = function(callback) {
+			if(!_getNetwork()) {
+				mui.toast("没有网络连接，请稍后再试！");
+				return;
+			}
+			var user = _db.getUser();
+			AsyncPost(API_SHOP+"GetShopPhotoTypes", "",
+				function(result) {
+					if(callback) {
+						console.log('接口返回数据：' + JSON.stringify(result));
+						callback.call(this, result);
+					}
+				},
+				function() {
+					console.log('请求失败：');
+				});
+		};
+		//获取店铺图片列表
+		this.GetShopPhotos = function(pageIndex,pageSize, shopId,typeId,callback) {
+			if(!_getNetwork()) {
+				mui.toast("没有网络连接，请稍后再试！");
+				return;
+			}
+			var user = _db.getUser();
+			AsyncPost(API_SHOP+"GetShopPhotos", "pageIndex=" + pageIndex + "&pageSize=" +pageSize+"&shopId=" + shopId + "&typeId=" +typeId,
+				function(result) {
+					if(callback) {
+						console.log('接口返回数据：' + JSON.stringify(result));
+						callback.call(this, result);
+					}
+				},
+				function() {
+					console.log('请求失败：');
+				});
+		};
+		//获取图片路径
+		this.getPhotoUrl = function(callback) {
+			if(!_getNetwork()) {
+				mui.toast("没有网络连接，请稍后再试！");
+				return;
+			}
+			var user = _db.getUser();
+			AsyncPost(API_SHOP + "GetImageSiteServer",'',
+				function(result) {
+					if(callback) {
+						console.log('接口返回数据：' + JSON.stringify(result));
+						callback.call(this, result);
+					}
+				},
+				function() {
+					mui.toast('没有网络连接，请稍后再试！');
 				});
 		};
 
