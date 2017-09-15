@@ -30,6 +30,24 @@ var Member = (function() {
 					
 				});
 		}
+		this.GetMemberInfo = function(callback,onerror){
+			if(!_getNetwork()) {
+				mui.toast("没有网络连接，请稍后再试！");
+				return;
+			}
+			AsyncPost(API_MEMBER+"GetMemberInfo", '' ,
+				function(result) {
+					if(callback) {
+						callback.call(this, result);
+					}
+				},
+				function(result) {
+					if (onerror) {
+						onerror.call(this,result);
+					}
+					
+				});
+		}
 
 	}
 	return access;

@@ -88,13 +88,14 @@
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/app.js"></script>
-		<script src="../../js/localDatabase.js" ></script>
-		<script src="../../js/post.js" ></script>
-		<script src="../../js/dao.js" ></script>
-		<script src="../../js/member.js" ></script>
+		<script src="../../js/localDatabase.js"></script>
+		<script src="../../js/post.js"></script>
+		<script src="../../js/dao.js"></script>
+		<script src="../../js/member.js"></script>
 		<script>
 			mui.init();
 			var member = new Member();
+			var _dataAccess = new DataAccess();
 			var _self;
 			var field;
 			var fieldValue;
@@ -107,35 +108,49 @@
 				accountBox.placeholder = _self.title;
 				accountBox.value = fieldValue;
 				btnsave.addEventListener('tap', function(event) {
-					if (accountBox.value=='') {
+					if(accountBox.value == '') {
 						mui.toast('请输入正确信息');
 						return;
 					}
-					member.UpdateField(field,accountBox.value,function(result){
+					member.UpdateField(field, accountBox.value, function(result) {
 						console.log(JSON.stringify(result));
-					},function(){
-						mui.toast('操作异常，请重试');
+						if(result.status == 1||result.type==1) {
+							plus.nativeUI.showWaiting();
+							var user = _dataAccess.getUser();
+							user.field = fieldValue;
+							_dataAccess.setUser(user);
+							console.log(JSON.stringify(_dataAccess.getUser()));
+							plus.nativeUI.closeWaiting();
+							var person = plus.webview.getWebviewById('person_center.html');
+							mui.fire(person, 'Refresh');
+							mui.back();
+						} else {
+							mui.toast(result.message);
+						}
+
+					}, function() {
+						mui.toast('操作异常，请确认格式正确');
 					})
 				});
-//				var Search = function() {
-//					var translatematrixREa = /^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/;
-//					var matrix = translatematrixREa.test(accountBox.value);
-//					//如果手机号码不能通过验证
-//					if(matrix == true) {
-//						mui.openWindow({
-//							url: 'reg_step2.html',
-//							id: 'reg_step2.html',
-//							show: {
-//								aniShow: 'pop-in'
-//							},
-//							extras:{
-//								data:accountBox.value
-//							}
-//						});
-//					} else {
-//						mui.alert("手机号码格式错误");
-//					}
-//				}
+				//				var Search = function() {
+				//					var translatematrixREa = /^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/;
+				//					var matrix = translatematrixREa.test(accountBox.value);
+				//					//如果手机号码不能通过验证
+				//					if(matrix == true) {
+				//						mui.openWindow({
+				//							url: 'reg_step2.html',
+				//							id: 'reg_step2.html',
+				//							show: {
+				//								aniShow: 'pop-in'
+				//							},
+				//							extras:{
+				//								data:accountBox.value
+				//							}
+				//						});
+				//					} else {
+				//						mui.alert("手机号码格式错误");
+				//					}
+				//				}
 			})
 		</script>
 	</body>
