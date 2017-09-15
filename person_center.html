@@ -267,6 +267,10 @@
 			});
 
 			document.getElementById("changepic").addEventListener('tap', function() {
+				if(!getLogin()) {
+					toLogin();
+					return;
+				}
 				if(mui.os.plus) {
 					var a = [{
 						title: "拍照"
@@ -410,7 +414,29 @@
 
 		function getImage() {
 			var c = plus.camera.getCamera();
-			c.captureImage(function(e) {
+			c.captureImage(function(path) {
+					plus.io.resolveLocalFileSystemURL(path, function(entry) {
+						//						alert("path" + path);
+						var zipFileName = path.substr(path.lastIndexOf("/") + 1);
+						plus.zip.compressImage({
+							src: path,
+							dst: '_doc/' + zipFileName,
+							overwrite: true,
+							quality: 20,
+							width:"20%",
+							height:"20%"
+						}, function(zip) {
+							console.log(zip.target);
+							upload(zip.target);
+//							self._addFile(zip.target);
+						}, function(zipe) {
+							mui.toast('压缩失败！')
+						});
+					}, function(e) {
+						mui.toast("读取拍照文件错误!");
+					});
+				}
+			/*
 				plus.io.resolveLocalFileSystemURL(e, function(entry) {
 					//将拍照的目录路径变成本地URL路径，如：file:///之类。
 					var s = entry.toLocalURL() + "?version=" + new Date().getTime();
@@ -418,11 +444,10 @@
 					document.getElementById("userpic").src = s;
 					//						upload(s);暂未有接口
 					//目前仅有一张图片，暂时如此处理，后续需要通过标准组件实现
-					//						document.querySelector("#__mui-imageview__group .mui-slider-item img").src = s /*+ "?version=" + new Date().getTime()*/ ;
-
 				}, function(e) {});
-			}, function(s) {}, {
-				filename: "_doc/" + _dataAccess.getSetting().HeadUrl
+			}*/
+			, function(s) {}, {
+				filename: "_doc/" + _dataAccess.getUser().IconUrl
 			})
 		}
 
@@ -433,7 +458,7 @@
 					console.log(e);
 					document.getElementById("userpic").src = e;
 					//						document.querySelector("#__mui-imageview__group .mui-slider-item img").src = e;
-					//						upload(e);暂未有接口
+					upload(e);
 				}, function(e) {});
 			}, function(a) {}, {
 				filter: "image"
@@ -441,24 +466,30 @@
 		};
 		// 上传文件
 		function upload(file) {
-			var task = plus.uploader.createUpload(globals.apiUrl + 'Users.ashx', {
+			console.log(JSON.stringify(_dataAccess.getUser()));
+			var task = plus.uploader.createUpload(globals.apiUrl + 'Member/Upload_ICON?memberid='+_dataAccess.getUser().MemberId, {
 				method: 'post',
 				timeout: 5000,
 			}, function(t, status) {
 				var rsp = JSON.parse(t.responseText);
+				console.log(JSON.stringify(rsp));
+				console.log(status);
 				// 上传完成
 				if(status == 200) {
-					if(rsp.Result) {
+					if(rsp.result) {
 						//更新用户信息
-						upDateUserInfo();
-						//				console.log(JSON.stringify(rsp));
+//						upDateUserInfo();
+						console.log('成功'+JSON.stringify(rsp));
 					}
 				} else {
+					console.log('失败：'+JSON.stringify(rsp))
 					self._refreshPlaceholder(file, 3);
 				}
+			},function(t){
+				console.log(JSON.stringify(JSON.parse(t.responseText)));
 			});
-			task.addData("Token", _db.getUser().Token);
-			task.addData("action", "uploadHeadPic");
+			task.setRequestHeader('Authorization',_dataAccess.getUser().Token);
+//			task.addData("memberid", _dataAccess.getUser().MemberId);
 			task.addFile(file, {
 				key: file
 			});
