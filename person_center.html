@@ -10,10 +10,12 @@
 		<link rel="stylesheet" href="css/main.css" />
 		<link href="css/mui.min.css" rel="stylesheet" />
 		<style>
-		html, body {
-   			 min-width: 320px;
-   			 background-color: #E7E7E7;
+			html,
+			body {
+				min-width: 320px;
+				background-color: #E7E7E7;
 			}
+			
 			.unlogin {
 				border-bottom: 1px solid #9D8C7B;
 			}
@@ -39,7 +41,7 @@
 			.user-img img {
 				width: 100%;
 				height: 100%;
-				border-radius:75px;
+				border-radius: 75px;
 			}
 			
 			.login {
@@ -150,12 +152,14 @@
 			.update {
 				background-image: url("images/user_menu_update@2x.png");
 			}
-			.linecss{
+			
+			.linecss {
 				padding: 15px;
 				background-color: #FFFFFF;
-/*				border-bottom: .5px solid #e7e7e7;*/			
+				/*				border-bottom: .5px solid #e7e7e7;*/
 			}
-			.loginout{
+			
+			.loginout {
 				border: 1px solid red;
 				background-color: red;
 			}
@@ -163,7 +167,7 @@
 	</head>
 
 	<body>
-		<div class="unlogin" tapmode="" >
+		<div class="unlogin" tapmode="">
 			<img src="images/t1.jpg">
 			<button class="login" id="changepic">修改头像</button>
 		</div>
@@ -173,35 +177,35 @@
 		<div class="mui-page-content">
 			<div class="mui-form">
 				<ul>
-					<li>
-						<a href="#" class="linecss">用户名<span id="sex">好少年前途似锦</span></a>
+					<li id="linickname">
+						<a href="#" class="linecss">用户名<span id="nickname"></span></a>
 					</li>
-					<li>
-						<a href="#" class="linecss">性别<span id="sex">男</span></a>
+					<li id="lisex">
+						<a href="#" class="linecss">性别<span id="sex"></span></a>
 					</li>
-					<li>
-						<a href="#" class="linecss">生日<span id="birthday">1990-01-01</span></a>
+					<li id="limobile">
+						<a href="#" class="linecss">绑定手机<span id="mobile"></span></a>
 					</li>
-					<li>
-						<a href="#" class="linecss">邮箱<span id="email">ceshi@163.com</span></a>
+					<li id="liemail">
+						<a href="#" class="linecss">邮箱<span id="email"></span></a>
 					</li>
-					<li>
-						<a href="#" class="linecss">居住地<span id="address">迪拜皇宫</span></a>
+					<li id="liaddress">
+						<a href="#" class="linecss">居住地<span id="address"></span></a>
 					</li>
-					<li >
+					<li id="lipsw">
 						<a href="#" class="linecss">修改密码<span></span></a>
 					</li>
 				</ul>
 				<div id="popover_save" class="mui-content-padded">
-				<button id="btnSave" type="button" class="mui-btn mui-btn-primary mui-btn-block loginout">退出登录</button>
-			</div>
+					<button id="btnSave" type="button" class="mui-btn mui-btn-primary mui-btn-block loginout">退出登录</button>
+				</div>
 			</div>
 			<!--<div class="mui-form" style="margin-top: 5px;">
 				<ul>-->
-					<!--<li style="border-top: 1px solid #e8e8e8;">
+			<!--<li style="border-top: 1px solid #e8e8e8;">
 						<a href="#">修改密码<span></span></a>
 					</li>-->
-				<!--</ul>
+			<!--</ul>
 			</div>-->
 		</div>
 	</body>
@@ -213,23 +217,31 @@
 	<script src="js/mui.enterfocus.js"></script>
 	<script src="js/app.js"></script>
 	<script>
+		/*NickName  50
+			Sex 2
+			Mail 50
+			Address 100
+			Mobile  20
+			IconUrl  100*/
 		mui.init();
 		var _dataAccess = new DataAccess();
-		var isLogin =false;
+		var isLogin = false;
 		mui.plusReady(function() {
-			isLogin = getLogin();	
-			if (isLogin) {
+			initClick();
+			initpage();
+			isLogin = getLogin();
+			if(isLogin) {
 				document.getElementById('btnSave').innerHTML = '退出登录';
-			} else{
+			} else {
 				document.getElementById('btnSave').innerHTML = '登录';
 			}
-			document.getElementById('btnSave').addEventListener('tap',function(){
+			document.getElementById('btnSave').addEventListener('tap', function() {
 				if(getLogin()) {
 					var btnArray = ['是', '否'];
 					mui.confirm('您确定要退出登录吗?', '', btnArray, function(e) {
 						if(e.index == 0) {
 							_dataAccess.logOutUser();
-//			 				plus.runtime.restart();
+							//			 				plus.runtime.restart();
 							if(mui.os.ios || mui.os.ipad || mui.os.iphone) {
 								// 获取所有Webview窗口
 								var curr = plus.webview.currentWebview();
@@ -245,25 +257,15 @@
 								curr.close();
 							} else {
 								plus.runtime.restart();
-//								plus.webview.open('../login.html');
+								//								plus.webview.open('../login.html');
 							}
 						}
 					});
 				} else {
-					mui.openWindow({
-						id: 'login',
-						url: 'html/account/login.html',
-						show: {
-							aniShow: 'slide-in-bottom'
-						},
-						waiting: {
-							autoShow: true,
-							title: '正在加载...'
-						}
-					});
+					toLogin();
 				}
 			});
-			
+
 			document.getElementById("changepic").addEventListener('tap', function() {
 				if(mui.os.plus) {
 					var a = [{
@@ -292,71 +294,176 @@
 				}
 			});
 		});
+
+		function initClick() {
+			//修改用户名
+			document.getElementById('linickname').addEventListener('tap', function() {
+				if(getLogin()) {
+					opWindow('html/member/member_modify.html','html/member/member_modify.html','NickName',getelementhtml('nickname'),'修改用户名');
+				} else {
+					toLogin();
+				}
+			});
+			//修改性别
+			document.getElementById('lisex').addEventListener('tap', function() {
+				if(getLogin()) {
+					opWindow('html/member/member_modify.html','html/member/member_modify.html','Sex',getelementhtml('sex'),'修改性别');
+				} else {
+					toLogin();
+				}
+			});
+			//修改绑定手机号码
+			document.getElementById('limobile').addEventListener('tap', function() {
+				mui.toast('暂不提供修改');
+				return;
+				if(getLogin()) {
+					opWindow('html/member/member_modify.html','html/member/member_modify.html','Mobile',getelementhtml('mobile'),'修改手机号');
+				} else {
+					toLogin();
+				}
+			});
+			//修改邮箱
+			document.getElementById('liemail').addEventListener('tap', function() {
+				if(getLogin()) {
+					opWindow('html/member/member_modify.html','html/member/member_modify.html','Mail',getelementhtml('email'),'修改邮箱');
+				} else {
+					toLogin();
+				}
+			});
+			//修改居住地
+			document.getElementById('liaddress').addEventListener('tap', function() {
+				mui.toast('暂不提供修改');
+				return;
+				if(getLogin()) {
+					opWindow('html/member/member_modify.html','html/member/member_modify.html','Address',getelementhtml('address'),'修改居住地');
+				} else {
+					toLogin();
+				}
+			});
+			
+		}
 		
-		function getLogin(){
-			if (_dataAccess.getUser()!='{}') {
+		function opWindow(id,url,field,fieldValue,title){
+			mui.openWindow({
+						id: id,
+						url: url,
+						show: {
+							aniShow: 'pop-in'
+						},
+						waiting: {
+							autoShow: true,
+							title: '正在加载...'
+						},
+						extras: {
+							field: field,
+							fieldValue:fieldValue,
+							title:title
+						}
+					});
+		}
+
+		function toLogin() {
+			mui.openWindow({
+				id: 'login',
+				url: 'html/account/login.html',
+				show: {
+					aniShow: 'slide-in-bottom'
+				},
+				waiting: {
+					autoShow: true,
+					title: '正在加载...'
+				}
+			});
+		}
+
+		function getLogin() {
+			if(_dataAccess.getUser() != '{}') {
 				return true;
-			} else{
+			} else {
 				return false;
 			}
 		}
 		
-			function getImage() {
-				var c = plus.camera.getCamera();
-				c.captureImage(function(e) {
-					plus.io.resolveLocalFileSystemURL(e, function(entry) {
-						//将拍照的目录路径变成本地URL路径，如：file:///之类。
-						var s = entry.toLocalURL() + "?version=" + new Date().getTime();
-						//					console.log('设置里面拍摄的图片是++++++++++++++++++' + s);
-						document.getElementById("userpic").src = s;
-//						upload(s);暂未有接口
-						//目前仅有一张图片，暂时如此处理，后续需要通过标准组件实现
-						//						document.querySelector("#__mui-imageview__group .mui-slider-item img").src = s /*+ "?version=" + new Date().getTime()*/ ;
-
-					}, function(e) {});
-				}, function(s) {}, {
-					filename: "_doc/" + _dataAccess.getSetting().HeadUrl
-				})
+		function initpage() {
+				var users = _dataAccess.getUser();
+				setelementhtml('nickname', users.NikeName);
+				setelementhtml('mobile', users.Mobile);
+				setelementhtml('sex', users.Sex);
+				setelementhtml('email', users.Mail);
+				if(users.IconUrl != undefined && users.IconUrl != '') {
+					//待修改
+					//					document.getElementById('head-img').src = users.IconUrl;
+				};
+				//				setelementhtml('address',users.Address);
+				console.log(JSON.stringify(users));
 			}
 
-			function galleryImg() {
-				plus.gallery.pick(function(a) {
-					plus.io.resolveLocalFileSystemURL(a, function(entry) {
-						var e = entry.fullPath + "?version=" + new Date().getTime();
-						console.log(e);
-						document.getElementById("userpic").src = e;
-						//						document.querySelector("#__mui-imageview__group .mui-slider-item img").src = e;
-//						upload(e);暂未有接口
-					}, function(e) {});
-				}, function(a) {}, {
-					filter: "image"
-				})
-			};
-			// 上传文件
-			function upload(file) {
-				var task = plus.uploader.createUpload(globals.apiUrl + 'Users.ashx', {
-					method: 'post',
-					timeout: 5000,
-				}, function(t, status) {
-					var rsp = JSON.parse(t.responseText);
-					// 上传完成
-					if(status == 200) {
-						if(rsp.Result) {
-							//更新用户信息
-							upDateUserInfo();
-							//				console.log(JSON.stringify(rsp));
-						}
-					} else {
-						self._refreshPlaceholder(file, 3);
+			function setelementhtml(ElementId, value) {
+				if(value == undefined) {
+					value = '';
+				}
+				document.getElementById(ElementId).innerHTML = value;
+			}
+			function getelementhtml(ElementId) {
+				return document.getElementById(ElementId).innerHTML;
+			}
+
+		function getImage() {
+			var c = plus.camera.getCamera();
+			c.captureImage(function(e) {
+				plus.io.resolveLocalFileSystemURL(e, function(entry) {
+					//将拍照的目录路径变成本地URL路径，如：file:///之类。
+					var s = entry.toLocalURL() + "?version=" + new Date().getTime();
+					//					console.log('设置里面拍摄的图片是++++++++++++++++++' + s);
+					document.getElementById("userpic").src = s;
+					//						upload(s);暂未有接口
+					//目前仅有一张图片，暂时如此处理，后续需要通过标准组件实现
+					//						document.querySelector("#__mui-imageview__group .mui-slider-item img").src = s /*+ "?version=" + new Date().getTime()*/ ;
+
+				}, function(e) {});
+			}, function(s) {}, {
+				filename: "_doc/" + _dataAccess.getSetting().HeadUrl
+			})
+		}
+
+		function galleryImg() {
+			plus.gallery.pick(function(a) {
+				plus.io.resolveLocalFileSystemURL(a, function(entry) {
+					var e = entry.fullPath + "?version=" + new Date().getTime();
+					console.log(e);
+					document.getElementById("userpic").src = e;
+					//						document.querySelector("#__mui-imageview__group .mui-slider-item img").src = e;
+					//						upload(e);暂未有接口
+				}, function(e) {});
+			}, function(a) {}, {
+				filter: "image"
+			})
+		};
+		// 上传文件
+		function upload(file) {
+			var task = plus.uploader.createUpload(globals.apiUrl + 'Users.ashx', {
+				method: 'post',
+				timeout: 5000,
+			}, function(t, status) {
+				var rsp = JSON.parse(t.responseText);
+				// 上传完成
+				if(status == 200) {
+					if(rsp.Result) {
+						//更新用户信息
+						upDateUserInfo();
+						//				console.log(JSON.stringify(rsp));
 					}
-				});
-				task.addData("Token", _db.getUser().Token);
-				task.addData("action", "uploadHeadPic");
-				task.addFile(file, {
-					key: file
-				});
-				task.start();
-			}
+				} else {
+					self._refreshPlaceholder(file, 3);
+				}
+			});
+			task.addData("Token", _db.getUser().Token);
+			task.addData("action", "uploadHeadPic");
+			task.addFile(file, {
+				key: file
+			});
+			task.start();
+		}
 	</script>
 
 </html>
