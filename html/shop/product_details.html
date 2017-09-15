@@ -18,6 +18,41 @@
 				display: block;
 			}
 			
+			.hotel-btn-booking {
+				position: absolute;
+				right: 10px;
+				top: 10px;
+				background: #ff9a14;
+				color: #fff;
+				font-size: 14px;
+				padding: 5px 20px;
+				border-radius: 3px;
+			}
+			
+			.hotel-btn-booking:active {
+				color: #fff;
+			}
+			
+			.hotel-color-orange {
+				position: absolute;
+				left: 10px;
+				font-weight: bold;
+				top: 14px;
+				font-size: 16px;
+			}
+			
+			.hotel-footer {
+				position: fixed;
+				border: solid 1px #ddd;
+				background-color: #eee;
+				/*box-shadow: 0px -5px 5px 0px rgba(0, 0, 0, 0.05);*/
+				left: 0px;
+				bottom: 0px;
+				height: 51px;
+				width: 100%;
+				padding: 0px;
+				margin: 0px;
+			}
 		</style>
 	</head>
 
@@ -30,6 +65,11 @@
 		<div class="mui-content">
 			<!--静态图片-->
 			<img id="img1" src="../../images/cbd.jpg" />
+		</div>
+		<div class="hotel-footer">
+			<a class="hotel-color-orange">收藏</a>
+			<!--<span class="hotel-color-orange">￥315</span>-->
+			<a class="hotel-btn-booking">预定入住</a>
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript">

@@ -522,6 +522,15 @@
 					"css/appfont.css",
 					"css/list-to-detail.css"
 				],
+				"refer": [
+					"html/shop/product_details.html"
+				],
+				"priority": 0
+			},
+			"html/shop/product_details.html": {
+				"resources": [
+					"css/mui.min.css"
+				],
 				"refer": [],
 				"priority": 0
 			},
