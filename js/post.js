@@ -35,7 +35,7 @@ function SyncPost(apiUrl,dataStr, onSuccess,onError) {
 function _postData(apiUrl,isAsync, dataStr, onSuccess,onError){
 	console.log('url路径是：'+apiUrl+'?'+dataStr);
 	var _db = new LocalDatabase();
-	console.log(_db.getUser().Token);
+//	console.log(_db.getUser().Token);
 	mui.ajax(apiUrl,{  
 		headers:{'Authorization':_db.getUser().Token},
         data:dataStr, 

@@ -5,6 +5,8 @@
 		<meta charset="UTF-8">
 		<title></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/main.css" rel="stylesheet" />
+		<link href="../../css/appfont.css" rel="stylesheet" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<style type="text/css">
 			.img {
@@ -19,39 +21,34 @@
 			}
 			
 			.hotel-btn-booking {
-				position: absolute;
-				right: 10px;
-				top: 10px;
-				background: #ff9a14;
-				color: #fff;
-				font-size: 14px;
-				padding: 5px 20px;
-				border-radius: 3px;
+				width: 50%;
+				color: #FFFFFF;
 			}
 			
-			.hotel-btn-booking:active {
-				color: #fff;
+			.mui-btn-block {
+				font-size: 18px;
+				display: block;
+				width: 49%;
+				height: 100%;
+				padding: 15px 0
 			}
 			
 			.hotel-color-orange {
-				position: absolute;
-				left: 10px;
-				font-weight: bold;
-				top: 14px;
-				font-size: 16px;
+				width: 50%;
+				color: #fff;
 			}
 			
 			.hotel-footer {
 				position: fixed;
-				border: solid 1px #ddd;
-				background-color: #eee;
+				display: flex;
+				justify-content: space-between;
+				background-color: #EFEFF4;
+				/*border: solid 1px #ddd;*/
 				/*box-shadow: 0px -5px 5px 0px rgba(0, 0, 0, 0.05);*/
 				left: 0px;
 				bottom: 0px;
 				height: 51px;
 				width: 100%;
-				padding: 0px;
-				margin: 0px;
 			}
 		</style>
 	</head>
@@ -65,15 +62,54 @@
 		<div class="mui-content">
 			<!--静态图片-->
 			<img id="img1" src="../../images/cbd.jpg" />
+			<div class="fg_title">
+				基本信息
+			</div>
+			<div id="info" class="info"></div>
+			<div class="fg_title" style="margin-top: 10px;">
+				收费标准
+			</div>
+			<div id="CourtyardFacilityDesc" class="Desc">
+				
+			</div>
+			<div class="fg_title mui-collapse">
+				服务标准
+			</div>
+			<div class="fg_title">
+				接送服务
+			</div>
+			<div class="fg_title">
+				护理标准
+			</div>
+			<div class="fg_title">
+				房间配套
+			</div>
 		</div>
 		<div class="hotel-footer">
-			<a class="hotel-color-orange">收藏</a>
-			<!--<span class="hotel-color-orange">￥315</span>-->
-			<a class="hotel-btn-booking">预定入住</a>
+			<button type="button" class="mui-btn mui-btn-warning mui-btn-block" >收藏</button>
+
+			<button type="button" class="mui-btn mui-btn-success mui-btn-block">预约入住</button>
 		</div>
 		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/localDatabase.js"></script>
+		<script src="../../js/post.js"></script>
+		<script src="../../js/dao.js"></script>
+		<script src="../../js/shop.js"></script>
 		<script type="text/javascript">
-			mui.init()
+			mui.init();
+			var _dataAccess = new DataAccess();
+			var _shop = new Shop();
+			var user;
+			var _self;
+			var id;
+			mui.plusReady(function() {
+				_self = plus.webview.currentWebview();
+				id = _self.data;
+				console.log(id);
+				_shop.GetProductModel(id, function(datas) {
+
+				});
+			})
 		</script>
 	</body>
 

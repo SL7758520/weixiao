@@ -19,15 +19,70 @@
 				display: -webkit-box;
 			}
 			
-			.img {
-				margin-top: 5px;
-				width: 80px;
-				height: 80px;
-			}
-			
-			img {
+			.position-atop img,
+			.top-banner img,
+			.position-bone img,
+			.position-c img {
 				width: 100%;
 				display: block;
+			}
+			
+			.position-a .position-atop,
+			.position-b,
+			.position-bone,
+			.position-c {
+				position: relative;
+				overflow: hidden;
+			}
+			
+			.position-b {
+				margin: 0 10px;
+			}
+			
+			.position-bcontent {
+				margin-bottom: 10px;
+				position: relative;
+				border-radius: 8px;
+			}
+			
+			.gray-lable {
+				background-image: -webkit-linear-gradient(top, rgba(59, 59, 59, .6), rgba(27, 27, 27, .6), rgba(50, 50, 50, .4), rgba(31, 31, 31, .4));
+				position: absolute;
+				left: 0;
+				bottom: 0;
+				width: 100%;
+				height: 50px;
+				padding-left: 5px;
+				display: block;
+				-webkit-box-sizing: border-box;
+				box-sizing: border-box;
+			}
+			
+			.first-line,
+			.vicetitle {
+				height: 25px;
+				line-height: 30px;
+			}
+			
+			.vicetitle {
+				font-size: 13px;
+			}
+			
+			.first-line .bigtitle,
+			.vicetitle {
+				color: #ffffff;
+			}
+			
+			.first-line .prices {
+				color: #f99d1c;
+				position: absolute;
+				right: 15px;
+				font-family: impact;
+				font-size: 20px;
+			}
+			
+			.position-abottom {
+				margin: 5px 0;
 			}
 			
 			.text {
@@ -103,7 +158,8 @@
 				padding-left: 5px;
 				background-color: #FFFFFF;
 			}
-			.Desc{
+			
+			.Desc {
 				background-color: #FFFFFF;
 				padding-left: 15px;
 			}
@@ -117,17 +173,26 @@
 		</header>-->
 		<header class="mui-bar mui-bar-transparent" style="border-top-width: 0px;">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 id="title" class="mui-title" style="color: #007AFF;">微孝养老</h1>
 			<button id="Selectall" type="button" class="mui-btn mui-btn-link mui-pull-right color_white">收藏</button>
 		</header>
 		<div class="mui-content">
-			<!--静态图片-->
-			<img id="img1" src="../../images/cbd.jpg" />
-			<div class="fg_title">
+			<div class="position-a">
+				<div id="image" class="position-atop">
+					<img src="../../images/cbd.jpg" alt="">
+					<div class="gray-lable ">
+						<div class="first-line">
+							<span id="title" class="bigtitle">三峡长海游轮5日游</span>
+							<span class="prices" id="BottomPrice">1668起</span>
+						</div>
+						<div class="vicetitle" id="DistanceDesc">单船票，宜昌登船，含宜昌码头接站</div>
+					</div>
+				</div>
+			</div>
+			<div class="fg_title" style="margin-top: 10px;">
 				基本信息
 			</div>
 			<div id="info" class="info"></div>
-			<div class="fg_title" style="margin-top: 30px;">
+			<div class="fg_title" style="margin-top: 10px;">
 				床位清单
 			</div>
 			<ul id="productList" class="mui-table-view content">
@@ -136,9 +201,9 @@
 				环境配套
 			</div>
 			<div id="CourtyardFacilityDesc" class="Desc">
-				
+
 			</div>
-			<div class="fg_title">
+			<div class="fg_title mui-collapse">
 				交通配套
 			</div>
 			<div class="fg_title">
@@ -164,98 +229,98 @@
 		<script src="../../js/shop.js"></script>
 		<script type="text/javascript">
 			mui.init();
-		var _dataAccess = new DataAccess();
-		var _shop = new Shop();
-		var user;
-		var shopId;
-		var shopName;
-		var div;
-		var pageIndex = 1;
-		var pageSize = 10;
-		var cityId = 6201;
-		var photoUrl;
-		var shopInfo;
-		var productList;
-		var _self;
-		var div;
+			var _dataAccess = new DataAccess();
+			var _shop = new Shop();
+			var user;
+			var shopId;
+			var shopName;
+			var div;
+			var pageIndex = 1;
+			var pageSize = 10;
+			var cityId = 6201;
+			var photoUrl;
+			var shopInfo;
+			var productList;
+			var _self;
+			var div;
 			mui.plusReady(function() {
-//				mui.previewImage();
-				//获得slider插件对象
-				var gallery = mui('.mui-slider');
-				gallery.slider({
-					interval: 3000 //自动轮播周期，若为0则不自动播放，默认为0；
-				});
-				_self=plus.webview.currentWebview();
-				div=document.getElementById("productList");
-				shopId=_self.data;
+				_self = plus.webview.currentWebview();
+				div = document.getElementById("productList");
+				shopId = _self.data;
 				console.log(shopId);
-				_shop.GetShopModel(shopId,function(datas){
-					if(datas.status == 1){
-						shopInfo=datas.result;
-						document.getElementById("title").innerHTML=shopInfo.Name;
-						document.getElementById("info").innerHTML=shopInfo.Intro;
-						document.getElementById("CourtyardFacilityDesc").innerHTML=shopInfo.CourtyardFacilityDesc;
-					}else{
+				_shop.GetShopModel(shopId, function(datas) {
+					if(datas.status == 1) {
+						shopInfo = datas.result;
+						document.getElementById("title").innerHTML = shopInfo.Name;
+						document.getElementById("DistanceDesc").innerHTML = shopInfo.DistanceDesc;
+						document.getElementById("BottomPrice").innerHTML = shopInfo.BottomPrice+"元/月起";
+						document.getElementById("info").innerHTML = shopInfo.Intro;
+						document.getElementById("CourtyardFacilityDesc").innerHTML = shopInfo.CourtyardFacilityDesc;
+					} else {
 						mui.toast(datas.message);
 					}
 				});
-//				photoUrl= _dataAccess.getPhotoUrl();
-//				_shop.getPhotoUrl(function(datas){
-//					photoUrl=datas;
-//				});
-				
-				_shop.GetProducts(pageIndex,pageSize,1,1,function(datas){
-					if(datas.status == 1){
-						productList=datas.result;
+				document.getElementById("image").addEventListener("tap",function(event){
+					gotoHtml("productpic.html", '');
+				});
+				//				photoUrl= _dataAccess.getPhotoUrl();
+				//				_shop.getPhotoUrl(function(datas){
+				//					photoUrl=datas;
+				//				});
+
+				_shop.GetProducts(pageIndex, pageSize, 1, 1, function(datas) {
+					if(datas.status == 1) {
+						productList = datas.result;
 						addList(productList);
-					}else{
+					} else {
 						mui.toast(datas.message);
 					}
 				});
 			});
+
 			function addList(datas) {
-			div.innerHTML = "";
-			for(var i = 0; i < datas.length; i++) {
-				div.appendChild(creatCard(datas[i]));
-			}
-		}
-
-		function creatCard(entity) {
-			//			console.log("AAAAAAAAAAA");
-			var li = document.createElement("li");
-			li.className = 'mui-table-view-cell';
-			var HasPickUp;
-			if(entity.HasPickUp){
-				HasPickUp="可接送";
-			}else{
-				HasPickUp="不可接送";
-			}
-			li.innerHTML = '<div class="item"><div class="img"><img src="../../images/t0-3.jpg"></div><div class="text"><div class="information"><h4>'+entity.CategoryName+'</h4><h5>'+HasPickUp+'</h5><h5 class="mui-ellipsis">'+entity.ShortDescription+'</h5></div><div class="price"><span class="new-price">￥'+entity.Price+'/月</span><div id="" style="display: flex;align-items: center;margin-top: 5px;"><img src="../../images/heart@2x.png" style="width: 15px;height: 15px;margin-left: 5px;" /><h5 style="margin-left: 5px;">'+entity.CollectCounts+'人关注</h5></div></div></div></div>';
-			li.addEventListener("tap", function(event) {
-								console.log("AAAAAAAAAAA"); 
-				gotoHtml("product_details.html", entity.Id);
-			});
-
-			return li;
-		}
-
-		function gotoHtml(u, datas) {
-			mui.openWindow({
-				url: u,
-				id: u,
-
-				show: {
-					aniShow: 'pop-in'
-				},
-				waiting: {
-					autoShow: true, //自动显示等待框，默认为true
-					title: '正在加载...', //等待对话框上显示的提示内容
-				},
-				extras: {
-					data: datas,
+				div.innerHTML = "";
+				for(var i = 0; i < datas.length; i++) {
+					div.appendChild(creatCard(datas[i]));
 				}
-			});
-		}
+			}
+
+			function creatCard(entity) {
+				//			console.log("AAAAAAAAAAA");
+				var li = document.createElement("li");
+				li.className = 'mui-table-view-cell';
+				var HasPickUp;
+				if(entity.HasPickUp) {
+					HasPickUp = "可接送";
+				} else {
+					HasPickUp = "不可接送";
+				}
+				li.innerHTML = '<div class="item"><div class="img"><img src="../../images/t0-3.jpg"></div><div class="text"><div class="information"><h4>' + entity.CategoryName + '</h4><h5>' + HasPickUp + '</h5><h5 class="mui-ellipsis">' + entity.ShortDescription + '</h5></div><div class="price"><span class="new-price">￥' + entity.Price + '/月</span><div id="" style="display: flex;align-items: center;margin-top: 5px;"><img src="../../images/heart@2x.png" style="width: 15px;height: 15px;margin-left: 5px;" /><h5 style="margin-left: 5px;">' + entity.CollectCounts + '人关注</h5></div></div></div></div>';
+				li.addEventListener("tap", function(event) {
+					console.log("AAAAAAAAAAA");
+					gotoHtml("product_details.html", entity.Id);
+				});
+
+				return li;
+			}
+
+			function gotoHtml(u, datas) {
+				mui.openWindow({
+					url: u,
+					id: u,
+
+					show: {
+						aniShow: 'pop-in'
+					},
+					waiting: {
+						autoShow: true, //自动显示等待框，默认为true
+						title: '正在加载...', //等待对话框上显示的提示内容
+					},
+					extras: {
+						data: datas,
+					}
+				});
+			}
 		</script>
 	</body>
 

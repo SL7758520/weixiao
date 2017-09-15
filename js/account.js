@@ -61,7 +61,7 @@ var Account = (function() {
 				return;
 			}
 			var user = _db.getUser();
-			AsyncPosts(API_LOGIN+"Login", "mobile=" + loginInfo.mobile + "&password=" + loginInfo.password,
+			AsyncPost(API_LOGIN+"Login", "mobile=" + loginInfo.mobile + "&password=" + loginInfo.password,
 				function(result) {
 					if(callback) {
 						console.log('接口返回数据：' + JSON.stringify(result));

@@ -220,15 +220,26 @@
 			"js/mui.previewimage.js",
 			"css/appfont.css",
 			"images/t0-3.jpg",
-			"images/heart@2x.png"
+			"images/heart@2x.png",
+			"js/localDatabase.js",
+			"images/cbd.jpg",
+			"css/main.css",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"js/dao.js",
+			"js/shop.js",
+			"js/post.js",
+			"fonts/icomoon.ttf"
 		],
 		"refer": [
-			"html/shop/product_details.html"
+			"html/shop/product_details.html",
+			"html/shop/productpic.html"
 		]
 	},
 	"html/shop/product_details.html": {
 		"resources": [
-			"css/mui.min.css"
+			"css/mui.min.css",
+			"css/appfont.css"
 		]
 	}
 }

@@ -520,16 +520,27 @@
 					"images/heart@2x.png",
 					"images/t0-3.jpg",
 					"css/appfont.css",
-					"css/list-to-detail.css"
+					"css/list-to-detail.css",
+					"js/localDatabase.js",
+					"images/cbd.jpg",
+					"css/main.css",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"js/dao.js",
+					"js/shop.js",
+					"js/post.js",
+					"fonts/icomoon.ttf"
 				],
 				"refer": [
-					"html/shop/product_details.html"
+					"html/shop/product_details.html",
+					"html/shop/productpic.html"
 				],
 				"priority": 0
 			},
 			"html/shop/product_details.html": {
 				"resources": [
-					"css/mui.min.css"
+					"css/mui.min.css",
+					"css/appfont.css"
 				],
 				"refer": [],
 				"priority": 0

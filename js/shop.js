@@ -96,13 +96,13 @@ var Shop = (function() {
 		};
 	
 		//获取Shop下的所有床位详细信息
-		this.GetProductModel = function( id,callback) {
+		this.GetProductModel = function( productId,callback) {
 			if(!_getNetwork()) {
 				mui.toast("没有网络连接，请稍后再试！");
 				return;
 			}
 			var user = _db.getUser();
-			AsyncPost(API_SHOP+"GetProductModel","id=" + id ,
+			AsyncPost(API_SHOP+"GetProductModel","productId=" + id ,
 				function(result) {
 					if(callback) {
 						console.log('接口返回数据：' + JSON.stringify(result));
