@@ -94,24 +94,7 @@ var Shop = (function() {
 					console.log('请求失败：');
 				});
 		};
-		//获取Shop下的所有床位列表
-		this.GetProducts = function(pageIndex,pageSize, shopId,categoryId,callback) {
-			if(!_getNetwork()) {
-				mui.toast("没有网络连接，请稍后再试！");
-				return;
-			}
-			var user = _db.getUser();
-			AsyncPost(API_SHOP+"GetProducts", "pageIndex=" + pageIndex + "&pageSize=" +pageSize+"&shopId=" + shopId + "&categoryId=" +categoryId,
-				function(result) {
-					if(callback) {
-						console.log('接口返回数据：' + JSON.stringify(result));
-						callback.call(this, result);
-					}
-				},
-				function() {
-					console.log('请求失败：');
-				});
-		};
+	
 		//获取Shop下的所有床位详细信息
 		this.GetProductModel = function( id,callback) {
 			if(!_getNetwork()) {

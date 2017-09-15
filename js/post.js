@@ -34,13 +34,17 @@ function SyncPost(apiUrl,dataStr, onSuccess,onError) {
 }  
 function _postData(apiUrl,isAsync, dataStr, onSuccess,onError){
 	console.log('url路径是：'+apiUrl+'?'+dataStr);
+	var _db = new LocalDatabase();
+	console.log(_db.getUser().Token);
 	mui.ajax(apiUrl,{  
+		headers:{'Authorization':_db.getUser().Token},
         data:dataStr, 
         //text
         dataType:'json',  
         type:'GET',
         async:isAsync,
-        timeout:10000,  
+        timeout:10000, 
+       
         success:function(data){
         	onSuccess.call(this,data);
         },
@@ -57,7 +61,7 @@ function _postDatas(apiUrl,isAsync, dataStr, onSuccess,onError){
         data:dataStr, 
         //text
         dataType:'json',  
-        type:'post',
+        type:'GET',
         async:isAsync,
         timeout:10000,  
         success:function(data){

@@ -61,7 +61,7 @@ var Account = (function() {
 				return;
 			}
 			var user = _db.getUser();
-			AsyncPost(API_LOGIN+"Login", "mobile=" + loginInfo.mobile + "&password=" + loginInfo.password,
+			AsyncPosts(API_LOGIN+"Login", "mobile=" + loginInfo.mobile + "&password=" + loginInfo.password,
 				function(result) {
 					if(callback) {
 						console.log('接口返回数据：' + JSON.stringify(result));
@@ -80,7 +80,7 @@ var Account = (function() {
 				return;
 			}
 			var user = _db.getUser();
-			AsyncPost(API_LOGIN+"LoginBySmsImgCode", "mobile=" + mobile,
+			AsyncPosts(API_LOGIN+"LoginBySmsImgCode", "mobile=" + mobile,
 				function(result) {
 					if(callback) {
 						console.log('接口返回数据：' + JSON.stringify(result));
@@ -99,7 +99,7 @@ var Account = (function() {
 				return;
 			}
 			var user = _db.getUser();
-			AsyncPost(API_LOGIN+"LoginBySms_GetCode", "mobile=" + mobile+"&imgCode="+imgCode,
+			AsyncPosts(API_LOGIN+"LoginBySms_GetCode", "mobile=" + mobile+"&imgCode="+imgCode,
 				function(result) {
 					if(callback) {
 						console.log('接口返回数据：' + JSON.stringify(result));
@@ -118,7 +118,7 @@ var Account = (function() {
 				return;
 			}
 			var user = _db.getUser();
-			AsyncPost(API_LOGIN+"LoginBySms_Verify", "mobile=" + mobile+"&smsCode="+smsCode,
+			AsyncPosts(API_LOGIN+"LoginBySms_Verify", "mobile=" + mobile+"&smsCode="+smsCode,
 				function(result) {
 					if(callback) {
 						console.log('接口返回数据：' + JSON.stringify(result));
@@ -136,7 +136,7 @@ var Account = (function() {
 				return;
 			}
 			var user = _db.getUser();
-			AsyncPost(API_LOGIN+"Auth", "authType=" + authType+"&openId=" + openId+"&token=" + token+"&nickName=" + nickName,
+			AsyncPosts(API_LOGIN+"Auth", "authType=" + authType+"&openId=" + openId+"&token=" + token+"&nickName=" + nickName,
 				function(result) {
 					if(callback) {
 						console.log('接口返回数据：' + JSON.stringify(result));
