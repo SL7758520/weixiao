@@ -390,7 +390,7 @@
 		
 		function initpage() {
 				var users = _dataAccess.getUser();
-				setelementhtml('nickname', users.NikeName);
+				setelementhtml('nickname', users.NickName);
 				setelementhtml('mobile', users.Mobile);
 				setelementhtml('sex', users.Sex);
 				setelementhtml('email', users.Mail);
@@ -417,6 +417,7 @@
 			c.captureImage(function(path) {
 					plus.io.resolveLocalFileSystemURL(path, function(entry) {
 						//						alert("path" + path);
+						var s = entry.toLocalURL() + "?version=" + new Date().getTime();
 						var zipFileName = path.substr(path.lastIndexOf("/") + 1);
 						plus.zip.compressImage({
 							src: path,
@@ -427,6 +428,7 @@
 							height:"20%"
 						}, function(zip) {
 							console.log(zip.target);
+							document.getElementById("userpic").src = s;
 							upload(zip.target);
 //							self._addFile(zip.target);
 						}, function(zipe) {
@@ -452,14 +454,27 @@
 		}
 
 		function galleryImg() {
-			plus.gallery.pick(function(a) {
-				plus.io.resolveLocalFileSystemURL(a, function(entry) {
-					var e = entry.fullPath + "?version=" + new Date().getTime();
-					console.log(e);
-					document.getElementById("userpic").src = e;
-					//						document.querySelector("#__mui-imageview__group .mui-slider-item img").src = e;
-					upload(e);
-				}, function(e) {});
+			plus.gallery.pick(function(path) {
+				plus.io.resolveLocalFileSystemURL(path, function(entry) {
+						//						alert("path" + path);
+						var s = entry.toLocalURL() + "?version=" + new Date().getTime();
+						var zipFileName = path.substr(path.lastIndexOf("/") + 1);
+						plus.zip.compressImage({
+							src: path,
+							dst: '_doc/' + zipFileName,
+							overwrite: true,
+							quality: 20,
+							width:"20%",
+							height:"20%"
+						}, function(zip) {
+							console.log(zip.target);
+							document.getElementById("userpic").src = s;
+							upload(zip.target);
+//							self._addFile(zip.target);
+						}, function(zipe) {
+							mui.toast('压缩失败！')
+						});
+					}, function(e) {});
 			}, function(a) {}, {
 				filter: "image"
 			})
@@ -495,6 +510,9 @@
 			});
 			task.start();
 		}
+		window.addEventListener('Refresh',function(){
+			initpage();
+		});
 	</script>
 
 </html>

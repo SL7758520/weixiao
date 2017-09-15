@@ -538,7 +538,13 @@
 				"resources": [
 					"css/mui.min.css",
 					"css/style.css",
-					"js/member.js"
+					"js/member.js",
+					"js/localDatabase.js",
+					"js/app.js",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"js/dao.js",
+					"js/post.js"
 				],
 				"refer": [],
 				"priority": 0
