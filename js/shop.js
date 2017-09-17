@@ -167,6 +167,20 @@ var Shop = (function() {
 					mui.toast('没有网络连接，请稍后再试！');
 				});
 		};
+		
+		this.MakeOrder = function(productId,quantity,peopleAmount,address,phone,remark,bookedDate,onSuccess,onError){
+			if(!_getNetwork()) {
+				mui.toast("没有网络连接，请稍后再试！");
+				return;
+			}
+			PostRequest(API_SHOP+'MakeOrder','productId='+productId+'&quantity='+quantity+'&peopleAmount='+peopleAmount+'&address='+address+'&phone='+phone+'&remark='+remark+'&bookedDate='+bookedDate,function(result){
+				if (onSuccess) {
+					onSuccess.call(this,result);
+				}
+			},function(){
+				mui.toast('没有网络连接，请稍后再试！');
+			});
+		}
 
 	}
 	return access;

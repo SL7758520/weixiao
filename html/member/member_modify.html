@@ -103,6 +103,9 @@
 				_self = plus.webview.currentWebview();
 				field = _self.field;
 				fieldValue = _self.fieldValue;
+				if (fieldValue.replace(/(^\s*)/g, "")=='') {
+					fieldValue = '';
+				}
 				var btnsave = document.getElementById('btnsave');
 				var accountBox = document.getElementById('account');
 				accountBox.placeholder = _self.title;

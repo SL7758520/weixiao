@@ -542,7 +542,9 @@
 					"css/mui.min.css",
 					"css/appfont.css"
 				],
-				"refer": [],
+				"refer": [
+					"html/shop/createorder.html"
+				],
 				"priority": 0
 			},
 			"html/member/member_modify.html": {
@@ -556,6 +558,23 @@
 					"fonts/mui.ttf",
 					"js/dao.js",
 					"js/post.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/shop/createorder.html": {
+				"resources": [
+					"css/mui.min.css",
+					"js/mui.picker.min.js",
+					"css/mui.picker.min.css",
+					"js/muifun.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/shop/productpic.html": {
+				"resources": [
+					"css/mui.min.css"
 				],
 				"refer": [],
 				"priority": 0
