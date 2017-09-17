@@ -8,7 +8,7 @@
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<!--<link href="../styles/default.css" rel="stylesheet" />-->
 		<style>
-			.title{
+			/*.title {
 				margin: 20px 15px 10px;
 				color: #6d6d72;
 				font-size: 15px;
@@ -23,22 +23,118 @@
 				position: relative;
 				margin: -11px 0;
 			}
-	
+			
 			.oa-contact-avatar {
 				width: 75px;
 			}
+			
 			.oa-contact-avatar img {
 				border-radius: 50%;
 			}
+			
 			.oa-contact-content {
 				width: 100%;
 			}
+			
 			.oa-contact-name {
 				margin-right: 20px;
 			}
-			.oa-contact-name, oa-contact-position {
+			
+			.oa-contact-name,
+			oa-contact-position {
 				float: left;
 			}
+			*/
+			
+			html,
+			body {
+				background-color: #efeff4;
+			}
+			
+			.mui-bar~.mui-content .mui-fullscreen {
+				top: 44px;
+				height: auto;
+			}
+			
+			.mui-pull-top-tips {
+				position: absolute;
+				top: -20px;
+				left: 50%;
+				margin-left: -25px;
+				width: 40px;
+				height: 40px;
+				border-radius: 100%;
+				z-index: 1;
+			}
+			
+			.mui-bar~.mui-pull-top-tips {
+				top: 24px;
+			}
+			
+			.mui-pull-top-wrapper {
+				width: 42px;
+				height: 42px;
+				display: block;
+				text-align: center;
+				background-color: #efeff4;
+				border: 1px solid #ddd;
+				border-radius: 25px;
+				background-clip: padding-box;
+				box-shadow: 0 4px 10px #bbb;
+				overflow: hidden;
+			}
+			
+			.mui-pull-top-tips.mui-transitioning {
+				-webkit-transition-duration: 200ms;
+				transition-duration: 200ms;
+			}
+			
+			.mui-pull-top-tips .mui-pull-loading {
+				/*-webkit-backface-visibility: hidden;
+				-webkit-transition-duration: 400ms;
+				transition-duration: 400ms;*/
+				margin: 0;
+			}
+			
+			.mui-pull-top-wrapper .mui-icon,
+			.mui-pull-top-wrapper .mui-spinner {
+				margin-top: 7px;
+			}
+			
+			.mui-pull-top-wrapper .mui-icon.mui-reverse {
+				/*-webkit-transform: rotate(180deg) translateZ(0);*/
+			}
+			
+			.mui-pull-bottom-tips {
+				text-align: center;
+				background-color: #efeff4;
+				font-size: 15px;
+				line-height: 40px;
+				color: #777;
+			}
+			
+			.mui-pull-top-canvas {
+				overflow: hidden;
+				background-color: #fafafa;
+				border-radius: 40px;
+				box-shadow: 0 4px 10px #bbb;
+				width: 40px;
+				height: 40px;
+				margin: 0 auto;
+			}
+			
+			.mui-pull-top-canvas canvas {
+				width: 40px;
+			}
+			
+			.mui-slider-indicator.mui-segmented-control {
+				background-color: #efeff4;
+			}
+			
+			.mui-slider .mui-slider-group .mui-slider-item {
+				height: 100%;
+			}
+			
 			.hotel-pic-list {
 				margin: 0px;
 				padding: 0px;
@@ -67,48 +163,388 @@
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">酒店照片</h1>
 		</header>
-		<nav class="mui-bar mui-bar-tab">
-			<a class="mui-tab-item mui-active" href="#tabbar">
-				<span class="mui-icon mui-icon-home"></span>
-				<span class="mui-tab-label">全部</span>
-			</a>
-			<a class="mui-tab-item" href="#tabbar-with-chat">
-				<span class="mui-icon mui-icon-email"></span>
-				<span class="mui-tab-label">用户上传</span>
-			</a>
-			<a class="mui-tab-item" href="#tabbar-with-contact">
-				<span class="mui-icon mui-icon-contact"></span>
-				<span class="mui-tab-label">外观</span>
-			</a>
-			<a class="mui-tab-item" href="#tabbar-with-map">
-				<span class="mui-icon mui-icon-gear"></span>
-				<span class="mui-tab-label">内景</span>
-			</a>
-		</nav>
 		<div class="mui-content">
-			<div id="tabbar" class="mui-control-content mui-active">
-				<div class="title">这是div模式选项卡中的第1个子页面.</div>
-				<ul class="hotel-pic-list">
-				<li><img src="../../images/t0-3.jpg" alt="" /></li>
-				<li><img src="../../images/t0-3.jpg" alt="" /></li>
-				<li><img src="../../images/t0-3.jpg" alt="" /></li>
-				<li><img src="../../images/t0-3.jpg" alt="" /></li>
-				<li><img src="../../images/t0-3.jpg" alt="" /></li>
-				<li><img src="../../images/t0-3.jpg" alt="" /></li>
-				<li><img src="../../images/t0-3.jpg" alt="" /></li>
-				<li><img src="../../images/t0-3.jpg" alt="" /></li>
-				</ul>
-			</div>
-			<div id="tabbar-with-chat" class="mui-control-content">
-				<div class="title">这是div模式选项卡中的第2个子页面，该页面展示一个消息列表</div>
-
-			</div>
-			<div id="tabbar-with-contact" class="mui-control-content">
-				<div class="title">这是div模式选项卡中的第3个子页面，该页面展示一个通讯录示例.</div>
-				
-			</div>
-			<div id="tabbar-with-map" class="mui-control-content">
-				
+			<div id="slider" class="mui-slider mui-fullscreen">
+				<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+					<div id="scroll" class="mui-scroll">
+						<a class="mui-control-item mui-active" href="#item1mobile">
+							推荐
+						</a>
+						<a class="mui-control-item" href="#item2mobile">
+							热点
+						</a>
+						<a class="mui-control-item" href="#item3mobile">
+							北京
+						</a>
+						<a class="mui-control-item" href="#item4mobile">
+							社会
+						</a>
+						<a class="mui-control-item" href="#item5mobile">
+							娱乐
+						</a>
+						<a class="mui-control-item" href="#item6mobile">
+							科技
+						</a>
+					</div>
+				</div>
+				<div  class="mui-slider-group">
+					<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
+						<div id="scroll1" class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<ul class="hotel-pic-list">
+									<li><img src="../../images/t0-3.jpg" alt="" /></li>
+									<li><img src="../../images/t0-3.jpg" alt="" /></li>
+									<li><img src="../../images/t0-3.jpg" alt="" /></li>
+									<li><img src="../../images/t0-3.jpg" alt="" /></li>
+									<li><img src="../../images/t0-3.jpg" alt="" /></li>
+									<li><img src="../../images/t0-3.jpg" alt="" /></li>
+									<li><img src="../../images/t0-3.jpg" alt="" /></li>
+									<li><img src="../../images/t0-3.jpg" alt="" /></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div id="item2mobile" class="mui-slider-item mui-control-content">
+						<div class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<ul class="mui-table-view">
+									<li class="mui-table-view-cell">
+										第2个选项卡子项-1
+									</li>
+									<li class="mui-table-view-cell">
+										第2个选项卡子项-2
+									</li>
+									<li class="mui-table-view-cell">
+										第2个选项卡子项-3
+									</li>
+									<li class="mui-table-view-cell">
+										第2个选项卡子项-4
+									</li>
+									<li class="mui-table-view-cell">
+										第2个选项卡子项-5
+									</li>
+									<li class="mui-table-view-cell">
+										第2个选项卡子项-6
+									</li>
+									<li class="mui-table-view-cell">
+										第2个选项卡子项-7
+									</li>
+									<li class="mui-table-view-cell">
+										第2个选项卡子项-8
+									</li>
+									<li class="mui-table-view-cell">
+										第2个选项卡子项-9
+									</li>
+									<li class="mui-table-view-cell">
+										第2个选项卡子项-10
+									</li>
+									<li class="mui-table-view-cell">
+										第2个选项卡子项-11
+									</li>
+									<li class="mui-table-view-cell">
+										第2个选项卡子项-12
+									</li>
+									<li class="mui-table-view-cell">
+										第2个选项卡子项-13
+									</li>
+									<li class="mui-table-view-cell">
+										第2个选项卡子项-14
+									</li>
+									<li class="mui-table-view-cell">
+										第2个选项卡子项-15
+									</li>
+									<li class="mui-table-view-cell">
+										第2个选项卡子项-16
+									</li>
+									<li class="mui-table-view-cell">
+										第2个选项卡子项-17
+									</li>
+									<li class="mui-table-view-cell">
+										第2个选项卡子项-18
+									</li>
+									<li class="mui-table-view-cell">
+										第2个选项卡子项-19
+									</li>
+									<li class="mui-table-view-cell">
+										第2个选项卡子项-20
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div id="item3mobile" class="mui-slider-item mui-control-content">
+						<div class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<ul class="mui-table-view">
+									<li class="mui-table-view-cell">
+										第3个选项卡子项-1
+									</li>
+									<li class="mui-table-view-cell">
+										第3个选项卡子项-2
+									</li>
+									<li class="mui-table-view-cell">
+										第3个选项卡子项-3
+									</li>
+									<li class="mui-table-view-cell">
+										第3个选项卡子项-4
+									</li>
+									<li class="mui-table-view-cell">
+										第3个选项卡子项-5
+									</li>
+									<li class="mui-table-view-cell">
+										第3个选项卡子项-6
+									</li>
+									<li class="mui-table-view-cell">
+										第3个选项卡子项-7
+									</li>
+									<li class="mui-table-view-cell">
+										第3个选项卡子项-8
+									</li>
+									<li class="mui-table-view-cell">
+										第3个选项卡子项-9
+									</li>
+									<li class="mui-table-view-cell">
+										第3个选项卡子项-10
+									</li>
+									<li class="mui-table-view-cell">
+										第3个选项卡子项-11
+									</li>
+									<li class="mui-table-view-cell">
+										第3个选项卡子项-12
+									</li>
+									<li class="mui-table-view-cell">
+										第3个选项卡子项-13
+									</li>
+									<li class="mui-table-view-cell">
+										第3个选项卡子项-14
+									</li>
+									<li class="mui-table-view-cell">
+										第3个选项卡子项-15
+									</li>
+									<li class="mui-table-view-cell">
+										第3个选项卡子项-16
+									</li>
+									<li class="mui-table-view-cell">
+										第3个选项卡子项-17
+									</li>
+									<li class="mui-table-view-cell">
+										第3个选项卡子项-18
+									</li>
+									<li class="mui-table-view-cell">
+										第3个选项卡子项-19
+									</li>
+									<li class="mui-table-view-cell">
+										第3个选项卡子项-20
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div id="item4mobile" class="mui-slider-item mui-control-content">
+						<div class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<ul class="mui-table-view">
+									<li class="mui-table-view-cell">
+										第4个选项卡子项-1
+									</li>
+									<li class="mui-table-view-cell">
+										第4个选项卡子项-2
+									</li>
+									<li class="mui-table-view-cell">
+										第4个选项卡子项-3
+									</li>
+									<li class="mui-table-view-cell">
+										第4个选项卡子项-4
+									</li>
+									<li class="mui-table-view-cell">
+										第4个选项卡子项-5
+									</li>
+									<li class="mui-table-view-cell">
+										第4个选项卡子项-6
+									</li>
+									<li class="mui-table-view-cell">
+										第4个选项卡子项-7
+									</li>
+									<li class="mui-table-view-cell">
+										第4个选项卡子项-8
+									</li>
+									<li class="mui-table-view-cell">
+										第4个选项卡子项-9
+									</li>
+									<li class="mui-table-view-cell">
+										第4个选项卡子项-10
+									</li>
+									<li class="mui-table-view-cell">
+										第4个选项卡子项-11
+									</li>
+									<li class="mui-table-view-cell">
+										第4个选项卡子项-12
+									</li>
+									<li class="mui-table-view-cell">
+										第4个选项卡子项-13
+									</li>
+									<li class="mui-table-view-cell">
+										第4个选项卡子项-14
+									</li>
+									<li class="mui-table-view-cell">
+										第4个选项卡子项-15
+									</li>
+									<li class="mui-table-view-cell">
+										第4个选项卡子项-16
+									</li>
+									<li class="mui-table-view-cell">
+										第4个选项卡子项-17
+									</li>
+									<li class="mui-table-view-cell">
+										第4个选项卡子项-18
+									</li>
+									<li class="mui-table-view-cell">
+										第4个选项卡子项-19
+									</li>
+									<li class="mui-table-view-cell">
+										第4个选项卡子项-20
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div id="item5mobile" class="mui-slider-item mui-control-content">
+						<div class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<ul class="mui-table-view">
+									<li class="mui-table-view-cell">
+										第5个选项卡子项-1
+									</li>
+									<li class="mui-table-view-cell">
+										第5个选项卡子项-2
+									</li>
+									<li class="mui-table-view-cell">
+										第5个选项卡子项-3
+									</li>
+									<li class="mui-table-view-cell">
+										第5个选项卡子项-4
+									</li>
+									<li class="mui-table-view-cell">
+										第5个选项卡子项-5
+									</li>
+									<li class="mui-table-view-cell">
+										第5个选项卡子项-6
+									</li>
+									<li class="mui-table-view-cell">
+										第5个选项卡子项-7
+									</li>
+									<li class="mui-table-view-cell">
+										第5个选项卡子项-8
+									</li>
+									<li class="mui-table-view-cell">
+										第5个选项卡子项-9
+									</li>
+									<li class="mui-table-view-cell">
+										第5个选项卡子项-10
+									</li>
+									<li class="mui-table-view-cell">
+										第5个选项卡子项-11
+									</li>
+									<li class="mui-table-view-cell">
+										第5个选项卡子项-12
+									</li>
+									<li class="mui-table-view-cell">
+										第5个选项卡子项-13
+									</li>
+									<li class="mui-table-view-cell">
+										第5个选项卡子项-14
+									</li>
+									<li class="mui-table-view-cell">
+										第5个选项卡子项-15
+									</li>
+									<li class="mui-table-view-cell">
+										第5个选项卡子项-16
+									</li>
+									<li class="mui-table-view-cell">
+										第5个选项卡子项-17
+									</li>
+									<li class="mui-table-view-cell">
+										第5个选项卡子项-18
+									</li>
+									<li class="mui-table-view-cell">
+										第5个选项卡子项-19
+									</li>
+									<li class="mui-table-view-cell">
+										第5个选项卡子项-20
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div id="item6mobile" class="mui-slider-item mui-control-content">
+						<div class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<ul class="mui-table-view">
+									<li class="mui-table-view-cell">
+										第6个选项卡子项-1
+									</li>
+									<li class="mui-table-view-cell">
+										第6个选项卡子项-2
+									</li>
+									<li class="mui-table-view-cell">
+										第6个选项卡子项-3
+									</li>
+									<li class="mui-table-view-cell">
+										第6个选项卡子项-4
+									</li>
+									<li class="mui-table-view-cell">
+										第6个选项卡子项-5
+									</li>
+									<li class="mui-table-view-cell">
+										第6个选项卡子项-6
+									</li>
+									<li class="mui-table-view-cell">
+										第6个选项卡子项-7
+									</li>
+									<li class="mui-table-view-cell">
+										第6个选项卡子项-8
+									</li>
+									<li class="mui-table-view-cell">
+										第6个选项卡子项-9
+									</li>
+									<li class="mui-table-view-cell">
+										第6个选项卡子项-10
+									</li>
+									<li class="mui-table-view-cell">
+										第6个选项卡子项-11
+									</li>
+									<li class="mui-table-view-cell">
+										第6个选项卡子项-12
+									</li>
+									<li class="mui-table-view-cell">
+										第6个选项卡子项-13
+									</li>
+									<li class="mui-table-view-cell">
+										第6个选项卡子项-14
+									</li>
+									<li class="mui-table-view-cell">
+										第6个选项卡子项-15
+									</li>
+									<li class="mui-table-view-cell">
+										第6个选项卡子项-16
+									</li>
+									<li class="mui-table-view-cell">
+										第6个选项卡子项-17
+									</li>
+									<li class="mui-table-view-cell">
+										第6个选项卡子项-18
+									</li>
+									<li class="mui-table-view-cell">
+										第6个选项卡子项-19
+									</li>
+									<li class="mui-table-view-cell">
+										第6个选项卡子项-20
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 		<!--<div class="mui-content">
@@ -147,12 +583,21 @@
 				<li>其他</li>
 			</ul>
 		</footer>-->
-	<script src="../../js/mui.min.js"></script>
-	<script>
-		mui.init({
-			swipeBack:true //启用右滑关闭功能
-		});
-	</script>
+		<script src="../../js/mui.min.js"></script>
+		<script>
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			});
+			(function($) {
+				//阻尼系数
+				var deceleration = mui.os.ios ? 0.003 : 0.0009;
+				$('.mui-scroll-wrapper').scroll({
+					bounce: false,
+					indicators: true, //是否显示滚动条
+					deceleration: deceleration
+				});
+			})(mui);
+		</script>
 	</body>
 
 </html>
