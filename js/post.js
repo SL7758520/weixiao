@@ -32,6 +32,10 @@ function AsyncPosts(apiUrl,dataStr, onSuccess,onError) {
 function SyncPost(apiUrl,dataStr, onSuccess,onError) {
     _postData(apiUrl,false, dataStr, onSuccess,onError);
 }  
+function PostRequest(apiUrl,dataStr, onSuccess,onError){
+	postrequest(apiUrl,true, dataStr, onSuccess,onError);
+}
+
 function _postData(apiUrl,isAsync, dataStr, onSuccess,onError){
 	console.log('url路径是：'+apiUrl+'?'+dataStr);
 	var _db = new LocalDatabase();
@@ -73,5 +77,29 @@ function _postDatas(apiUrl,isAsync, dataStr, onSuccess,onError){
         	onError.call(this);
         }   
     });  
+}
+
+function postrequest(apiUrl,isAsync, dataStr, onSuccess,onError){
+	console.log('url路径是：'+apiUrl+'?'+dataStr);
+	var _db = new LocalDatabase();
+//	console.log(_db.getUser().Token);
+	mui.ajax(apiUrl,{
+		headers:{'Authorization':_db.getUser().Token},
+        data:dataStr, 
+        //text
+        dataType:'json',  
+        type:'post',
+        async:isAsync,
+        timeout:10000,  
+        success:function(data){
+        	onSuccess.call(this,data);
+        },
+        error:function(xhr,type,errorThrown){  
+        	plus.nativeUI.closeWaiting();
+            console.log('++++++++++'+errorThrown+'++++'+xhr+"++++++++++"+type);
+            console.log(xhr.responseText);
+        	onError.call(this);
+        }   
+    }); 
 }
 

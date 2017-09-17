@@ -87,8 +87,7 @@
 		</div>
 		<div class="hotel-footer">
 			<button type="button" class="mui-btn mui-btn-warning mui-btn-block" >收藏</button>
-
-			<button type="button" class="mui-btn mui-btn-success mui-btn-block">预约入住</button>
+			<button id="createorder" type="button" class="mui-btn mui-btn-success mui-btn-block">预约入住</button>
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/localDatabase.js"></script>
@@ -102,14 +101,38 @@
 			var user;
 			var _self;
 			var id;
+			var entity ={};
 			mui.plusReady(function() {
 				_self = plus.webview.currentWebview();
 				id = _self.data;
 				console.log(id);
+				initpage();
 				_shop.GetProductModel(id, function(datas) {
-
+				
 				});
 			})
+			function initpage(){
+				document.getElementById('createorder').addEventListener('tap',function(){
+					entity.productId = id;
+					opWindow('createorder.html','createorder.html',entity);
+				});
+			}
+			function opWindow(id,url,entity){
+				mui.openWindow({
+						id: id,
+						url: url,
+						show: {
+							aniShow: 'pop-in'
+						},
+						waiting: {
+							autoShow: true,
+							title: '正在加载...'
+						},
+						extras: {
+							data:entity
+						}
+					});
+		}
 		</script>
 	</body>
 

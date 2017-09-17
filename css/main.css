@@ -16,7 +16,7 @@ height: 35px;
 		    box-shadow: 0 0 0 rgba(0,0,0,0);
 }
 .mui-bar-nav {
-	background-color: #283a8c;
+	background-color: #4cd964;
 	border: none;
 -webkit-box-shadow: 0 0 0 rgba(0,0,0,0);
 		box-shadow: 0 0 0 rgba(0,0,0,0);
@@ -762,7 +762,7 @@ margin-top: 10px;
 	width: 93%;
 	border-radius: 0px;
 }
-.fault_bar .fault_btn_ok{background-color:rgba(84,73,193,0.90);}
+.fault_bar .fault_btn_ok{background-color:#4cd964;}
 .fault_bar a:active {
 	color: #fff;
 	background-color:rgba(152,151,151,0.9);

@@ -238,9 +238,12 @@
 	},
 	"html/shop/product_details.html": {
 		"resources": [
-			"css/mui.min.css"
+			"css/mui.min.css",
+			"css/appfont.css"
 		],
-		"refer": []
+		"refer": [
+			"html/shop/createorder.html"
+		]
 	},
 	"html/member/member_modify.html": {
 		"resources": [
@@ -256,12 +259,17 @@
 		],
 		"refer": []
 	},
+	"html/shop/createorder.html": {
+		"resources": [
+			"css/mui.min.css",
+			"js/mui.picker.min.js",
+			"css/mui.picker.min.css",
+			"js/muifun.js"
+		]
+	},
 	"html/shop/productpic.html": {
 		"resources": [
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"css/mui.min.css",
-			"images/t0-3.jpg"
+			"css/mui.min.css"
 		]
 	}
 }

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="css/appfont.css" rel="stylesheet" />
+		<link href="../../css/main.css" rel="stylesheet" />
+		<link href="css/chart.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/mui.picker.min.css" />
+
+	</head>
+
+	<body>
+		<style>
+			.button {
+				color: #fff;
+				border: 1px solid #4cd964;
+				background-color: #4cd964;
+				font-size: 18px;
+				display: block;
+				width: 100%;
+				margin-bottom: 10px;
+				padding: 15px 0
+			}
+		</style>
+		<div class="windows_bg" id="dialog" style="display: none;">
+			<!--通用弹窗标准-->
+			<div class="windows_box">
+				<!--一按钮状态
+		<div class="info_box">
+		<p>请先选路段，再选备件仓库请先选路段，再选备件仓库请先选路段，再选备件仓库请先选路段，再选备件仓库</p>
+		<a href="#">确定</a>
+		</div>-->
+				<!--两按钮状态-->
+				<div class="info_box two_btn">
+					<p>订单就要完成了，你确定要离开吗？</p>
+					<a href="#" id="casncel">继续填写</a>
+					<a href="#" class="left_line" id="close">确定</a>
+				</div>
+				<!--三按钮状态-->
+				<!--<div class="info_box nbg_bgn">
+		<p>请先选路段，再选备件仓库请先选路段，再选备件仓库请先选路段，再选备件仓库请先选路段，再选备件仓库</p>
+		<a href="#">重试</a>
+		<a href="#">确认绑定</a>
+		<a href="#">暂存</a>
+		</div>-->
+			</div>
+		</div>
+		<!--主界面部分-->
+		<header id="header" class="mui-bar mui-bar-nav">
+			<h1 class="mui-title">预约入住</h1>
+			<a id="back" href="#offCanvasSide" class="mui-icon icon_app_02 mui-action-menu mui-icon-left-nav mui-pull-left"></a>
+		</header>
+
+		<div class="fault_main" style="top:45px">
+			<div class="form_info">
+				<div><label>接送地址</label>
+					<dd><input id="address" type="text" class="input_sys1" placeholder="请填写准确地址，方便我们接送"></dd>
+				</div>
+				<div><label>联系电话</label>
+					<dd><input id="phone" type="text" class="input_sys1" placeholder="请填写联系人电话"></dd>
+				</div>
+			</div>
+			<div class="line_box" style="border-top: 1px solid #e8e8e8;"></div>
+			<div class="form_info">
+				<div><label>时长(月)</label>
+					<dd><input id="quantity" type="number" class="input_sys1" placeholder="未填写"></dd>
+				</div>
+				<div><label>入住人数</label>
+					<dd><input id="peopleAmount" type="number" class="input_sys1" placeholder="未填写"></dd>
+				</div>
+			</div>
+			<div class="line_box"></div>
+			<div class="mui-form">
+				<ul>
+					<li id="dtPicker">
+						<a href="#">预约时间<span id="txtOccurTime">选择</span></a>
+					</li>
+				</ul>
+			</div>
+			<div class="line_box"></div>
+			<div class="mui-form">
+				<ul>
+					<li class="form_tp">备注</li>
+					<li><textarea id="remark" class="text_box" placeholder="请填写需要注意的事项"></textarea></li>
+				</ul>
+			</div>
+			<div class="line_box"></div>
+			<!--<div>
+				<a href="#" class="fault_btn_ok long_btn" id="confirm">
+				<i class="mui-icon icon_cloud"></i><span>确定订单</span>
+			</a>
+		</div>-->
+			<div id="confirm" class="mui-content-padded">
+				<button id="btnSave" type="button" class="mui-btn button">确认订单</button>
+			</div>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/mui.picker.min.js"></script>
+		<script src="../../js/muifun.js"></script>
+		<script src="../../js/localDatabase.js"></script>
+		<script src="../../js/post.js"></script>
+		<script src="../../js/dao.js"></script>
+		<script src="../../js/shop.js"></script>
+		<script>
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			});
+			var _shop = new Shop();
+			var productId;
+			var _self;
+			var bookedDate;
+			mui.plusReady(function() {
+				_self = plus.webview.currentWebview();
+				productId = _self.data.productId;
+				initpage();
+			});
+
+			function initpage() {
+				mui('#dtPicker').on('tap', 'a', function() {
+					var curTime = (new Date()).Format("yyyy-MM-dd hh:mm:ss")
+					//					var curTime = document.getElementById("txtOccurTime").innerHTML;
+					var year = new Date().getFullYear();
+					var opt = {
+						"value": curTime,
+						"beginYear": year - 1,
+						"endYear": year
+					};
+					var picker = new mui.DtPicker(opt);
+					picker.show(function(rs) {
+						document.getElementById("txtOccurTime").innerHTML = rs.text;
+						bookedDate = rs.text;
+						picker.dispose();
+					});
+				});
+				document.getElementById('confirm').addEventListener('tap', function() {
+					if(getValue('address') == '') {
+						mui.toast('请填写接送地址');
+						return;
+					}
+					if(getValue('phone') == '') {
+						mui.toast('请填写联系电话');
+						return;
+					}
+					if(getValue('quantity') == '') {
+						mui.toast('请填写入住时长');
+						return;
+					}
+					if(getValue('peopleAmount') == '') {
+						mui.toast('请填写入住人数');
+						return;
+					}
+					if(document.getElementById("txtOccurTime").innerHTML == '选择') {
+						mui.toast('请选择预约时间');
+						return;
+					}
+					plus.nativeUI.showWaiting();
+					console.log('productId:' + productId + 'address:' + getValue('address') + 'phone:' + getValue('phone') + 'quantity:' + getValue('quantity') + 'peopleAmount:' + getValue('peopleAmount'));
+					_shop.MakeOrder(productId, getValue('quantity'), getValue('peopleAmount'), getValue('address'), getValue('phone'), getValue('remark'),document.getElementById("txtOccurTime").innerHTML, function(result) {
+						console.log(JSON.stringify(result));
+						plus.nativeUI.closeWaiting();
+					}, function() {
+						plus.nativeUI.closeWaiting();
+						mui.toast('请求失败');
+					});
+				});
+				document.getElementById('casncel').addEventListener('tap', function() {
+					dialog.style.display = 'none';
+				});
+				document.getElementById('close').addEventListener('tap', function() {
+					plus.webview.currentWebview().close();
+				});
+				document.getElementById('back').addEventListener('tap', function() {
+					mui.back();
+				});
+			}
+
+			function getValue(ElementId) {
+				return document.getElementById(ElementId).value;
+			}
+
+			//			var inputTap = false;
+			//			mui('.mui-card').on('tap', '.allSelect', function() {
+			//				inputTap = true;
+			//			});
+			//			mui('.mui-card').on('tap', '.mui-navigate-right', function() {
+			//				if(inputTap) {
+			//					inputTap = false;
+			//					return;
+			//				}
+			//				//记录状态
+			//				var li = this.parentNode;
+			//				var ul = this.parentNode.querySelector('.mui-table-view');
+			//				var _style = ul.style.display;
+			//				//关闭同级菜单
+			//				var parent = this.parentNode.parentNode.children;
+			//				for(var i = 0; i < parent.length; i++) {
+			//					if(!!parent[i].querySelector('.mui-table-view')) {
+			//						parent[i].querySelector('.mui-table-view').style.display = '';
+			//						removeClass(parent[i], 'mui-active');
+			//					}
+			//				}
+			//				//更改状态
+			//				if(_style == 'block') {
+			//					ul.style.display = '';
+			//					removeClass(li, 'mui-active');
+			//				} else {
+			//					ul.style.display = 'block';
+			//					addClass(li, 'mui-active');
+			//				}
+			//				//关闭下级子菜单
+			//				var children = ul.children;
+			//				for(var i = 0; i < children.length; i++) {
+			//					var child = children[i].querySelector('.mui-table-view');
+			//					if(!!child) {
+			//						child.style.display = '';
+			//						removeClass(children[i], 'mui-active');
+			//					}
+			//				}
+			//			});
+
+			function hasClass(obj, cls) {
+				return obj.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));
+			}
+
+			function addClass(obj, cls) {
+				if(!this.hasClass(obj, cls)) obj.className += " " + cls;
+			}
+
+			function removeClass(obj, cls) {
+				if(hasClass(obj, cls)) {
+					var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
+					obj.className = obj.className.replace(reg, '');
+				}
+
+			}
+			var old_back = mui.back;
+			mui.back = function(event) {
+				var dialog = document.getElementById('dialog');
+				if(dialog.style.display == 'none') {
+					dialog.style.display = 'block';
+					return;
+				} else {
+					dialog.style.display = 'none';
+					return;
+				}
+				return false;
+			};
+		</script>
+	</body>
+
+</html>
