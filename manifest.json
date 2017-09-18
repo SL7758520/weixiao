@@ -574,7 +574,14 @@
 			},
 			"html/shop/productpic.html": {
 				"resources": [
-					"css/mui.min.css"
+					"css/mui.min.css",
+					"js/mui.min.js",
+					"images/t0-3.jpg",
+					"fonts/mui.ttf",
+					"js/localDatabase.js",
+					"js/dao.js",
+					"js/shop.js",
+					"js/post.js"
 				],
 				"refer": [],
 				"priority": 0
