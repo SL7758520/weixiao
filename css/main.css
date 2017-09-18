@@ -86,10 +86,9 @@ margin-bottom: 60px;
 background-color: #ff2929;
 }
 .mui-segmented-control .mui-control-item {
-
-color: #ff2929;
-border-color: #ff2929;
-border-left: 1px solid #ff2929;
+color: #000;
+border-color: #aab2d7;
+border-left: 1px solid #aab2d7;
 }
 .mui-segmented-control.mui-segmented-control-inverted .mui-control-item {
     color: #888787;
@@ -1463,3 +1462,8 @@ padding: 15px 15px;
 	color: #f35c53;
 	font-weight: 300;
 }
+.mui-segmented-control .mui-control-item.mui-active {
+color: #000;
+background-color: #4cd964;
+}
+

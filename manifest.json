@@ -222,7 +222,8 @@
 					"member.html",
 					"shop.html",
 					"health.html",
-					"person_center.html"
+					"person_center.html",
+					"html/member/shop_order_list.html"
 				],
 				"priority": 1
 			},
@@ -582,6 +583,17 @@
 					"js/dao.js",
 					"js/shop.js",
 					"js/post.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/member/shop_order_list.html": {
+				"resources": [
+					"css/mui.min.css",
+					"css/appfont.css",
+					"js/mui.pullToRefresh.js",
+					"js/mui.pullToRefresh.material.js",
+					"js/member.js"
 				],
 				"refer": [],
 				"priority": 0
