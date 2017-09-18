@@ -132,13 +132,13 @@ var Shop = (function() {
 				});
 		};
 		//获取店铺图片列表
-		this.GetShopPhotos = function(pageIndex,pageSize, shopId,typeId,callback) {
+		this.GetShopPhotos = function( shopId,photoTypeId,isAd,callback) {
 			if(!_getNetwork()) {
 				mui.toast("没有网络连接，请稍后再试！");
 				return;
 			}
 			var user = _db.getUser();
-			AsyncPost(API_SHOP+"GetShopPhotos", "pageIndex=" + pageIndex + "&pageSize=" +pageSize+"&shopId=" + shopId + "&typeId=" +typeId,
+			AsyncPost(API_SHOP+"GetShopPhotos", "&shopId=" + shopId + "&photoTypeId=" +photoTypeId+"&isAd="+isAd,
 				function(result) {
 					if(callback) {
 						console.log('接口返回数据：' + JSON.stringify(result));

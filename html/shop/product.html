@@ -261,12 +261,12 @@
 					}
 				});
 				document.getElementById("image").addEventListener("tap",function(event){
-					gotoHtml("productpic.html", '');
+					gotoHtml("productpic.html", shopId);
 				});
-				//				photoUrl= _dataAccess.getPhotoUrl();
-				//				_shop.getPhotoUrl(function(datas){
-				//					photoUrl=datas;
-				//				});
+//				photoUrl= _dataAccess.getPhotoUrl();
+								_shop.getPhotoUrl(function(datas){
+									photoUrl=datas;
+								});
 
 				_shop.GetProducts(pageIndex, pageSize, 1, 1, function(datas) {
 					if(datas.status == 1) {
