@@ -173,7 +173,7 @@ var Shop = (function() {
 				mui.toast("没有网络连接，请稍后再试！");
 				return;
 			}
-			PostRequest(API_SHOP+'MakeOrder','productId='+productId+'&quantity='+quantity+'&peopleAmount='+peopleAmount+'&address='+address+'&phone='+phone+'&remark='+remark+'&bookedDate='+bookedDate,function(result){
+			PostRequest(API_SHOP+'MakeOrder?productId='+productId+'&quantity='+quantity+'&peopleAmount='+peopleAmount+'&address='+address+'&phone='+phone+'&remark='+remark+'&bookedDate='+bookedDate,'',function(result){
 				if (onSuccess) {
 					onSuccess.call(this,result);
 				}

@@ -111,6 +111,7 @@
 				swipeBack: true //启用右滑关闭功能
 			});
 			var _shop = new Shop();
+			var _dataAccess = new DataAccess();
 			var productId;
 			var _self;
 			var bookedDate;
@@ -121,6 +122,7 @@
 			});
 
 			function initpage() {
+				document.getElementById('phone').value = _dataAccess.getUser().Mobile;
 				mui('#dtPicker').on('tap', 'a', function() {
 					var curTime = (new Date()).Format("yyyy-MM-dd hh:mm:ss")
 					//					var curTime = document.getElementById("txtOccurTime").innerHTML;
@@ -163,6 +165,12 @@
 					_shop.MakeOrder(productId, getValue('quantity'), getValue('peopleAmount'), getValue('address'), getValue('phone'), getValue('remark'),document.getElementById("txtOccurTime").innerHTML, function(result) {
 						console.log(JSON.stringify(result));
 						plus.nativeUI.closeWaiting();
+						if(result.status==1){
+							mui.toast('创建订单成功');
+							plus.webview.currentWebview().close();
+						}else{
+							mui.toast('创建订单失败，请确认信息是否正确');
+						}
 					}, function() {
 						plus.nativeUI.closeWaiting();
 						mui.toast('请求失败');
