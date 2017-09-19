@@ -294,7 +294,8 @@
 			"css/appfont.css",
 			"js/mui.pullToRefresh.js",
 			"js/mui.pullToRefresh.material.js",
-			"js/member.js"
+			"js/member.js",
+			"fonts/mui.ttf"
 		]
 	}
 }

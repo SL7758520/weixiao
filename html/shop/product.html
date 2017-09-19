@@ -173,6 +173,7 @@
 		</header>-->
 		<header class="mui-bar mui-bar-transparent" style="border-top-width: 0px;">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 id="Tab_title" class="mui-title" style="color: #007aff;" >导航栏</h1>
 			<button id="Selectall" type="button" class="mui-btn mui-btn-link mui-pull-right color_white">收藏</button>
 		</header>
 		<div class="mui-content">
@@ -206,20 +207,38 @@
 			<div class="fg_title mui-collapse">
 				交通配套
 			</div>
+			<div id="TrafficDesc" class="Desc">
+
+			</div>
 			<div class="fg_title">
 				医院配套
+			</div>
+			<div id="HospitalDesc" class="Desc">
+
 			</div>
 			<div class="fg_title">
 				购物配套
 			</div>
+			<div id="ShoppingDesc" class="Desc">
+
+			</div>
 			<div class="fg_title">
 				旅游配套
+			</div>
+			<div id="TourismDesc" class="Desc">
+
 			</div>
 			<div class="fg_title">
 				公共配套
 			</div>
+			<div id="PublicDesc" class="Desc">
+
+			</div>
 			<div class="fg_title">
 				教育配套
+			</div>
+			<div id="EducationalDesc" class="Desc">
+
 			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
@@ -252,10 +271,19 @@
 					if(datas.status == 1) {
 						shopInfo = datas.result;
 						document.getElementById("title").innerHTML = shopInfo.Name;
+						document.getElementById("Tab_title").innerHTML = shopInfo.Name;
 						document.getElementById("DistanceDesc").innerHTML = shopInfo.DistanceDesc;
 						document.getElementById("BottomPrice").innerHTML = shopInfo.BottomPrice+"元/月起";
 						document.getElementById("info").innerHTML = shopInfo.Intro;
-						document.getElementById("CourtyardFacilityDesc").innerHTML = shopInfo.CourtyardFacilityDesc;
+						setHtml("CourtyardFacilityDesc",shopInfo.CourtyardFacilityDesc);
+						setHtml("TrafficDesc",shopInfo.TrafficDesc);
+						setHtml("HospitalDesc",shopInfo.HospitalDesc);
+						setHtml("ShoppingDesc",shopInfo.ShoppingDesc);
+						setHtml("TourismDesc",shopInfo.TravelDesc);
+						setHtml("PublicDesc",shopInfo.PublicServiceDesc);
+						setHtml("EducationalDesc",shopInfo.SchoolDesc);
+
+						
 					} else {
 						mui.toast(datas.message);
 					}
@@ -264,9 +292,9 @@
 					gotoHtml("productpic.html", shopId);
 				});
 //				photoUrl= _dataAccess.getPhotoUrl();
-								_shop.getPhotoUrl(function(datas){
-									photoUrl=datas;
-								});
+//								_shop.getPhotoUrl(function(datas){
+//									photoUrl=datas;
+//								});
 
 				_shop.GetProducts(pageIndex, pageSize, 1, 1, function(datas) {
 					if(datas.status == 1) {
@@ -277,7 +305,10 @@
 					}
 				});
 			});
-
+			
+			function setHtml(id,value){
+				document.getElementById(id).innerHTML=value;
+			}
 			function addList(datas) {
 				div.innerHTML = "";
 				for(var i = 0; i < datas.length; i++) {

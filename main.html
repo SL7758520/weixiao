@@ -35,7 +35,7 @@
 				<span class="mui-icon icon_app_34" id="t1icon"></span>
 				<span class="mui-tab-label">健康问诊</span>
 			</a>
-			<a id="t4" class="mui-tab-item" href="health.html">
+			<a id="t4" class="mui-tab-item" href='html/member/shop_order_list.html'>
 				<span class="mui-icon icon_app_34" id="t1icon"></span>
 				<span class="mui-tab-label">我的订单</span>
 			</a>
@@ -57,7 +57,7 @@
 			mui.init({
 				swipeBack: true
 			});
-			var subpages = ['home.html', 'health.html', 'shop.html', 'person_center.html'];
+			var subpages = ['home.html', 'health.html','html/member/shop_order_list.html', 'shop.html', 'person_center.html'];
 			var subpage_style = {
 				top: '0px',
 				bottom: '60px'
@@ -69,21 +69,21 @@
 			// H5 plus事件处理
 			function plusReady() {
 				// 设置系统状态栏背景为红色
-//				plus.navigator.setStatusBarBackground('#b8b2b2');
-				document.getElementById('t4').addEventListener('tap',function(){
-					mui.openWindow({
-						id:'html/member/shop_order_list.html',
-						url:'html/member/shop_order_list.html',
-						show: {
-							aniShow: 'pop-in'
-						},
-						waiting: {
-							autoShow: true,
-							title: '正在加载...'
-						},
-						extras: {}
-					});
-				});
+				plus.navigator.setStatusBarBackground('#4cd964');
+//				document.getElementById('t4').addEventListener('tap',function(){
+//					mui.openWindow({
+//						id:'html/member/shop_order_list.html',
+//						url:'html/member/shop_order_list.html',
+//						show: {
+//							aniShow: 'pop-in'
+//						},
+//						waiting: {
+//							autoShow: true,
+//							title: '正在加载...'
+//						},
+//						extras: {}
+//					});
+//				});
 			}
 			if(window.plus) {
 				plusReady();
