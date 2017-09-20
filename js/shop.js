@@ -181,6 +181,19 @@ var Shop = (function() {
 				mui.toast('没有网络连接，请稍后再试！');
 			});
 		}
+		this.OrderCancel = function(orderId,reason,onSuccess,onError){
+			if(!_getNetwork()) {
+				mui.toast("没有网络连接，请稍后再试！");
+				return;
+			}
+			PostRequest(API_SHOP+'OrderCancel?orderId='+orderId+'&reason='+reason,'',function(result){
+				if (onSuccess) {
+					onSuccess.call(this,result);
+				}
+			},function(){
+				mui.toast('没有网络连接，请稍后再试！');
+			});
+		}
 
 	}
 	return access;
