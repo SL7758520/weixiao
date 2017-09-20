@@ -8,6 +8,7 @@
 		<link href="../../css/main.css" rel="stylesheet" />
 		<link href="../../css/appfont.css" rel="stylesheet" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/font-awesome.min.css" rel="stylesheet" />
 		<style type="text/css">
 			html,
 			body {
@@ -56,6 +57,19 @@
 				display: block;
 				-webkit-box-sizing: border-box;
 				box-sizing: border-box;
+			}
+			
+			.gray-img {
+				background-image: -webkit-linear-gradient(top, rgba(59, 59, 59, .6), rgba(27, 27, 27, .6), rgba(50, 50, 50, .4), rgba(31, 31, 31, .4));
+				position: absolute;
+				top: 48px;
+				right: 20px;
+				width: 20px;
+				height: 20px;
+				display: block;
+				-webkit-box-sizing: border-box;
+				box-sizing: border-box;
+				text-align: center;
 			}
 			
 			.first-line,
@@ -163,6 +177,30 @@
 				background-color: #FFFFFF;
 				padding-left: 15px;
 			}
+			
+			.fg_title {
+				margin-top: 10px;
+				border-bottom: 1px solid #EDEDED;
+			}
+			
+			i.mui-media-object {
+				color: #ccc;
+				font-size: 18px;
+			}
+			
+			.hotel-right-text {
+				position: absolute;
+				font-size: 14px;
+				height: 16px;
+				line-height: 16px;
+				right: 40px;
+				top: 50%;
+				margin-top: -8px;
+			}
+			
+			.hotel-color-blue {
+				color: #099FDE !important;
+			}
 		</style>
 	</head>
 
@@ -173,13 +211,16 @@
 		</header>-->
 		<header class="mui-bar mui-bar-transparent" style="border-top-width: 0px;">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 id="Tab_title" class="mui-title" style="color: #007aff;" >导航栏</h1>
+			<h1 id="Tab_title" class="mui-title" style="color: #007aff;">导航栏</h1>
 			<button id="Selectall" type="button" class="mui-btn mui-btn-link mui-pull-right color_white">收藏</button>
 		</header>
 		<div class="mui-content">
 			<div class="position-a">
 				<div id="image" class="position-atop">
-					<img src="../../images/cbd.jpg" alt="">
+					<img id="Shop_img" src="../../images/cbd.jpg" alt="">
+					<div class="gray-img">
+						6
+					</div>
 					<div class="gray-lable ">
 						<div class="first-line">
 							<span id="title" class="bigtitle">三峡长海游轮5日游</span>
@@ -193,18 +234,36 @@
 				基本信息
 			</div>
 			<div id="info" class="info"></div>
-			<div class="fg_title" style="margin-top: 10px;">
+			<ul class="mui-table-view">
+				<!--<li class="mui-table-view-cell mui-media">
+					<i class="fa fa-map-marker mui-media-object mui-pull-left"></i>
+					<div class="mui-media-body mui-navigate-right">
+						西客站南广场东侧
+						<p>点击在地图中查看</p>
+						<span class="hotel-color-blue hotel-right-text">地图</span>
+					</div>
+				</li>-->
+				<li class="mui-table-view-cell mui-media">
+					<i class="fa fa-phone mui-media-object mui-pull-left"></i>
+					<div class="mui-media-body mui-navigate-right">
+						010-88888888
+						<p>点击拨打电话</p>
+						<span class="hotel-color-blue hotel-right-text">联系商家</span>
+					</div>
+				</li>
+			</ul>
+			<div class="fg_title">
 				床位清单
 			</div>
 			<ul id="productList" class="mui-table-view content">
 			</ul>
-			<div class="fg_title" style="margin-top: 10px;">
+			<div class="fg_title">
 				环境配套
 			</div>
 			<div id="CourtyardFacilityDesc" class="Desc">
 
 			</div>
-			<div class="fg_title mui-collapse">
+			<div class="fg_title">
 				交通配套
 			</div>
 			<div id="TrafficDesc" class="Desc">
@@ -266,35 +325,33 @@
 				_self = plus.webview.currentWebview();
 				div = document.getElementById("productList");
 				shopId = _self.data;
-				console.log(shopId);
+				photoUrl=_self.photoUrl;
+				console.log(shopId+"------------"+photoUrl);
 				_shop.GetShopModel(shopId, function(datas) {
 					if(datas.status == 1) {
 						shopInfo = datas.result;
 						document.getElementById("title").innerHTML = shopInfo.Name;
 						document.getElementById("Tab_title").innerHTML = shopInfo.Name;
+						document.getElementById("Shop_img").src=photoUrl+shopInfo.PhotoUrl;
 						document.getElementById("DistanceDesc").innerHTML = shopInfo.DistanceDesc;
-						document.getElementById("BottomPrice").innerHTML = shopInfo.BottomPrice+"元/月起";
+						document.getElementById("BottomPrice").innerHTML = shopInfo.BottomPrice + "元/月起";
 						document.getElementById("info").innerHTML = shopInfo.Intro;
-						setHtml("CourtyardFacilityDesc",shopInfo.CourtyardFacilityDesc);
-						setHtml("TrafficDesc",shopInfo.TrafficDesc);
-						setHtml("HospitalDesc",shopInfo.HospitalDesc);
-						setHtml("ShoppingDesc",shopInfo.ShoppingDesc);
-						setHtml("TourismDesc",shopInfo.TravelDesc);
-						setHtml("PublicDesc",shopInfo.PublicServiceDesc);
-						setHtml("EducationalDesc",shopInfo.SchoolDesc);
+						setHtml("CourtyardFacilityDesc", shopInfo.CourtyardFacilityDesc);
+						setHtml("TrafficDesc", shopInfo.TrafficDesc);
+						setHtml("HospitalDesc", shopInfo.HospitalDesc);
+						setHtml("ShoppingDesc", shopInfo.ShoppingDesc);
+						setHtml("TourismDesc", shopInfo.TravelDesc);
+						setHtml("PublicDesc", shopInfo.PublicServiceDesc);
+						setHtml("EducationalDesc", shopInfo.SchoolDesc);
 
-						
 					} else {
 						mui.toast(datas.message);
 					}
 				});
-				document.getElementById("image").addEventListener("tap",function(event){
-					gotoHtml("productpic.html", shopId);
+				document.getElementById("image").addEventListener("tap", function(event) {
+					gotoHtml("productpic.html", shopId,photoUrl);
 				});
-//				photoUrl= _dataAccess.getPhotoUrl();
-//								_shop.getPhotoUrl(function(datas){
-//									photoUrl=datas;
-//								});
+				
 
 				_shop.GetProducts(pageIndex, pageSize, 1, 1, function(datas) {
 					if(datas.status == 1) {
@@ -305,10 +362,11 @@
 					}
 				});
 			});
-			
-			function setHtml(id,value){
-				document.getElementById(id).innerHTML=value;
+
+			function setHtml(id, value) {
+				document.getElementById(id).innerHTML = value;
 			}
+
 			function addList(datas) {
 				div.innerHTML = "";
 				for(var i = 0; i < datas.length; i++) {
@@ -329,13 +387,13 @@
 				li.innerHTML = '<div class="item"><div class="img"><img src="../../images/t0-3.jpg"></div><div class="text"><div class="information"><h4>' + entity.CategoryName + '</h4><h5>' + HasPickUp + '</h5><h5 class="mui-ellipsis">' + entity.ShortDescription + '</h5></div><div class="price"><span class="new-price">￥' + entity.Price + '/月</span><div id="" style="display: flex;align-items: center;margin-top: 5px;"><img src="../../images/heart@2x.png" style="width: 15px;height: 15px;margin-left: 5px;" /><h5 style="margin-left: 5px;">' + entity.CollectCounts + '人关注</h5></div></div></div></div>';
 				li.addEventListener("tap", function(event) {
 					console.log("AAAAAAAAAAA");
-					gotoHtml("product_details.html", entity.Id);
+					gotoHtml("product_details.html", entity.Id,photoUrl);
 				});
 
 				return li;
 			}
 
-			function gotoHtml(u, datas) {
+			function gotoHtml(u, datas,photoUrl) {
 				mui.openWindow({
 					url: u,
 					id: u,
@@ -349,6 +407,7 @@
 					},
 					extras: {
 						data: datas,
+						photoUrl:photoUrl,
 					}
 				});
 			}

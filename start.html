@@ -13,13 +13,46 @@
 			<img src="images/cbd.jpg" />
 		</div>
 		<script src="js/mui.min.js"></script>
+		<script src="js/post.js"></script>
+		<script src="js/localDatabase.js"></script>
+		<script src="js/dao.js"></script>
+		<script src="js/account.js"></script>
+		<script src="js/mui.enterfocus.js"></script>
+		<script src="js/app.js"></script>
 		<script type="text/javascript">
 			mui.init();
+			var _dataAccess = new DataAccess();
+				var _account = new Account();
 			mui.plusReady(function() {
-				console.log("AAAAAAAAAAAAAAAAA");
 				setTimeout(function() {
-					console.log("AAAAAAAAAAAAAAAAA");
-					mui.openWindow({
+					
+					var settings = app.getSettings();
+					if(!settings.autoLogin) {
+						settings.autoLogin = true;
+					}
+					var toMain = function() {
+						//						$.fire(mainPage, 'show', null);
+						setTimeout(function() {
+							mui.openWindow({
+								id: 'main.html',
+								url: 'main.html',
+								show: {
+									aniShow: 'pop-in'
+								},
+								waiting: {
+									autoShow: false
+								}
+							});
+						}, 0);
+					};
+					console.log(JSON.stringify(_dataAccess.getUser()) + "--------" + settings.autoLogin);
+					//					settings.autoLogin = false;
+					if(JSON.stringify(_dataAccess.getUser()) != '{}' && settings.autoLogin) {
+						console.log("CCCCCCC");
+						toMain();
+					} else {
+						console.log("AAAAAAAAAAAAAAAAA");
+						mui.openWindow({
 							url: 'html/account/login.html',
 							id: 'login',
 							preload: true,
@@ -33,6 +66,7 @@
 								autoShow: false
 							}
 						});
+					}
 				}, 2000);
 			})
 		</script>
