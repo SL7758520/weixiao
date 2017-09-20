@@ -117,6 +117,9 @@
 			.font{
 				font-size: 14px;
 			}
+			.tableli{
+				padding-right: 15px !important;
+			}
 		</style>
 	</head>
 
@@ -164,7 +167,7 @@
 						<div class="mui-scroll-wrapper">
 							<div id="scroll0" class="mui-scroll">
 								<ul class="mui-table-view mui-table-view-chevron">
-									<li class='mui-table-view-cell' style="padding-right: 15px !important;">
+									<li class='mui-table-view-cell tableli'>
 											<h6 class="font" style="float: left; width: 80%;">兰州市安宁区##养老院</h6>
 											<h6 class="font" style="float: left; width: 20%;">已受理</h6>
 											<!--<div class="contact_box">
@@ -177,7 +180,7 @@
 												<button class="buttondiv">删除订单</button>
 											</div>
 									</li>
-									<li class='mui-table-view-cell' style="padding-right: 15px !important;">
+									<li class='mui-table-view-cell tableli'>
 											<h6 class="font" style="float: left; width: 80%;">兰州市安宁区##养老院</h6>
 											<h6 class="font" style="float: left; width: 20%;">已受理</h6>
 											<h6 class="font" style="width: 100%;">[普通床位]*1</h6>
@@ -186,7 +189,7 @@
 												<button class="buttondiv">删除订单</button>
 											</div>
 									</li>
-									<li class='mui-table-view-cell' style="padding-right: 15px !important;">
+									<li class='mui-table-view-cell tableli'>
 											<h6 class="font" style="float: left; width: 80%;">兰州市安宁区##养老院</h6>
 											<h6 class="font" style="float: left; width: 20%;">已受理</h6>
 											<h6 class="font" style="width: 100%;">[普通床位]*1</h6>
@@ -284,13 +287,13 @@
 			}
 
 			function backListener() {
-				document.getElementById("backBtn").addEventListener("tap", function() {
-					var task = plus.webview.getWebviewById('pages/task.html');
-					mui.fire(task, "finishAllot", {
-						finishAllot: true
-					});
-					mui.back();
-				})
+//				document.getElementById("backBtn").addEventListener("tap", function() {
+//					var task = plus.webview.getWebviewById('pages/task.html');
+//					mui.fire(task, "finishAllot", {
+//						finishAllot: true
+//					});
+//					mui.back();
+//				})
 			}
 
 			;
@@ -421,9 +424,18 @@
 								div.appendChild(card);
 							}
 						}
+						/*					<li class='mui-table-view-cell tableli'>
+											<h6 class="font" style="float: left; width: 80%;">兰州市安宁区##养老院</h6>
+											<h6 class="font" style="float: left; width: 20%;">已受理</h6>
+											<h6 class="font" style="width: 100%;">[普通床位]*1</h6>
+											<h5 class="font" style="width: 100%;">预约：2017年12月11日入住</h5>
+											<div style="float: right;">
+												<button class="buttondiv">删除订单</button>
+											</div>
+									</li>*/
 						var createCard = function(index, entity) {
 							var card = document.createElement("li");
-							card.className = "mui-table-view-cell";
+							card.className = "mui-table-view-cell tableli";
 							card.setAttribute("data-value", entity.CLEANRID);
 							var startDate = string2date(entity.BEGINDATE).Format("yyyy-MM-dd");
 							var endDate = string2date(entity.ENDDATE).Format("yyyy-MM-dd");
