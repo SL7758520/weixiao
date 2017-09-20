@@ -393,19 +393,34 @@
 							card.setAttribute("data-value", entity.Id);
 							var status = Status[entity.OrderStatus];
 							if (index==0) {
-								var buttonnum = '<div style="float: right;"><button class="buttondiv">取消订单</button></div>';
+								var buttonnum = '<div style="float: right;"><button class="buttondiv" id="cancel">取消订单</button></div>';
 							}else if(index==1) {
-								var buttonnum = '<div style="float: right;"><button class="buttondiv">支付</button><button class="buttondiv">取消订单</button></div>';
+								var buttonnum = '<div style="float: right;"><button class="buttondiv" id="confrim">支付</button><button class="buttondiv" id="cancel">取消订单</button></div>';
 							}else if (index==2) {
-								var buttonnum = '<div style="float: right;"><button class="buttondiv">完成入住</button><button class="buttondiv">申请退款</button></div>';
+								var buttonnum = '<div style="float: right;"><button class="buttondiv" id="cancel">申请退款</button></div>';
 							}else{
-								var buttonnum = '<div style="float: right;"><button class="buttondiv">入住评价</button><button class="buttondiv">申请退款</button></div>';
+								var buttonnum = '<div style="float: right;"><button class="buttondiv" id="cancel">入住评价</button></div>';
 							}
 //							var startDate = string2date(entity.BEGINDATE).Format("yyyy-MM-dd");
 //							var endDate = string2date(entity.ENDDATE).Format("yyyy-MM-dd");
 							card.innerHTML = '<h6 class="font" style="float: left; width: 80%;">'+entity.ShopName+'</h6><h6 class="font" style="float: left; width: 20%;">'+status+'</h6><h6 class="font" style="width: 100%;">'+
 											 entity.ProductName+'</h6><h5 class="font" style="width: 100%;">预约：'+entity.BookedDate+'入住</h5>'+buttonnum;
-//							card.querySelector('img').addEventListener('tap', function() {
+							mui(this).on('tap','button',function(){
+								if (this.id=='confrim') {
+									mui.toast('支付');
+								} else{
+									if (index==0) {
+										mui.toast('取消订单');
+									}else if (index==1) {
+										mui.toast('待支付的取消订单');
+									}else if (index==2) {
+										mui.toast('申请退款');
+									}else if (index==3) {
+										
+									}
+								}
+							})
+//							card.querySelectorall('img').addEventListener('tap', function() {
 //								mui.openWindow({
 //									id: 'device_map.html',
 //									url: 'device_map.html',

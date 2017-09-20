@@ -51,6 +51,10 @@
 				orderId = _self.data;
 				document.getElementById('btnAllot').addEventListener('tap',function(){
 					var reason = document.getElementById('txtDescription').value;
+					if (reason<5) {
+						mui.toast('请至少填写5个文字');
+						return;
+					}
 					shop.OrderCancel(orderId,reason,function(result){
 						console.log(JSON.stringify(result));
 					});

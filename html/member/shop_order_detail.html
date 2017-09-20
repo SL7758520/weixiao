@@ -303,6 +303,11 @@
 					}
 				});
 			}
+			window.addEventListener("cancelOrder", function(e) {
+				var list = plus.webview.getWebviewById('html/member/shop_order_list.html');
+				mui.fire(list,'listRefresh'+status);
+				mui.back();
+			});
 		</script>
 	</body>
 
