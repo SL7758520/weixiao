@@ -21,7 +21,8 @@
 			"js/localDatabase.js",
 			"js/dao.js",
 			"js/post.js",
-			"fonts/mui.ttf"
+			"fonts/mui.ttf",
+			"html/member/shop_order_list.html"
 		]
 	},
 	"html/account/login.html": {
@@ -321,7 +322,27 @@
 			"js/mui.pullToRefresh.js",
 			"js/mui.pullToRefresh.material.js",
 			"js/member.js",
-			"fonts/mui.ttf"
+			"fonts/mui.ttf",
+			"js/localDatabase.js",
+			"css/main.css",
+			"js/mui.min.js",
+			"js/dao.js",
+			"js/post.js"
+		],
+		"refer": [
+			"html/member/shop_order_detail.html"
+		]
+	},
+	"html/member/shop_order_detail.html": {
+		"resources": [
+			"css/main.css",
+			"css/appfont.css",
+			"js/mui.min.js",
+			"fonts/icomoon.ttf",
+			"css/mui.min.css"
+		],
+		"refer": [
+			"html/shop/product.html"
 		]
 	}
 }

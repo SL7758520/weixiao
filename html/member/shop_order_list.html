@@ -97,6 +97,29 @@
 			.mui-slider-indicator.mui-segmented-control {
 				background-color: #efeff4;
 			}
+			li>h6 {
+				text-align: left;
+			}
+			.nomargin {
+				-webkit-margin-before: 0px;
+				-webkit-margin-after: 0px;
+				-webkit-margin-start: 0px;
+				-webkit-padding-start: 10px;
+				border-bottom: 1px solid rgba(204, 204, 204, 0.8);
+			}
+			.buttondiv{
+				border: 1px solid #4cd964;
+				font-size: 14px;
+				text-align: center;
+				border-radius: 3px;
+				padding: 6px 10px 4px 10px;
+			}
+			.font{
+				font-size: 14px;
+			}
+			.tableli{
+				padding-right: 15px !important;
+			}
 		</style>
 	</head>
 
@@ -128,39 +151,27 @@
 					</div>-->
 					<div class="tab_menu" style="background-color: #FFFFFF;">
 						<div id="segmentedControl" class="mui-segmented-control">
-						<a id="a0" class="mui-control-item mui-active" href="#item0mobile">待受理</a>
-						<a id="a1" class="mui-control-item" href="#item1mobile">待支付</a>
-						<a id="a2" class="mui-control-item" href="#item2mobile">
-							待入住<span id="t2"></span>
-						</a>
-						<a id="a3" class="mui-control-item" href="#item3mobile">
-							已入住<span id="t3"></span>
-						</a>
+							<a id="a0" class="mui-control-item mui-active" href="#item0mobile">待受理</a>
+							<a id="a1" class="mui-control-item" href="#item1mobile">待支付</a>
+							<a id="a2" class="mui-control-item" href="#item2mobile">
+								待入住<span id="t2"></span>
+							</a>
+							<a id="a3" class="mui-control-item" href="#item3mobile">
+								已入住<span id="t3"></span>
+							</a>
+						</div>
 					</div>
 				</div>
-				</div>
 				<div class="mui-slider-group" style="padding-bottom: 60px;">
-					<div id="item0mobile" class="mui-slider-item mui-control-content mui-active">
+					<div id="item0mobile" class="mui-slider-item mui-control-content mui-active" style="height: 100%;">
 						<div class="mui-scroll-wrapper">
 							<div id="scroll0" class="mui-scroll">
 								<ul class="mui-table-view mui-table-view-chevron">
-									<!--<li class="mui-table-view-cell">
-										<a class="mui-navigate-right" href="examples/accordion.html">
-											accordion（折叠面板）<br />
-											AAAAA
-										</a>
-									</li>
-									<li class="mui-table-view-cell">
-										<a class="mui-navigate-right" href="examples/accordion.html">
-											accordion（折叠面板）<br />
-											AAAAA
-										</a>
-									</li>-->
 								</ul>
 							</div>
 						</div>
 					</div>
-					<div id="item1mobile" class="mui-slider-item mui-control-content">
+					<div id="item1mobile" class="mui-slider-item mui-control-content" style="height: 100%;">
 						<div class="mui-scroll-wrapper">
 							<div id="scroll1" class="mui-scroll">
 								<ul class="mui-table-view mui-table-view-chevron">
@@ -174,7 +185,7 @@
 							</div>
 						</div>
 					</div>
-					<div id="item2mobile" class="mui-slider-item mui-control-content">
+					<div id="item2mobile" class="mui-slider-item mui-control-content" style="height: 100%;">
 						<div class="mui-scroll-wrapper">
 							<div id="scroll2" class="mui-scroll">
 								<ul class="mui-table-view mui-table-view-chevron">
@@ -188,14 +199,14 @@
 							</div>
 						</div>
 					</div>
-					<div id="item3mobile" class="mui-slider-item mui-control-content">
+					<div id="item3mobile" class="mui-slider-item mui-control-content" style="height: 100%;">
 						<div class="mui-scroll-wrapper">
 							<div id="scroll3" class="mui-scroll">
 								<ul class="mui-table-view mui-table-view-chevron"></ul>
 							</div>
 						</div>
 					</div>
-				
+
 				</div>
 			</div>
 		</div>
@@ -206,7 +217,7 @@
 		<script src="../../js/post.js"></script>
 		<script src="../../js/localDatabase.js"></script>
 		<script src="../../js/dao.js"></script>
-		<script src="../../js/member.js" ></script>
+		<script src="../../js/member.js"></script>
 		<!--<script src="../../js/app/post.js"></script>
 		<script src="../../js/app/muifun.js"></script>
 		<script src="../../js/app/localDatabase.js"></script>
@@ -214,7 +225,7 @@
 		<script src="../../js/hmmp.extend.js"></script>-->
 		<script>
 			mui.init();
-//			console.log(("2017-4-10 17:06:00").replace(new RegExp("-","gm"),'/'));
+			//			console.log(("2017-4-10 17:06:00").replace(new RegExp("-","gm"),'/'));
 			function selectTab(index) {
 				mui('#slider').slider().gotoItem(index);
 				var tab = document.getElementById("a" + index);
@@ -224,130 +235,131 @@
 				}
 				tab.classList.add('mui-active');
 			}
+
 			var member = new Member();
 			var _dataAccess = new DataAccess();
 			var isonly = false;
 			var pageObjects = [];
+			var Status = ['待受理','待支付','待入住','已入住'];
 			//设置tab的选择
 			function selectTabs(currentIndex) {
 				var scrollIndex = '#scroll' + currentIndex;
 				mui(scrollIndex).pullToRefresh().pullDownLoading();
 				selectTab(currentIndex);
 			}
+
 			//界面滑动监听
 			var cleanSLidListener = function() {
 				document.getElementById('slider').addEventListener('slide', function(e) {
 					//					console.log("当前滑动的数据" + e.detail.slideNumber);
 					selectTabs(e.detail.slideNumber);
 				});
-
 			}
 
 			function backListener() {
-				document.getElementById("backBtn").addEventListener("tap", function() {
-					var task = plus.webview.getWebviewById('pages/task.html');
-					mui.fire(task, "finishAllot", {
-						finishAllot: true
-					});
-					mui.back();
-				})
+//				document.getElementById("backBtn").addEventListener("tap", function() {
+//					var task = plus.webview.getWebviewById('pages/task.html');
+//					mui.fire(task, "finishAllot", {
+//						finishAllot: true
+//					});
+//					mui.back();
+//				})
+			}
 
-			};
+			;
 			mui.plusReady(function() {
-				//获取当前用户拥有权限的路段
-				window.addEventListener("listRefresh0", function(e) {
-					mui('#scroll0').pullToRefresh().pullDownLoading();
-					selectTab(0);
-				});
-				window.addEventListener("listRefresh1", function(e) {
-					mui('#scroll1').pullToRefresh().pullDownLoading();
-					selectTab(1);
-				});
-				window.addEventListener("listRefresh2", function(e) {
-					mui('#scroll2').pullToRefresh().pullDownLoading();
-					selectTab(2);
-				});
-				window.addEventListener("listRefresh3", function(e) {
-					mui('#scroll3').pullToRefresh().pullDownLoading();
-					selectTab(3);
-				});
-				cleanSLidListener()
-				backListener()
-			});
-
-			(function($) {
-				//阻尼系数
-				var deceleration = mui.os.ios ? 0.003 : 0.0009;
-				$('.mui-scroll-wrapper').scroll({
-					bounce: false,
-					indicators: true, //是否显示滚动条
-					deceleration: deceleration
-				});
-				//打开窗体
-				function openWindow(index, entity) { //来源，数据实体
-					var id = 'cleaning_edit.html';
-					var url = 'cleaning_edit.html';
-					if(index != 0) {
-						id = 'cleaning_info.html';
-						url = 'cleaning_info.html';
-					}
-					mui.openWindow({
-						id: id,
-						url: url,
-						show: {
-							aniShow: 'pop-in'
-						},
-						waiting: {
-							autoShow: true,
-							title: '正在加载...'
-						},
-						extras: {
-							data: entity,
-							from: index //来源：0:保洁中；1:审核中；2：完成
-						}
+					//获取当前用户拥有权限的路段
+					window.addEventListener("listRefresh0", function(e) {
+						mui('#scroll0').pullToRefresh().pullDownLoading();
+						selectTab(0);
 					});
+					window.addEventListener("listRefresh1", function(e) {
+						mui('#scroll1').pullToRefresh().pullDownLoading();
+						selectTab(1);
+					});
+					window.addEventListener("listRefresh2", function(e) {
+						mui('#scroll2').pullToRefresh().pullDownLoading();
+						selectTab(2);
+					});
+					window.addEventListener("listRefresh3", function(e) {
+						mui('#scroll3').pullToRefresh().pullDownLoading();
+						selectTab(3);
+					});
+					cleanSLidListener(); 
+					backListener();
 				}
-				$.ready(function() {
-					//循环初始化所有下拉刷新，上拉加载。
-					$.each(document.querySelectorAll('.mui-slider-group .mui-scroll'), function(index, pullRefreshEl) {
-						pageObjects.push({
-							pageSize: 8,
-							currentPageIndex: 0,
-							totalCount: 0,
-							recordCount: 0
-						});
-						$(pullRefreshEl).pullToRefresh({
-							down: {
-								callback: function() {
-									var self = this;
-									pullRefresh(self, false, index);
-								}
+
+			);
+			(function($) {
+					//阻尼系数
+					var deceleration = mui.os.ios ? 0.003 : 0.0009;
+					$('.mui-scroll-wrapper').scroll({
+						bounce: false,
+						indicators: true, //是否显示滚动条
+						deceleration: deceleration
+					});
+					//打开窗体
+					function openWindow(index, entity) {
+						//来源，数据实体
+						var id = 'shop_order_detail.html';
+						var url = 'shop_order_detail.html';
+						mui.openWindow({
+							id: id,
+							url: url,
+							show: {
+								aniShow: 'pop-in'
 							},
-							up: {
-								auto: true,
-								contentnomore: '没有更多数据',
-								callback: function() {
-									var self = this;
-									pullRefresh(self, true, index);
-								}
+							waiting: {
+								autoShow: true,
+								title: '正在加载...'
+							},
+							extras: {
+								data: entity,
+								from: index //来源：0:待受理；1:待支付；2：待入住 3：已入住
 							}
 						});
-					});
+					}
+					$.ready(function() {
+						//循环初始化所有下拉刷新，上拉加载。
+						$.each(document.querySelectorAll('.mui-slider-group .mui-scroll'), function(index, pullRefreshEl) {
+							pageObjects.push({
+								pageSize: 8,
+								currentPageIndex: 0,
+								totalCount: 0,
+								recordCount: 0
+							});
+							$(pullRefreshEl).pullToRefresh({
+								down: {
+									callback: function() {
+										var self = this;
+										pullRefresh(self, false, index);
+									}
+								},
+								up: {
+									auto: true,
+									contentnomore: '没有更多数据',
+									callback: function() {
+										var self = this;
+										pullRefresh(self, true, index);
+									}
+								}
+							});
+						});
 
-					function pullRefresh(obj, isUp, index) {
-						if(isUp) {
-							pageObjects[index].currentPageIndex++;
-						} else {
-							pageObjects[index].currentPageIndex = 1;
-							pageObjects[index].recordCount = 0;
-							pageObjects[index].totalCount = 0;
-						}
-						var self = obj;
-						var user = _dataAccess.getUser();
-						setTimeout(function() {
-							var div = self.element.querySelector('.mui-table-view');
-							var result = {};
-								member.GetShopOrders(pageObjects[index].currentPageIndex,pageObjects[index].pageSize, index, function(result) {
+						function pullRefresh(obj, isUp, index) {
+							if(isUp) {
+								pageObjects[index].currentPageIndex++;
+							} else {
+								pageObjects[index].currentPageIndex = 1;
+								pageObjects[index].recordCount = 0;
+								pageObjects[index].totalCount = 0;
+							}
+							var self = obj;
+							var user = _dataAccess.getUser();
+							setTimeout(function() {
+								var div = self.element.querySelector('.mui-table-view');
+								var result = {};
+								member.GetShopOrders(pageObjects[index].currentPageIndex, pageObjects[index].pageSize, index, function(result) {
 									if(result) {
 										//									console.log("保洁任务单列表" + JSON.stringify(result));
 										if(!isUp) {
@@ -355,63 +367,69 @@
 											document.getElementById('item' + index + 'mobile').querySelector('.mui-table-view').innerHTML = '';
 										}
 										console.log(JSON.stringify(result));
-//										pageObjects[index].recordCount = result.recordCount;
-////										document.getElementById('t' + index + '').innerText = "(" + pageObjects[index].recordCount + ")";
-//										addList(index, result.data);
+										//										pageObjects[index].recordCount = result.recordCount;
+										////										document.getElementById('t' + index + '').innerText = "(" + pageObjects[index].recordCount + ")";
+										addList(index, result.result);
 									}
 									if(isUp) {
-										self.endPullUpToRefresh(false);
+										self.endPullUpToRefresh(result.total<8);
 									} else {
-										self.endPullDownToRefresh(false);
+										self.endPullDownToRefresh(result.total<8);
 									}
 								});
-						}, 1000);
-					}
-
-					var addList = function(index, datas) {
-						var div = document.getElementById('item' + index + 'mobile').querySelector('.mui-table-view');
-						for(var i = 0; i < datas.length; i++) {
-							pageObjects[index].totalCount++;
-							//当app端叠加的数量大于中数量的时候就不添加数据显示在app上
-							if(pageObjects[index].totalCount > pageObjects[index].recordCount) {
-								return;
-							}
-							var card = createCard(index, datas[i]);
-							div.appendChild(card);
+							}, 1000);
 						}
-					}
+						var addList = function(index, datas) {
+							var div = document.getElementById('item' + index + 'mobile').querySelector('.mui-table-view');
+							for(var i = 0; i < datas.length; i++) {
+								pageObjects[index].totalCount++;
+								var card = createCard(index, datas[i]);
+								div.appendChild(card);
+							}
+						}
+						var createCard = function(index, entity) {
+							var card = document.createElement("li");
+							card.className = "mui-table-view-cell tableli";
+							card.setAttribute("data-value", entity.Id);
+							var status = Status[entity.OrderStatus];
+							if (index==0) {
+								var buttonnum = '<div style="float: right;"><button class="buttondiv">取消订单</button></div>';
+							}else if(index==1) {
+								var buttonnum = '<div style="float: right;"><button class="buttondiv">支付</button><button class="buttondiv">取消订单</button></div>';
+							}else if (index==2) {
+								var buttonnum = '<div style="float: right;"><button class="buttondiv">完成入住</button><button class="buttondiv">申请退款</button></div>';
+							}else{
+								var buttonnum = '<div style="float: right;"><button class="buttondiv">入住评价</button><button class="buttondiv">申请退款</button></div>';
+							}
+//							var startDate = string2date(entity.BEGINDATE).Format("yyyy-MM-dd");
+//							var endDate = string2date(entity.ENDDATE).Format("yyyy-MM-dd");
+							card.innerHTML = '<h6 class="font" style="float: left; width: 80%;">'+entity.ShopName+'</h6><h6 class="font" style="float: left; width: 20%;">'+status+'</h6><h6 class="font" style="width: 100%;">'+
+											 entity.ProductName+'</h6><h5 class="font" style="width: 100%;">预约：'+entity.BookedDate+'入住</h5>'+buttonnum;
+//							card.querySelector('img').addEventListener('tap', function() {
+//								mui.openWindow({
+//									id: 'device_map.html',
+//									url: 'device_map.html',
+//									waiting: {
+//										autoShow: false,
+//										title: '正在加载...'
+//									},
+//									extras: {
+//										showall: true,
+//										datas: entity.CLEANRID,
+//										from: "bj"
+//									}
+//								});
+//								event.stopPropagation();
+//							});
+							card.addEventListener('tap', function() {
+								openWindow(index, entity);
+							}, false);
+							return card;
+						}
+					});
+				}
 
-					var createCard = function(index, entity) {
-						var card = document.createElement("li");
-						card.className = "mui-table-view-cell";
-						card.setAttribute("data-value", entity.CLEANRID);
-						var startDate = string2date(entity.BEGINDATE).Format("yyyy-MM-dd");
-						var endDate = string2date(entity.ENDDATE).Format("yyyy-MM-dd");
-						//						card.innerHTML = '<a class="mui-navigate-right">编号：' + entity.CLEANRNO + '<br />日期：' + startDate + '至' + endDate + '</a>';
-						card.innerHTML = '<div style="flex: ;flex-direction: row;align-items: center;line-height:10px"><span class="mui-navigate-right">编号：' + entity.CLEANRNO + '<br />日期：' + startDate + '至' + endDate + '</span><img style="height:20px;width: 20px;margin-left:55px;text-align: center; margin-bottom: 10px;" src="../images/search_current_location.png"></img></div>';
-						card.querySelector('img').addEventListener('tap', function() {
-							mui.openWindow({
-								id: 'device_map.html',
-								url: 'device_map.html',
-								waiting: {
-									autoShow: false,
-									title: '正在加载...'
-								},
-								extras: {
-									showall: true,
-									datas: entity.CLEANRID,
-									from: "bj"
-								}
-							});
-							event.stopPropagation();
-						});
-						card.addEventListener('tap', function() {
-							openWindow(index, entity);
-						}, false);
-						return card;
-					}
-				});
-			})(mui);
+			)(mui);
 		</script>
 	</body>
 
