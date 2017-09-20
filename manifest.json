@@ -214,7 +214,8 @@
 					"fonts/icomoon.ttf",
 					"js/localDatabase.js",
 					"js/dao.js",
-					"js/post.js"
+					"js/post.js",
+					"html/member/shop_order_list.html"
 				],
 				"refer": [
 					"setting.html",
@@ -222,8 +223,7 @@
 					"member.html",
 					"shop.html",
 					"health.html",
-					"person_center.html",
-					"html/member/shop_order_list.html"
+					"person_center.html"
 				],
 				"priority": 1
 			},
@@ -601,7 +601,9 @@
 					"js/dao.js",
 					"js/post.js"
 				],
-				"refer": [],
+				"refer": [
+					"html/member/shop_order_detail.html"
+				],
 				"priority": 0
 			},
 			"html/member/shop_order_detail.html": {
@@ -612,7 +614,9 @@
 					"fonts/icomoon.ttf",
 					"css/mui.min.css"
 				],
-				"refer": [],
+				"refer": [
+					"html/shop/product.html"
+				],
 				"priority": 0
 			}
 		},

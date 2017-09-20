@@ -88,6 +88,37 @@
 				margin: 10px 10px 2px 2px;
 				border: none;
 			}
+			.shopinfo{
+				background-color: #4cd964;
+				color: white;
+			}
+			.shopli{
+				line-height: 0px;
+				border-bottom:0px !important;
+			}
+			.mui-form li a span:after {
+				font-family: Muiicons;
+				font-size: 18px;
+				font-weight: 400;
+				font-style: normal;
+				line-height: 1;
+				display: none;
+				text-decoration: none;
+				-webkit-font-smoothing: antialiased;
+				position: absolute;
+			}
+			.hotel-footer {
+				position: fixed;
+				display: flex;
+				justify-content: space-between;
+				background-color: #EFEFF4;
+				/*border: solid 1px #ddd;*/
+				/*box-shadow: 0px -5px 5px 0px rgba(0, 0, 0, 0.05);*/
+				left: 0px;
+				bottom: 0px;
+				height: 51px;
+				width: 100%;
+			}
 		</style>
 		<!--主界面部分-->
 		<header id="header" class="mui-bar mui-bar-nav">
@@ -95,18 +126,165 @@
 			<a href="#offCanvasSide" class="mui-action-back mui-icon icon_app_02 mui-action-menu mui-icon-left-nav mui-pull-left"></a>
 		</header>
 		<div class="fault_main" style="top:45px;background-color: #efeff4;">
-			<div class="mui-form" style="background-color: #FFFFFF;margin-top: 5px;">
+			<!--<div class="mui-form" style="background-color: #FFFFFF;margin-top: 5px;">
 				<ul>
 					<li id="selectWaySetion">
-						<a href="#" class="orderstatus">订单状态：<i id="roid_text"></i></a>
-						<a href="#" class="orderid">订单号：<i id="excutor_unit_text"></i></a>
+						<a href="#" class="orderstatus">订单状态：<i id="orderstatus"></i></a>
+						<a href="#" class="orderid">订单号：<i id="orderid"></i></a>
+					</li>
+				</ul>
+			</div>-->
+			<div class="form_info" style="background-color: #FFFFFF;margin-top: 5px;">
+					<div style="border-bottom: 1px solid #e8e8e8;"><label>订单状态：</label>
+						<dd><input type="text" id="orderstatus" class="input_sys1" readonly="readonly"></dd>
+					</div>
+					<div><label>订单号：</label>
+						<dd><input type="text" id="orderid" class="input_sys1" readonly="readonly"></dd>
+					</div>
+			</div>
+			<div class="form_info" style="background-color: #FFFFFF;margin-top: 5px;">
+					<div><label>预定服务：</label>
+						<dd><input type="text" id="servicename" class="input_sys1" readonly="readonly"></dd>
+					</div>
+					<div><label>入住时间：</label>
+						<dd><input type="text" id="bookeddate" class="input_sys1" readonly="readonly"></dd>
+					</div>
+					<div><label>入住人数：</label>
+						<dd><input type="text" id="peopleamount" class="input_sys1" readonly="readonly"></dd>
+					</div>
+			</div>
+			<div class="form_info" style="background-color: #FFFFFF;margin-top: 5px;">
+					<div><label>是否接送：</label>
+						<dd><input type="text" id="haspickup" class="input_sys1" readonly="readonly"></dd>
+					</div>
+					<div><label style="width: 100px;">单人接送费用：</label>
+						<dd style="margin-left: 100px;"><input type="text" id="costsingle" class="input_sys1" readonly="readonly"></dd>
+					</div>
+					<div><label style="width: 100px;">多人接送费用：</label>
+						<dd style="margin-left: 100px;"><input type="text" id="costmultiplayer" class="input_sys1" readonly="readonly"></dd>
+					</div>
+			</div>
+			<div class="form_info" style="background-color: #FFFFFF;margin-top: 5px;">
+					<div><label>预定数量：</label>
+						<dd><input type="text" id="quantity" class="input_sys1" readonly="readonly"></dd>
+					</div>
+					<div><label>单价：</label>
+						<dd><input type="text" id="price" class="input_sys1" readonly="readonly"></dd>
+					</div>
+					<div><label>订单金额：</label>
+						<dd><input type="text" id="cost" class="input_sys1" readonly="readonly"></dd>
+					</div>
+			</div>
+
+			<div class="mui-form" style="background-color: #FFFFFF;margin-top: 5px;" id="shopinfo">
+				<ul>
+					<li class="shopli">
+						<a href="#">商家信息：</a>
+					</li>
+					<li class="shopli">
+						<a href="#" id="shopName"><span id="cityName"></span></a>
+					</li>
+					<li class="shopli">
+						<a href="#" id="address"></a>
+					</li>
+					<li class="shopli">
+						<a href="#" id="phone"></a>
 					</li>
 				</ul>
 			</div>
+			<div class="fault_bar btn_two" style="position: relative;">
+			<a href="#" class="h_btn" id="btnCancel">
+				<i class="mui-icon icon_trash"></i><span id="cancelmes">取消订单</span>
+			</a>
+			<a href="#" class="fault_btn_ok" id="btnPay">
+				<i class="mui-icon icon_cloud"></i><span id="paymes">支付</span>
+			</a>
+		</div>
 		</div>	
 		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/post.js"></script>
+		<script src="../../js/localDatabase.js"></script>
+		<script src="../../js/dao.js"></script>
+		<script src="../../js/member.js"></script>
+		<script src="../../js/shop.js" ></script>
 		<script>
 			mui.init();
+			var _self;
+			var FaultEntity;
+			var status;
+			var ShopId;
+			var member = new Member();
+			var shop = new Shop();
+			var Status = ['待受理','待支付','待入住','已入住'];
+			mui.plusReady(function(){
+				_self = plus.webview.currentWebview();
+				FaultEntity = _self.data;
+				status = _self.from;
+				initpage();
+				console.log(status+'===='+JSON.stringify(FaultEntity));
+			});
+			function initpage(){
+				member.GetOrderDetails(FaultEntity.Id,function(result){
+					if (result.status==1) {
+						var entity = result.result;
+						ShopId = entity.ShopId;
+						shop.GetShopModel(ShopId,function(data){
+							console.log(JSON.stringify(data));
+							if (data.status==1) {
+								setHtmls('shopName',data.result.Name+'<span id="cityName">'+'广州市'+'</span>');
+								setHtmls('address',data.result.Address);
+								setHtmls('phone',data.result.Phone);
+							} else{
+								mui.toast(data.message);
+							}
+						});
+						setHtml('orderstatus',Status[entity.OrderStatus]);
+						setHtml('orderid',entity.Id);
+						setHtml('servicename',entity.ShopName+'-'+entity.ProductName);
+						setHtml('bookeddate',entity.BookedDate);
+						setHtml('peopleamount',entity.PeopleAmount);
+						setHtml('haspickup',entity.HasPickUp?'是':'否');
+						setHtml('costsingle',entity.PickUpCostSingle+'元/公里');
+						setHtml('costmultiplayer',entity.PickUpCostMultiplayer+'元/公里');
+						setHtml('quantity',entity.Quantity+'月');
+						setHtml('price',entity.Price+'/月');
+						setHtml('cost',entity.Cost+'元');
+					}else{
+						mui.toast(result.message);					
+					}
+//					console.log('接口返回:'+JSON.stringify(result));
+				});
+				document.getElementById('shopinfo').addEventListener('tap',function(){
+					if (ShopId!=''&&ShopId!=undefined) {
+						gotoHtml("../shop/product.html", ShopId);
+					} else{
+						mui.toast('暂无商户信息');
+					}
+				});
+			}
+			function setHtml(ElementId,value){
+				document.getElementById(ElementId).value=value;
+			}
+			function setHtmls(ElementId,value){
+				document.getElementById(ElementId).innerHTML=value;
+			}
+			function gotoHtml(u, datas) {
+			mui.openWindow({
+				url: u,
+				id: u,
+
+				show: {
+					aniShow: 'pop-in'
+				},
+				waiting: {
+					autoShow: true, //自动显示等待框，默认为true
+					title: '正在加载...', //等待对话框上显示的提示内容
+				},
+				extras: {
+					data: datas,
+				}
+			});
+		}
 		</script>
 	</body>
 

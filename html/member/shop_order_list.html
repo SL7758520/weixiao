@@ -163,46 +163,15 @@
 					</div>
 				</div>
 				<div class="mui-slider-group" style="padding-bottom: 60px;">
-					<div id="item0mobile" class="mui-slider-item mui-control-content mui-active">
+					<div id="item0mobile" class="mui-slider-item mui-control-content mui-active" style="height: 100%;">
 						<div class="mui-scroll-wrapper">
 							<div id="scroll0" class="mui-scroll">
 								<ul class="mui-table-view mui-table-view-chevron">
-									<li class='mui-table-view-cell tableli'>
-											<h6 class="font" style="float: left; width: 80%;">兰州市安宁区##养老院</h6>
-											<h6 class="font" style="float: left; width: 20%;">已受理</h6>
-											<!--<div class="contact_box">
-												<span class="fl"><i>兰州市安宁区##养老院</i></span>
-												<span class="fr"><i>已受理</i></span>
-											</div>-->
-											<h6 class="font" style="width: 100%;">[普通床位]*1</h6>
-											<h5 class="font" style="width: 100%;">预约：2017年12月11日入住</h5>
-											<div style="float: right;">
-												<button class="buttondiv">删除订单</button>
-											</div>
-									</li>
-									<li class='mui-table-view-cell tableli'>
-											<h6 class="font" style="float: left; width: 80%;">兰州市安宁区##养老院</h6>
-											<h6 class="font" style="float: left; width: 20%;">已受理</h6>
-											<h6 class="font" style="width: 100%;">[普通床位]*1</h6>
-											<h5 class="font" style="width: 100%;">预约：2017年12月11日入住</h5>
-											<div style="float: right;">
-												<button class="buttondiv">删除订单</button>
-											</div>
-									</li>
-									<li class='mui-table-view-cell tableli'>
-											<h6 class="font" style="float: left; width: 80%;">兰州市安宁区##养老院</h6>
-											<h6 class="font" style="float: left; width: 20%;">已受理</h6>
-											<h6 class="font" style="width: 100%;">[普通床位]*1</h6>
-											<h5 class="font" style="width: 100%;">预约：2017年12月11日入住</h5>
-											<div style="float: right;">
-												<button class="buttondiv">删除订单</button>
-											</div>
-									</li>
 								</ul>
 							</div>
 						</div>
 					</div>
-					<div id="item1mobile" class="mui-slider-item mui-control-content">
+					<div id="item1mobile" class="mui-slider-item mui-control-content" style="height: 100%;">
 						<div class="mui-scroll-wrapper">
 							<div id="scroll1" class="mui-scroll">
 								<ul class="mui-table-view mui-table-view-chevron">
@@ -216,7 +185,7 @@
 							</div>
 						</div>
 					</div>
-					<div id="item2mobile" class="mui-slider-item mui-control-content">
+					<div id="item2mobile" class="mui-slider-item mui-control-content" style="height: 100%;">
 						<div class="mui-scroll-wrapper">
 							<div id="scroll2" class="mui-scroll">
 								<ul class="mui-table-view mui-table-view-chevron">
@@ -230,7 +199,7 @@
 							</div>
 						</div>
 					</div>
-					<div id="item3mobile" class="mui-slider-item mui-control-content">
+					<div id="item3mobile" class="mui-slider-item mui-control-content" style="height: 100%;">
 						<div class="mui-scroll-wrapper">
 							<div id="scroll3" class="mui-scroll">
 								<ul class="mui-table-view mui-table-view-chevron"></ul>
@@ -271,6 +240,7 @@
 			var _dataAccess = new DataAccess();
 			var isonly = false;
 			var pageObjects = [];
+			var Status = ['待受理','待支付','待入住','已入住'];
 			//设置tab的选择
 			function selectTabs(currentIndex) {
 				var scrollIndex = '#scroll' + currentIndex;
@@ -315,7 +285,8 @@
 						mui('#scroll3').pullToRefresh().pullDownLoading();
 						selectTab(3);
 					});
-					cleanSLidListener() backListener()
+					cleanSLidListener(); 
+					backListener();
 				}
 
 			);
@@ -330,12 +301,8 @@
 					//打开窗体
 					function openWindow(index, entity) {
 						//来源，数据实体
-						var id = 'cleaning_edit.html';
-						var url = 'cleaning_edit.html';
-						if(index != 0) {
-							id = 'cleaning_info.html';
-							url = 'cleaning_info.html';
-						}
+						var id = 'shop_order_detail.html';
+						var url = 'shop_order_detail.html';
 						mui.openWindow({
 							id: id,
 							url: url,
@@ -348,7 +315,7 @@
 							},
 							extras: {
 								data: entity,
-								from: index //来源：0:保洁中；1:审核中；2：完成
+								from: index //来源：0:待受理；1:待支付；2：待入住 3：已入住
 							}
 						});
 					}
@@ -402,12 +369,12 @@
 										console.log(JSON.stringify(result));
 										//										pageObjects[index].recordCount = result.recordCount;
 										////										document.getElementById('t' + index + '').innerText = "(" + pageObjects[index].recordCount + ")";
-										//										addList(index, result.data);
+										addList(index, result.result);
 									}
 									if(isUp) {
-										self.endPullUpToRefresh(false);
+										self.endPullUpToRefresh(result.total<8);
 									} else {
-										self.endPullDownToRefresh(false);
+										self.endPullDownToRefresh(result.total<8);
 									}
 								});
 							}, 1000);
@@ -416,47 +383,44 @@
 							var div = document.getElementById('item' + index + 'mobile').querySelector('.mui-table-view');
 							for(var i = 0; i < datas.length; i++) {
 								pageObjects[index].totalCount++;
-								//当app端叠加的数量大于中数量的时候就不添加数据显示在app上
-								if(pageObjects[index].totalCount > pageObjects[index].recordCount) {
-									return;
-								}
 								var card = createCard(index, datas[i]);
 								div.appendChild(card);
 							}
 						}
-						/*					<li class='mui-table-view-cell tableli'>
-											<h6 class="font" style="float: left; width: 80%;">兰州市安宁区##养老院</h6>
-											<h6 class="font" style="float: left; width: 20%;">已受理</h6>
-											<h6 class="font" style="width: 100%;">[普通床位]*1</h6>
-											<h5 class="font" style="width: 100%;">预约：2017年12月11日入住</h5>
-											<div style="float: right;">
-												<button class="buttondiv">删除订单</button>
-											</div>
-									</li>*/
 						var createCard = function(index, entity) {
 							var card = document.createElement("li");
 							card.className = "mui-table-view-cell tableli";
-							card.setAttribute("data-value", entity.CLEANRID);
-							var startDate = string2date(entity.BEGINDATE).Format("yyyy-MM-dd");
-							var endDate = string2date(entity.ENDDATE).Format("yyyy-MM-dd");
-							//						card.innerHTML = '<a class="mui-navigate-right">编号：' + entity.CLEANRNO + '<br />日期：' + startDate + '至' + endDate + '</a>';
-							card.innerHTML = '<div style="flex: ;flex-direction: row;align-items: center;line-height:10px"><span class="mui-navigate-right">编号：' + entity.CLEANRNO + '<br />日期：' + startDate + '至' + endDate + '</span><img style="height:20px;width: 20px;margin-left:55px;text-align: center; margin-bottom: 10px;" src="../images/search_current_location.png"></img></div>';
-							card.querySelector('img').addEventListener('tap', function() {
-								mui.openWindow({
-									id: 'device_map.html',
-									url: 'device_map.html',
-									waiting: {
-										autoShow: false,
-										title: '正在加载...'
-									},
-									extras: {
-										showall: true,
-										datas: entity.CLEANRID,
-										from: "bj"
-									}
-								});
-								event.stopPropagation();
-							});
+							card.setAttribute("data-value", entity.Id);
+							var status = Status[entity.OrderStatus];
+							if (index==0) {
+								var buttonnum = '<div style="float: right;"><button class="buttondiv">取消订单</button></div>';
+							}else if(index==1) {
+								var buttonnum = '<div style="float: right;"><button class="buttondiv">支付</button><button class="buttondiv">取消订单</button></div>';
+							}else if (index==2) {
+								var buttonnum = '<div style="float: right;"><button class="buttondiv">完成入住</button><button class="buttondiv">申请退款</button></div>';
+							}else{
+								var buttonnum = '<div style="float: right;"><button class="buttondiv">入住评价</button><button class="buttondiv">申请退款</button></div>';
+							}
+//							var startDate = string2date(entity.BEGINDATE).Format("yyyy-MM-dd");
+//							var endDate = string2date(entity.ENDDATE).Format("yyyy-MM-dd");
+							card.innerHTML = '<h6 class="font" style="float: left; width: 80%;">'+entity.ShopName+'</h6><h6 class="font" style="float: left; width: 20%;">'+status+'</h6><h6 class="font" style="width: 100%;">'+
+											 entity.ProductName+'</h6><h5 class="font" style="width: 100%;">预约：'+entity.BookedDate+'入住</h5>'+buttonnum;
+//							card.querySelector('img').addEventListener('tap', function() {
+//								mui.openWindow({
+//									id: 'device_map.html',
+//									url: 'device_map.html',
+//									waiting: {
+//										autoShow: false,
+//										title: '正在加载...'
+//									},
+//									extras: {
+//										showall: true,
+//										datas: entity.CLEANRID,
+//										from: "bj"
+//									}
+//								});
+//								event.stopPropagation();
+//							});
 							card.addEventListener('tap', function() {
 								openWindow(index, entity);
 							}, false);
