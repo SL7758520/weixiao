@@ -39,7 +39,8 @@
 			"js/localDatabase.js",
 			"js/post.js",
 			"fonts/mui.ttf",
-			"js/account.js"
+			"js/account.js",
+			"images/bg.jpg"
 		],
 		"refer": [
 			"main.html",
@@ -137,7 +138,8 @@
 			"js/shop.js",
 			"js/post.js",
 			"css/app.css",
-			"images/t5.jpg"
+			"images/t5.jpg",
+			"css/main.css"
 		],
 		"refer": [
 			"html/shop/product.html"
@@ -154,10 +156,18 @@
 		"resources": [
 			"images/cbd.jpg",
 			"js/mui.min.js",
-			"css/mui.min.css"
+			"css/mui.min.css",
+			"js/localDatabase.js",
+			"js/app.js",
+			"js/dao.js",
+			"js/account.js",
+			"js/mui.enterfocus.js",
+			"js/post.js"
 		],
 		"refer": [
-			"html/account/login.html"
+			"html/account/login.html",
+			"splash.html",
+			"main.html"
 		]
 	},
 	"html/account/quick_login_3.html": {
@@ -239,7 +249,10 @@
 			"fonts/mui.ttf",
 			"js/dao.js",
 			"js/shop.js",
-			"js/post.js"
+			"js/post.js",
+			"css/font-awesome.min.css",
+			"fonts/fontawesome-webfont.ttf",
+			"fonts/fontawesome-webfont.woff2"
 		],
 		"refer": [
 			"html/shop/product_details.html",
@@ -249,7 +262,15 @@
 	"html/shop/product_details.html": {
 		"resources": [
 			"css/mui.min.css",
-			"css/appfont.css"
+			"css/appfont.css",
+			"js/localDatabase.js",
+			"images/cbd.jpg",
+			"css/main.css",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"js/dao.js",
+			"js/shop.js",
+			"js/post.js"
 		],
 		"refer": [
 			"html/shop/createorder.html"
@@ -274,7 +295,12 @@
 			"css/mui.min.css",
 			"js/mui.picker.min.js",
 			"css/mui.picker.min.css",
-			"js/muifun.js"
+			"js/muifun.js",
+			"js/localDatabase.js",
+			"js/mui.min.js",
+			"js/dao.js",
+			"js/shop.js",
+			"js/post.js"
 		]
 	},
 	"html/shop/productpic.html": {

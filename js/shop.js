@@ -1,7 +1,7 @@
 var Shop = (function() {
 	var _db = new LocalDatabase();
 	var API_SHOP = globals.apiUrl + 'Shop/';
-	var API_PHOTO = globals.apiUrl + 'Shop/';
+	var API_PHOTO = globals.apiUrl + 'AppHome/';
 	var API_URL_ACTION = globals.apiUrl + 'Action.ashx';
 	var API_URL_ACTION_ = globals.apiUrl + 'Action_.ashx';
 	var API_URL = globals.apiUrl + "Service.ashx";
@@ -156,7 +156,7 @@ var Shop = (function() {
 				return;
 			}
 			var user = _db.getUser();
-			AsyncPost(API_SHOP + "GetImageSiteServer",'',
+			AsyncPost(API_PHOTO + "GetImageSiteServerUrl",'serverName=Shop',
 				function(result) {
 					if(callback) {
 						console.log('接口返回数据：' + JSON.stringify(result));

@@ -6,6 +6,7 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<title>酒店照片</title>
 		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/main.css" rel="stylesheet" />
 		<!--<link href="../styles/default.css" rel="stylesheet" />-->
 		<style>
 			/*.title {
@@ -161,7 +162,7 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">酒店照片</h1>
+			<h1 class="mui-title">相册</h1>
 		</header>
 		<div class="mui-content">
 			<div id="slider" class="mui-slider mui-fullscreen">
@@ -279,10 +280,13 @@
 			var scroll;
 			var slidergroup;
 			var _self;
+			var photoUrl;
 			var shopId;
 			mui.plusReady(function() {
 				_self = plus.webview.currentWebview();
 				shopId = _self.data;
+				photoUrl=_self.photoUrl;
+				console.log(shopId+"------------"+photoUrl);
 				scroll = document.getElementById("scroll");
 				slidergroup = document.getElementById("slidergroup");
 				_shop.GetShopPhotoTypes(function(datas) {
@@ -307,7 +311,7 @@
 
 			function addData(datas) {
 				var li = document.createElement("li");
-				li.innerHTML = '<img src="../../images/t0-3.jpg" alt="" />';
+				li.innerHTML = '<img src='+photoUrl+datas.PhotoUrl+' alt="" />';
 				return li;
 
 			}

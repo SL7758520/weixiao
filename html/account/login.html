@@ -138,27 +138,29 @@
 					statusBarBackground: '#f7f7f7'
 				});
 				var _dataAccess = new DataAccess();
-				var _account=new Account();
+				var _account = new Account();
 				$.plusReady(function() {
 					//读取本地存储，检查是否为首次启动
 					var showGuide = plus.storage.getItem("lauchFlag");
 					//					var showGuide = 'aaa';
 
-//					console.log(JSON.stringify(_dataAccess.getUser()));
+					//					console.log(JSON.stringify(_dataAccess.getUser()));
 					//仅支持竖屏显示
 					plus.screen.lockOrientation("portrait-primary");
 					console.log(showGuide);
 					if(showGuide) {
+						console.log("AAAAAAAAAAAAAAAAA");
 						//有值，说明已经显示过了，无需显示；
 						//关闭splash页面；
 						plus.navigator.closeSplashscreen();
 						plus.navigator.setFullscreen(false);
 
 					} else {
+						console.log("EEEEEEEEEEEEE");
 						//显示启动导航
 						mui.openWindow({
 							id: 'splash',
-							url: '../../splash.html',
+							url: 'splash.html',
 							styles: {
 								popGesture: "none"
 							},
@@ -176,20 +178,12 @@
 					}
 					plus.screen.lockOrientation("portrait-primary");
 					var settings = app.getSettings();
-					if(!settings.autoLogin) {
-						settings.autoLogin = true;
-					}
-					var state = app.getState();
-//					var mainPage = $.preload({
-//						"id": 'main',
-//						"url": '../../main.html'
-//					});
 					var toMain = function() {
-//						$.fire(mainPage, 'show', null);
+						//						$.fire(mainPage, 'show', null);
 						setTimeout(function() {
 							$.openWindow({
 								id: 'main.html',
-								url:'../../main.html',
+								url: '../../main.html',
 								show: {
 									aniShow: 'pop-in'
 								},
@@ -199,25 +193,13 @@
 							});
 						}, 0);
 					};
-					//					//检查 "登录状态/锁屏状态" 开始
-					//					if (settings.autoLogin && state.token && settings.gestures) {
-					//						$.openWindow({
-					//							url: 'unlock.html',
-					//							id: 'unlock',
-					//							show: {
-					//								aniShow: 'pop-in'
-					//							},
-					//							waiting: {
-					//								autoShow: false
-					//							}
-					//						});
-					//					} else
+					if(!settings.autoLogin) {
+						settings.autoLogin = true;
+					}
+					var state = app.getState();
+					
 					console.log(JSON.stringify(_dataAccess.getUser()) + "--------" + settings.autoLogin);
-//					settings.autoLogin = false;
-					if(JSON.stringify(_dataAccess.getUser()) != '{}' && settings.autoLogin) {
-						console.log("CCCCCCC");
-						toMain();
-					} else {
+
 						console.log("BBBBBBBBBBBB");
 						app.setState(null);
 						//第三方登录
@@ -249,13 +231,13 @@
 									waiting.close();
 									plus.nativeUI.toast("登录认证成功");
 									auth.getUserInfo(function() {
-//										plus.nativeUI.toast("获取用户信息成功");
+										//										plus.nativeUI.toast("获取用户信息成功");
 										console.log(JSON.stringify(auth));
 										var authType = auth.id;
 										var token = auth.authResult.access_token;
 										var openid;
 										if(authType == "weixin") {
-											authType='wechat';
+											authType = 'wechat';
 											openid = auth.userInfo.unionid;
 										} else {
 											openid = auth.authResult.openid;
@@ -267,7 +249,7 @@
 												var user = datas.result;
 												_dataAccess.setUser(user);
 												toMain();
-											}else{
+											} else {
 												mui.toast(datas.message);
 											}
 										});
@@ -284,7 +266,6 @@
 							oauthArea.style.display = 'none';
 							plus.nativeUI.toast("获取登录认证失败：" + e.message);
 						});
-					}
 					// close splash
 					setTimeout(function() {
 						//关闭 splash
@@ -297,7 +278,7 @@
 					var autoLoginButton = doc.getElementById("autoLogin");
 					var regButton = doc.getElementById('reg');
 					var forgetButton = doc.getElementById('forgetPassword');
-//					settings.autoLogin = true;
+					//					settings.autoLogin = true;
 					loginButton.addEventListener('tap', function(event) {
 						var loginInfo = {
 							mobile: accountBox.value,

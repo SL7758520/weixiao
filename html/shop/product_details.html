@@ -9,16 +9,113 @@
 		<link href="../../css/appfont.css" rel="stylesheet" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<style type="text/css">
-			.img {
-				margin-top: 5px;
-				width: 80px;
-				height: 80px;
+			.item {
+				display: -webkit-box;
 			}
 			
-			img {
+			.position-atop img,
+			.top-banner img,
+			.position-bone img,
+			.position-c img {
 				width: 100%;
 				display: block;
 			}
+			
+			.position-a .position-atop,
+			.position-b,
+			.position-bone,
+			.position-c {
+				position: relative;
+				overflow: hidden;
+			}
+			
+			.position-b {
+				margin: 0 10px;
+			}
+			
+			.position-bcontent {
+				margin-bottom: 10px;
+				position: relative;
+				border-radius: 8px;
+			}
+			
+			.gray-lable {
+				background-image: -webkit-linear-gradient(top, rgba(59, 59, 59, .6), rgba(27, 27, 27, .6), rgba(50, 50, 50, .4), rgba(31, 31, 31, .4));
+				position: absolute;
+				left: 0;
+				bottom: 0;
+				width: 100%;
+				height: 50px;
+				padding-left: 5px;
+				display: block;
+				-webkit-box-sizing: border-box;
+				box-sizing: border-box;
+			}
+			.gray-img {
+				background-image: -webkit-linear-gradient(top, rgba(59, 59, 59, .6), rgba(27, 27, 27, .6), rgba(50, 50, 50, .4), rgba(31, 31, 31, .4));
+				position: absolute;
+				top: 48px;
+				right: 20px;
+				width: 20px;
+				height: 20px;
+				display: block;
+				-webkit-box-sizing: border-box;
+				box-sizing: border-box;
+				text-align: center;
+			}
+			
+			.first-line,
+			.vicetitle {
+				height: 25px;
+				line-height: 30px;
+			}
+			
+			.vicetitle {
+				font-size: 13px;
+			}
+			
+			.first-line .bigtitle,
+			.vicetitle {
+				color: #ffffff;
+			}
+			
+			.first-line .prices {
+				color: #f99d1c;
+				position: absolute;
+				right: 15px;
+				font-family: impact;
+				font-size: 20px;
+			}
+			
+			.position-abottom {
+				margin: 5px 0;
+			}
+			
+			.text {
+				width: 75%;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+			}
+			
+			.information {
+				width: 65%;
+				margin-left: 5px;
+			}
+			
+			.price {
+				width: 35%;
+				margin-left: 5px;
+			}
+			
+			.new-price {
+				font-size: 16px;
+				color: #ff7c70;
+				font-family: Impact, Arail, sans-serif;
+				font-weight: bold;
+			}
+			
+			
 			
 			.hotel-btn-booking {
 				width: 50%;
@@ -50,39 +147,79 @@
 				height: 51px;
 				width: 100%;
 			}
+			.info {
+				padding-left: 5px;
+				background-color: #FFFFFF;
+			}
+			
+			.Desc {
+				background-color: #FFFFFF;
+				padding-left: 15px;
+			}
+			.fg_title{
+				margin-top: 10px;
+				border-bottom: 1px solid #EDEDED;
+			}
 		</style>
 	</head>
 
 	<body>
 		<header class="mui-bar mui-bar-transparent" style="border-top-width: 0px;">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 id="title" class="mui-title" style="color: #007AFF;">微孝养老</h1>
+			<h1 id="Tab_title" class="mui-title" style="color: #007AFF;">微孝养老</h1>
 			<button id="Selectall" type="button" class="mui-btn mui-btn-link mui-pull-right color_white">收藏</button>
 		</header>
-		<div class="mui-content">
+		<div class="mui-content" style="padding-bottom: 51px;">
+			<div class="position-a">
+				<div id="image" class="position-atop">
+					<img id="shop_img" src="../../images/cbd.jpg" alt="">
+					<div class="gray-img">
+						6
+					</div>
+					<div class="gray-lable ">
+						<div class="first-line">
+							<span id="title" class="bigtitle">三峡长海游轮5日游</span>
+							<span class="prices" id="BottomPrice">1668起</span>
+						</div>
+						<div class="vicetitle" id="DistanceDesc">单船票，宜昌登船，含宜昌码头接站</div>
+					</div>
+				</div>
+			</div>
 			<!--静态图片-->
-			<img id="img1" src="../../images/cbd.jpg" />
+			<!--<img id="img1" src="../../images/cbd.jpg" />-->
 			<div class="fg_title">
 				基本信息
 			</div>
 			<div id="info" class="info"></div>
-			<div class="fg_title" style="margin-top: 10px;">
+			<div class="fg_title" >
 				收费标准
 			</div>
-			<div id="CourtyardFacilityDesc" class="Desc">
+			<div id="TollDesc" class="Desc">
 				
 			</div>
 			<div class="fg_title mui-collapse">
 				服务标准
 			</div>
+			<div id="ServiceDesc" class="Desc">
+
+			</div>
 			<div class="fg_title">
 				接送服务
+			</div>
+			<div id="ShuttleDesc" class="Desc">
+
 			</div>
 			<div class="fg_title">
 				护理标准
 			</div>
+			<div id="NursingDesc" class="Desc">
+
+			</div>
 			<div class="fg_title">
 				房间配套
+			</div>
+			<div id="RoomDesc" class="Desc">
+
 			</div>
 		</div>
 		<div class="hotel-footer">
@@ -100,17 +237,42 @@
 			var _shop = new Shop();
 			var user;
 			var _self;
+			var proudctInfo;
 			var id;
-			var entity ={};
+			var photoUrl;
+			var entity ={}; 
 			mui.plusReady(function() {
 				_self = plus.webview.currentWebview();
 				id = _self.data;
-				console.log(id);
+				photoUrl=_self.photoUrl;
+				console.log(id+"------------"+photoUrl);
 				initpage();
 				_shop.GetProductModel(id, function(datas) {
-				
+					if(datas.status == 1) {
+						proudctInfo = datas.result;
+						document.getElementById("title").innerHTML = proudctInfo.Name;
+						document.getElementById("Tab_title").innerHTML = proudctInfo.Name;
+						document.getElementById("shop_img").src=photoUrl+proudctInfo.PhotoUrl;
+						document.getElementById("DistanceDesc").innerHTML = proudctInfo.ShortDescription;
+						document.getElementById("BottomPrice").innerHTML = proudctInfo.Price+"元/月";
+//						document.getElementById("info").innerHTML = proudctInfo.Intro;
+						setHtml("TollDesc",proudctInfo.Cost);
+						setHtml("ServiceDesc",proudctInfo.Service);
+						setHtml("ShuttleDesc",proudctInfo.PickUp);
+						setHtml("NursingDesc",proudctInfo.Catering);
+						setHtml("RoomDesc",proudctInfo.HouseFacility);
+
+
+						
+					} else {
+						mui.toast(datas.message);
+					}
 				});
 			})
+			
+			function setHtml(id,value){
+				document.getElementById(id).innerHTML=value;
+			}
 			function initpage(){
 				document.getElementById('createorder').addEventListener('tap',function(){
 					entity.productId = id;
