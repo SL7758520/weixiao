@@ -226,6 +226,7 @@
 			IconUrl  100*/
 		mui.init();
 		var _dataAccess = new DataAccess();
+		var Token;
 		var member = new Member();
 		var isLogin = false;
 		mui.plusReady(function() {
@@ -393,6 +394,9 @@
 		
 		function initpage() {
 				var users = _dataAccess.getUser();
+				if (users.Token!=null) {
+					Token =users.Token;
+				}
 				setelementhtml('nickname', users.NickName);
 				setelementhtml('mobile', users.Mobile);
 				setelementhtml('sex', users.Sex);
@@ -519,6 +523,7 @@
 		function GetMemberDetail(){
 			member.GetMemberDetail(function(result){
 				var user = result.result;
+				user.Token = Token;
 				_dataAccess.setUser(user);
 				initpage();
 			});
