@@ -14,8 +14,6 @@
 		<!--App自定义的css-->
 		<!--<link rel="stylesheet" type="text/css" href="css/app.css" />-->
 		<style type="text/css">
-			
-			
 			img {
 				width: 100%;
 				height: 100%;
@@ -82,7 +80,7 @@
 			<h1 id="title" class="mui-title">微孝养老</h1>
 		</header>
 		<div class="mui-content">
-			<div id="slider" class="mui-slider ">
+			<div id="slider" class="mui-slider " style="height: 200px;">
 				<div class="mui-slider-group mui-slider-loop">
 					<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
 					<div class="mui-slider-item mui-slider-item-duplicate">
@@ -155,6 +153,42 @@
 		var cityId = 6201;
 		var shopList;
 		var photoUrl;
+		if(window.plus) {
+			plusReady();
+		} else {
+			document.addEventListener("plusready", function() {
+				plusReady();
+			}, false);
+		}
+
+		function plusReady() {
+			_self = plus.webview.currentWebview();
+			_self.setPullToRefresh({
+				support: true,
+				height: '100px',
+				range: '120px',
+				style: 'circle',
+				offset: '44px'
+			}, pulldownRefresh);
+
+			plus.key.addEventListener("backbutton", function() {
+				_self.close("auto");
+			}, false);
+		}
+		
+		/**
+			 * 下拉刷新具体业务实现
+			 */
+			function pulldownRefresh() {
+				setTimeout(function() {
+					initData();
+					_self.endPullToRefresh();
+				}, 1500);
+			}
+
+			mui.back = function() {
+				_self.close("auto");
+			}
 		mui.plusReady(function() {
 			//获得slider插件对象
 			var gallery = mui('.mui-slider');
@@ -168,10 +202,15 @@
 			if(shopName != '') {
 				document.getElementById('title').innerHTML = shopName;
 			}
-			_shop.getPhotoUrl(function(datas){
-				photoUrl=datas;
+			_shop.getPhotoUrl(function(datas) {
+				photoUrl = datas;
 			});
 			console.log(photoUrl);
+			initData();
+
+		});
+		
+		function initData(){
 			if(shopId == null) {
 				_shop.GetShopsByCityId(pageIndex, pageSize, cityId, function(datas) {
 					if(datas.status == 1) {
@@ -191,9 +230,7 @@
 					}
 				});
 			}
-
-		});
-
+		}
 		function addList(datas) {
 			div.innerHTML = "";
 			for(var i = 0; i < datas.length; i++) {
@@ -213,16 +250,16 @@
 			}
 			//			console.log(globals.apiUrl + entity.PhotoUrl); 
 			//			li.innerHTML = '<div class="mui-card-header mui-card-media" style="height:40vw;background-image:url(' + entity.PhotoUrl + ')"></div><div class="mui-card-content"><div class="mui-card-content-inner"><p>' + entity.Name + '</p><p style="color: #333;">' + description + '</p></div></div><div class="mui-card-footer"><a class="mui-card-link">类型:' + entity.TypeName + '</a><a class="mui-card-link">详细..</a></div>';
-			li.innerHTML = '<dd class="img"><img src='+photoUrl+entity.PhotoUrl+'></dd><div class="content"><dd class="detail">' + entity.Name + '<div class=" mui-ellipsis-3">' + description + '<br>地址：' + entity.Address + '</div></dd><dd class="price"><span class="newPrice">￥' + entity.BottomPrice + '/月起</span></dd></div>';
+			li.innerHTML = '<dd class="img"><img src=' + photoUrl + entity.PhotoUrl + '></dd><div class="content"><dd class="detail">' + entity.Name + '<div class=" mui-ellipsis-3">' + description + '<br>地址：' + entity.Address + '</div></dd><dd class="price"><span class="newPrice">￥' + entity.BottomPrice + '/月起</span></dd></div>';
 			li.addEventListener("tap", function(event) {
 				//				console.log("AAAAAAAAAAA"); 
-				gotoHtml("html/shop/product.html", entity.Id,photoUrl);
+				gotoHtml("html/shop/product.html", entity.Id, photoUrl);
 			});
 
 			return li;
 		}
 
-		function gotoHtml(u, datas,photoUrl) {
+		function gotoHtml(u, datas, photoUrl) {
 			mui.openWindow({
 				url: u,
 				id: u,
@@ -236,7 +273,7 @@
 				},
 				extras: {
 					data: datas,
-					photoUrl:photoUrl,
+					photoUrl: photoUrl,
 				}
 			});
 		}
