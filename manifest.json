@@ -659,7 +659,8 @@
 					"js/post.js"
 				],
 				"refer": [
-					"html/member/shop_order_detail.html"
+					"html/member/shop_order_detail.html",
+					"html/shop/order_cancel.html"
 				],
 				"priority": 0
 			},
@@ -669,11 +670,24 @@
 					"css/appfont.css",
 					"js/mui.min.js",
 					"fonts/icomoon.ttf",
-					"css/mui.min.css"
+					"css/mui.min.css",
+					"js/localDatabase.js",
+					"js/member.js",
+					"js/dao.js",
+					"js/shop.js",
+					"js/post.js"
 				],
 				"refer": [
-					"html/shop/product.html"
+					"html/shop/product.html",
+					"html/shop/order_cancel.html"
 				],
+				"priority": 0
+			},
+			"html/shop/order_cancel.html": {
+				"resources": [
+					"css/mui.min.css"
+				],
+				"refer": [],
 				"priority": 0
 			}
 		},

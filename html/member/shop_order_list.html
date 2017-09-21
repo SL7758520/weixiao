@@ -97,9 +97,11 @@
 			.mui-slider-indicator.mui-segmented-control {
 				background-color: #efeff4;
 			}
+			
 			li>h6 {
 				text-align: left;
 			}
+			
 			.nomargin {
 				-webkit-margin-before: 0px;
 				-webkit-margin-after: 0px;
@@ -107,17 +109,21 @@
 				-webkit-padding-start: 10px;
 				border-bottom: 1px solid rgba(204, 204, 204, 0.8);
 			}
-			.buttondiv{
+			
+			.buttondiv {
 				border: 1px solid #4cd964;
 				font-size: 14px;
 				text-align: center;
 				border-radius: 3px;
 				padding: 6px 10px 4px 10px;
+				margin-left: 10px;
 			}
-			.font{
+			
+			.font {
 				font-size: 14px;
 			}
-			.tableli{
+			
+			.tableli {
 				padding-right: 15px !important;
 			}
 		</style>
@@ -240,7 +246,7 @@
 			var _dataAccess = new DataAccess();
 			var isonly = false;
 			var pageObjects = [];
-			var Status = ['待受理','待支付','待入住','已入住'];
+			var Status = ['待受理', '待支付', '待入住', '已入住'];
 			//设置tab的选择
 			function selectTabs(currentIndex) {
 				var scrollIndex = '#scroll' + currentIndex;
@@ -255,18 +261,6 @@
 					selectTabs(e.detail.slideNumber);
 				});
 			}
-
-			function backListener() {
-//				document.getElementById("backBtn").addEventListener("tap", function() {
-//					var task = plus.webview.getWebviewById('pages/task.html');
-//					mui.fire(task, "finishAllot", {
-//						finishAllot: true
-//					});
-//					mui.back();
-//				})
-			}
-
-			;
 			mui.plusReady(function() {
 					//获取当前用户拥有权限的路段
 					window.addEventListener("listRefresh0", function(e) {
@@ -285,8 +279,7 @@
 						mui('#scroll3').pullToRefresh().pullDownLoading();
 						selectTab(3);
 					});
-					cleanSLidListener(); 
-					backListener();
+					cleanSLidListener();
 				}
 
 			);
@@ -361,7 +354,6 @@
 								var result = {};
 								member.GetShopOrders(pageObjects[index].currentPageIndex, pageObjects[index].pageSize, index, function(result) {
 									if(result) {
-										//									console.log("保洁任务单列表" + JSON.stringify(result));
 										if(!isUp) {
 											self.refresh(true);
 											document.getElementById('item' + index + 'mobile').querySelector('.mui-table-view').innerHTML = '';
@@ -369,12 +361,17 @@
 										console.log(JSON.stringify(result));
 										//										pageObjects[index].recordCount = result.recordCount;
 										////										document.getElementById('t' + index + '').innerText = "(" + pageObjects[index].recordCount + ")";
+										if(index == 0) {    //测试加入数据
+											test = result;
+										} else {
+											result = test;
+										}
 										addList(index, result.result);
 									}
 									if(isUp) {
-										self.endPullUpToRefresh(result.total<8);
+										self.endPullUpToRefresh(result.total < 8);
 									} else {
-										self.endPullDownToRefresh(result.total<8);
+										self.endPullDownToRefresh(result.total < 8);
 									}
 								});
 							}, 1000);
@@ -390,52 +387,62 @@
 						var createCard = function(index, entity) {
 							var card = document.createElement("li");
 							card.className = "mui-table-view-cell tableli";
+							card.setAttribute('id', entity.Id);
 							card.setAttribute("data-value", entity.Id);
 							var status = Status[entity.OrderStatus];
-							if (index==0) {
+							if(index == 0) {
 								var buttonnum = '<div style="float: right;"><button class="buttondiv" id="cancel">取消订单</button></div>';
-							}else if(index==1) {
+							} else if(index == 1) {
 								var buttonnum = '<div style="float: right;"><button class="buttondiv" id="confrim">支付</button><button class="buttondiv" id="cancel">取消订单</button></div>';
-							}else if (index==2) {
+							} else if(index == 2) {
 								var buttonnum = '<div style="float: right;"><button class="buttondiv" id="cancel">申请退款</button></div>';
-							}else{
+							} else {
 								var buttonnum = '<div style="float: right;"><button class="buttondiv" id="cancel">入住评价</button></div>';
 							}
-//							var startDate = string2date(entity.BEGINDATE).Format("yyyy-MM-dd");
-//							var endDate = string2date(entity.ENDDATE).Format("yyyy-MM-dd");
-							card.innerHTML = '<h6 class="font" style="float: left; width: 80%;">'+entity.ShopName+'</h6><h6 class="font" style="float: left; width: 20%;">'+status+'</h6><h6 class="font" style="width: 100%;">'+
-											 entity.ProductName+'</h6><h5 class="font" style="width: 100%;">预约：'+entity.BookedDate+'入住</h5>'+buttonnum;
-							mui(this).on('tap','button',function(){
-								if (this.id=='confrim') {
-									mui.toast('支付');
-								} else{
-									if (index==0) {
-										mui.toast('取消订单');
-									}else if (index==1) {
-										mui.toast('待支付的取消订单');
-									}else if (index==2) {
-										mui.toast('申请退款');
-									}else if (index==3) {
-										
-									}
+							//							var startDate = string2date(entity.BEGINDATE).Format("yyyy-MM-dd");
+							//							var endDate = string2date(entity.ENDDATE).Format("yyyy-MM-dd");
+							card.innerHTML = '<h6 class="font" style="float: left; width: 80%;">' + entity.ShopName + '</h6><h6 class="font" style="float: left; width: 20%;">' + status + '</h6><h6 class="font" style="width: 100%;">' +
+								entity.ProductName + '</h6><h5 class="font" style="width: 100%;">预约：' + entity.BookedDate + '入住</h5>' + buttonnum;
+							if(index == 1) {
+								var buttons = card.querySelectorAll('button');
+								for(var i = 0; i < buttons.length; i++) {
+									buttons[i].addEventListener('tap', function() {
+										if(this.id == 'confrim') {
+											mui.toast('去支付');
+										} else {
+											mui.toast('待支付的取消订单');
+											var id = card.getAttribute('data-value');
+											console.log('打印id:' + id);
+											if(id != '' && id != undefined) {
+												gotoHtml("../shop/order_cancel.html", id);
+											} else {
+												mui.toast('订单ID有误');
+											}
+										}
+										event.stopPropagation();
+									})
 								}
-							})
-//							card.querySelectorall('img').addEventListener('tap', function() {
-//								mui.openWindow({
-//									id: 'device_map.html',
-//									url: 'device_map.html',
-//									waiting: {
-//										autoShow: false,
-//										title: '正在加载...'
-//									},
-//									extras: {
-//										showall: true,
-//										datas: entity.CLEANRID,
-//										from: "bj"
-//									}
-//								});
-//								event.stopPropagation();
-//							});
+							} else {
+								card.querySelector('button').addEventListener('tap', function() {
+									if(index == 0) {
+										mui.toast('取消订单');
+										var id = card.getAttribute('data-value');
+										console.log('打印id:' + id);
+										if(id != '' && id != undefined) {
+											gotoHtml("../shop/order_cancel.html", id);
+										} else {
+											mui.toast('订单ID有误');
+										}
+									} else if(index == 2) {
+										mui.toast('申请退款');
+									} else if(index == 3) {
+										mui.toast('入住评价');
+									} else {
+										mui.toast('判断错误');
+									}
+									event.stopPropagation();
+								})
+							}
 							card.addEventListener('tap', function() {
 								openWindow(index, entity);
 							}, false);
@@ -445,6 +452,25 @@
 				}
 
 			)(mui);
+
+			function gotoHtml(u, datas) {
+				mui.openWindow({
+					url: u,
+					id: u,
+
+					show: {
+						aniShow: 'pop-in'
+					},
+					waiting: {
+						autoShow: true, //自动显示等待框，默认为true
+						title: '正在加载...', //等待对话框上显示的提示内容
+					},
+					extras: {
+						data: datas,
+						pageId:'html/member/shop_order_list.html'
+					}
+				});
+			}
 		</script>
 	</body>
 

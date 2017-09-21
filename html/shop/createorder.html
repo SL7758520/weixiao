@@ -67,11 +67,25 @@
 			</div>
 			<div class="line_box" style="border-top: 1px solid #e8e8e8;"></div>
 			<div class="form_info">
-				<div><label>时长(月)</label>
-					<dd><input id="quantity" type="number" class="input_sys1" placeholder="未填写"></dd>
+				<div><label style="width: 100px;">入住时长(月)</label>
+					<div class="mui-numbox" style="margin-left: 100px;" data-numbox-min='0' id="quantity">
+						<!-- "-"按钮，点击可减小当前数值 -->
+						<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						<input class="mui-numbox-input" type="number" />
+						<!-- "+"按钮，点击可增大当前数值 -->
+						<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+					</div>
+					<!--<dd><input id="quantity" type="number" class="input_sys1" placeholder="未填写"></dd>-->
 				</div>
-				<div><label>入住人数</label>
-					<dd><input id="peopleAmount" type="number" class="input_sys1" placeholder="未填写"></dd>
+				<div><label style="width: 100px;">入住人数</label>
+					<!--<dd><input id="peopleAmount" type="number" class="input_sys1" placeholder="未填写"></dd>-->
+					<div class="mui-numbox" style="margin-left: 100px;" data-numbox-min='0' id="peopleAmount">
+						<!-- "-"按钮，点击可减小当前数值 -->
+						<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+						<input class="mui-numbox-input" type="number" />
+						<!-- "+"按钮，点击可增大当前数值 -->
+						<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+					</div>
 				</div>
 			</div>
 			<div class="line_box"></div>
@@ -115,19 +129,26 @@
 			var productId;
 			var _self;
 			var bookedDate;
+			var FaultEntity;
 			mui.plusReady(function() {
 				_self = plus.webview.currentWebview();
 				productId = _self.data.productId;
+				FaultEntity = _self.data;
 				initpage();
 			});
 
 			function initpage() {
 				document.getElementById('phone').value = _dataAccess.getUser().Mobile;
+				mui('#quantity').numbox().setOption('min',FaultEntity.MinQuantity);
+				mui('#quantity').numbox().setOption('max',FaultEntity.MaxQuantity);
+				console.log(mui('#quantity').numbox().getValue());
+//				mui('#quantity').numbox().setValue(FaultEntity.MinQuantity);
 				mui('#dtPicker').on('tap', 'a', function() {
-					var curTime = (new Date()).Format("yyyy-MM-dd hh:mm:ss")
+					var curTime = (new Date()).Format("yyyy-MM-dd");
 					//					var curTime = document.getElementById("txtOccurTime").innerHTML;
 					var year = new Date().getFullYear();
 					var opt = {
+						"type":"date",
 						"value": curTime,
 						"beginYear": year - 1,
 						"endYear": year
@@ -140,6 +161,8 @@
 					});
 				});
 				document.getElementById('confirm').addEventListener('tap', function() {
+					var quantitynum = mui('#quantity').numbox().getValue();
+					var peopleAmountnum = mui('#peopleAmount').numbox().getValue();
 					if(getValue('address') == '') {
 						mui.toast('请填写接送地址');
 						return;
@@ -148,12 +171,16 @@
 						mui.toast('请填写联系电话');
 						return;
 					}
-					if(getValue('quantity') == '') {
-						mui.toast('请填写入住时长');
+					if(quantitynum<FaultEntity.MinQuantity) {
+						mui.toast('入住时长不能少于'+FaultEntity.MinQuantity+'个月');
 						return;
 					}
-					if(getValue('peopleAmount') == '') {
-						mui.toast('请填写入住人数');
+					if(quantitynum>FaultEntity.MaxQuantity) {
+						mui.toast('入住时长不能大于'+FaultEntity.MaxQuantity+'个月');
+						return;
+					}
+					if(peopleAmountnum==0) {
+						mui.toast('请填写正确的入住人数');
 						return;
 					}
 					if(document.getElementById("txtOccurTime").innerHTML == '选择') {
@@ -161,8 +188,9 @@
 						return;
 					}
 					plus.nativeUI.showWaiting();
-					console.log('productId:' + productId + 'address:' + getValue('address') + 'phone:' + getValue('phone') + 'quantity:' + getValue('quantity') + 'peopleAmount:' + getValue('peopleAmount'));
-					_shop.MakeOrder(productId, getValue('quantity'), getValue('peopleAmount'), getValue('address'), getValue('phone'), getValue('remark'),document.getElementById("txtOccurTime").innerHTML, function(result) {
+
+					console.log('productId:' + productId + 'address:' + getValue('address') + 'phone:' + getValue('phone') + 'quantity:' + quantitynum + 'peopleAmount:' + peopleAmountnum);
+					_shop.MakeOrder(productId, quantitynum, peopleAmountnum, getValue('address'), getValue('phone'), getValue('remark'),document.getElementById("txtOccurTime").innerHTML,1, function(result) {
 						console.log(JSON.stringify(result));
 						plus.nativeUI.closeWaiting();
 						if(result.status==1){
