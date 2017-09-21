@@ -5,7 +5,7 @@
 		"iPad"
 	],
 	"id": "H54FAF69E",/*应用的标识，创建应用时自动生成，勿手动修改*/
-	"name": "wexiao",/*应用名称，程序桌面图标名称*/
+	"name": "微孝养老",/*应用名称，程序桌面图标名称*/
 	"version": {
 		"name": "1.0.0",/*应用版本名称*/
 		"code": "83"
@@ -97,18 +97,9 @@
 		"distribute": {
 			"plugins": {
 				"oauth": {
-					"qq": {
-						"appid": ""
-					},
-					"sina": {
-						"appkey": "",
-						"appsecret": "",
-						"redirect_uri": ""
-					},
-					"weixin": {
-						"appid": "",
-						"appsecret": ""
-					}
+					
+					
+					
 				}
 			},
 			"apple": {
@@ -423,7 +414,10 @@
 					"js/post.js",
 					"css/app.css",
 					"images/t5.jpg",
-					"css/main.css"
+					"css/main.css",
+					"js/mui.lazyload.js",
+					"js/mui.lazyload.img.js",
+					"fonts/mui.ttf"
 				],
 				"refer": [
 					"html/shop/product.html"

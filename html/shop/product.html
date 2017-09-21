@@ -127,45 +127,23 @@
 				padding: 5px 5px;
 			}
 			
-			.flex {
+			.hotel-footer {
+				position: fixed;
 				display: flex;
-				flex-flow: row nowrap;
 				justify-content: space-between;
+				background-color: #EFEFF4;
+				/*border: solid 1px #ddd;*/
+				/*box-shadow: 0px -5px 5px 0px rgba(0, 0, 0, 0.05);*/
+				left: 0px;
+				bottom: 0px;
+				height: 51px;
+				width: 100%;
 			}
 			
-			.flex-cell1 {
-				-webkit-box-flex: 1.5;
-				-moz-box-flex: 1.5;
-				box-flex: 1.5;
-				flex: 1.5;
-			}
-			
-			.flex-cell2 {
-				-webkit-box-flex: 2;
-				-moz-box-flex: 2;
-				box-flex: 2;
-				flex: 2;
-			}
-			
-			.flex-cell3 {
-				-webkit-box-flex: 3;
-				-moz-box-flex: 3;
-				box-flex: 3;
-				flex: 3;
-			}
-			
-			.flex-cell4 {
-				-webkit-box-flex: 4;
-				-moz-box-flex: 4;
-				box-flex: 4;
-				flex: 4;
-			}
-			
-			.flex-cell5 {
-				-webkit-box-flex: 5;
-				-moz-box-flex: 5;
-				box-flex: 5;
-				flex: 5;
+			.mui-btn-block {
+				font-size: 18px;
+				display: block;
+				height: 100%;
 			}
 			
 			.info {
@@ -212,7 +190,6 @@
 		<header class="mui-bar mui-bar-transparent" style="border-top-width: 0px;">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 id="Tab_title" class="mui-title" style="color: #007aff;">导航栏</h1>
-			<button id="Selectall" type="button" class="mui-btn mui-btn-link mui-pull-right color_white">收藏</button>
 		</header>
 		<div class="mui-content">
 			<div class="position-a">
@@ -230,6 +207,7 @@
 					</div>
 				</div>
 			</div>
+		
 			<div class="fg_title" style="margin-top: 10px;">
 				基本信息
 			</div>
@@ -245,7 +223,7 @@
 				</li>-->
 				<li class="mui-table-view-cell mui-media">
 					<i class="fa fa-phone mui-media-object mui-pull-left"></i>
-					<div class="mui-media-body mui-navigate-right">
+					<div id="tel" class="mui-media-body mui-navigate-right">
 						010-88888888
 						<p>点击拨打电话</p>
 						<span class="hotel-color-blue hotel-right-text">联系商家</span>
@@ -257,11 +235,56 @@
 			</div>
 			<ul id="productList" class="mui-table-view content">
 			</ul>
-			<div class="fg_title">
-				环境配套
+			<ul class="mui-table-view" style="margin-top: 10px;">
+				<li class="mui-table-view-cell mui-collapse " style="padding: 9px 15px;font-size: 16px;color: #6a6a6a;">
+					<a class="mui-navigate-right" href="#" >庭院配置</a>
+					<div id="CourtyardFacilityDesc" class="mui-collapse-content Desc">
+						
+					</div>
+				</li>
+				<li class="mui-table-view-cell mui-collapse" style="padding: 9px 15px;font-size: 16px;color: #6a6a6a;">
+					<a class="mui-navigate-right" href="#">交通配套</a>
+					<div id="TrafficDesc" class="mui-collapse-content Desc">
+						
+					</div>
+				</li>
+				<li class="mui-table-view-cell mui-collapse" style="padding: 9px 15px;font-size: 16px;color: #6a6a6a;">
+					<a class="mui-navigate-right" href="#">医院配套</a>
+					<div id="HospitalDesc" class="mui-collapse-content Desc">
+						
+					</div>
+				</li>
+				<li class="mui-table-view-cell mui-collapse" style="padding: 9px 15px;font-size: 16px;color: #6a6a6a;">
+					<a class="mui-navigate-right" href="#">购物配套</a>
+					<div id="ShoppingDesc" class="mui-collapse-content Desc">
+						
+					</div>
+				</li>
+				<li class="mui-table-view-cell mui-collapse" style="padding: 9px 15px;font-size: 16px;color: #6a6a6a;">
+					<a class="mui-navigate-right" href="#">旅游配套</a>
+					<div id="TourismDesc" class="mui-collapse-content Desc">
+						
+					</div>
+				</li>
+				<li class="mui-table-view-cell mui-collapse" style="padding: 9px 15px;font-size: 16px;color: #6a6a6a;">
+					<a class="mui-navigate-right" href="#">公共配套</a>
+					<div id="PublicDesc" class="mui-collapse-content Desc">
+						
+					</div>
+				</li>
+				<li class="mui-table-view-cell mui-collapse" style="padding: 9px 15px;font-size: 16px;color: #6a6a6a;">
+					<a class="mui-navigate-right" href="#">教育配套</a>
+					<div id="EducationalDesc" class="mui-collapse-content Desc">
+						
+					</div>
+				</li>
+			</ul>
+			<!--<div class="fg_title">
+				庭院配置
+			
 			</div>
 			<div id="CourtyardFacilityDesc" class="Desc">
-
+				
 			</div>
 			<div class="fg_title">
 				交通配套
@@ -298,7 +321,10 @@
 			</div>
 			<div id="EducationalDesc" class="Desc">
 
-			</div>
+			</div>-->
+		</div>
+		<div class="hotel-footer">
+			<button type="button" class="mui-btn mui-btn-warning mui-btn-block">收藏</button>
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/localDatabase.js"></script>
@@ -325,14 +351,14 @@
 				_self = plus.webview.currentWebview();
 				div = document.getElementById("productList");
 				shopId = _self.data;
-				photoUrl=_self.photoUrl;
-				console.log(shopId+"------------"+photoUrl);
+				photoUrl = _self.photoUrl;
+				console.log(shopId + "------------" + photoUrl);
 				_shop.GetShopModel(shopId, function(datas) {
 					if(datas.status == 1) {
 						shopInfo = datas.result;
 						document.getElementById("title").innerHTML = shopInfo.Name;
 						document.getElementById("Tab_title").innerHTML = shopInfo.Name;
-						document.getElementById("Shop_img").src=photoUrl+shopInfo.PhotoUrl;
+						document.getElementById("Shop_img").src = photoUrl + shopInfo.PhotoUrl;
 						document.getElementById("DistanceDesc").innerHTML = shopInfo.DistanceDesc;
 						document.getElementById("BottomPrice").innerHTML = shopInfo.BottomPrice + "元/月起";
 						document.getElementById("info").innerHTML = shopInfo.Intro;
@@ -348,10 +374,18 @@
 						mui.toast(datas.message);
 					}
 				});
-				document.getElementById("image").addEventListener("tap", function(event) {
-					gotoHtml("productpic.html", shopId,photoUrl);
+
+				document.getElementById("tel").addEventListener('tap', function() {
+					if(mui.os.plus) {
+						plus.device.dial("114");
+					} else {
+						location.href = 'tel:114';
+					}
+
 				});
-				
+				document.getElementById("image").addEventListener("tap", function(event) {
+					gotoHtml("productpic.html", shopId, photoUrl);
+				});
 
 				_shop.GetProducts(pageIndex, pageSize, 1, 1, function(datas) {
 					if(datas.status == 1) {
@@ -386,14 +420,13 @@
 				}
 				li.innerHTML = '<div class="item"><div class="img"><img src="../../images/t0-3.jpg"></div><div class="text"><div class="information"><h4>' + entity.CategoryName + '</h4><h5>' + HasPickUp + '</h5><h5 class="mui-ellipsis">' + entity.ShortDescription + '</h5></div><div class="price"><span class="new-price">￥' + entity.Price + '/月</span><div id="" style="display: flex;align-items: center;margin-top: 5px;"><img src="../../images/heart@2x.png" style="width: 15px;height: 15px;margin-left: 5px;" /><h5 style="margin-left: 5px;">' + entity.CollectCounts + '人关注</h5></div></div></div></div>';
 				li.addEventListener("tap", function(event) {
-					console.log("AAAAAAAAAAA");
-					gotoHtml("product_details.html", entity.Id,photoUrl);
+					gotoHtml("product_details.html", entity.Id, photoUrl);
 				});
 
 				return li;
 			}
 
-			function gotoHtml(u, datas,photoUrl) {
+			function gotoHtml(u, datas, photoUrl) {
 				mui.openWindow({
 					url: u,
 					id: u,
@@ -407,7 +440,7 @@
 					},
 					extras: {
 						data: datas,
-						photoUrl:photoUrl,
+						photoUrl: photoUrl,
 					}
 				});
 			}
