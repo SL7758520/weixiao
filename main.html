@@ -97,6 +97,18 @@
 					preload();
 				
 			});
+			
+			function selectTab(id) {
+				var tab = document.getElementById(id);
+				//模拟首页点击
+				mui.trigger(tab, 'tap');
+				//切换选项卡高亮
+				var current = document.querySelector(".mui-bar-tab>.mui-tab-item.mui-active");
+				if(tab !== current) {
+					current.classList.remove('mui-active');
+					tab.classList.add('mui-active');
+				}
+			}
 
 			function preload() {
 				var self = plus.webview.currentWebview();
@@ -153,6 +165,10 @@
 					}
 				});
 			}
+			window.addEventListener("CreateOrder", function(e) {
+				console.log('main');
+				selectTab('t4');
+			});
 		</script>
 	</body>
 

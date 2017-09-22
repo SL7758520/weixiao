@@ -279,7 +279,7 @@
 						mui.toast('暂无商户信息');
 					}
 				});
-				document.getElementById('cancelmes').addEventListener('tap', function() {
+				document.getElementById('btnCancel').addEventListener('tap', function() {
 					if(status <= 1) {
 						if(FaultEntity.Id != '' && FaultEntity.Id != undefined) {
 							gotoHtml("../shop/order_cancel.html", FaultEntity.Id);
@@ -288,8 +288,31 @@
 						}
 					} else if(status == 2) {
 						mui.toast('申请退款');
+						if(FaultEntity.Id != '' && FaultEntity.Id != undefined) {
+							gotoHtml("../shop/order_apply_refund.html", FaultEntity.Id);
+						} else {
+							mui.toast('订单ID有误');
+						}
 					} else if(status == 3) {
 						mui.toast('申请退款');
+						if(FaultEntity.Id != '' && FaultEntity.Id != undefined) {
+							gotoHtml("../shop/order_apply_refund.html", FaultEntity.Id);
+						} else {
+							mui.toast('订单ID有误');
+						}
+					}
+
+				});
+				document.getElementById('btnPay').addEventListener('tap', function() {
+					if(status == 2) {
+						mui.toast('完成入住');
+					} else if(status == 3) {
+						if(FaultEntity.Id != '' && FaultEntity.Id != undefined) {
+							gotoHtml("../shop/order_comment.html", FaultEntity.Id);
+						} else {
+							mui.toast('订单ID有误');
+						}
+						mui.toast('入住评价');
 					}
 
 				});

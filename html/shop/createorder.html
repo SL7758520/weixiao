@@ -141,7 +141,7 @@
 				document.getElementById('phone').value = _dataAccess.getUser().Mobile;
 				mui('#quantity').numbox().setOption('min',FaultEntity.MinQuantity);
 				mui('#quantity').numbox().setOption('max',FaultEntity.MaxQuantity);
-				console.log(mui('#quantity').numbox().getValue());
+				console.log(FaultEntity.MinQuantity+'========'+FaultEntity.MaxQuantity);
 //				mui('#quantity').numbox().setValue(FaultEntity.MinQuantity);
 				mui('#dtPicker').on('tap', 'a', function() {
 					var curTime = (new Date()).Format("yyyy-MM-dd");
@@ -195,6 +195,8 @@
 						plus.nativeUI.closeWaiting();
 						if(result.status==1){
 							mui.toast('创建订单成功');
+							var task = plus.webview.getWebviewById('product_details.html');
+							mui.fire(task, 'CreateOrder');
 							plus.webview.currentWebview().close();
 						}else{
 							mui.toast('创建订单失败，请确认信息是否正确');

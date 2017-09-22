@@ -131,7 +131,6 @@
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
-			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" id="backBtn"></a>
 			<h1 class="mui-title">我的订单</h1>
 			<!--<a id="btnNew" class="mui-btn mui-btn-link mui-pull-right">故障申报</a>-->
 		</header>
@@ -361,11 +360,11 @@
 										console.log(JSON.stringify(result));
 										//										pageObjects[index].recordCount = result.recordCount;
 										////										document.getElementById('t' + index + '').innerText = "(" + pageObjects[index].recordCount + ")";
-//										if(index == 0) {    //测试加入数据
-//											test = result;
-//										} else {
-//											result = test;
-//										}
+										if(index == 0) {    //测试加入数据
+											test = result;
+										} else {
+											result = test;
+										}
 										addList(index, result.result);
 									}
 									if(isUp) {
@@ -424,9 +423,9 @@
 								}
 							} else {
 								card.querySelector('button').addEventListener('tap', function() {
+									var id = card.getAttribute('data-value');
 									if(index == 0) {
 										mui.toast('取消订单');
-										var id = card.getAttribute('data-value');
 										console.log('打印id:' + id);
 										if(id != '' && id != undefined) {
 											gotoHtml("../shop/order_cancel.html", id);
@@ -435,10 +434,19 @@
 										}
 									} else if(index == 2) {
 										mui.toast('申请退款');
+										if(id != '' && id != undefined) {
+											gotoHtml("../shop/order_apply_refund.html", id);
+										} else {
+											mui.toast('订单ID有误3');
+										}
 									} else if(index == 3) {
-										mui.toast('入住评价');
+										if(id != '' && id != undefined) {
+											gotoHtml("../shop/order_comment.html", entity);
+										} else {
+											mui.toast('订单ID有误3');
+										}
 									} else {
-										mui.toast('判断错误');
+										console.log('判断错误');
 									}
 									event.stopPropagation();
 								})

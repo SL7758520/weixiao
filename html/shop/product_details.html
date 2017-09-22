@@ -329,6 +329,12 @@
 						}
 					});
 		}
+			window.addEventListener("CreateOrder", function(e) {
+				console.log('product_details.html');
+				var task = plus.webview.getWebviewById('html/shop/product.html');
+				mui.fire(task, 'CreateOrder');
+				mui.back();
+			});
 		</script>
 	</body>
 

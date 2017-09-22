@@ -181,12 +181,41 @@ var Shop = (function() {
 				mui.toast('没有网络连接，请稍后再试！');
 			});
 		}
+		//取消订单
 		this.OrderCancel = function(orderId,reason,onSuccess,onError){
 			if(!_getNetwork()) {
 				mui.toast("没有网络连接，请稍后再试！");
 				return;
 			}
 			PostRequest(API_SHOP+'OrderCancel?orderId='+orderId+'&reason='+reason,'',function(result){
+				if (onSuccess) {
+					onSuccess.call(this,result);
+				}
+			},function(){
+				mui.toast('没有网络连接，请稍后再试！');
+			});
+		}
+		//订单评价
+		this.OrderComment = function(orderId,content,onSuccess,onError){
+			if(!_getNetwork()) {
+				mui.toast("没有网络连接，请稍后再试！");
+				return;
+			}
+			PostRequest(API_SHOP+'OrderComment?orderId='+orderId+'&content='+content,'',function(result){
+				if (onSuccess) {
+					onSuccess.call(this,result);
+				}
+			},function(){
+				mui.toast('没有网络连接，请稍后再试！');
+			});
+		}
+		//申请退款
+		this.OrderApplyRefund = function(orderId,reson,onSuccess,onError){
+			if(!_getNetwork()) {
+				mui.toast("没有网络连接，请稍后再试！");
+				return;
+			}
+			PostRequest(API_SHOP+'OrderApplyRefund?orderId='+orderId+'&reson='+reson,'',function(result){
 				if (onSuccess) {
 					onSuccess.call(this,result);
 				}
