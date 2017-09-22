@@ -51,6 +51,7 @@
 				-webkit-box-sizing: border-box;
 				box-sizing: border-box;
 			}
+			
 			.gray-img {
 				background-image: -webkit-linear-gradient(top, rgba(59, 59, 59, .6), rgba(27, 27, 27, .6), rgba(50, 50, 50, .4), rgba(31, 31, 31, .4));
 				position: absolute;
@@ -115,8 +116,6 @@
 				font-weight: bold;
 			}
 			
-			
-			
 			.hotel-btn-booking {
 				width: 50%;
 				color: #FFFFFF;
@@ -147,6 +146,7 @@
 				height: 51px;
 				width: 100%;
 			}
+			
 			.info {
 				padding-left: 5px;
 				background-color: #FFFFFF;
@@ -156,9 +156,34 @@
 				background-color: #FFFFFF;
 				padding-left: 15px;
 			}
-			.fg_title{
+			
+			.fg_title {
 				margin-top: 10px;
 				border-bottom: 1px solid #EDEDED;
+			}
+			
+			.mui-form li a span:after {
+				font-family: Muiicons;
+				font-size: 18px;
+				font-weight: 400;
+				font-style: normal;
+				line-height: 1;
+				display: none;
+				text-decoration: none;
+				-webkit-font-smoothing: antialiased;
+				position: absolute;
+			}
+			
+			.mui-form li a {
+				padding: 10px;
+				display: block;
+				color: #636363;
+				position: relative;
+			}
+			
+			.form_info {
+				padding: 0px 20px;
+				color: #6a6a6a;
 			}
 		</style>
 	</head>
@@ -189,37 +214,50 @@
 			<div class="fg_title">
 				基本信息
 			</div>
-			<div id="info" class="info"></div>
-			
+			<div class="form_info" style="background-color: #FFFFFF;margin-top: -2px;">
+				<div><label>预定数量：</label>
+					<dd><input type="text" id="quantity" class="input_sys1" readonly="readonly"></dd>
+				</div>
+				<div><label>单价：</label>
+					<dd><input type="text" id="price" class="input_sys1" readonly="readonly"></dd>
+				</div>
+				<div><label>订单金额：</label>
+					<dd><input type="text" id="cost" class="input_sys1" readonly="readonly"></dd>
+				</div>
+				<div><label>订单金额：</label>
+					<dd><input type="text" id="cost" class="input_sys1" readonly="readonly"></dd>
+				</div>
+			</div>
+
 			<ul class="mui-table-view" style="margin-top: 10px;">
 				<li class="mui-table-view-cell mui-collapse " style="padding: 9px 15px;font-size: 16px;color: #6a6a6a;">
-					<a class="mui-navigate-right" href="#" >收费标准</a>
+					<a class="mui-navigate-right" href="#">收费标准</a>
 					<div id="TollDesc" class="mui-collapse-content Desc">
-						
+
 					</div>
 				</li>
 				<li class="mui-table-view-cell mui-collapse" style="padding: 9px 15px;font-size: 16px;color: #6a6a6a;">
 					<a class="mui-navigate-right" href="#">服务标准</a>
 					<div id="ServiceDesc" class="mui-collapse-content Desc">
-						
+
 					</div>
 				</li>
 				<li class="mui-table-view-cell mui-collapse" style="padding: 9px 15px;font-size: 16px;color: #6a6a6a;">
 					<a class="mui-navigate-right" href="#">接送服务</a>
 					<div id="ShuttleDesc" class="mui-collapse-content Desc">
-						
+
 					</div>
 				</li>
 				<li class="mui-table-view-cell mui-collapse" style="padding: 9px 15px;font-size: 16px;color: #6a6a6a;">
 					<a class="mui-navigate-right" href="#">护理标准</a>
 					<div id="NursingDesc" class="mui-collapse-content Desc">
-						
+
 					</div>
 				</li>
 				<li class="mui-table-view-cell mui-collapse" style="padding: 9px 15px;font-size: 16px;color: #6a6a6a;">
 					<a class="mui-navigate-right" href="#">房间配套</a>
 					<div id="RoomDesc" class="mui-collapse-content Desc">
-						
+
 					</div>
 				</li>
 			</ul>
@@ -255,7 +293,7 @@
 			</div>-->
 		</div>
 		<div class="hotel-footer">
-			<button type="button" class="mui-btn mui-btn-warning mui-btn-block" >收藏</button>
+			<button type="button" class="mui-btn mui-btn-warning mui-btn-block">收藏</button>
 			<button id="createorder" type="button" class="mui-btn mui-btn-success mui-btn-block">预约入住</button>
 		</div>
 		<script src="../../js/mui.min.js"></script>
@@ -272,61 +310,61 @@
 			var proudctInfo;
 			var id;
 			var photoUrl;
-			var entity ={}; 
+			var entity = {};
 			mui.plusReady(function() {
 				_self = plus.webview.currentWebview();
 				id = _self.data;
-				photoUrl=_self.photoUrl;
-				console.log(id+"------------"+photoUrl);
+				photoUrl = _self.photoUrl;
+				console.log(id + "------------" + photoUrl);
 				initpage();
 				_shop.GetProductModel(id, function(datas) {
 					if(datas.status == 1) {
 						proudctInfo = datas.result;
 						document.getElementById("title").innerHTML = proudctInfo.Name;
 						document.getElementById("Tab_title").innerHTML = proudctInfo.Name;
-						document.getElementById("shop_img").src=photoUrl+proudctInfo.PhotoUrl;
+						document.getElementById("shop_img").src = photoUrl + proudctInfo.PhotoUrl;
 						document.getElementById("DistanceDesc").innerHTML = proudctInfo.ShortDescription;
-						document.getElementById("BottomPrice").innerHTML = proudctInfo.Price+"元/月";
-//						document.getElementById("info").innerHTML = proudctInfo.Intro;
-						setHtml("TollDesc",proudctInfo.Cost);
-						setHtml("ServiceDesc",proudctInfo.Service);
-						setHtml("ShuttleDesc",proudctInfo.PickUp);
-						setHtml("NursingDesc",proudctInfo.Catering);
-						setHtml("RoomDesc",proudctInfo.HouseFacility);
+						document.getElementById("BottomPrice").innerHTML = proudctInfo.Price + "元/月";
+						//						document.getElementById("info").innerHTML = proudctInfo.Intro;
+						setHtml("TollDesc", proudctInfo.Cost);
+						setHtml("ServiceDesc", proudctInfo.Service);
+						setHtml("ShuttleDesc", proudctInfo.PickUp);
+						setHtml("NursingDesc", proudctInfo.Catering);
+						setHtml("RoomDesc", proudctInfo.HouseFacility);
 
-
-						
 					} else {
 						mui.toast(datas.message);
 					}
 				});
 			})
-			
-			function setHtml(id,value){
-				document.getElementById(id).innerHTML=value;
+
+			function setHtml(id, value) {
+				document.getElementById(id).innerHTML = value;
 			}
-			function initpage(){
-				document.getElementById('createorder').addEventListener('tap',function(){
+
+			function initpage() {
+				document.getElementById('createorder').addEventListener('tap', function() {
 					entity.productId = id;
-					opWindow('createorder.html','createorder.html',entity);
+					opWindow('createorder.html', 'createorder.html', entity);
 				});
 			}
-			function opWindow(id,url,entity){
+
+			function opWindow(id, url, entity) {
 				mui.openWindow({
-						id: id,
-						url: url,
-						show: {
-							aniShow: 'pop-in'
-						},
-						waiting: {
-							autoShow: true,
-							title: '正在加载...'
-						},
-						extras: {
-							data:entity
-						}
-					});
-		}
+					id: id,
+					url: url,
+					show: {
+						aniShow: 'pop-in'
+					},
+					waiting: {
+						autoShow: true,
+						title: '正在加载...'
+					},
+					extras: {
+						data: entity
+					}
+				});
+			}
 		</script>
 	</body>
 

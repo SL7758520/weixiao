@@ -76,6 +76,25 @@ var Shop = (function() {
 				});
 		};
 		
+		//按名称搜索店铺
+		this.ShopSearch = function( pageIndex,pageSize,name,callback) {
+			if(!_getNetwork()) {
+				mui.toast("没有网络连接，请稍后再试！");
+				return;
+			}
+			var user = _db.getUser();
+			PostRequest(API_SHOP+"ShopSearch?pageIndex=" + pageIndex + "&pageSize=" +pageSize+"&name=" + name,"",
+				function(result) {
+					if(callback) {
+						console.log('接口返回数据：' + JSON.stringify(result));
+						callback.call(this, result);
+					}
+				},
+				function() {
+					console.log('请求失败：');
+				});
+		};
+		
 		//获取Shop下的所有床位列表
 		this.GetProducts = function(pageIndex,pageSize, shopId,categoryId,callback) {
 			if(!_getNetwork()) {
@@ -113,6 +132,25 @@ var Shop = (function() {
 					console.log('请求失败：');
 				});
 		};
+		//获取筛选类型
+		this.GetAttributes = function(callback) {
+			if(!_getNetwork()) {
+				mui.toast("没有网络连接，请稍后再试！");
+				return;
+			}
+			var user = _db.getUser();
+			AsyncPost(API_SHOP+"GetAttributes", "",
+				function(result) {
+					if(callback) {
+						console.log('接口返回数据：' + JSON.stringify(result));
+						callback.call(this, result);
+					}
+				},
+				function() {
+					console.log('请求失败：');
+				});
+		};
+		
 		//获取店铺图片类型
 		this.GetShopPhotoTypes = function(callback) {
 			if(!_getNetwork()) {

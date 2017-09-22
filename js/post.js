@@ -1,6 +1,6 @@
 //var globals={apiUrl:'http://128.23.60.253:3221/WebService/App/'};//app接口地址//OMP.Web 
 //var globals={apiUrl:'http://128.23.60.253/OMP.Web/WebService/App/',domain:'http://hop.gdxinyue.net'};//app接口地址//OMP.Web 
-var globals={apiUrl:'http://www.jeffsoft.cn:9801/Api/',domain:'http://oa.gdxinyue.net:1002'};//app接口地址//OMP.Web
+var globals={apiUrl:'http://www.jeffsoft.cn:9801/api/',domain:'http://oa.gdxinyue.net:1002'};//app接口地址//OMP.Web
 //var globals={apiUrl:'http://128.23.51.5:1002/WebService/App/',domain:'http://128.23.51.5:1002'};//app接口地址//OMP.Web
 //var globals={apiUrl:'http://hop.gdxinyue.net/WebService/App/',domain:'http://hop.gdxinyue.net'};//app接口地址//OMP.Web
 function postData(apiUrl,isAsync, dataStr, onSuccess,waitingMsg) {

@@ -420,14 +420,16 @@
 					"fonts/mui.ttf"
 				],
 				"refer": [
-					"html/shop/product.html"
+					"html/shop/product.html",
+					"html/shop/shop_search.html"
 				],
 				"priority": 0
 			},
 			"health.html": {
 				"resources": [
 					"fonts/mui.ttf",
-					"css/mui.min.css"
+					"css/mui.min.css",
+					"js/mui.min.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -668,6 +670,37 @@
 				"refer": [
 					"html/shop/product.html"
 				],
+				"priority": 0
+			},
+			"html/shop/shop_search.html": {
+				"resources": [
+					"css/appfont.css",
+					"css/main.css",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"fonts/icomoon.ttf",
+					"css/mui.min.css",
+					"js/localDatabase.js",
+					"js/dao.js",
+					"js/shop.js",
+					"js/post.js"
+				],
+				"refer": [
+					"html/shop/product_screen.html"
+				],
+				"priority": 0
+			},
+			"html/shop/product_screen.html": {
+				"resources": [
+					"js/localDatabase.js",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"js/dao.js",
+					"css/mui.min.css",
+					"js/shop.js",
+					"js/post.js"
+				],
+				"refer": [],
 				"priority": 0
 			}
 		},
