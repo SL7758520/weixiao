@@ -444,6 +444,14 @@
 					}
 				});
 			}
+			window.addEventListener("CreateOrder", function(e) {
+				console.log('html/shop/product.html');
+				var main = plus.webview.getWebviewById('main.html');
+				mui.fire(main, 'CreateOrder');
+				var task = plus.webview.getWebviewById('html/member/shop_order_list.html');
+				mui.fire(task, 'listRefresh0');
+				mui.back();
+			});
 		</script>
 	</body>
 

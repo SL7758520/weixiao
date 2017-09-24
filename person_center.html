@@ -216,6 +216,7 @@
 	<script src="js/account.js"></script>
 	<script src="js/mui.enterfocus.js"></script>
 	<script src="js/app.js"></script>
+	<script src="js/member.js"></script>
 	<script>
 		/*NickName  50
 			Sex 2
@@ -225,10 +226,13 @@
 			IconUrl  100*/
 		mui.init();
 		var _dataAccess = new DataAccess();
+		var Token;
+		var member = new Member();
 		var isLogin = false;
 		mui.plusReady(function() {
 			initClick();
 			initpage();
+//			GetMemberDetail();
 			isLogin = getLogin();
 			if(isLogin) {
 				document.getElementById('btnSave').innerHTML = '退出登录';
@@ -390,6 +394,9 @@
 		
 		function initpage() {
 				var users = _dataAccess.getUser();
+				if (users.Token!=null) {
+					Token =users.Token;
+				}
 				setelementhtml('nickname', users.NickName);
 				setelementhtml('mobile', users.Mobile);
 				setelementhtml('sex', users.Sex);
@@ -493,8 +500,8 @@
 				if(status == 200) {
 					if(rsp.result) {
 						//更新用户信息
-//						upDateUserInfo();
-						console.log('成功'+JSON.stringify(rsp));
+					GetMemberDetail();
+					console.log('成功'+JSON.stringify(rsp));
 					}
 				} else {
 					console.log('失败：'+JSON.stringify(rsp))
@@ -511,8 +518,16 @@
 			task.start();
 		}
 		window.addEventListener('Refresh',function(){
-			initpage();
+			GetMemberDetail();
 		});
+		function GetMemberDetail(){
+			member.GetMemberDetail(function(result){
+				var user = result.result;
+				user.Token = Token;
+				_dataAccess.setUser(user);
+				initpage();
+			});
+		}
 	</script>
 
 </html>

@@ -211,7 +211,8 @@
 			"images/user_menu_setting@2x.png",
 			"images/user_menu_bankcard@2x.png",
 			"js/account.js",
-			"js/mui.enterfocus.js"
+			"js/mui.enterfocus.js",
+			"js/member.js"
 		],
 		"refer": [
 			"html/member/member_modify.html"
@@ -335,7 +336,9 @@
 			"js/post.js"
 		],
 		"refer": [
-			"html/member/shop_order_detail.html"
+			"html/member/shop_order_detail.html",
+			"html/shop/order_comment.html",
+			"html/shop/order_apply_refund.html"
 		]
 	},
 	"html/member/shop_order_detail.html": {
@@ -347,7 +350,9 @@
 			"css/mui.min.css"
 		],
 		"refer": [
-			"html/shop/product.html"
+			"html/shop/product.html",
+			"html/shop/order_cancel.html",
+			"html/shop/order_comment.html"
 		]
 	},
 	"html/shop/shop_search.html": {
@@ -374,6 +379,21 @@
 			"fonts/mui.ttf",
 			"js/dao.js",
 			"css/mui.min.css",
+			"js/shop.js",
+			"js/post.js"
+		]
+	},
+	"html/shop/order_cancel.html": {
+		"resources": [
+			"css/mui.min.css"
+		]
+	},
+	"html/shop/order_comment.html": {
+		"resources": [
+			"css/mui.min.css",
+			"js/localDatabase.js",
+			"js/mui.min.js",
+			"js/dao.js",
 			"js/shop.js",
 			"js/post.js"
 		]

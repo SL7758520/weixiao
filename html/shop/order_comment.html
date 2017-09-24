@@ -8,9 +8,50 @@
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/appfont.css" rel="stylesheet" />
 		<link href="../../css/main.css" rel="stylesheet" />
+		<style>
+			.hide {
+				display: none;
+			}
+			
+			.backTop {
+				background: #DDDDDD;
+				border-radius: 50%;
+				position: fixed;
+				right: 10px;
+				bottom: 15px;
+				width: 38px;
+				height: 38px;
+				z-index: 9999;
+				text-align: center;
+				font-size: 18px;
+				color: #666666;
+				padding-top: 8px;
+				opacity: 0.8;
+			}
+			
+			.start {
+				padding: 10px 15px;
+				background-color: transparent;
+			}
+			
+			.sendScore {
+				padding: .5em !important;
+			}
+			
+			.mui-icon-star-filled {
+				color: #FFB400;
+				font-size: 22px;
+			}
+			
+			.mui-icon-star {
+				color: #B5B5B5;
+				font-size: 22px;
+			}
+		</style>
 	</head>
 
 	<body>
+
 		<header class="mui-bar mui-bar-nav">
 			<a href="#offCanvasSide" class="mui-action-back mui-icon icon_app_02 mui-action-menu mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">评价</h1>
@@ -22,7 +63,11 @@
 				</div>
 			</div>
 			<p></p>-->
-
+			<ul class="mui-table-view" style="margin-bottom: 10px;">
+				<li style="clear: both;" id="startScore">
+					<div class="start">评分：<span id="star11" class="mui-icon mui-icon-star"><span id="star12" class="mui-icon mui-icon-star"><span id="star13" class="mui-icon mui-icon-star"><span id="star14" class="mui-icon mui-icon-star"><span id="star15" class="mui-icon mui-icon-star"></span></div>
+				</li>
+			</ul>
 			<div class="mui-form">
 				<ul>
 					<li class="form_tp">服务点评：</li>
@@ -41,24 +86,41 @@
 		<script src="../../js/localDatabase.js"></script>
 		<script src="../../js/dao.js"></script>
 		<script src="../../js/shop.js"></script>
+		<script src="../../js/member.js"></script>
 		<script type="text/javascript">
 			mui.init();
 			var data;
 			var _self;
 			var pageId;
+			var DetailEntity;
+			var Servicescore = 0;
 			var shop = new Shop();
+			var member = new Member();
 			mui.plusReady(function() {
 				_self = plus.webview.currentWebview();
 				data = _self.data;
 				pageId = _self.pageId;
 				console.log(JSON.stringify(data));
+				member.GetOrderDetails(data.Id, function(result) {
+					if(result.status == 1) {
+						DetailEntity = result.result;
+						console.log('详细订单：'+JSON.stringify(DetailEntity));
+					} else {
+						mui.toast(result.message);
+					}
+					//					console.log('接口返回:'+JSON.stringify(result));
+				});
 				document.getElementById('btnAllot').addEventListener('tap', function() {
-					var content = document.getElementById('txtDescription').value;
-					if(content < 5) {
+					var reason = document.getElementById('txtDescription').value;
+					if(reason < 5) {
 						mui.toast('请至少填写5个文字');
 						return;
 					}
-					shop.OrderComment(orderId, content, function(result) {
+					if (Servicescore==0) {
+						mui.toast('请为该订单评分');
+						return;
+					}
+					shop.OrderComment(data.Id,data.ShopId,DetailEntity.Id,data.MemberId, reason,Servicescore, function(result) {
 						if(result.status == 1) {
 							var task = plus.webview.getWebviewById(pageId);
 							console.log(pageId);
@@ -77,7 +139,26 @@
 					});
 				});
 			});
-			mui.back = function(){
+			mui('.start').on('tap', 'span', function() {
+				var score = this.id.charAt(5);
+				var index = this.id.charAt(4);
+				Servicescore = score;
+				var id = this.id.substring(0, 5);
+				for(var i = 1; i < 6; i++) {
+					var starEle = document.getElementById(id + i);
+					if(i <= score) {
+						if(!starEle.classList.contains('mui-icon-star-filled')) {
+							starEle.classList.remove('mui-icon-star');
+							starEle.classList.add('mui-icon-star-filled');
+						}
+					} else {
+						starEle.classList.remove('mui-icon-star-filled');
+						starEle.classList.add('mui-icon-star');
+					}
+				}
+				event.stopPropagation();
+			});
+			mui.back = function() {
 				plus.webview.currentWebview().close();
 			}
 		</script>
