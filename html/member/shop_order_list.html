@@ -216,7 +216,8 @@
 			</div>
 		</div>
 
-		<script src="../../js/mui.min.js"></script>
+		<!--<script src="../../js/mui.min.js"></script>-->
+		<script type="text/javascript" src="../../js/mui.js" ></script>
 		<script src="../../js/mui.pullToRefresh.js"></script>
 		<script src="../../js/mui.pullToRefresh.material.js"></script>
 		<script src="../../js/post.js"></script>
@@ -322,6 +323,7 @@
 							});
 							$(pullRefreshEl).pullToRefresh({
 								down: {
+									auto: true,
 									callback: function() {
 										var self = this;
 										pullRefresh(self, false, index);
@@ -360,11 +362,11 @@
 										console.log(JSON.stringify(result));
 										//										pageObjects[index].recordCount = result.recordCount;
 										////										document.getElementById('t' + index + '').innerText = "(" + pageObjects[index].recordCount + ")";
-										if(index == 0) {    //测试加入数据
-											test = result;
-										} else {
-											result = test;
-										}
+//										if(index == 0) {    //测试加入数据
+//											test = result;
+//										} else {
+//											result = test;
+//										}
 										addList(index, result.result);
 									}
 									if(isUp) {

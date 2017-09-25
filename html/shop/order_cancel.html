@@ -22,13 +22,13 @@
 				</div>
 			</div>
 			<p></p>-->
-			
+
 			<div class="mui-form">
-					<ul>
-						<li class="form_tp">取消描述：</li>
-						<li><textarea class="text_box" id="txtDescription" placeholder="请在这里输入要取消订单的原因"></textarea></li>
-					</ul>
-				</div>
+				<ul>
+					<li class="form_tp">取消描述：</li>
+					<li><textarea class="text_box" id="txtDescription" placeholder="请在这里输入要取消订单的原因"></textarea></li>
+				</ul>
+			</div>
 			<div id="popover_save" class="fault_bar" style="position: relative;">
 				<a href="#" class="fault_btn_ok long_btn" id="btnAllot" style="border-radius: 5px;">
 					<span>确&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;定</span>
@@ -40,26 +40,44 @@
 		<script src="../../js/post.js"></script>
 		<script src="../../js/localDatabase.js"></script>
 		<script src="../../js/dao.js"></script>
-		<script src="../../js/shop.js" ></script>
+		<script src="../../js/shop.js"></script>
 		<script type="text/javascript">
 			mui.init();
 			var orderId;
 			var _self;
+			var pageId;
 			var shop = new Shop();
-			mui.plusReady(function(){
+			mui.plusReady(function() {
 				_self = plus.webview.currentWebview();
 				orderId = _self.data;
-				document.getElementById('btnAllot').addEventListener('tap',function(){
+				pageId = _self.pageId;
+				document.getElementById('btnAllot').addEventListener('tap', function() {
 					var reason = document.getElementById('txtDescription').value;
-					if (reason<5) {
+					if(reason < 5) {
 						mui.toast('请至少填写5个文字');
 						return;
 					}
-					shop.OrderCancel(orderId,reason,function(result){
+					shop.OrderCancel(orderId, reason, function(result) {
+						if(result.status == 1) {
+							var task = plus.webview.getWebviewById(pageId);
+							console.log(pageId);
+							if(pageId == 'shop_order_detail.html') {
+								mui.fire(task, "cancelOrder");
+							} else {
+								mui.fire(task, "listRefresh0");
+							}
+							mui.back();
+						} else {
+							mui.toast(result.message);
+						}
 						console.log(JSON.stringify(result));
+
 					});
 				});
 			});
+			mui.back = function(){
+				plus.webview.currentWebview().close();
+			}
 		</script>
 	</body>
 

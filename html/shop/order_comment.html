@@ -120,16 +120,16 @@
 						mui.toast('请为该订单评分');
 						return;
 					}
-					shop.OrderComment(data.Id,data.ShopId,DetailEntity.Id,data.MemberId, reason,Servicescore, function(result) {
+					shop.OrderComment(data.Id,data.ShopId,DetailEntity.OrderItemId,data.MemberId, reason,Servicescore, function(result) {
 						if(result.status == 1) {
 							var task = plus.webview.getWebviewById(pageId);
 							console.log(pageId);
 							if(pageId == 'shop_order_detail.html') {
 								mui.fire(task, "cancelOrder");
 							} else {
-								mui.fire(task, "listRefresh0");
-								mui.fire(task, "listRefresh1");
+								mui.fire(task, "listRefresh3");
 							}
+							mui.toast(result.message);
 							mui.back();
 						} else {
 							mui.toast(result.message);
