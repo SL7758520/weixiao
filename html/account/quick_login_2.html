@@ -94,6 +94,7 @@
 			mui.plusReady(function () {
 			    _self=plus.webview.currentWebview();
 			    tel=_self.data;
+				var isFrom=_self.isFrom;
 			    console.log(tel);
 			    src=globals.apiUrl+"Account/LoginBySmsImgCode?mobile="+tel; 
 			     console.log(src);
@@ -103,7 +104,7 @@
 					console.log(code);
 					_account.LoginBySms_GetCode(tel,code,function(data){
 						if(data.status == 1){
-							app.gotoHtml("quick_login_3.html",tel);
+							app.gotoHtml("quick_login_3.html",tel,isFrom);
 						}else{
 							mui.toast(data.message);
 							mui.back();

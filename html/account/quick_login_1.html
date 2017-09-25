@@ -83,11 +83,12 @@
 			mui.init();
 			var _dataAccess=new DataAccess();
 			mui.plusReady(function() {
-
+				var _self=plus.webview.currentWebview();
+				var isFrom=_self.isFrom;
 				document.getElementById("sendMail").addEventListener("tap", function(event) {
 					var tel = document.getElementById("vcode").value;
 					console.log(tel);
-					app.gotoHtml("quick_login_2.html",tel);
+					app.gotoHtml("quick_login_2.html",tel,isFrom);
 				});
 			})
 		</script>
