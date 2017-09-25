@@ -197,75 +197,75 @@
 						settings.autoLogin = true;
 					}
 					var state = app.getState();
-					
+
 					console.log(JSON.stringify(_dataAccess.getUser()) + "--------" + settings.autoLogin);
 
-						console.log("BBBBBBBBBBBB");
-						app.setState(null);
-						//第三方登录
-						var authBtns = ['qihoo', 'weixin', 'sinaweibo', 'qq']; //配置业务支持的第三方登录
-						var auths = {};
-						var oauthArea = doc.querySelector('.oauth-area');
-						plus.oauth.getServices(function(services) {
-							for(var i in services) {
-								var service = services[i];
-								auths[service.id] = service;
-								if(~authBtns.indexOf(service.id)) {
-									var isInstalled = app.isInstalled(service.id);
-									var btn = document.createElement('div');
-									//如果微信未安装，则为不启用状态
-									btn.setAttribute('class', 'oauth-btn' + (!isInstalled && service.id === 'weixin' ? (' disabled') : ''));
-									btn.authId = service.id;
-									btn.style.backgroundImage = 'url("../../images/' + service.id + '.png")'
-									oauthArea.appendChild(btn);
-								}
+					console.log("BBBBBBBBBBBB");
+					app.setState(null);
+					//第三方登录
+					var authBtns = ['qihoo', 'weixin', 'sinaweibo', 'qq']; //配置业务支持的第三方登录
+					var auths = {};
+					var oauthArea = doc.querySelector('.oauth-area');
+					plus.oauth.getServices(function(services) {
+						for(var i in services) {
+							var service = services[i];
+							auths[service.id] = service;
+							if(~authBtns.indexOf(service.id)) {
+								var isInstalled = app.isInstalled(service.id);
+								var btn = document.createElement('div');
+								//如果微信未安装，则为不启用状态
+								btn.setAttribute('class', 'oauth-btn' + (!isInstalled && service.id === 'weixin' ? (' disabled') : ''));
+								btn.authId = service.id;
+								btn.style.backgroundImage = 'url("../../images/' + service.id + '.png")'
+								oauthArea.appendChild(btn);
 							}
-							$(oauthArea).on('tap', '.oauth-btn', function() {
-								if(this.classList.contains('disabled')) {
-									plus.nativeUI.toast('您尚未安装微信客户端');
-									return;
-								}
-								var auth = auths[this.authId];
-								var waiting = plus.nativeUI.showWaiting();
-								auth.login(function() {
-									waiting.close();
-									plus.nativeUI.toast("登录认证成功");
-									auth.getUserInfo(function() {
-										//										plus.nativeUI.toast("获取用户信息成功");
-										console.log(JSON.stringify(auth));
-										var authType = auth.id;
-										var token = auth.authResult.access_token;
-										var openid;
-										if(authType == "weixin") {
-											authType = 'wechat';
-											openid = auth.userInfo.unionid;
+						}
+						$(oauthArea).on('tap', '.oauth-btn', function() {
+							if(this.classList.contains('disabled')) {
+								plus.nativeUI.toast('您尚未安装微信客户端');
+								return;
+							}
+							var auth = auths[this.authId];
+							var waiting = plus.nativeUI.showWaiting();
+							auth.login(function() {
+								waiting.close();
+								plus.nativeUI.toast("登录认证成功");
+								auth.getUserInfo(function() {
+									//										plus.nativeUI.toast("获取用户信息成功");
+									console.log(JSON.stringify(auth));
+									var authType = auth.id;
+									var token = auth.authResult.access_token;
+									var openid;
+									if(authType == "weixin") {
+										authType = 'wechat';
+										openid = auth.userInfo.unionid;
+									} else {
+										openid = auth.authResult.openid;
+									}
+									var name = auth.userInfo.nickname || auth.userInfo.name;
+									_account.Auth(authType, openid, token, name, function(datas) {
+										if(datas.status == 1) {
+											mui.toast(datas.message);
+											var user = datas.result;
+											_dataAccess.setUser(user);
+											toMain();
 										} else {
-											openid = auth.authResult.openid;
+											mui.toast(datas.message);
 										}
-										var name = auth.userInfo.nickname || auth.userInfo.name;
-										_account.Auth(authType, openid, token, name, function(datas) {
-											if(datas.status == 1) {
-												mui.toast(datas.message);
-												var user = datas.result;
-												_dataAccess.setUser(user);
-												toMain();
-											} else {
-												mui.toast(datas.message);
-											}
-										});
-
-									}, function(e) {
-										plus.nativeUI.toast("获取用户信息失败：" + e.message);
 									});
+
 								}, function(e) {
-									waiting.close();
-									plus.nativeUI.toast("登录认证失败：" + e.message);
+									plus.nativeUI.toast("获取用户信息失败：" + e.message);
 								});
+							}, function(e) {
+								waiting.close();
+								plus.nativeUI.toast("登录认证失败：" + e.message);
 							});
-						}, function(e) {
-							oauthArea.style.display = 'none';
-							plus.nativeUI.toast("获取登录认证失败：" + e.message);
 						});
+					}, function(e) {
+						oauthArea.style.display = 'none';
+						plus.nativeUI.toast("获取登录认证失败：" + e.message);
+					});
 					// close splash
 					setTimeout(function() {
 						//关闭 splash
@@ -326,6 +326,9 @@
 							},
 							waiting: {
 								autoShow: false
+							},
+							extras: {
+								isFrom:false
 							}
 						});
 					}, false);
@@ -358,6 +361,9 @@
 							},
 							waiting: {
 								autoShow: false
+							},
+							extras: {
+								isFrom:true
 							}
 						});
 					}, false);

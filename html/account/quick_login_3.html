@@ -84,18 +84,24 @@
 			var _self;
 			var tel;
 			var _dataAccess = new DataAccess();
-			var _account=new Account();
+			var _account = new Account();
 			mui.plusReady(function() {
 				_self = plus.webview.currentWebview();
 				tel = _self.data;
+				var isFrom = _self.isFrom;
 				console.log(tel);
 				document.getElementById("sendMail").addEventListener("tap", function(event) {
 					var smscode = document.getElementById("vcode").value;
 					console.log(smscode);
-					_account.LoginBySms_Verify(tel,smscode,function(data){
-						if(data.status == 1){
-							_dataAccess.setUser(data.result);
-							toMain();
+					_account.LoginBySms_Verify(tel, smscode, function(data) {
+						if(data.status == 1) {
+							if(isFrom) {
+							
+							} else {
+								_dataAccess.setUser(data.result);
+								toMain();
+							}
+
 						}
 						mui.toast(data.message);
 					});

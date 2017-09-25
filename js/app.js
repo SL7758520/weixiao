@@ -82,7 +82,7 @@
 		return (email.length > 3 && email.indexOf('@') > -1);
 	};
 	
-	owner.gotoHtml =function(u,datas){
+	owner.gotoHtml =function(u,datas,isFrom){
 		$.openWindow({
 				url: u,
 				id: u,
@@ -96,6 +96,7 @@
 				},
 				extras: {
 					data: datas,
+					isFrom:isFrom,
 				}
 			});
 	}
