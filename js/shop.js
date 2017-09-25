@@ -95,6 +95,25 @@ var Shop = (function() {
 				});
 		};
 		
+		//按条件搜索产品
+		this.ProductSearch = function(pageIndex,pageSize, categoryId,cityId,jsonAttributes,callback) {
+			if(!_getNetwork()) {
+				mui.toast("没有网络连接，请稍后再试！");
+				return;
+			}
+			var user = _db.getUser();
+			AsyncPost(API_SHOP+"ProductSearch", "pageIndex=" + pageIndex + "&pageSize=" +pageSize+"&categoryId=" + categoryId + "&cityId=" +cityId+"&jsonAttributes="+jsonAttributes,
+				function(result) {
+					if(callback) {
+						console.log('接口返回数据：' + JSON.stringify(result));
+						callback.call(this, result);
+					}
+				},
+				function() {
+					console.log('请求失败：');
+				});
+		};
+		
 		//获取Shop下的所有床位列表
 		this.GetProducts = function(pageIndex,pageSize, shopId,categoryId,callback) {
 			if(!_getNetwork()) {

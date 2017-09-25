@@ -34,6 +34,24 @@
 			.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
 				background-color: #fff;
 			}
+			
+			.hotel-footer {
+				position: fixed;
+				display: flex;
+				justify-content: space-between;
+				background-color: #EFEFF4;
+				/*border: solid 1px #ddd;*/
+				/*box-shadow: 0px -5px 5px 0px rgba(0, 0, 0, 0.05);*/
+				left: 0px;
+				bottom: 0px;
+				height: 51px;
+				width: 100%;
+			}
+			
+			.mui-btn-block {
+				margin-bottom: 0px;
+				padding: 0px 0;
+			}
 		</style>
 	</head>
 
@@ -41,14 +59,18 @@
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">床位筛选</h1>
+			<button id="EmptyAll" type="button" class="mui-btn mui-btn-link mui-pull-right color_white">清空条件</button>
 		</header>
-		<div class="mui-content mui-row mui-fullscreen">
+		<div class="mui-content mui-row mui-fullscreen" style="margin-bottom: 51px;">
 			<div class="mui-col-xs-3">
 				<div id="segmentedControls" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-vertical">
 				</div>
 			</div>
 			<div id="segmentedControlContents" class="mui-col-xs-9" style="border-left: 1px solid #c8c7cc;">
 			</div>
+		</div>
+		<div class="hotel-footer">
+			<button id="screen" type="button" class="mui-btn mui-btn-warning mui-btn-block">筛选</button>
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/localDatabase.js"></script>
@@ -59,6 +81,10 @@
 			var _dataAccess = new DataAccess();
 			var _shop = new Shop();
 			var ScreenList;
+			var ScreenConditions = {};
+			var pageIndex = 1;
+			var pageSize = 10;
+			var cityId = 6201;
 			var olderId;
 			var contenthtml;
 			mui.init({
@@ -77,6 +103,36 @@
 						}
 					}
 				});
+				document.getElementById("EmptyAll").addEventListener("tap", function(event) {
+					ScreenConditions = {};
+					mui.each(document.querySelectorAll('.mui-table-view .mui-table-view-cell'), function(index, element) {
+						if(element.classList.contains("mui-selected")) {
+							element.classList.remove("mui-selected");
+						}
+					});
+					mui.toast("清理成功!");
+				});
+				document.getElementById("screen").addEventListener("tap", function(event) {
+					if(JSON.stringify(ScreenConditions) == "{}") {
+						mui.toast("您还没有选择筛选条件!");
+						return;
+					}
+					_shop.ProductSearch(pageIndex, pageSize, 1, cityId, JSON.stringify(ScreenConditions), function(datas) {
+						if(datas.status == 1) {
+							if(datas.result.length == 0){
+								mui.toast("没有符合您筛选条件的床位!");
+								return ;
+							}
+							var view = plus.webview.getWebviewById("html/shop/shop_search.html");
+							mui.fire(view, "productScreen", {
+								data:datas.result
+							});
+							mui.back();
+						} else {
+							mui.toast(datas.message);
+						}
+					});
+				});
 				_shop.GetAttributes(function(datas) {
 					if(datas.status == 1) {
 						ScreenList = datas.result;
@@ -93,9 +149,9 @@
 						for(i = 0; i < m; i++) {
 							if(i == 0) {
 								olderId = 0;
-								contenthtml.push('<div id="content' + i + '" class="mui-control-content"><ul class="mui-table-view mui-table-view-radio">');
+								contenthtml.push('<div id="content' + i + '" class="mui-control-content"><ul id="ul' + i + '" data-index="' + (i + 1) + '" class="mui-table-view mui-table-view-radio">');
 							} else {
-								contenthtml.push('<div id="content' + i + '" class="mui-control-content mui-hidden"><ul class="mui-table-view mui-table-view-radio">');
+								contenthtml.push('<div id="content' + i + '" class="mui-control-content mui-hidden"><ul id="ul' + i + '" data-index="' + (i + 1) + '" class="mui-table-view mui-table-view-radio">');
 							}
 							for(j = 0; j < datas.result[i].Shop_AttributeValuesList.length; j++) {
 								contenthtml.push('<li class="mui-table-view-cell"><a class="mui-navigate-right">' + datas.result[i].Shop_AttributeValuesList[j].Value + '</a></li>');
@@ -103,8 +159,26 @@
 
 							contenthtml.push('</ul></div>');
 						}
-						console.log(contenthtml.join(''));
+
+						//						console.log(contenthtml.join(''));
 						contents.innerHTML = contenthtml.join('');
+						for(var k = 0; k < m; k++) {
+							document.getElementById("ul" + k).addEventListener("selected", function(event) {
+								var text = event.detail.el.innerText;
+								var id = this.getAttribute('data-index');
+								var str = text.split("\n");
+								console.log(JSON.stringify(str) + id);
+								for(var i = 0; i < ScreenList.length; i++) {
+									if(ScreenList[i].Id == id) {
+										var tab = ScreenList[i].Name;
+										ScreenConditions[tab] = str[0];
+										console.log(JSON.stringify(ScreenConditions));
+										return;
+									}
+								}
+							});
+						}
+
 						//默认选中第一个
 						controls.querySelector('.mui-control-item').classList.add('mui-active');
 						//			contents.querySelector('.mui-control-content').classList.add('mui-active');
