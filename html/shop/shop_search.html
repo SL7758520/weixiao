@@ -12,6 +12,7 @@
 			.mui-bar .mui-title {
 				left: 10px;
 			}
+			
 			html,
 			body {
 				background-color: #efeff4;
@@ -32,6 +33,34 @@
 				background-color: #F4F4F4;
 				position: relative;
 				margin-left: 0px;
+			}
+			
+			.item {
+				display: -webkit-box;
+			}
+			
+			.text {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+			}
+			
+			.information {
+				width: 60%;
+				margin-left: 5px;
+			}
+			
+			.Pprice {
+				width: 40%;
+				text-align: end;
+				margin-left: 5px;
+			}
+			
+			.new-price {
+				font-size: 16px;
+				color: #ff7c70;
+				font-family: Impact, Arail, sans-serif;
+				font-weight: bold;
 			}
 			
 			.content {
@@ -89,10 +118,11 @@
 			<button id="confirmSelected" type="button" class="mui-btn mui-btn-link mui-pull-right color_white">高级筛选</button>
 		</header>
 		<div class="mui-content">
-			<div id="scroll0" class="mui-scroll">
-				<ul id="shopList" class="mui-table-view">
-				</ul>
-			</div>
+			<ul id="shopList" class="mui-table-view">
+				<li class="mui-table-cell">
+					
+				</li>
+			</ul>
 		</div>
 
 		<script src="../../js/mui.min.js"></script>
@@ -134,6 +164,11 @@
 					inputElem.focus();
 				}, 20);
 			};
+			window.addEventListener("productScreen", function(e) {
+				var datas = e.detail.data;
+				console.log(JSON.stringify(datas));
+				addListProudct(datas);
+			});
 			mui.plusReady(function() {
 				_self = plus.webview.currentWebview();
 				div = document.getElementById("shopList");
@@ -154,10 +189,35 @@
 						});
 					}
 				}, false);
-				document.getElementById("confirmSelected").addEventListener("tap",function(event){
+				document.getElementById("confirmSelected").addEventListener("tap", function(event) {
 					gotoHtml("product_screen.html", "", "");
 				});
 			});
+
+			function addListProudct(datas) {
+				div.innerHTML = "";
+				for(var i = 0; i < datas.length; i++) {
+					div.appendChild(creatCardProudct(datas[i]));
+				}
+			}
+
+			function creatCardProudct(entity) {
+				//			console.log("AAAAAAAAAAA");
+				var li = document.createElement("li");
+				li.className = 'mui-table-view-cell';
+				var HasPickUp;
+				if(entity.HasPickUp) {
+					HasPickUp = "可接送";
+				} else {
+					HasPickUp = "不可接送";
+				}
+				li.innerHTML='<div class="item"><div ><img src="../../images/t0-3.jpg"></div><div class="text"><div class="information"><h4>' + entity.CategoryName + '</h4><h5>' + HasPickUp + '</h5><h5 class="mui-ellipsis">' + entity.ShortDescription + '</h5></div><div class="Pprice"><span class="new-price" >￥' + entity.Price + '/月</span><div id="" style="display: flex;align-items: center;margin-top: 5px;"><img src="../../images/heart@2x.png" style="width: 15px;height: 15px;margin-left: 5px;" /><h5 style="margin-left: 5px;">' + entity.CollectCounts + '人关注</h5></div></div></div></div>'
+//				li.innerHTML = '<div class="item"><div ><img src="../../images/t0-3.jpg"></div><div class="text"><div class="information"><h4>' + entity.CategoryName + '</h4><h5>' + HasPickUp + '</h5><h5 class="mui-ellipsis">' + entity.ShortDescription + '</h5></div><div class="price"><span class="new-price">￥' + entity.Price + '/月</span><div id="" style="display: flex;align-items: center;margin-top: 5px;"><img src="../../images/heart@2x.png" style="width: 15px;height: 15px;margin-left: 5px;" /><h5 style="margin-left: 5px;">' + entity.CollectCounts + '人关注</h5></div></div></div></div>';
+				li.addEventListener("tap", function(event) {
+					gotoHtml("product_details.html", entity.Id, photoUrl);
+				});
+				return li;
+			}
 
 			function addList(datas) {
 				div.innerHTML = "";
