@@ -279,6 +279,20 @@ var Shop = (function() {
 				mui.toast('没有网络连接，请稍后再试！');
 			});
 		}
+		//完成入住
+		this.OrderFinish = function(orderId,onSuccess,onError){
+			if(!_getNetwork()) {
+				mui.toast("没有网络连接，请稍后再试！");
+				return;
+			}
+			PostRequest(API_SHOP+'OrderFinish?orderId='+orderId,'',function(result){
+				if (onSuccess) {
+					onSuccess.call(this,result);
+				}
+			},function(){
+				mui.toast('没有网络连接，请稍后再试！');
+			});
+		}
 
 	}
 	return access;
