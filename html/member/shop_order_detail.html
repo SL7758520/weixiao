@@ -127,6 +127,17 @@
 				width: 100%;
 			}
 		</style>
+		<div class="windows_bg" id="dialog" style="display: none;">
+			<!--通用弹窗标准-->
+			<div class="windows_box">
+				<!--两按钮状态-->
+				<div class="info_box two_btn">
+					<p>正在进行确认操作，请确定</p>
+					<a href="#" id="casncel">确定</a>
+					<a href="#" class="left_line" id="close">取消</a>
+				</div>
+			</div>
+		</div>
 		<!--主界面部分-->
 		<header id="header" class="mui-bar mui-bar-nav">
 			<h1 class="mui-title">订单信息</h1>
@@ -306,6 +317,11 @@
 				document.getElementById('btnPay').addEventListener('tap', function() {
 					if(status == 2) {
 						mui.toast('完成入住');
+						if(FaultEntity.Id == '' || FaultEntity.Id == undefined) {
+							mui.toast('订单ID有误');
+							return;
+						}
+						document.getElementById('dialog').style.display = 'block';
 					} else if(status == 3) {
 						if(FaultEntity.Id != '' && FaultEntity.Id != undefined) {
 							gotoHtml("../shop/order_comment.html", FaultEntity);
@@ -315,6 +331,22 @@
 						mui.toast('入住评价');
 					}
 
+				});
+				document.getElementById('casncel').addEventListener('tap', function() {
+					shop.OrderFinish(FaultEntity.Id,function(result){
+						console.log(JSON.stringify(result));
+						if (result.status==1) {
+							mui.toast(result.message);
+							var list = plus.webview.getWebviewById('html/member/shop_order_list.html');
+							mui.fire(list, 'listRefresh2');
+							plus.webview.currentWebview().close();
+						}else{
+							mui.toast(result.message);
+						}
+					});
+				});
+				document.getElementById('close').addEventListener('tap', function() {
+					dialog.style.display = 'none';
 				});
 			}
 
@@ -347,7 +379,7 @@
 			window.addEventListener("cancelOrder", function(e) {
 				var list = plus.webview.getWebviewById('html/member/shop_order_list.html');
 				mui.fire(list, 'listRefresh' + status);
-				mui.back();
+				plus.webview.currentWebview().close();
 			});
 		</script>
 	</body>

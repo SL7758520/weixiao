@@ -426,7 +426,8 @@
 				setelementhtml('email', users.Mail);
 				if(users.IconUrl != undefined && users.IconUrl != '') {
 					//待修改
-					//					document.getElementById('head-img').src = users.IconUrl;
+					document.getElementById('userpic').src = users.IconUrl;
+//					document.getElementById('userpic').src = 'http://www.jeffsoft.cn:9801/upload/Member/201709/2017061315445799302963d1050e931.png';
 				};
 				//				setelementhtml('address',users.Address);
 				console.log(JSON.stringify(users));
@@ -453,9 +454,9 @@
 							src: path,
 							dst: '_doc/' + zipFileName,
 							overwrite: true,
-							quality: 20,
-							width:"20%",
-							height:"20%"
+							quality: 50,
+							width:"50%",
+							height:"50%"
 						}, function(zip) {
 							console.log(zip.target);
 							document.getElementById("userpic").src = s;
@@ -493,9 +494,9 @@
 							src: path,
 							dst: '_doc/' + zipFileName,
 							overwrite: true,
-							quality: 20,
-							width:"20%",
-							height:"20%"
+							quality: 50,
+							width:"50%",
+							height:"50%"
 						}, function(zip) {
 							console.log(zip.target);
 							document.getElementById("userpic").src = s;

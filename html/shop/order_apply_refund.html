@@ -64,8 +64,8 @@
 							if(pageId == 'shop_order_detail.html') {
 								mui.fire(task, "cancelOrder");
 							} else {
-								mui.fire(task, "listRefresh0");
-								mui.fire(task, "listRefresh1");
+								var task = plus.webview.getWebviewById('html/member/shop_order_list.html');
+								mui.fire(task, 'listRefresh2');
 							}
 							mui.back();
 						} else {

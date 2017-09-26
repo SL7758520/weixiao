@@ -271,12 +271,12 @@ var Shop = (function() {
 			});
 		}
 		//订单评价
-		this.OrderComment = function(orderId,shopId,itemsId,memberId,reson,mark,onSuccess,onError){
+		this.OrderComment = function(orderId,shopId,itemsId,memberId,content,mark,onSuccess,onError){
 			if(!_getNetwork()) {
 				mui.toast("没有网络连接，请稍后再试！");
 				return;
 			}
-			PostRequest(API_SHOP+'OrderComment?orderId='+orderId+'&shopId='+shopId+'&itemsId='+itemsId+'&memberId='+memberId+'&reson='+reson+'&mark='+mark,'',function(result){
+			PostRequest(API_SHOP+'OrderComment?orderId='+orderId+'&shopId='+shopId+'&itemsId='+itemsId+'&memberId='+memberId+'&content='+content+'&mark='+mark,'',function(result){
 				if (onSuccess) {
 					onSuccess.call(this,result);
 				}
@@ -291,6 +291,20 @@ var Shop = (function() {
 				return;
 			}
 			PostRequest(API_SHOP+'OrderApplyRefund?orderId='+orderId+'&reson='+reson,'',function(result){
+				if (onSuccess) {
+					onSuccess.call(this,result);
+				}
+			},function(){
+				mui.toast('没有网络连接，请稍后再试！');
+			});
+		}
+		//完成入住
+		this.OrderFinish = function(orderId,onSuccess,onError){
+			if(!_getNetwork()) {
+				mui.toast("没有网络连接，请稍后再试！");
+				return;
+			}
+			PostRequest(API_SHOP+'OrderFinish?orderId='+orderId,'',function(result){
 				if (onSuccess) {
 					onSuccess.call(this,result);
 				}

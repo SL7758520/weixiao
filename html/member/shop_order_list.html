@@ -216,7 +216,8 @@
 			</div>
 		</div>
 
-		<script src="../../js/mui.min.js"></script>
+		<!--<script src="../../js/mui.min.js"></script>-->
+		<script type="text/javascript" src="../../js/mui.js" ></script>
 		<script src="../../js/mui.pullToRefresh.js"></script>
 		<script src="../../js/mui.pullToRefresh.material.js"></script>
 		<script src="../../js/post.js"></script>
@@ -322,6 +323,7 @@
 							});
 							$(pullRefreshEl).pullToRefresh({
 								down: {
+									auto: true,
 									callback: function() {
 										var self = this;
 										pullRefresh(self, false, index);
