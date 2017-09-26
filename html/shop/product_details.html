@@ -185,6 +185,13 @@
 				padding: 0px 20px;
 				color: #6a6a6a;
 			}
+			
+			.form_info label {
+				width: 100px;
+			}
+			.form_info dd {
+				margin-left: 105px;
+			}
 		</style>
 	</head>
 
@@ -215,17 +222,17 @@
 				基本信息
 			</div>
 			<div class="form_info" style="background-color: #FFFFFF;margin-top: -2px;">
-				<div><label>预定数量：</label>
-					<dd><input type="text" id="quantity" class="input_sys1" readonly="readonly"></dd>
+				<div><label>单人接送：</label>
+					<dd><input type="text" id="PickUpCostSingle" class="input_sys1" readonly="readonly"></dd>
 				</div>
-				<div><label>单价：</label>
-					<dd><input type="text" id="price" class="input_sys1" readonly="readonly"></dd>
+				<div><label>多人接送：</label>
+					<dd><input type="text" id="PickUpCostMultiplayer" class="input_sys1" readonly="readonly"></dd>
 				</div>
-				<div><label>订单金额：</label>
-					<dd><input type="text" id="cost" class="input_sys1" readonly="readonly"></dd>
+				<div><label>最小购买数量：</label>
+					<dd><input type="text" id="MinQuantity" class="input_sys1" readonly="readonly"></dd>
 				</div>
-				<div><label>订单金额：</label>
-					<dd><input type="text" id="cost" class="input_sys1" readonly="readonly"></dd>
+				<div><label>最大购买数量：</label>
+					<dd><input type="text" id="MaxQuantity" class="input_sys1" readonly="readonly"></dd>
 				</div>
 			</div>
 
@@ -332,11 +339,20 @@
 						setHtml("NursingDesc", proudctInfo.Catering);
 						setHtml("RoomDesc", proudctInfo.HouseFacility);
 
+						setValue("MinQuantity", proudctInfo.MinQuantity + "元/公里");
+						setValue("MaxQuantity", proudctInfo.MaxQuantity + "元/公里");
+						setValue("PickUpCostSingle", proudctInfo.PickUpCostSingle + "/月");
+						setValue("PickUpCostMultiplayer", proudctInfo.PickUpCostMultiplayer + "/月");
+
 					} else {
 						mui.toast(datas.message);
 					}
 				});
 			})
+
+			function setValue(id, value) {
+				document.getElementById(id).value = value;
+			}
 
 			function setHtml(id, value) {
 				document.getElementById(id).innerHTML = value;

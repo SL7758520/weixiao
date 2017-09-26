@@ -348,8 +348,31 @@
 					toLogin();
 				}
 			});
+			//修改密码
+			document.getElementById('lipsw').addEventListener('tap', function() {
+				if(getLogin()) {
+					gotoHtml('html/account/forget_password.html');
+				} else {
+					toLogin();
+				}
+			});
 			
 		}
+		
+		function gotoHtml(u) {
+				mui.openWindow({
+					url: u,
+					id: u,
+
+					show: {
+						aniShow: 'pop-in'
+					},
+					waiting: {
+						autoShow: true, //自动显示等待框，默认为true
+						title: '正在加载...', //等待对话框上显示的提示内容
+					},
+				});
+			}
 		
 		function opWindow(id,url,field,fieldValue,title){
 			mui.openWindow({

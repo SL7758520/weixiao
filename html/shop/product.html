@@ -191,7 +191,7 @@
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 id="Tab_title" class="mui-title" style="color: #007aff;">导航栏</h1>
 		</header>
-		<div class="mui-content">
+		<div class="mui-content" style="margin-bottom: 51px;">
 			<div class="position-a">
 				<div id="image" class="position-atop">
 					<img id="Shop_img" src="../../images/cbd.jpg" alt="">
@@ -324,7 +324,7 @@
 			</div>-->
 		</div>
 		<div class="hotel-footer">
-			<button type="button" class="mui-btn mui-btn-warning mui-btn-block">收藏</button>
+			<button id="collect" type="button" class="mui-btn mui-btn-warning mui-btn-block">收藏</button>
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/localDatabase.js"></script>
@@ -386,7 +386,20 @@
 				document.getElementById("image").addEventListener("tap", function(event) {
 					gotoHtml("productpic.html", shopId, photoUrl);
 				});
-
+				document.getElementById("collect").addEventListener("tap",function(event){
+					if(document.getElementById("collect").innerText == "已收藏"){
+						mui.toast("您已收藏该店铺!");
+						return;
+					}
+					_shop.ShopCollect(shopId,function(datas){
+						if(datas.status == 1){
+							document.getElementById("collect").innerText = "已收藏";
+						}
+						
+						mui.toast(datas.message);
+					});
+				});
+				
 				_shop.GetProducts(pageIndex, pageSize, 1, 1, function(datas) {
 					if(datas.status == 1) {
 						productList = datas.result;

@@ -101,6 +101,20 @@ var Member = (function() {
 					}
 				});
 		}
+		//忘记密码
+		this.ChangPassword = function(oldPassword,newPassword,callback){
+			if(!_getNetwork()) {
+				mui.toast("没有网络连接，请稍后再试！");
+				return;
+			}
+			PostRequest(API_SHOP+'ChangPassword?oldPassword='+oldPassword+'&newPassword='+newPassword+'&peopleAmount='+peopleAmount+'&address='+address+'&phone='+phone+'&remark='+remark+'&bookedDate='+bookedDate+'&categoryId='+categoryId,'',function(result){
+				if (callback) {
+					callback.call(this,result);
+				}
+			},function(){
+				mui.toast('没有网络连接，请稍后再试！');
+			});
+		}
 
 	}
 	return access;

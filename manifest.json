@@ -730,6 +730,13 @@
 				],
 				"refer": [],
 				"priority": 0
+			},
+			"html/account/forget_password.html": {
+				"resources": [
+					"css/style.css"
+				],
+				"refer": [],
+				"priority": 0
 			}
 		},
 		"idle": {
