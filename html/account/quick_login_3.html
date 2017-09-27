@@ -96,18 +96,37 @@
 					_account.LoginBySms_Verify(tel, smscode, function(data) {
 						if(data.status == 1) {
 							if(isFrom) {
-							
+								_dataAccess.setUser(data.result);
+								gotoHtml("fp_pwd.html");
 							} else {
 								_dataAccess.setUser(data.result);
 								toMain();
+								mui.toast(data.message);
 							}
 
+						} else {
+							mui.toast(data.message);
 						}
-						mui.toast(data.message);
+
 					});
 
 				});
 			});
+
+			function gotoHtml(u) {
+				mui.openWindow({
+					url: u,
+					id: u,
+
+					show: {
+						aniShow: 'pop-in'
+					},
+					waiting: {
+						autoShow: true, //自动显示等待框，默认为true
+						title: '正在加载...', //等待对话框上显示的提示内容
+					}
+				});
+			}
 			var toMain = function() {
 				//						mui.fire(mainPage, 'show', null);
 				setTimeout(function() {

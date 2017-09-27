@@ -11,7 +11,8 @@ var LocalDatabase= (function() {
 	var KEY_CLEAN_LOCATION="$KEY_CLEAN_LOCATION";
 	var KEY_FORM_CHECK="$KEY_FORM_CHECK";
 	var KEY_TEMPORAYR_INSPECTION="$KEY_TEMPORAYR_INSPECTION";//临时修改巡检情况的保存
-	var KEY_READING='$READING';
+	var KEY_SHOPCOLLECT='$SHOPCOLLECT';
+	var KEY_SHOPPRODUCTCOLLECT='$SHOPPRODUCTCOLLECT';
 	function _getDatas(KEY){
 		var jsonText = localStorage.getItem(KEY) || "[]";
 		var datas=JSON.parse(jsonText);
@@ -91,13 +92,22 @@ var LocalDatabase= (function() {
 		this.getSetting = function() {
 			return _getData(KEY_SETTING);
 		};
-		//保存已读消息
-		this.setReading = function(setting) {
-			_setDatas(KEY_READING,setting||[]);
+		
+		//保存收藏店铺列表
+		this.setShopCollect = function(ShopCollects) {
+			_setDatas(KEY_SHOPCOLLECT,ShopCollects||[]);
 		};
-		//获取已读消息
-		this.getReading = function() {
-			return _getDatas(KEY_READING);
+		//获取收藏店铺列表
+		this.getShopCollect = function() {
+			return _getDatas(KEY_SHOPCOLLECT);
+		};
+		//保存床位店铺列表
+		this.setShopProductCollect = function(ShopProductCollects) {
+			_setDatas(KEY_SHOPPRODUCTCOLLECT,ShopProductCollects||[]);
+		};
+		//获取床位店铺列表
+		this.getShopProductCollect = function() {
+			return _getDatas(KEY_SHOPPRODUCTCOLLECT);
 		};
 		//设置用户对应的路段
 		this.setWaySections= function(sections){

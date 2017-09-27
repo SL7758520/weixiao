@@ -189,6 +189,7 @@
 			.form_info label {
 				width: 100px;
 			}
+			
 			.form_info dd {
 				margin-left: 105px;
 			}
@@ -300,7 +301,7 @@
 			</div>-->
 		</div>
 		<div class="hotel-footer">
-			<button type="button" class="mui-btn mui-btn-warning mui-btn-block">收藏</button>
+			<button id="collect" type="button" class="mui-btn mui-btn-warning mui-btn-block">收藏</button>
 			<button id="createorder" type="button" class="mui-btn mui-btn-success mui-btn-block">预约入住</button>
 		</div>
 		<script src="../../js/mui.min.js"></script>
@@ -308,10 +309,12 @@
 		<script src="../../js/post.js"></script>
 		<script src="../../js/dao.js"></script>
 		<script src="../../js/shop.js"></script>
+		<script src="../../js/member.js"></script>
 		<script type="text/javascript">
 			mui.init();
 			var _dataAccess = new DataAccess();
 			var _shop = new Shop();
+			var _member = new Member();
 			var user;
 			var _self;
 			var proudctInfo;
@@ -323,6 +326,16 @@
 				id = _self.data;
 				photoUrl = _self.photoUrl;
 				console.log(id + "------------" + photoUrl);
+				var ShopProductCollect = _dataAccess.getShopProductCollect();
+				console.log(JSON.stringify(ShopProductCollect));
+				if(ShopProductCollect != null) {
+					for(var i = 0; i < ShopProductCollect.length; i++) {
+						if(id == ShopProductCollect[i].ProductId) {
+							document.getElementById("collect").innerText = "已收藏";
+							break;
+						}
+					}
+				}
 				initpage();
 				_shop.GetProductModel(id, function(datas) {
 					if(datas.status == 1) {
@@ -348,7 +361,28 @@
 						mui.toast(datas.message);
 					}
 				});
-			})
+				document.getElementById("collect").addEventListener("tap", function(event) {
+					console.log(document.getElementById("collect").innerText);
+					if(document.getElementById("collect").innerText == "已收藏") {
+						_member.RemoveShopProductCollect(id, function(datas) {
+							if(datas.status == 1) {
+								document.getElementById("collect").innerText = "收藏";
+							}
+
+							mui.toast(datas.message);
+						});
+					} else {
+						_member.SetShopProductCollect(id, function(datas) {
+							if(datas.status == 1) {
+								document.getElementById("collect").innerText = "已收藏";
+							}
+
+							mui.toast(datas.message);
+						});
+					}
+
+				});
+			});
 
 			function setValue(id, value) {
 				document.getElementById(id).value = value;

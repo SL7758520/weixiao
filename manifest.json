@@ -85,7 +85,7 @@
 		"NativeObj": {},
 		"OAuth": {},
 		"Device": {},
-		"Camera": {}
+		"Camera": {},"Geolocation":{}
 	},
 	"plus": {
 		"splashscreen": {
@@ -115,18 +115,7 @@
 				"keystore": "",/*Android应用打包使用的密钥库文件*/
 				"password": "",/*Android应用打包使用密钥库中证书的密码*/
 				"aliasname": "",/*Android应用打包使用密钥库中证书的别名*/
-				"permissions": [
-					"<uses-feature android:name=\"android.hardware.camera\"/>",
-					"<uses-permission android:name=\"com.android.launcher.permission.INSTALL_SHORTCUT\"/>",
-					"<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>",
-					"<uses-permission android:name=\"android.permission.VIBRATE\"/>",
-					"<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>",
-					"<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>",
-					"<uses-permission android:name=\"android.permission.CALL_PHONE\"/>",
-					"<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>",
-					"<uses-permission android:name=\"com.android.launcher.permission.UNINSTALL_SHORTCUT\"/>",
-					"<uses-permission android:name=\"android.permission.CAMERA\"/>"
-				]
+				"permissions": ["<uses-permission android:name=\"com.android.launcher.permission.INSTALL_SHORTCUT\"/>","<uses-feature android:name=\"android.hardware.camera\"/>","<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\"/>","<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>","<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>","<uses-permission android:name=\"android.permission.VIBRATE\"/>","<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>","<uses-permission android:name=\"android.permission.CALL_PHONE\"/>","<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>","<uses-permission android:name=\"com.android.launcher.permission.UNINSTALL_SHORTCUT\"/>","<uses-permission android:name=\"android.permission.CAMERA\"/>"]
 			},
 			"orientation": [
 				"portrait-primary",
@@ -417,7 +406,8 @@
 					"css/main.css",
 					"js/mui.lazyload.js",
 					"js/mui.lazyload.img.js",
-					"fonts/mui.ttf"
+					"fonts/mui.ttf",
+					"js/member.js"
 				],
 				"refer": [
 					"html/shop/product.html",
@@ -463,9 +453,12 @@
 					"css/mui.min.css",
 					"css/style.css",
 					"js/mui.enterfocus.js",
-					"js/post.js"
+					"js/post.js",
+					"js/account.js"
 				],
-				"refer": [],
+				"refer": [
+					"html/account/fp_pwd.html"
+				],
 				"priority": 0
 			},
 			"home.html": {
@@ -480,9 +473,13 @@
 					"images/cbd.jpg",
 					"js/mui.min.js",
 					"js/dao.js",
-					"js/post.js"
+					"js/post.js",
+					"fonts/icomoon.ttf",
+					"js/apphome.js"
 				],
-				"refer": [],
+				"refer": [
+					"html/apphome/city.html"
+				],
 				"priority": 0
 			},
 			"html/account/reg.html": {
@@ -547,7 +544,8 @@
 					"js/member.js"
 				],
 				"refer": [
-					"html/member/member_modify.html"
+					"html/member/member_modify.html",
+					"html/account/forget_password.html"
 				],
 				"priority": 0
 			},
@@ -571,7 +569,8 @@
 					"fonts/icomoon.ttf",
 					"css/font-awesome.min.css",
 					"fonts/fontawesome-webfont.ttf",
-					"fonts/fontawesome-webfont.woff2"
+					"fonts/fontawesome-webfont.woff2",
+					"js/member.js"
 				],
 				"refer": [
 					"html/shop/product_details.html",
@@ -590,7 +589,8 @@
 					"fonts/mui.ttf",
 					"js/dao.js",
 					"js/shop.js",
-					"js/post.js"
+					"js/post.js",
+					"js/member.js"
 				],
 				"refer": [
 					"html/shop/createorder.html"
@@ -654,7 +654,8 @@
 					"css/main.css",
 					"js/mui.min.js",
 					"js/dao.js",
-					"js/post.js"
+					"js/post.js",
+					"js/mui.js"
 				],
 				"refer": [
 					"html/member/shop_order_detail.html",
@@ -733,7 +734,45 @@
 			},
 			"html/account/forget_password.html": {
 				"resources": [
-					"css/style.css"
+					"css/style.css",
+					"js/localDatabase.js",
+					"js/member.js",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"js/dao.js",
+					"css/mui.min.css",
+					"js/post.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/account/fp_pwd.html": {
+				"resources": [
+					"js/member.js",
+					"js/localDatabase.js",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"js/dao.js",
+					"css/mui.min.css",
+					"css/style.css",
+					"js/post.js"
+				],
+				"refer": [
+					"main.html"
+				],
+				"priority": 0
+			},
+			"html/apphome/city.html": {
+				"resources": [
+					"css/mui.indexedlist.css",
+					"js/mui.indexedlist.js",
+					"fonts/mui.ttf",
+					"js/mui.min.js",
+					"css/mui.min.css",
+					"js/localDatabase.js",
+					"js/dao.js",
+					"js/apphome.js",
+					"js/post.js"
 				],
 				"refer": [],
 				"priority": 0

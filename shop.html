@@ -25,6 +25,15 @@
 				height: 100%;
 			}
 			
+			/*.shoplist {
+				position: fixed;
+				left: 0;
+				top: 294px;
+				right: 0;
+				bottom: 1px;
+				overflow-y: auto;
+			}*/
+			
 			.img:first-of-type {
 				padding-top: 0;
 			}
@@ -84,14 +93,17 @@
 			}
 			
 			.search {
-				margin-top: 5px;
-				margin-bottom: 5px;
+				position: fixed;
+				left: 0;
+				top: 44px;
+				right: 0;
 				width: 100%;
 				height: 40px;
-				background-color: rgba(0, 0, 0, .1);
+				background-color: #FFFFFF;
 				text-align: center;
 				font-size: 18px;
 				color: #999;
+				z-index: 9999;
 			}
 		</style>
 	</head>
@@ -102,7 +114,8 @@
 			<h1 id="title" class="mui-title">微孝养老</h1>
 		</header>
 		<div class="mui-content">
-			<div id="slider" class="mui-slider " style="height: 200px;">
+			<button id="search" type="button" class="search"><a><span class="mui-icon mui-icon-search"></span></a>热门店铺搜索</button>
+			<div id="slider" class="mui-slider " style="height: 180px;margin-top: 40px;">
 				<div class="mui-slider-group mui-slider-loop">
 					<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
 					<div class="mui-slider-item mui-slider-item-duplicate">
@@ -153,11 +166,12 @@
 					<input type="search"  style="width: 80%;border-radius: 0px;" placeholder="输入要查找的店铺">
 					<button id="search" type="button" style="margin-left:10px; margin-bottom: 15px;">搜索</button>
 				</div>-->
-			<button id="search" type="button" class="search"><a><span class="mui-icon mui-icon-search"></span></a>热门店铺搜索</button>
-			<div id="scroll0" class="mui-scroll">
-				<ul id="shopList" class="mui-table-view">
-				</ul>
-			</div>
+
+
+		</div>
+		<div id="pullrefresh" class="mui-scroll shoplist">
+			<ul id="shopList" class="mui-table-view">
+			</ul>
 		</div>
 	</body>
 	<script src="js/mui.min.js"></script>
@@ -165,12 +179,11 @@
 	<script src="js/post.js"></script>
 	<script src="js/dao.js"></script>
 	<script src="js/shop.js"></script>
+	<script src="js/member.js"></script>
 	<script>
-		mui.init({
-			swipeBack: true //启用右滑关闭功能
-		});
 		var _dataAccess = new DataAccess();
 		var _shop = new Shop();
+		var _member =new Member();
 		var user;
 		var shopId;
 		var shopName;
@@ -232,6 +245,20 @@
 			if(shopName != '') {
 				document.getElementById('title').innerHTML = shopName;
 			}
+			_member.GetShopCollect(pageIndex, pageSize,function(datas){
+				if(datas.status == 1){
+					_dataAccess.setShopCollect(datas.result);
+				}else{
+					mui.toast(datas.message);
+				}
+			});
+			_member.GetShopProductCollect(pageIndex, pageSize,function(datas){
+				if(datas.status == 1){
+					_dataAccess.setShopProductCollect(datas.result);
+				}else{
+					mui.toast(datas.message);
+				}
+			});
 			_shop.getPhotoUrl(function(datas) {
 				photoUrl = datas;
 			});

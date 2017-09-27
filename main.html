@@ -55,7 +55,7 @@
 		<script type="text/javascript" charset="utf-8">
 			//mui初始化
 			mui.init({
-				swipeBack: true
+				swipeBack: false,
 			});
 			var subpages = ['home.html', 'health.html','html/member/shop_order_list.html', 'shop.html', 'person_center.html'];
 			var subpage_style = {
@@ -165,6 +165,23 @@
 					}
 				});
 			}
+			mui.back = function(event) {
+				if(showMenu) {
+					//菜单处于显示状态，返回键应该先关闭菜单,阻止主窗口执行mui.back逻辑；
+					closeMenu();
+					return false;
+				}
+				backButtonPress++;
+				if(backButtonPress > 1) {
+					plus.runtime.quit();
+				} else {
+					plus.nativeUI.toast('再按一次退出应用');
+				}
+				setTimeout(function() {
+					backButtonPress = 0;
+				}, 1000);
+				return false;
+			};
 			window.addEventListener("CreateOrder", function(e) {
 				console.log('main');
 				selectTab('t4');

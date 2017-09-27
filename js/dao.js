@@ -40,11 +40,18 @@ var DataAccess = (function() {
 		this.setSetting = function(setting) {
 			_db.setSetting(setting);
 		};
-		this.getReading = function() {
-			return _db.getReading();
+		
+		this.getShopCollect = function() {
+			return _db.getShopCollect();
 		};
-		this.setReading = function(datas) {
-			_db.setReading(datas);
+		this.setShopCollect = function(datas) {
+			_db.setShopCollect(datas);
+		};
+		this.getShopProductCollect = function() {
+			return _db.getShopProductCollect();
+		};
+		this.setShopProductCollect = function(datas) {
+			_db.setShopProductCollect(datas);
 		};
 		
 

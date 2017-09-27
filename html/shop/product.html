@@ -207,7 +207,7 @@
 					</div>
 				</div>
 			</div>
-		
+
 			<div class="fg_title" style="margin-top: 10px;">
 				基本信息
 			</div>
@@ -224,58 +224,58 @@
 				<li class="mui-table-view-cell mui-media">
 					<i class="fa fa-phone mui-media-object mui-pull-left"></i>
 					<div id="tel" class="mui-media-body mui-navigate-right">
-						010-88888888
+						<a id="Phone">010-88888888</a>
 						<p>点击拨打电话</p>
 						<span class="hotel-color-blue hotel-right-text">联系商家</span>
 					</div>
 				</li>
 			</ul>
 			<div class="fg_title">
-				床位清单
+				床位列表
 			</div>
 			<ul id="productList" class="mui-table-view content">
 			</ul>
 			<ul class="mui-table-view" style="margin-top: 10px;">
 				<li class="mui-table-view-cell mui-collapse " style="padding: 9px 15px;font-size: 16px;color: #6a6a6a;">
-					<a class="mui-navigate-right" href="#" >庭院配置</a>
+					<a class="mui-navigate-right" href="#">庭院配置</a>
 					<div id="CourtyardFacilityDesc" class="mui-collapse-content Desc">
-						
+
 					</div>
 				</li>
 				<li class="mui-table-view-cell mui-collapse" style="padding: 9px 15px;font-size: 16px;color: #6a6a6a;">
 					<a class="mui-navigate-right" href="#">交通配套</a>
 					<div id="TrafficDesc" class="mui-collapse-content Desc">
-						
+
 					</div>
 				</li>
 				<li class="mui-table-view-cell mui-collapse" style="padding: 9px 15px;font-size: 16px;color: #6a6a6a;">
 					<a class="mui-navigate-right" href="#">医院配套</a>
 					<div id="HospitalDesc" class="mui-collapse-content Desc">
-						
+
 					</div>
 				</li>
 				<li class="mui-table-view-cell mui-collapse" style="padding: 9px 15px;font-size: 16px;color: #6a6a6a;">
 					<a class="mui-navigate-right" href="#">购物配套</a>
 					<div id="ShoppingDesc" class="mui-collapse-content Desc">
-						
+
 					</div>
 				</li>
 				<li class="mui-table-view-cell mui-collapse" style="padding: 9px 15px;font-size: 16px;color: #6a6a6a;">
 					<a class="mui-navigate-right" href="#">旅游配套</a>
 					<div id="TourismDesc" class="mui-collapse-content Desc">
-						
+
 					</div>
 				</li>
 				<li class="mui-table-view-cell mui-collapse" style="padding: 9px 15px;font-size: 16px;color: #6a6a6a;">
 					<a class="mui-navigate-right" href="#">公共配套</a>
 					<div id="PublicDesc" class="mui-collapse-content Desc">
-						
+
 					</div>
 				</li>
 				<li class="mui-table-view-cell mui-collapse" style="padding: 9px 15px;font-size: 16px;color: #6a6a6a;">
 					<a class="mui-navigate-right" href="#">教育配套</a>
 					<div id="EducationalDesc" class="mui-collapse-content Desc">
-						
+
 					</div>
 				</li>
 			</ul>
@@ -331,10 +331,12 @@
 		<script src="../../js/post.js"></script>
 		<script src="../../js/dao.js"></script>
 		<script src="../../js/shop.js"></script>
+		<script src="../../js/member.js"></script>
 		<script type="text/javascript">
 			mui.init();
 			var _dataAccess = new DataAccess();
 			var _shop = new Shop();
+			var _member = new Member();
 			var user;
 			var shopId;
 			var shopName;
@@ -353,6 +355,17 @@
 				shopId = _self.data;
 				photoUrl = _self.photoUrl;
 				console.log(shopId + "------------" + photoUrl);
+				var shopCollects = _dataAccess.getShopCollect();
+				console.log(JSON.stringify(shopCollects));
+				if(shopCollects != null) {
+					for(var i = 0; i < shopCollects.length; i++) {
+						if(shopId == shopCollects[i].ShopId) {
+							document.getElementById("collect").innerText = "已收藏";
+							break;
+						}
+					}
+				}
+
 				_shop.GetShopModel(shopId, function(datas) {
 					if(datas.status == 1) {
 						shopInfo = datas.result;
@@ -362,6 +375,7 @@
 						document.getElementById("DistanceDesc").innerHTML = shopInfo.DistanceDesc;
 						document.getElementById("BottomPrice").innerHTML = shopInfo.BottomPrice + "元/月起";
 						document.getElementById("info").innerHTML = shopInfo.Intro;
+						document.getElementById("Phone").innerHTML = shopInfo.Phone;
 						setHtml("CourtyardFacilityDesc", shopInfo.CourtyardFacilityDesc);
 						setHtml("TrafficDesc", shopInfo.TrafficDesc);
 						setHtml("HospitalDesc", shopInfo.HospitalDesc);
@@ -377,29 +391,36 @@
 
 				document.getElementById("tel").addEventListener('tap', function() {
 					if(mui.os.plus) {
-						plus.device.dial("114");
+						plus.device.dial(shopInfo.Phone + "");
 					} else {
-						location.href = 'tel:114';
+						location.href = 'tel:' + shopInfo.Phone;
 					}
 
 				});
 				document.getElementById("image").addEventListener("tap", function(event) {
 					gotoHtml("productpic.html", shopId, photoUrl);
 				});
-				document.getElementById("collect").addEventListener("tap",function(event){
-					if(document.getElementById("collect").innerText == "已收藏"){
-						mui.toast("您已收藏该店铺!");
-						return;
+				document.getElementById("collect").addEventListener("tap", function(event) {
+					if(document.getElementById("collect").innerText == "已收藏") {
+						_member.RemoveShopCollect(shopId, function(datas) {
+							if(datas.status == 1) {
+								document.getElementById("collect").innerText = "收藏";
+							}
+
+							mui.toast(datas.message);
+						});
+					} else {
+						_member.SetShopCollect(shopId, function(datas) {
+							if(datas.status == 1) {
+								document.getElementById("collect").innerText = "已收藏";
+							}
+
+							mui.toast(datas.message);
+						});
 					}
-					_shop.ShopCollect(shopId,function(datas){
-						if(datas.status == 1){
-							document.getElementById("collect").innerText = "已收藏";
-						}
-						
-						mui.toast(datas.message);
-					});
+
 				});
-				
+
 				_shop.GetProducts(pageIndex, pageSize, 1, 1, function(datas) {
 					if(datas.status == 1) {
 						productList = datas.result;
@@ -431,7 +452,14 @@
 				} else {
 					HasPickUp = "不可接送";
 				}
-				li.innerHTML = '<div class="item"><div class="img"><img src="../../images/t0-3.jpg"></div><div class="text"><div class="information"><h4>' + entity.CategoryName + '</h4><h5>' + HasPickUp + '</h5><h5 class="mui-ellipsis">' + entity.ShortDescription + '</h5></div><div class="price"><span class="new-price">￥' + entity.Price + '/月</span><div id="" style="display: flex;align-items: center;margin-top: 5px;"><img src="../../images/heart@2x.png" style="width: 15px;height: 15px;margin-left: 5px;" /><h5 style="margin-left: 5px;">' + entity.CollectCounts + '人关注</h5></div></div></div></div>';
+				if(entity.CollectCounts == null) {
+					li.innerHTML = '<div class="item"><div ><img src="../../images/t0-3.jpg" style="width: 75px;height: 75px;"></div><div class="text"><div class="information"><h4>' + entity.CategoryName + '</h4><h5 style="margin-top: 8px;">' + HasPickUp + '</h5><h5 class="mui-ellipsis" style="margin-top: 8px;">' + entity.ShortDescription + '</h5></div><div class="price"><span class="new-price">￥' + entity.Price + '/月</span></div></div></div>';
+
+				} else {
+					li.innerHTML = '<div class="item"><div ><img src="../../images/t0-3.jpg" style="width: 75px;height: 75px;"></div><div class="text"><div class="information"><h4>' + entity.CategoryName + '</h4><h5 style="margin-top: 8px;">' + HasPickUp + '</h5><h5 class="mui-ellipsis" style="margin-top: 8px;">' + entity.ShortDescription + '</h5></div><div class="price"><span class="new-price">￥' + entity.Price + '/月</span><div id="" style="display: flex;align-items: center;margin-top: 5px;"><img src="../../images/heart@2x.png" style="width: 15px;height: 15px;" /><h5 style="margin-left: 5px;">' + entity.CollectCounts + '人关注</h5></div></div></div></div>';
+
+				}
+
 				li.addEventListener("tap", function(event) {
 					gotoHtml("product_details.html", entity.Id, photoUrl);
 				});

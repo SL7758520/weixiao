@@ -11,28 +11,37 @@
 			.area {
 				margin: 20px auto 0px auto;
 			}
+			
 			.mui-input-group:first-child {
 				margin-top: 20px;
 			}
+			
 			.mui-input-group label {
 				width: 30%;
 			}
+			
 			.mui-input-row label~input,
 			.mui-input-row label~select,
 			.mui-input-row label~textarea {
 				width: 70%;
 			}
+			
 			.mui-checkbox input[type=checkbox],
 			.mui-radio input[type=radio] {
 				top: 6px;
 			}
+			
 			.mui-content-padded {
 				margin-top: 25px;
 			}
+			
 			.mui-btn {
 				padding: 10px;
 			}
-			.mui-input-row label~input, .mui-input-row label~select, .mui-input-row label~textarea{
+			
+			.mui-input-row label~input,
+			.mui-input-row label~select,
+			.mui-input-row label~textarea {
 				margin-top: 1px;
 			}
 		</style>
@@ -41,20 +50,10 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">修改密码</h1>
+			<h1 class="mui-title">忘记密码</h1>
 		</header>
 		<div class="mui-content">
 			<form class="mui-input-group">
-				<!--
-				<div class="mui-input-row">
-					<label>账号</label>
-					<input id='account' type="text" class="mui-input-clear mui-input" placeholder="请输入账号">
-				</div>             	
-                -->
-				<div class="mui-input-row">
-					<label>原密码</label>
-					<input id='oldPassword' type="email" class="mui-input-clear mui-input" placeholder="请输入原密码">
-				</div>
 				<div class="mui-input-row">
 					<label>新密码</label>
 					<input id='newPassword' type="email" class="mui-input-clear mui-input" placeholder="请输入新密码">
@@ -74,32 +73,47 @@
 		<script src="../../js/dao.js"></script>
 		<script src="../../js/member.js"></script>
 		<script>
-			var _Member=new Member();
+			var _Member = new Member();
+			var _dataAccess = new DataAccess();
 			(function($, doc) {
 				$.init();
 				$.plusReady(function() {
-					var oldPassword = doc.getElementById('oldPassword');
 					var newPassword = doc.getElementById('newPassword');
 					var SnewPassword = doc.getElementById('SnewPassword');
-					document.getElementById("send").addEventListener("tap",function(event){
-						if(newPassword.value !=SnewPassword.value){
+					document.getElementById("send").addEventListener("tap", function(event) {
+						if(newPassword.value != SnewPassword.value) {
 							mui.toast("两次输入的新密码不一致，请确认!");
 							return;
 						}
-						if(newPassword.value.length >6){
+						if(newPassword.value.length > 6) {
 							mui.toast("密码长度限制6位，请确认!");
 							return;
 						}
-						_Member.ChangPassword(oldPassword.value,newPassword.value,function(datas){
-							if(datas.status == 1){
-								mui.back();
+						_Member.ResetPassword(newPassword.value, function(datas) {
+							if(datas.status == 1) {
+								toMain();
 							}
 							mui.toast(datas.message);
 						});
-						
+
 					});
 				});
 			}(mui, document));
+			var toMain = function() {
+				//						$.fire(mainPage, 'show', null);
+				setTimeout(function() {
+					mui.openWindow({
+						id: 'main.html',
+						url: '../../main.html',
+						show: {
+							aniShow: 'pop-in'
+						},
+						waiting: {
+							autoShow: false
+						}
+					});
+				}, 0);
+			};
 		</script>
 	</body>
 

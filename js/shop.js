@@ -2,6 +2,7 @@ var Shop = (function() {
 	var _db = new LocalDatabase();
 	var API_SHOP = globals.apiUrl + 'Shop/';
 	var API_PHOTO = globals.apiUrl + 'AppHome/';
+	var API_MEMBER = globals.apiUrl + 'Member/';
 	var API_URL_ACTION = globals.apiUrl + 'Action.ashx';
 	var API_URL_ACTION_ = globals.apiUrl + 'Action_.ashx';
 	var API_URL = globals.apiUrl + "Service.ashx";
@@ -152,24 +153,8 @@ var Shop = (function() {
 				});
 		};
 		
-		//收藏店铺
-		this.ShopCollect = function( shopId,callback) {
-			if(!_getNetwork()) {
-				mui.toast("没有网络连接，请稍后再试！");
-				return;
-			}
-			var user = _db.getUser();
-			AsyncPost(API_SHOP+"ShopCollect","shopId=" + shopId ,
-				function(result) {
-					if(callback) {
-						console.log('接口返回数据：' + JSON.stringify(result));
-						callback.call(this, result);
-					}
-				},
-				function() {
-					console.log('请求失败：');
-				});
-		};
+		
+		
 		//获取筛选类型
 		this.GetAttributes = function(callback) {
 			if(!_getNetwork()) {
