@@ -30,14 +30,14 @@
 		<div class="windows_bg" id="dialog" style="display: none;">
 			<!--通用弹窗标准-->
 			<div class="windows_box">
-				<!--一按钮状态
-		<div class="info_box">
-		<p>请先选路段，再选备件仓库请先选路段，再选备件仓库请先选路段，再选备件仓库请先选路段，再选备件仓库</p>
-		<a href="#">确定</a>
-		</div>-->
+				<!--一按钮状态-->
+				<div class="info_box" id="dialogone" style="display: none;text-align: left;">
+					<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;您好，因为旅居需要入住的时间周期较长，在您支付前，商家需要最终为您确定并安排床位，在商家确认并安排好您的入住床位和行程后，您就可以支付并完成最终预定了。</br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;请您密切关注我们的通知消息或【待支付】订单！</p>
+					<a href="#" id="notice" style="text-align: center;">确定</a>
+				</div>
 				<!--两按钮状态-->
-				<div class="info_box two_btn">
-					<p>订单就要完成了，你确定要离开吗？</p>
+				<div class="info_box two_btn" id="dialogtwo">
+					<p id="title">订单就要完成了，你确定要离开吗？</p>
 					<a href="#" id="casncel">继续填写</a>
 					<a href="#" class="left_line" id="close">确定</a>
 				</div>
@@ -139,16 +139,16 @@
 
 			function initpage() {
 				document.getElementById('phone').value = _dataAccess.getUser().Mobile;
-				mui('#quantity').numbox().setOption('min',FaultEntity.MinQuantity);
-				mui('#quantity').numbox().setOption('max',FaultEntity.MaxQuantity);
-				console.log(FaultEntity.MinQuantity+'========'+FaultEntity.MaxQuantity);
-//				mui('#quantity').numbox().setValue(FaultEntity.MinQuantity);
+				mui('#quantity').numbox().setOption('min', FaultEntity.MinQuantity);
+				mui('#quantity').numbox().setOption('max', FaultEntity.MaxQuantity);
+				console.log(FaultEntity.MinQuantity + '========' + FaultEntity.MaxQuantity);
+				//				mui('#quantity').numbox().setValue(FaultEntity.MinQuantity);
 				mui('#dtPicker').on('tap', 'a', function() {
 					var curTime = (new Date()).Format("yyyy-MM-dd");
 					//					var curTime = document.getElementById("txtOccurTime").innerHTML;
 					var year = new Date().getFullYear();
 					var opt = {
-						"type":"date",
+						"type": "date",
 						"value": curTime,
 						"beginYear": year - 1,
 						"endYear": year
@@ -171,15 +171,15 @@
 						mui.toast('请填写联系电话');
 						return;
 					}
-					if(quantitynum<FaultEntity.MinQuantity) {
-						mui.toast('入住时长不能少于'+FaultEntity.MinQuantity+'个月');
+					if(quantitynum < FaultEntity.MinQuantity) {
+						mui.toast('入住时长不能少于' + FaultEntity.MinQuantity + '个月');
 						return;
 					}
-					if(quantitynum>FaultEntity.MaxQuantity) {
-						mui.toast('入住时长不能大于'+FaultEntity.MaxQuantity+'个月');
+					if(quantitynum > FaultEntity.MaxQuantity) {
+						mui.toast('入住时长不能大于' + FaultEntity.MaxQuantity + '个月');
 						return;
 					}
-					if(peopleAmountnum==0) {
+					if(peopleAmountnum == 0) {
 						mui.toast('请填写正确的入住人数');
 						return;
 					}
@@ -190,15 +190,16 @@
 					plus.nativeUI.showWaiting();
 
 					console.log('productId:' + productId + 'address:' + getValue('address') + 'phone:' + getValue('phone') + 'quantity:' + quantitynum + 'peopleAmount:' + peopleAmountnum);
-					_shop.MakeOrder(productId, quantitynum, peopleAmountnum, getValue('address'), getValue('phone'), getValue('remark'),document.getElementById("txtOccurTime").innerHTML,1, function(result) {
+					_shop.MakeOrder(productId, quantitynum, peopleAmountnum, getValue('address'), getValue('phone'), getValue('remark'), document.getElementById("txtOccurTime").innerHTML, 1, function(result) {
 						console.log(JSON.stringify(result));
 						plus.nativeUI.closeWaiting();
-						if(result.status==1){
+						if(result.status == 1) {
 							mui.toast('创建订单成功');
-							var task = plus.webview.getWebviewById('product_details.html');
-							mui.fire(task, 'CreateOrder');
-							plus.webview.currentWebview().close();
-						}else{
+							dialog.style.display = 'block';
+							document.getElementById('dialogone').style.display = 'block';
+							document.getElementById('dialogtwo').style.display = 'none';
+							//							plus.webview.currentWebview().close();
+						} else {
 							mui.toast('创建订单失败，请确认信息是否正确');
 						}
 					}, function() {
@@ -214,6 +215,11 @@
 				});
 				document.getElementById('back').addEventListener('tap', function() {
 					mui.back();
+				});
+				document.getElementById('notice').addEventListener('tap', function() {
+					var task = plus.webview.getWebviewById('product_details.html');
+					mui.fire(task, 'CreateOrder');
+					plus.webview.currentWebview().close();
 				});
 			}
 

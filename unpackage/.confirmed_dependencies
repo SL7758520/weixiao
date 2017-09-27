@@ -142,8 +142,7 @@
 			"css/main.css",
 			"js/mui.lazyload.js",
 			"js/mui.lazyload.img.js",
-			"fonts/mui.ttf",
-			"js/member.js"
+			"fonts/mui.ttf"
 		],
 		"refer": [
 			"html/shop/product.html",
@@ -186,12 +185,9 @@
 			"css/mui.min.css",
 			"css/style.css",
 			"js/mui.enterfocus.js",
-			"js/post.js",
-			"js/account.js"
+			"js/post.js"
 		],
-		"refer": [
-			"html/account/fp_pwd.html"
-		]
+		"refer": []
 	},
 	"person_center.html": {
 		"resources": [
@@ -219,8 +215,7 @@
 			"js/member.js"
 		],
 		"refer": [
-			"html/member/member_modify.html",
-			"html/account/forget_password.html"
+			"html/member/member_modify.html"
 		]
 	},
 	"home.html": {
@@ -235,13 +230,9 @@
 			"images/cbd.jpg",
 			"js/mui.min.js",
 			"js/dao.js",
-			"js/post.js",
-			"fonts/icomoon.ttf",
-			"js/apphome.js"
+			"js/post.js"
 		],
-		"refer": [
-			"html/apphome/city.html"
-		]
+		"refer": []
 	},
 	"splash.html": {
 		"resources": [
@@ -267,8 +258,7 @@
 			"js/post.js",
 			"css/font-awesome.min.css",
 			"fonts/fontawesome-webfont.ttf",
-			"fonts/fontawesome-webfont.woff2",
-			"js/member.js"
+			"fonts/fontawesome-webfont.woff2"
 		],
 		"refer": [
 			"html/shop/product_details.html",
@@ -286,8 +276,7 @@
 			"fonts/mui.ttf",
 			"js/dao.js",
 			"js/shop.js",
-			"js/post.js",
-			"js/member.js"
+			"js/post.js"
 		],
 		"refer": [
 			"html/shop/createorder.html"
@@ -319,8 +308,7 @@
 			"js/shop.js",
 			"js/post.js",
 			"css/main.css"
-		],
-		"refer": []
+		]
 	},
 	"html/shop/productpic.html": {
 		"resources": [
@@ -332,8 +320,7 @@
 			"js/dao.js",
 			"js/shop.js",
 			"js/post.js"
-		],
-		"refer": []
+		]
 	},
 	"html/member/shop_order_list.html": {
 		"resources": [
@@ -353,7 +340,9 @@
 		"refer": [
 			"html/member/shop_order_detail.html",
 			"html/shop/order_comment.html",
-			"html/shop/order_apply_refund.html"
+			"html/shop/order_apply_refund.html",
+			"html/shop/pay.html",
+			"html/member/finsh_order_list.html"
 		]
 	},
 	"html/member/shop_order_detail.html": {
@@ -362,12 +351,19 @@
 			"css/appfont.css",
 			"js/mui.min.js",
 			"fonts/icomoon.ttf",
-			"css/mui.min.css"
+			"css/mui.min.css",
+			"js/localDatabase.js",
+			"js/member.js",
+			"js/dao.js",
+			"js/shop.js",
+			"js/post.js"
 		],
 		"refer": [
 			"html/shop/product.html",
 			"html/shop/order_cancel.html",
-			"html/shop/order_comment.html"
+			"html/shop/order_comment.html",
+			"html/shop/pay.html",
+			"html/member/finsh_order_list.html"
 		]
 	},
 	"html/shop/shop_search.html": {
@@ -399,14 +395,12 @@
 			"css/mui.min.css",
 			"js/shop.js",
 			"js/post.js"
-		],
-		"refer": []
+		]
 	},
 	"html/shop/order_cancel.html": {
 		"resources": [
 			"css/mui.min.css"
-		],
-		"refer": []
+		]
 	},
 	"html/shop/order_comment.html": {
 		"resources": [
@@ -416,49 +410,36 @@
 			"js/dao.js",
 			"js/shop.js",
 			"js/post.js"
-		],
-		"refer": []
+		]
 	},
 	"html/account/forget_password.html": {
 		"resources": [
-			"css/style.css",
-			"js/localDatabase.js",
-			"js/member.js",
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"js/dao.js",
-			"css/mui.min.css",
-			"js/post.js"
-		],
-		"refer": []
-	},
-	"html/account/fp_pwd.html": {
-		"resources": [
-			"js/member.js",
-			"js/localDatabase.js",
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"js/dao.js",
-			"css/mui.min.css",
-			"css/style.css",
-			"js/post.js"
-		],
-		"refer": [
-			"main.html"
+			"css/style.css"
 		]
 	},
-	"html/apphome/city.html": {
+	"html/shop/pay.html": {
 		"resources": [
-			"css/mui.indexedlist.css",
-			"js/mui.indexedlist.js",
-			"fonts/mui.ttf",
+			"images/weixinpay.png",
+			"css/mui.min.css",
+			"images/zhifubao.png",
+			"js/mui.min.js"
+		]
+	},
+	"html/member/finsh_order_list.html": {
+		"resources": [
 			"js/mui.min.js",
 			"css/mui.min.css",
-			"js/localDatabase.js",
-			"js/dao.js",
-			"js/apphome.js",
-			"js/post.js"
+			"js/member.js",
+			"js/dao.js"
 		],
-		"refer": []
+		"refer": [
+			"html/member/shop_order_detail.html",
+			"html/member/shop_order_detail_info.html"
+		]
+	},
+	"html/member/shop_order_detail_info.html": {
+		"resources": [
+			"css/mui.min.css"
+		]
 	}
 }

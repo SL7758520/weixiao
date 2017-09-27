@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en" class="feedback">
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>支付订单</title>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/appfont.css" rel="stylesheet" />
+		<link href="../../css/main.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<style>
+			.loginout {
+				border: 1px solid #4cd964;
+				background-color: #4cd964;
+			}
+			
+			.liheigh {
+				line-height: 31px;
+			}
+		</style>
+		<header class="mui-bar mui-bar-nav">
+			<a href="#offCanvasSide" class="mui-action-back mui-icon icon_app_02 mui-action-menu mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">支付订单</h1>
+		</header>
+		<div class="mui-content">
+			<div class="mui-form">
+				<ul class="mui-table-view mui-table-view-radio">
+					<li class="mui-table-view-cell liheigh">
+						<img src="../../images/weixinpay.png" style="height: 31px;width: 30px;float: left;margin-right: 15px;" />
+						<div class="mui-navigate-right">微信支付</div>
+					</li>
+					<li class="mui-table-view-cell mui-selected liheigh">
+						<!--<span style="background-image: url(../../images/zhifubao.png);float: right;"></span><a class="mui-navigate-right">支付宝支付</a>-->
+						<img src="../../images/zhifubao.png" style="height: 31px;width: 30px;float: left;margin-right: 15px;" />
+						<div class="mui-navigate-right">支付宝支付</div>
+					</li>
+				</ul>
+			</div>
+			<div id="popover_save" class="mui-content-padded" style="margin-top: 2em;">
+				<button id="btnSave" type="button" class="mui-btn mui-btn-primary mui-btn-block loginout">确认支付</button>
+			</div>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/post.js"></script>
+		<script src="../../js/localDatabase.js"></script>
+		<script src="../../js/dao.js"></script>
+		<script src="../../js/shop.js"></script>
+		<script>
+			var wxChannel = null; // 微信支付  
+			var aliChannel = null; // 支付宝支付  
+			var channel = null; //支付通道 
+			mui.init({
+				swipeBack: true //启用右滑关闭功能  
+			});
+
+			mui.plusReady(function() {
+				// 获取支付通道  
+				plus.payment.getChannels(function(channels) {
+					for(var i in channels) {
+						if(channels[i].id == "wxpay") {
+							wxChannel = channels[i];
+						} else {
+							aliChannel = channels[i];
+						}
+					}
+				}, function(e) {
+					alert("获取支付通道失败：" + e.message);
+				});
+			})
+
+			document.getElementById('btnSave').addEventListener('tap', function() {
+				console.log("微信");
+				mui.toast('暂未加入后续操作');
+//				pay('wxpay');
+			})
+//			document.getElementById('zhifubao').addEventListener('tap', function() {
+//				console.log("zhifubao");
+//				pay('alipay');
+//			})
+
+			var ALIPAYSERVER = 'http://demo.dcloud.net.cn/helloh5/payment/alipay.php?total=';
+			var WXPAYSERVER = 'http://demo.dcloud.net.cn/helloh5/payment/wxpay.php?total=';
+
+			// 2. 发起支付请求  
+			function pay(id) {
+				// 从服务器请求支付订单  
+				var PAYSERVER = '';
+				if(id == 'alipay') {
+					PAYSERVER = ALIPAYSERVER;
+					channel = aliChannel;
+				} else if(id == 'wxpay') {
+					PAYSERVER = WXPAYSERVER;
+					channel = wxChannel;
+				} else {
+					plus.nativeUI.alert("不支持此支付通道！", null, "捐赠");
+					return;
+				}
+				var xhr = new XMLHttpRequest();
+				var amount = document.getElementById('jine').value;
+
+				xhr.onreadystatechange = function() {
+					switch(xhr.readyState) {
+						case 4:
+							if(xhr.status == 200) {
+								plus.payment.request(channel, xhr.responseText, function(result) {
+									plus.nativeUI.alert("支付成功！", function() {
+										back();
+									});
+								}, function(error) {
+									plus.nativeUI.alert("支付失败：" + error.code);
+								});
+							} else {
+								alert("获取订单信息失败！");
+							}
+							break;
+						default:
+							break;
+					}
+				}
+				xhr.open('GET', PAYSERVER + amount);
+				xhr.send();
+
+			}
+		</script>
+	</body>
+
+</html>
