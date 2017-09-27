@@ -151,6 +151,25 @@ var Shop = (function() {
 					console.log('请求失败：');
 				});
 		};
+		
+		//收藏店铺
+		this.ShopCollect = function( shopId,callback) {
+			if(!_getNetwork()) {
+				mui.toast("没有网络连接，请稍后再试！");
+				return;
+			}
+			var user = _db.getUser();
+			AsyncPost(API_SHOP+"ShopCollect","shopId=" + shopId ,
+				function(result) {
+					if(callback) {
+						console.log('接口返回数据：' + JSON.stringify(result));
+						callback.call(this, result);
+					}
+				},
+				function() {
+					console.log('请求失败：');
+				});
+		};
 		//获取筛选类型
 		this.GetAttributes = function(callback) {
 			if(!_getNetwork()) {

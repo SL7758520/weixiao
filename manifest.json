@@ -654,14 +654,12 @@
 					"css/main.css",
 					"js/mui.min.js",
 					"js/dao.js",
-					"js/post.js",
-					"js/mui.js"
+					"js/post.js"
 				],
 				"refer": [
 					"html/member/shop_order_detail.html",
 					"html/shop/order_comment.html",
-					"html/shop/order_apply_refund.html",
-					"html/shop/order_cancel.html"
+					"html/shop/order_apply_refund.html"
 				],
 				"priority": 0
 			},
@@ -671,12 +669,7 @@
 					"css/appfont.css",
 					"js/mui.min.js",
 					"fonts/icomoon.ttf",
-					"css/mui.min.css",
-					"js/localDatabase.js",
-					"js/member.js",
-					"js/dao.js",
-					"js/shop.js",
-					"js/post.js"
+					"css/mui.min.css"
 				],
 				"refer": [
 					"html/shop/product.html",
@@ -738,14 +731,9 @@
 				"refer": [],
 				"priority": 0
 			},
-			"html/shop/order_apply_refund.html": {
+			"html/account/forget_password.html": {
 				"resources": [
-					"js/localDatabase.js",
-					"js/mui.min.js",
-					"js/dao.js",
-					"css/mui.min.css",
-					"js/shop.js",
-					"js/post.js"
+					"css/style.css"
 				],
 				"refer": [],
 				"priority": 0

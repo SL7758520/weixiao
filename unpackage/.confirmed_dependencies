@@ -334,8 +334,7 @@
 			"css/main.css",
 			"js/mui.min.js",
 			"js/dao.js",
-			"js/post.js",
-			"js/mui.js"
+			"js/post.js"
 		],
 		"refer": [
 			"html/member/shop_order_detail.html",
@@ -349,8 +348,7 @@
 			"css/appfont.css",
 			"js/mui.min.js",
 			"fonts/icomoon.ttf",
-			"css/mui.min.css",
-			"js/member.js"
+			"css/mui.min.css"
 		],
 		"refer": [
 			"html/shop/product.html",
@@ -402,6 +400,11 @@
 			"js/dao.js",
 			"js/shop.js",
 			"js/post.js"
+		]
+	},
+	"html/account/forget_password.html": {
+		"resources": [
+			"css/style.css"
 		]
 	}
 }
