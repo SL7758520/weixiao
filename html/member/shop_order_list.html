@@ -132,7 +132,7 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 			<h1 class="mui-title">我的订单</h1>
-			<!--<a id="btnNew" class="mui-btn mui-btn-link mui-pull-right">故障申报</a>-->
+			<a id="btnNew" class="mui-btn mui-btn-link mui-pull-right">已完成订单</a>
 		</header>
 		<div class="mui-content">
 			<div id="slider" class="mui-slider mui-fullscreen">
@@ -279,6 +279,19 @@
 						mui('#scroll3').pullToRefresh().pullDownLoading();
 						selectTab(3);
 					});
+					document.getElementById('btnNew').addEventListener('tap',function(){
+						mui.openWindow({
+							id: 'finsh_order_list.html',
+							url: 'finsh_order_list.html',
+							show: {
+								aniShow: 'pop-in'
+							},
+							waiting: {
+								autoShow: true,
+								title: '正在加载...'
+							}
+						});
+					});
 					cleanSLidListener();
 				}
 
@@ -410,6 +423,13 @@
 									buttons[i].addEventListener('tap', function() {
 										if(this.id == 'confrim') {
 											mui.toast('去支付');
+											var id = card.getAttribute('data-value');
+											console.log('打印id:' + id);
+											if(id != '' && id != undefined) {
+												gotoHtml("../shop/pay.html", id);
+											} else {
+												mui.toast('订单ID有误');
+											}
 										} else {
 											mui.toast('待支付的取消订单');
 											var id = card.getAttribute('data-value');

@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>已完成订单</title>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/appfont.css" rel="stylesheet" />
+		<link href="../../css/main.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<style>
+			.tableli {
+				padding: 15px 15px 15px 15px;
+			}
+		</style>
+		<!--主界面部分-->
+		<header id="header" class="mui-bar mui-bar-nav">
+			<h1 class="mui-title">已完成订单</h1>
+			<a href="#offCanvasSide" class="mui-action-back mui-icon icon_app_02 mui-action-menu mui-icon-left-nav mui-pull-left"></a>
+		</header>
+		<ul class="mui-table-view" id='ulorderlists' style="margin-top: 44px;"></ul>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/post.js"></script>
+		<script src="../../js/localDatabase.js"></script>
+		<script src="../../js/dao.js"></script>
+		<script src="../../js/member.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			var member = new Member();
+			mui.plusReady(function() {
+				setTimeout(function(){
+					plus.webview.getWebviewById('shop_order_detail.html').close();
+				},1000);
+				
+				initdatas();
+			});
+
+			function initdatas() {
+				member.GetShopOrders(1, 100, 9, function(result) {
+					if(result) {
+						addList(result.result);
+					}
+				});
+			}
+			var addList = function(datas) {
+				var div = document.getElementById('ulorderlists');
+				for(var i = 0; i < datas.length; i++) {
+					var card = createCard(datas[i]);
+					div.appendChild(card);
+				}
+			}
+			var createCard = function(entity) {
+//				console.log(JSON.stringify(entity));
+				var card = document.createElement("li");
+				card.className = "mui-table-view-cell tableli";
+				card.setAttribute('id', entity.Id);
+				card.setAttribute("data-value", entity.Id);
+				var status = '已完成订单';
+				card.innerHTML = '<h6 class="font" style="float: left; width: 80%;">' + entity.ShopName + '</h6><h6 class="font" style="float: left; width: 20%;">' + status + '</h6><h6 class="font" style="width: 100%;">' +
+					entity.ProductName + '</h6><h5 class="font" style="width: 100%;">预约：' + entity.BookedDate + '入住</h5>';
+				card.addEventListener('tap', function() {
+					openWindow(9, entity);
+				}, false);
+				return card;
+			}
+								//打开窗体
+					function openWindow(index, entity) {
+						//来源，数据实体
+						var id = 'shop_order_detail_info.html';
+						var url = 'shop_order_detail_info.html';
+						mui.openWindow({
+							id: id,
+							url: url,
+							show: {
+								aniShow: 'pop-in'
+							},
+							waiting: {
+								autoShow: true,
+								title: '正在加载...'
+							},
+							extras: {
+								data: entity,
+								from: 9 //来源：0:待受理；1:待支付；2：待入住 3：已入住
+							}
+						});
+					}
+		</script>
+	</body>
+
+</html>

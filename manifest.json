@@ -73,6 +73,9 @@
 		"Zip": {
 			"description": "文件压缩与解压缩"
 		},
+		"Payment": {
+			"description": "管理支付插件"
+		},
 
 
 
@@ -85,7 +88,8 @@
 		"NativeObj": {},
 		"OAuth": {},
 		"Device": {},
-		"Camera": {}
+		"Camera": {},
+		"Payment": {}
 	},
 	"plus": {
 		"splashscreen": {
@@ -96,11 +100,16 @@
 		"signature": "Sk9JTiBVUyBtYWlsdG86aHIyMDEzQGRjbG91ZC5pbw==",/*可选，保留给应用签名，暂不使用*/
 		"distribute": {
 			"plugins": {
-				"oauth": {
-					
-					
-					
-				}
+				"payment": {
+					"alipay": {
+						"description": "阿里支付",
+						"scheme": ""
+					},
+					"appleiap": {
+						"description": "Apple应用内支付"
+					}
+				},
+				"oauth": {}
 			},
 			"apple": {
 				"appid": "",/*iOS应用标识，苹果开发网站申请的appid，如io.dcloud.HelloH5*/
@@ -116,14 +125,15 @@
 				"password": "",/*Android应用打包使用密钥库中证书的密码*/
 				"aliasname": "",/*Android应用打包使用密钥库中证书的别名*/
 				"permissions": [
-					"<uses-feature android:name=\"android.hardware.camera\"/>",
 					"<uses-permission android:name=\"com.android.launcher.permission.INSTALL_SHORTCUT\"/>",
+					"<uses-feature android:name=\"android.hardware.camera\"/>",
 					"<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>",
-					"<uses-permission android:name=\"android.permission.VIBRATE\"/>",
 					"<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>",
+					"<uses-permission android:name=\"android.permission.VIBRATE\"/>",
 					"<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>",
 					"<uses-permission android:name=\"android.permission.CALL_PHONE\"/>",
 					"<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>",
+					"<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>",
 					"<uses-permission android:name=\"com.android.launcher.permission.UNINSTALL_SHORTCUT\"/>",
 					"<uses-permission android:name=\"android.permission.CAMERA\"/>"
 				]
@@ -654,12 +664,15 @@
 					"css/main.css",
 					"js/mui.min.js",
 					"js/dao.js",
-					"js/post.js"
+					"js/post.js",
+					"js/mui.js"
 				],
 				"refer": [
 					"html/member/shop_order_detail.html",
 					"html/shop/order_comment.html",
-					"html/shop/order_apply_refund.html"
+					"html/shop/order_apply_refund.html",
+					"html/shop/pay.html",
+					"html/member/finsh_order_list.html"
 				],
 				"priority": 0
 			},
@@ -669,12 +682,19 @@
 					"css/appfont.css",
 					"js/mui.min.js",
 					"fonts/icomoon.ttf",
-					"css/mui.min.css"
+					"css/mui.min.css",
+					"js/localDatabase.js",
+					"js/member.js",
+					"js/dao.js",
+					"js/shop.js",
+					"js/post.js"
 				],
 				"refer": [
 					"html/shop/product.html",
 					"html/shop/order_cancel.html",
-					"html/shop/order_comment.html"
+					"html/shop/order_comment.html",
+					"html/shop/pay.html",
+					"html/member/finsh_order_list.html"
 				],
 				"priority": 0
 			},
@@ -734,6 +754,36 @@
 			"html/account/forget_password.html": {
 				"resources": [
 					"css/style.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/shop/pay.html": {
+				"resources": [
+					"images/weixinpay.png",
+					"css/mui.min.css",
+					"images/zhifubao.png",
+					"js/mui.min.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/member/finsh_order_list.html": {
+				"resources": [
+					"js/mui.min.js",
+					"css/mui.min.css",
+					"js/member.js",
+					"js/dao.js"
+				],
+				"refer": [
+					"html/member/shop_order_detail.html",
+					"html/member/shop_order_detail_info.html"
+				],
+				"priority": 0
+			},
+			"html/member/shop_order_detail_info.html": {
+				"resources": [
+					"css/mui.min.css"
 				],
 				"refer": [],
 				"priority": 0

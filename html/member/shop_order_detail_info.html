@@ -278,7 +278,7 @@
 								mui.toast(data.message);
 							}
 						});
-						setHtml('orderstatus', Status[entity.OrderStatus]);
+						setHtml('orderstatus','已完成订单');
 						setHtml('orderid', entity.Id);
 						setHtml('servicename', entity.ShopName + '-' + entity.ProductName);
 						setHtml('bookeddate', entity.BookedDate);
@@ -358,18 +358,14 @@
 							document.getElementById('dialog').style.display = 'block';
 							document.getElementById('dialogone').style.display = 'block';
 							document.getElementById('dialogtwo').style.display = 'none';
+							
 						}else{
 							mui.toast(result.message);
 						}
 					});
 				});
 				document.getElementById('notice').addEventListener('tap',function(){
-//					var list = plus.webview.getWebviewById('html/member/shop_order_list.html');
-//					mui.fire(list, 'listRefresh2');
-					dialog.style.display = 'none';
-					var list = plus.webview.getWebviewById('html/member/shop_order_list.html');
-					mui.fire(list, 'listRefresh3');
-//					plus.webview.currentWebview().close();
+				setTimeout(function() {
 					mui.openWindow({
 							id: 'finsh_order_list.html',
 							url: 'finsh_order_list.html',
@@ -381,7 +377,12 @@
 								title: '正在加载...'
 							}
 						});
-					
+					}, 1000);
+//					plus.webview.getWebviewById('shop_order_detail.html').close();
+					plus.webview.currentWebview().close();
+//					var list = plus.webview.getWebviewById('html/member/shop_order_list.html');
+//					mui.fire(list, 'listRefresh2');
+
 				});
 				document.getElementById('casncel').addEventListener('tap', function() {
 					shop.OrderFinish(FaultEntity.Id,function(result){

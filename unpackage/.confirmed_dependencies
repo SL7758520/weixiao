@@ -334,12 +334,15 @@
 			"css/main.css",
 			"js/mui.min.js",
 			"js/dao.js",
-			"js/post.js"
+			"js/post.js",
+			"js/mui.js"
 		],
 		"refer": [
 			"html/member/shop_order_detail.html",
 			"html/shop/order_comment.html",
-			"html/shop/order_apply_refund.html"
+			"html/shop/order_apply_refund.html",
+			"html/shop/pay.html",
+			"html/member/finsh_order_list.html"
 		]
 	},
 	"html/member/shop_order_detail.html": {
@@ -348,12 +351,19 @@
 			"css/appfont.css",
 			"js/mui.min.js",
 			"fonts/icomoon.ttf",
-			"css/mui.min.css"
+			"css/mui.min.css",
+			"js/localDatabase.js",
+			"js/member.js",
+			"js/dao.js",
+			"js/shop.js",
+			"js/post.js"
 		],
 		"refer": [
 			"html/shop/product.html",
 			"html/shop/order_cancel.html",
-			"html/shop/order_comment.html"
+			"html/shop/order_comment.html",
+			"html/shop/pay.html",
+			"html/member/finsh_order_list.html"
 		]
 	},
 	"html/shop/shop_search.html": {
@@ -405,6 +415,31 @@
 	"html/account/forget_password.html": {
 		"resources": [
 			"css/style.css"
+		]
+	},
+	"html/shop/pay.html": {
+		"resources": [
+			"images/weixinpay.png",
+			"css/mui.min.css",
+			"images/zhifubao.png",
+			"js/mui.min.js"
+		]
+	},
+	"html/member/finsh_order_list.html": {
+		"resources": [
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"js/member.js",
+			"js/dao.js"
+		],
+		"refer": [
+			"html/member/shop_order_detail.html",
+			"html/member/shop_order_detail_info.html"
+		]
+	},
+	"html/member/shop_order_detail_info.html": {
+		"resources": [
+			"css/mui.min.css"
 		]
 	}
 }
