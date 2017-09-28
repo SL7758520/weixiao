@@ -51,6 +51,9 @@ var Member = (function() {
 		this.GetShopOrders = function(pageIndex,pageSize,orderStatus,callback,onerror){
 			if(!_getNetwork()) {
 				mui.toast("没有网络连接，请稍后再试！");
+				if (onerror) {
+						onerror.call(this);
+					}
 				return;
 			}
 			AsyncPost(API_MEMBER+"GetShopOrders", 'pageIndex='+pageIndex+'&pageSize='+pageSize+'&orderStatus='+orderStatus ,

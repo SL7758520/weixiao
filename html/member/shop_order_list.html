@@ -388,6 +388,12 @@
 									} else {
 										self.endPullDownToRefresh(result.total < 8);
 									}
+								},function(){
+									if(isUp) {
+										self.endPullUpToRefresh(false);
+									} else {
+										self.endPullDownToRefresh(false);
+									}
 								});
 							}, 1000);
 						}
