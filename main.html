@@ -165,12 +165,8 @@
 					}
 				});
 			}
+			var backButtonPress = 0;
 			mui.back = function(event) {
-				if(showMenu) {
-					//菜单处于显示状态，返回键应该先关闭菜单,阻止主窗口执行mui.back逻辑；
-					closeMenu();
-					return false;
-				}
 				backButtonPress++;
 				if(backButtonPress > 1) {
 					plus.runtime.quit();

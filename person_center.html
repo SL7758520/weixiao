@@ -417,8 +417,10 @@
 		
 		function initpage() {
 				var users = _dataAccess.getUser();
-				if (users.Token!=null) {
+				if (users.Token!=null&&users.Token!='') {
 					Token =users.Token;
+				}else{
+					mui.toast('登录已失效，请重新登录');
 				}
 				setelementhtml('nickname', users.NickName);
 				setelementhtml('mobile', users.Mobile);
