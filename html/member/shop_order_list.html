@@ -233,6 +233,7 @@
 			mui.init();
 			//			console.log(("2017-4-10 17:06:00").replace(new RegExp("-","gm"),'/'));
 			function selectTab(index) {
+				document.getElementById('btnNew').focus();
 				mui('#slider').slider().gotoItem(index);
 				var tab = document.getElementById("a" + index);
 				var tabs = document.querySelectorAll(".mui-control-item");
