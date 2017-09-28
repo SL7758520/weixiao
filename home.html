@@ -23,12 +23,14 @@
 					mui.toast(p.address.city);
 					document.getElementById("position").innerText = p.address.city;
 					_appHome.GetCityIdByCityName(p.address.city, function(datas) {
-						_dataAccess.getUser().CityId=datas;
+						_dataAccess.getUser().CityId = datas;
 					});
-					//					alert('Geolocation\nLatitude:' + p.coords.latitude + '\nLongitude:' + p.coords.longitude + '\nAltitude:' + p.coords.altitude);
 				}, function(e) {
-					alert('Geolocation error: ' + e.message);
-				},{geocode:true,provider:'amap'});
+					mui.toast('获取定位信息失败:' + e.message);
+				}, {
+					geocode: true,
+					provider: 'baidu'
+				}); //bd09ll
 			}
 		</script>
 		<style type="text/css">
@@ -147,10 +149,10 @@
 		var shopName;
 		mui.init();
 		window.addEventListener("getCity", function(e) {
-				var datas = e.detail.data;
-				console.log(JSON.stringify(datas));
-				document.getElementById("position").innerText = datas;
-			});
+			var datas = e.detail.data;
+			console.log(JSON.stringify(datas));
+			document.getElementById("position").innerText = datas;
+		});
 		mui.plusReady(function() {
 			//获得slider插件对象
 			var gallery = mui('.mui-slider');

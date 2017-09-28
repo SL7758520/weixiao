@@ -194,7 +194,7 @@
 		<div class="mui-content" style="margin-bottom: 51px;">
 			<div class="position-a">
 				<div id="image" class="position-atop">
-					<img id="Shop_img" src="../../images/cbd.jpg" alt="">
+					<img id="Shop_img" src="../../images/shop.jpg" alt="">
 					<div class="gray-img">
 						6
 					</div>
@@ -452,11 +452,17 @@
 				} else {
 					HasPickUp = "不可接送";
 				}
+				var imgsrc;
+				if(entity.PhotoUrl == null) {
+					imgsrc = "../../images/bed_small.jpg";
+				} else {
+					imgsrc = photoUrl + entity.PhotoUrl;
+				}
 				if(entity.CollectCounts == null) {
-					li.innerHTML = '<div class="item"><div ><img src="../../images/t0-3.jpg" style="width: 75px;height: 75px;"></div><div class="text"><div class="information"><h4>' + entity.CategoryName + '</h4><h5 style="margin-top: 8px;">' + HasPickUp + '</h5><h5 class="mui-ellipsis" style="margin-top: 8px;">' + entity.ShortDescription + '</h5></div><div class="price"><span class="new-price">￥' + entity.Price + '/月</span></div></div></div>';
+					li.innerHTML = '<div class="item"><div ><img src='+imgsrc+' style="width: 100px;height: 65px;"></div><div class="text"><div class="information"><h4>' + entity.CategoryName + '</h4><h5 style="margin-top: 8px;">' + HasPickUp + '</h5><h5 class="mui-ellipsis" style="margin-top: 8px;">' + entity.ShortDescription + '</h5></div><div class="price"><span class="new-price">￥' + entity.Price + '/月</span></div></div></div>';
 
 				} else {
-					li.innerHTML = '<div class="item"><div ><img src="../../images/t0-3.jpg" style="width: 75px;height: 75px;"></div><div class="text"><div class="information"><h4>' + entity.CategoryName + '</h4><h5 style="margin-top: 8px;">' + HasPickUp + '</h5><h5 class="mui-ellipsis" style="margin-top: 8px;">' + entity.ShortDescription + '</h5></div><div class="price"><span class="new-price">￥' + entity.Price + '/月</span><div id="" style="display: flex;align-items: center;margin-top: 5px;"><img src="../../images/heart@2x.png" style="width: 15px;height: 15px;" /><h5 style="margin-left: 5px;">' + entity.CollectCounts + '人关注</h5></div></div></div></div>';
+					li.innerHTML = '<div class="item"><div ><img src='+imgsrc+' style="width: 100px;height: 65px;"></div><div class="text"><div class="information"><h4>' + entity.CategoryName + '</h4><h5 style="margin-top: 8px;">' + HasPickUp + '</h5><h5 class="mui-ellipsis" style="margin-top: 8px;">' + entity.ShortDescription + '</h5></div><div class="price"><span class="new-price">￥' + entity.Price + '/月</span><div id="" style="display: flex;align-items: center;margin-top: 5px;"><img src="../../images/heart@2x.png" style="width: 15px;height: 15px;" /><h5 style="margin-left: 5px;">' + entity.CollectCounts + '人关注</h5></div></div></div></div>';
 
 				}
 
@@ -488,7 +494,7 @@
 			window.addEventListener("CreateOrder", function(e) {
 				console.log('html/shop/product.html');
 				var main = plus.webview.getWebviewById('main.html');
-				mui.fire(main, 'CreateOrder',{});
+				mui.fire(main, 'CreateOrder', {});
 				var task = plus.webview.getWebviewById('html/member/shop_order_list.html');
 				mui.fire(task, 'listRefresh0');
 				plus.webview.getWebviewById('html/shop/product.html').close();

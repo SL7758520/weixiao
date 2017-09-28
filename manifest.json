@@ -89,7 +89,8 @@
 		"OAuth": {},
 		"Device": {},
 		"Camera": {},
-		"Payment": {}
+		"Payment": {},
+		"Geolocation": {}
 	},
 	"plus": {
 		"splashscreen": {
@@ -125,16 +126,17 @@
 				"password": "",/*Android应用打包使用密钥库中证书的密码*/
 				"aliasname": "",/*Android应用打包使用密钥库中证书的别名*/
 				"permissions": [
-					"<uses-permission android:name=\"com.android.launcher.permission.INSTALL_SHORTCUT\"/>",
 					"<uses-feature android:name=\"android.hardware.camera\"/>",
+					"<uses-permission android:name=\"com.android.launcher.permission.INSTALL_SHORTCUT\"/>",
+					"<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\"/>",
 					"<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>",
-					"<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>",
 					"<uses-permission android:name=\"android.permission.VIBRATE\"/>",
+					"<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>",
 					"<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>",
 					"<uses-permission android:name=\"android.permission.CALL_PHONE\"/>",
 					"<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>",
-					"<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>",
 					"<uses-permission android:name=\"com.android.launcher.permission.UNINSTALL_SHORTCUT\"/>",
+					"<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>",
 					"<uses-permission android:name=\"android.permission.CAMERA\"/>"
 				]
 			},
@@ -492,7 +494,8 @@
 					"js/mui.min.js",
 					"js/dao.js",
 					"js/post.js",
-					"js/apphome.js"
+					"js/apphome.js",
+					"fonts/icomoon.ttf"
 				],
 				"refer": [],
 				"priority": 0
@@ -583,7 +586,10 @@
 					"fonts/icomoon.ttf",
 					"css/font-awesome.min.css",
 					"fonts/fontawesome-webfont.ttf",
-					"fonts/fontawesome-webfont.woff2"
+					"fonts/fontawesome-webfont.woff2",
+					"images/shop.jpg",
+					"js/member.js",
+					"images/bed_small.jpg"
 				],
 				"refer": [
 					"html/shop/product_details.html",
@@ -602,7 +608,9 @@
 					"fonts/mui.ttf",
 					"js/dao.js",
 					"js/shop.js",
-					"js/post.js"
+					"js/post.js",
+					"js/member.js",
+					"images/bed.jpg"
 				],
 				"refer": [
 					"html/shop/createorder.html"
