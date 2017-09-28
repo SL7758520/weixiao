@@ -217,9 +217,15 @@
 					mui.back();
 				});
 				document.getElementById('notice').addEventListener('tap', function() {
-					var task = plus.webview.getWebviewById('product_details.html');
-					mui.fire(task, 'CreateOrder');
-					plus.webview.currentWebview().close();
+					//					var task = plus.webview.getWebviewById('product_details.html');
+					//					mui.fire(task, 'CreateOrder');
+					//					plus.webview.getWebviewById('createorder.html').close();
+					var main = plus.webview.getWebviewById('main.html');
+					mui.fire(main, 'CreateOrder', {});
+					var task = plus.webview.getWebviewById('html/member/shop_order_list.html');
+					mui.fire(task, 'listRefresh0');
+					toMain();
+					mui.back();
 				});
 			}
 
@@ -293,6 +299,21 @@
 					return;
 				}
 				return false;
+			};
+			var toMain = function() {
+				//						$.fire(mainPage, 'show', null);
+				setTimeout(function() {
+					mui.openWindow({
+						id: 'main.html',
+						url: '../../main.html',
+						show: {
+							aniShow: 'pop-in'
+						},
+						waiting: {
+							autoShow: false
+						}
+					});
+				}, 0);
 			};
 		</script>
 	</body>

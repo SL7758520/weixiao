@@ -20,6 +20,7 @@
 			// 扩展API加载完毕，现在可以正常调用扩展API
 			function onPlusReady() {
 				plus.geolocation.getCurrentPosition(function(p) {
+					mui.toast(p.address.city);
 					document.getElementById("position").innerText = p.address.city;
 					_appHome.GetCityIdByCityName(p.address.city, function(datas) {
 						_dataAccess.getUser().CityId=datas;
@@ -27,7 +28,7 @@
 					//					alert('Geolocation\nLatitude:' + p.coords.latitude + '\nLongitude:' + p.coords.longitude + '\nAltitude:' + p.coords.altitude);
 				}, function(e) {
 					alert('Geolocation error: ' + e.message);
-				});
+				},{geocode:true,provider:'amap'});
 			}
 		</script>
 		<style type="text/css">
