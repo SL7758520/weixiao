@@ -156,14 +156,10 @@
 					</div>-->
 					<div class="tab_menu" style="background-color: #FFFFFF;">
 						<div id="segmentedControl" class="mui-segmented-control">
-							<a id="a0" class="mui-control-item mui-active" href="#item0mobile">待受理</a>
-							<a id="a1" class="mui-control-item" href="#item1mobile">待支付</a>
-							<a id="a2" class="mui-control-item" href="#item2mobile">
-								待入住<span id="t2"></span>
-							</a>
-							<a id="a3" class="mui-control-item" href="#item3mobile">
-								已入住<span id="t3"></span>
-							</a>
+							<a id="a0" class="mui-control-item mui-active" href="#item0mobile">待受理<span id="t0"></a>
+							<a id="a1" class="mui-control-item" href="#item1mobile">待支付<span id="t1"></a>
+							<a id="a2" class="mui-control-item" href="#item2mobile">待到达<span id="t2"></span></a>
+							<a id="a3" class="mui-control-item" href="#item3mobile">已到达<span id="t3"></span></a>
 						</div>
 					</div>
 				</div>
@@ -247,7 +243,7 @@
 			var _dataAccess = new DataAccess();
 			var isonly = false;
 			var pageObjects = [];
-			var Status = ['待受理', '待支付', '待入住', '已入住'];
+			var Status = ['待受理', '待支付', '待到达', '已到达'];
 			//设置tab的选择
 			function selectTabs(currentIndex) {
 				var scrollIndex = '#scroll' + currentIndex;
@@ -322,7 +318,7 @@
 							},
 							extras: {
 								data: entity,
-								from: index //来源：0:待受理；1:待支付；2：待入住 3：已入住
+								from: index //来源：0:待受理；1:待支付；2：待到达 3：已到达
 							}
 						});
 					}
