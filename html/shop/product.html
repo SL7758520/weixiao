@@ -47,33 +47,30 @@
 			}
 			
 			.gray-lable {
-				background-image: -webkit-linear-gradient(top, rgba(59, 59, 59, .6), rgba(27, 27, 27, .6), rgba(50, 50, 50, .4), rgba(31, 31, 31, .4));
-				position: absolute;
-				left: 0;
-				bottom: 0;
+				background-color: #FFFFFF;
 				width: 100%;
 				height: 50px;
-				padding-left: 5px;
-				display: block;
-				-webkit-box-sizing: border-box;
-				box-sizing: border-box;
+				padding-left: 12px;
+				border-bottom: 1px solid #EDEDED;
 			}
 			
 			.gray-img {
 				background-image: -webkit-linear-gradient(top, rgba(59, 59, 59, .6), rgba(27, 27, 27, .6), rgba(50, 50, 50, .4), rgba(31, 31, 31, .4));
 				position: absolute;
-				top: 48px;
-				right: 20px;
-				width: 20px;
-				height: 20px;
-				display: block;
-				-webkit-box-sizing: border-box;
-				box-sizing: border-box;
+				color: #FFFFFF;
+				padding-top: 2px;
+				font-size: 16px;
+				bottom: 20px;
+				right: 0px;
+				width: 60px;
+				height: 25px;
+				border-radius: 50px 0px 0px 50px;
 				text-align: center;
 			}
 			
 			.first-line,
 			.vicetitle {
+				color: #6a6a6a;
 				height: 25px;
 				line-height: 30px;
 			}
@@ -82,10 +79,6 @@
 				font-size: 13px;
 			}
 			
-			.first-line .bigtitle,
-			.vicetitle {
-				color: #ffffff;
-			}
 			
 			.first-line .prices {
 				color: #f99d1c;
@@ -194,21 +187,20 @@
 		<div class="mui-content" style="margin-bottom: 51px;">
 			<div class="position-a">
 				<div id="image" class="position-atop">
-					<img id="Shop_img" src="../../images/shop.jpg" alt="">
+					<img id="Shop_img" src="" alt="" onerror="this.src='../../images/shop.jpg'">
 					<div class="gray-img">
-						6
-					</div>
-					<div class="gray-lable ">
-						<div class="first-line">
-							<span id="title" class="bigtitle">三峡长海游轮5日游</span>
-							<span class="prices" id="BottomPrice">1668起</span>
-						</div>
-						<div class="vicetitle" id="DistanceDesc">单船票，宜昌登船，含宜昌码头接站</div>
+						共6张
 					</div>
 				</div>
 			</div>
-
-			<div class="fg_title" style="margin-top: 10px;">
+			<div class="gray-lable ">
+				<div class="first-line">
+					<span id="title" class="bigtitle">三峡长海游轮5日游</span>
+					<span class="prices" id="BottomPrice">1668起</span>
+				</div>
+				<div class="vicetitle" id="DistanceDesc">单船票，宜昌登船，含宜昌码头接站</div>
+			</div>
+			<div class="fg_title" style="margin-top: 1px;">
 				基本信息
 			</div>
 			<div id="info" class="info"></div>
@@ -453,16 +445,13 @@
 					HasPickUp = "不可接送";
 				}
 				var imgsrc;
-				if(entity.PhotoUrl == null) {
-					imgsrc = "../../images/bed_small.jpg";
-				} else {
-					imgsrc = photoUrl + entity.PhotoUrl;
-				}
+				imgsrc = photoUrl + entity.PhotoUrl;
+
 				if(entity.CollectCounts == null) {
-					li.innerHTML = '<div class="item"><div ><img src='+imgsrc+' style="width: 100px;height: 65px;"></div><div class="text"><div class="information"><h4>' + entity.CategoryName + '</h4><h5 style="margin-top: 8px;">' + HasPickUp + '</h5><h5 class="mui-ellipsis" style="margin-top: 8px;">' + entity.ShortDescription + '</h5></div><div class="price"><span class="new-price">￥' + entity.Price + '/月</span></div></div></div>';
+					li.innerHTML = '<div class="item"><div ><img src=' + imgsrc + ' onerror="this.src=\'../../images/bed_small.jpg\'" style="width: 100px;height: 65px;"></div><div class="text"><div class="information"><h4>' + entity.CategoryName + '</h4><h5 style="margin-top: 8px;">' + HasPickUp + '</h5><h5 class="mui-ellipsis" style="margin-top: 8px;">' + entity.ShortDescription + '</h5></div><div class="price"><span class="new-price">￥' + entity.Price + '/月</span></div></div></div>';
 
 				} else {
-					li.innerHTML = '<div class="item"><div ><img src='+imgsrc+' style="width: 100px;height: 65px;"></div><div class="text"><div class="information"><h4>' + entity.CategoryName + '</h4><h5 style="margin-top: 8px;">' + HasPickUp + '</h5><h5 class="mui-ellipsis" style="margin-top: 8px;">' + entity.ShortDescription + '</h5></div><div class="price"><span class="new-price">￥' + entity.Price + '/月</span><div id="" style="display: flex;align-items: center;margin-top: 5px;"><img src="../../images/heart@2x.png" style="width: 15px;height: 15px;" /><h5 style="margin-left: 5px;">' + entity.CollectCounts + '人关注</h5></div></div></div></div>';
+					li.innerHTML = '<div class="item"><div ><img src=' + imgsrc + ' onerror="this.src=\'../../images/bed_small.jpg\'" style="width: 100px;height: 65px;"></div><div class="text"><div class="information"><h4>' + entity.CategoryName + '</h4><h5 style="margin-top: 8px;">' + HasPickUp + '</h5><h5 class="mui-ellipsis" style="margin-top: 8px;">' + entity.ShortDescription + '</h5></div><div class="price"><span class="new-price">￥' + entity.Price + '/月</span><div id="" style="display: flex;align-items: center;margin-top: 5px;"><img src="../../images/heart@2x.png" style="width: 15px;height: 15px;" /><h5 style="margin-left: 5px;">' + entity.CollectCounts + '人关注</h5></div></div></div></div>';
 
 				}
 

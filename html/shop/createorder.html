@@ -217,15 +217,16 @@
 					mui.back();
 				});
 				document.getElementById('notice').addEventListener('tap', function() {
-					//					var task = plus.webview.getWebviewById('product_details.html');
-					//					mui.fire(task, 'CreateOrder');
-					//					plus.webview.getWebviewById('createorder.html').close();
+										var task = plus.webview.getWebviewById('product_details.html');
+										mui.fire(task, 'CreateOrder');
+										
 					var main = plus.webview.getWebviewById('main.html');
 					mui.fire(main, 'CreateOrder', {});
 					var task = plus.webview.getWebviewById('html/member/shop_order_list.html');
 					mui.fire(task, 'listRefresh0');
 					toMain();
-					mui.back();
+//					mui.back();
+					plus.webview.getWebviewById('createorder.html').close();
 				});
 			}
 

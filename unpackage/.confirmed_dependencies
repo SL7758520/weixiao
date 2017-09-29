@@ -22,7 +22,9 @@
       "js/dao.js",
       "js/post.js",
       "fonts/mui.ttf",
-      "html/member/shop_order_list.html"
+      "html/member/shop_order_list.html",
+      "fonts/mui-icons-extra.ttf",
+      "css/icons-extra.css"
     ]
   },
   "html/account/login.html": {
@@ -143,7 +145,8 @@
       "js/mui.lazyload.js",
       "js/mui.lazyload.img.js",
       "fonts/mui.ttf",
-      "js/member.js"
+      "js/member.js",
+      "images/bed.jpg"
     ],
     "refer": [
       "html/shop/product.html",

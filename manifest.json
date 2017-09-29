@@ -249,7 +249,9 @@
 					"js/localDatabase.js",
 					"js/dao.js",
 					"js/post.js",
-					"html/member/shop_order_list.html"
+					"html/member/shop_order_list.html",
+					"fonts/mui-icons-extra.ttf",
+					"css/icons-extra.css"
 				],
 				"refer": [
 					"setting.html",
@@ -430,7 +432,8 @@
 					"js/mui.lazyload.js",
 					"js/mui.lazyload.img.js",
 					"fonts/mui.ttf",
-					"js/member.js"
+					"js/member.js",
+					"images/bed.jpg"
 				],
 				"refer": [
 					"html/shop/product.html",

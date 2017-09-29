@@ -17,25 +17,23 @@
 		<style type="text/css">
 			html,
 			body {
-				background-color: #efeff4;
+				background-color: #F3F3F3;
 			}
 			
 			img {
 				width: 100%;
 				height: 100%;
 			}
-			
-			/*.shoplist {
-				position: fixed;
-				left: 0;
-				top: 294px;
-				right: 0;
-				bottom: 1px;
-				overflow-y: auto;
-			}*/
+			.mui-table-view {
+				background-color: #F3F3F3;
+			}
 			
 			.img:first-of-type {
 				padding-top: 0;
+			}
+			.mui-card{
+				background-color: #FFFFFF;
+				margin-top: 15px;
 			}
 			
 			.img {
@@ -56,7 +54,7 @@
 				width: 70%;
 				padding: 5px 10px;
 				color: #A4A4A4;
-				font-size: 13px;
+				font-size: 16px;
 				line-height: 20px;
 				/*border-bottom: 1px solid #EDEDED;*/
 				margin-left: 0px;
@@ -64,7 +62,7 @@
 			
 			.detail:first-line {
 				color: #000000;
-				font-size: 16px;
+				font-size: 18px;
 			}
 			
 			.price {
@@ -105,6 +103,13 @@
 				color: #999;
 				z-index: 9999;
 			}
+			.shop_text{
+				color: #8f8f94;
+				padding-left: 10px;
+				padding-right: 10px;
+				font-size: 14px;
+			}
+
 		</style>
 	</head>
 
@@ -120,37 +125,37 @@
 					<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
 					<div class="mui-slider-item mui-slider-item-duplicate">
 						<a href="#">
-							<img src="images/yuantiao.jpg" id="img0">
+							<img src="" onerror="this.src='images/bed.jpg'" id="img0">
 						</a>
 					</div>
 					<!-- 第一张 -->
 					<div class="mui-slider-item">
 						<a href="#">
-							<img src="images/shuijiao.jpg" id="img1">
+							<img src="" onerror="this.src='images/bed.jpg'" id="img1">
 						</a>
 					</div>
 					<!-- 第二张 -->
 					<div class="mui-slider-item">
 						<a href="#">
-							<img src="images/muwu.jpg" id="img2">
+							<img src="" onerror="this.src='images/bed.jpg'" id="img2">
 						</a>
 					</div>
 					<!-- 第三张 -->
 					<div class="mui-slider-item">
 						<a href="#">
-							<img src="images/cbd.jpg" id="img3">
+							<img src="" onerror="this.src='images/bed.jpg'" id="img3">
 						</a>
 					</div>
 					<!-- 第四张 -->
 					<div class="mui-slider-item">
 						<a href="#">
-							<img src="images/yuantiao.jpg" id="img4">
+							<img src="" onerror="this.src='images/bed.jpg'" id="img4">
 						</a>
 					</div>
 					<!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播)-->
 					<div class="mui-slider-item mui-slider-item-duplicate">
 						<a href="#">
-							<img src="images/shuijiao.jpg" id="img5">
+							<img src="" onerror="this.src='images/bed.jpg'" id="img5">
 						</a>
 					</div>
 				</div>
@@ -167,7 +172,6 @@
 					<button id="search" type="button" style="margin-left:10px; margin-bottom: 15px;">搜索</button>
 				</div>-->
 
-
 		</div>
 		<div id="pullrefresh" class="mui-scroll shoplist">
 			<ul id="shopList" class="mui-table-view">
@@ -183,7 +187,7 @@
 	<script>
 		var _dataAccess = new DataAccess();
 		var _shop = new Shop();
-		var _member =new Member();
+		var _member = new Member();
 		var user;
 		var shopId;
 		var shopName;
@@ -200,6 +204,7 @@
 				plusReady();
 			}, false);
 		}
+		mui.init();
 
 		function plusReady() {
 			_self = plus.webview.currentWebview();
@@ -210,10 +215,6 @@
 				style: 'circle',
 				offset: '44px'
 			}, pulldownRefresh);
-
-			plus.key.addEventListener("backbutton", function() {
-				_self.close("auto");
-			}, false);
 		}
 
 		/**
@@ -226,9 +227,6 @@
 			}, 1500);
 		}
 
-		mui.back = function() {
-			_self.close("auto");
-		}
 		mui.plusReady(function() {
 			//获得slider插件对象
 			var gallery = mui('.mui-slider');
@@ -245,17 +243,29 @@
 			if(shopName != '') {
 				document.getElementById('title').innerHTML = shopName;
 			}
-			_member.GetShopCollect(pageIndex, pageSize,function(datas){
-				if(datas.status == 1){
-					_dataAccess.setShopCollect(datas.result);
+			
+			_shop.GetHotProducts(cityId,1,4,function(datas){
+				if(datas.status ==1){
+					for(var i=0;i<4;i++){
+						document.getElementById("img"+(i+1)).src=datas.result[i].PhotoUrl;
+					}
+					document.getElementById("img0").src=datas.result[3].PhotoUrl;
+					document.getElementById("img5").src=datas.result[0].PhotoUrl;
 				}else{
 					mui.toast(datas.message);
 				}
 			});
-			_member.GetShopProductCollect(pageIndex, pageSize,function(datas){
-				if(datas.status == 1){
+			_member.GetShopCollect(pageIndex, pageSize, function(datas) {
+				if(datas.status == 1) {
+					_dataAccess.setShopCollect(datas.result);
+				} else {
+					mui.toast(datas.message);
+				}
+			});
+			_member.GetShopProductCollect(pageIndex, pageSize, function(datas) {
+				if(datas.status == 1) {
 					_dataAccess.setShopProductCollect(datas.result);
-				}else{
+				} else {
 					mui.toast(datas.message);
 				}
 			});
@@ -307,14 +317,12 @@
 				description = entity.ShortDescription;
 			}
 			var imgsrc;
-			if(entity.PhotoUrl == null){
-				imgsrc="images/shop.jpg";
-			}else{
-				imgsrc=photoUrl + entity.PhotoUrl;
-			}
+
+				imgsrc = photoUrl + entity.PhotoUrl;
+			
 			//			console.log(globals.apiUrl + entity.PhotoUrl); 
 			//			li.innerHTML = '<div class="mui-card-header mui-card-media" style="height:40vw;background-image:url(' + entity.PhotoUrl + ')"></div><div class="mui-card-content"><div class="mui-card-content-inner"><p>' + entity.Name + '</p><p style="color: #333;">' + description + '</p></div></div><div class="mui-card-footer"><a class="mui-card-link">类型:' + entity.TypeName + '</a><a class="mui-card-link">详细..</a></div>';
-			li.innerHTML = '<dd class="img"><img src=' + imgsrc + '></dd><div class="content"><dd class="detail">' + entity.Name + '<div class=" mui-ellipsis-3">' + description + '<br>地址：' + entity.Address + '</div></dd><dd class="price"><span class="newPrice">￥' + entity.BottomPrice + '/月起</span></dd></div>';
+			li.innerHTML = '<dd class="img"><img src=' + imgsrc + ' onerror="this.src=\'images/shop.jpg\'"></dd><div class="content"><dd class="detail">' + entity.Name + '</dd><dd class="price"><span class="newPrice">￥' + entity.BottomPrice + '/月起</span></dd></div><div class="shop_text">' + description + '<br>地址：' + entity.Address + '</div>';
 			li.addEventListener("tap", function(event) {
 				//				console.log("AAAAAAAAAAA"); 
 				gotoHtml("html/shop/product.html", entity.Id, photoUrl);

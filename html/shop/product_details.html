@@ -18,6 +18,7 @@
 			.position-bone img,
 			.position-c img {
 				width: 100%;
+				height: 220px;
 				display: block;
 			}
 			
@@ -40,44 +41,36 @@
 			}
 			
 			.gray-lable {
-				background-image: -webkit-linear-gradient(top, rgba(59, 59, 59, .6), rgba(27, 27, 27, .6), rgba(50, 50, 50, .4), rgba(31, 31, 31, .4));
-				position: absolute;
-				left: 0;
-				bottom: 0;
+				background-color: #FFFFFF;
 				width: 100%;
 				height: 50px;
-				padding-left: 5px;
-				display: block;
-				-webkit-box-sizing: border-box;
-				box-sizing: border-box;
+				padding-left: 12px;
+				border-bottom: 1px solid #EDEDED;
 			}
 			
 			.gray-img {
 				background-image: -webkit-linear-gradient(top, rgba(59, 59, 59, .6), rgba(27, 27, 27, .6), rgba(50, 50, 50, .4), rgba(31, 31, 31, .4));
 				position: absolute;
-				top: 48px;
-				right: 20px;
-				width: 20px;
-				height: 20px;
-				display: block;
-				-webkit-box-sizing: border-box;
-				box-sizing: border-box;
+				color: #FFFFFF;
+				padding-top: 2px;
+				font-size: 16px;
+				bottom:20px ;
+				right: 0px;
+				width: 60px;
+				height: 25px;
+				border-radius: 50px 0px 0px 50px;
 				text-align: center;
 			}
 			
 			.first-line,
 			.vicetitle {
+				color: #6a6a6a;
 				height: 25px;
 				line-height: 30px;
 			}
 			
 			.vicetitle {
 				font-size: 13px;
-			}
-			
-			.first-line .bigtitle,
-			.vicetitle {
-				color: #ffffff;
 			}
 			
 			.first-line .prices {
@@ -204,22 +197,20 @@
 		<div class="mui-content" style="padding-bottom: 51px;">
 			<div class="position-a">
 				<div id="image" class="position-atop">
-					<img id="shop_img" src="../../images/bed.jpg" alt="">
+					<img id="shop_img" src="" alt="" onerror="this.src='../../images/bed.jpg'">
 					<div class="gray-img">
-						6
-					</div>
-					<div class="gray-lable ">
-						<div class="first-line">
-							<span id="title" class="bigtitle">三峡长海游轮5日游</span>
-							<span class="prices" id="BottomPrice">1668起</span>
-						</div>
-						<div class="vicetitle" id="DistanceDesc">单船票，宜昌登船，含宜昌码头接站</div>
+						共6张
 					</div>
 				</div>
 			</div>
-			<!--静态图片-->
-			<!--<img id="img1" src="../../images/cbd.jpg" />-->
-			<div class="fg_title">
+			<div class="gray-lable ">
+				<div class="first-line">
+					<span id="title" class="bigtitle">三峡长海游轮5日游</span>
+					<span class="prices" id="BottomPrice">1668起</span>
+				</div>
+				<div class="vicetitle" id="DistanceDesc">单船票，宜昌登船，含宜昌码头接站</div>
+			</div>
+			<div class="fg_title" style="margin-top: 1px;">
 				基本信息
 			</div>
 			<div class="form_info" style="background-color: #FFFFFF;margin-top: -2px;">
@@ -419,7 +410,7 @@
 			window.addEventListener("CreateOrder", function(e) {
 				console.log('product_details.html');
 				var task = plus.webview.getWebviewById('html/shop/product.html');
-				mui.fire(task, 'CreateOrder',{});
+				mui.fire(task, 'CreateOrder', {});
 				plus.webview.getWebviewById('product_details.html').close();
 			})
 		</script>
