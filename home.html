@@ -9,6 +9,7 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<link href="css/mui.min.css" rel="stylesheet" />
 		<link href="css/appfont.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../css/icons-extra.css" />
 		<link href="css/main.css" rel="stylesheet" />
 		<script src="js/post.js"></script>
 		<script src="js/localDatabase.js"></script>
@@ -63,6 +64,9 @@
 			
 			.time_btn:active {
 				background-color: #4cd964!important;
+			}
+			.mui-table-view {
+				margin: 10px 0px 10px 0px;
 			}
 		</style>
 	</head>
@@ -121,19 +125,48 @@
 					<div class="mui-indicator"></div>
 				</div>
 			</div>
-			<div id="slider" class="mui-segmented-control mui-segmented-control-inverted">
-				<div id="sliderSegmentedControl" class="mui-segmented-control mui-segmented-control-inverted">
-					<a class="mui-control-item" href="#item1mobile">新闻</a>
-				</div>
-				<!--<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-6"></div>-->
-				<div class="mui-slider-group">
-					<div id="item1mobile" class="mui-slider-item mui-control-content">
-						<div id="scroll1">
-							<ul id='ulNews' class="mui-table-view"></ul>
+
+			<ul class="mui-table-view mui-grid-view mui-grid-9">
+		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
+		                    <span class="mui-icon mui-icon-contact"></span>
+		                    <div class="mui-media-body">养老服务</div></a></li>
+		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
+		                    <span class="mui-icon mui-icon-paperclip"></span>
+		                    <div class="mui-media-body">健康护理</div></a></li>
+		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
+		                    <span class="mui-icon mui-icon-home"></span>
+		                    <div class="mui-media-body">家庭保洁</div></a></li>
+		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
+		                    <span class="mui-icon mui-icon-paperclip"></span>
+		                    <div class="mui-media-body">保姆</div></a></li>
+		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
+		                    <span class="mui-icon mui-icon-starhalf"></span>
+		                    <div class="mui-media-body">钟点工</div></a></li>
+		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
+		                    <span class="mui-icon mui-icon-settings"><span class="mui-badge">12</span></span>
+		                    <div class="mui-media-body">更多...</div></a></li>
+		        </ul>
+
+			<ul class="mui-table-view" id="ul_Artiles">
+				<li class="mui-table-view-cell mui-media">
+					<a href="javascript:;">
+						<img class="mui-media-object mui-pull-right" src="../images/yuantiao.jpg">
+						<div class="mui-media-body">
+							Article消息标题i
+							<p class='mui-ellipsis'>Title静静的看这个世界，最后终于疯了</p>
 						</div>
-					</div>
-				</div>
-			</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media">
+					<a href="javascript:;">
+						<img class="mui-media-object mui-pull-right" src="../images/shuijiao.jpg">
+						<div class="mui-media-body">
+							Article消息标题m
+							<p class='mui-ellipsis'>Title能和心爱的人一起睡觉，是件幸福的事情；可是，打呼噜怎么办？</p>
+						</div>
+					</a>
+				</li>
+			</ul>
 		</div>
 	</body>
 	<script src="js/mui.min.js"></script>
@@ -141,12 +174,15 @@
 	<script src="js/localDatabase.js"></script>
 	<script src="js/dao.js"></script>
 	<script src="js/apphome.js"></script>
+	<script src="js/article.js"></script>
 	<script>
 		var _dataAccess = new DataAccess();
 		var _appHome = new AppHome();
+		var _article = new Article();
 		var user;
 		var shopId;
 		var shopName;
+		var photoUrl;
 		mui.init();
 		window.addEventListener("getCity", function(e) {
 			var datas = e.detail.data;
@@ -168,9 +204,46 @@
 			document.getElementById("position").addEventListener("tap", function(event) {
 				openWindow("city.html", "html/apphome/city.html");
 			});
-
+			_article.getPhotoUrl(function(datas) {
+				photoUrl = datas;
+			});
+			showArtiles();
 		});
+		
+		function showArtiles() {
+			var user = _dataAccess.getUser();
+			setTimeout(function() {
+				var result = {};
+				
+				_article.GetTopList(0,5, function(result) {
+					if(result) {
+						document.getElementById('ul_Artiles').innerHTML = '';
+						console.log(JSON.stringify(result));
+						
+						for(var i = 0; i < datas.result.length; i++) {
 
+							//var card = createCard(index, datas.result[i]);
+							var liArticle = document.createElement("li");
+							liArticle.className = "mui-table-view-cell mui-media";
+							
+							liArticle.innerHTML = '<a href="javascript:;">';
+							liArticle.innerHTML += '<img class="mui-media-object mui-pull-right" src="'+photoUrl+datas.result[i].ImgUrl+'">';
+								liArticle.innerHTML += '<div class="mui-media-body">';
+									liArticle.innerHTML += '<p class="mui-ellipsis">'+datas.result[i].Title+'</p>';
+								liArticle.innerHTML += '</div>';
+							iArticle.innerHTML += '</a>';
+						
+					
+							document.getElementById('ul_Artiles').appendChild(iArticle);
+						}
+							
+						
+							
+					}
+				});
+				
+			}, 1000);
+		}
 		function openWindow(id, href) {
 			mui.openWindow({
 				url: href,
@@ -196,6 +269,25 @@
 				},
 				extras: {
 					data: targetUrl
+				}
+			});
+		}
+		
+		function gotoHtml(u, datas) {
+			mui.openWindow({
+				url: u,
+				id: u,
+
+				show: {
+					aniShow: 'pop-in'
+				},
+				waiting: {
+					autoShow: true, //自动显示等待框，默认为true
+					title: '正在加载...', //等待对话框上显示的提示内容
+				},
+				extras: {
+					data: datas,
+					pageId:'html/member/shop_order_list.html'
 				}
 			});
 		}

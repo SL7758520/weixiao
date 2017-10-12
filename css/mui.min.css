@@ -1782,11 +1782,11 @@ transform:rotate(360deg)
 	height: 0
 }
 .mui-grid-view.mui-grid-9 .mui-media {
-	color: #797979
+	color: #797979;padding:5px; background-color:#fff;border:0px;
 }
 .mui-grid-view.mui-grid-9 .mui-media .mui-icon {
-	font-size: 2.4em;
-	position: relative
+	font-size: 1.8em;
+	position: relative;
 }
 .mui-slider-cell {
 	position: relative

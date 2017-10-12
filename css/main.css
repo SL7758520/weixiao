@@ -248,50 +248,6 @@ left: 0px;
 	border-top: 1px solid #FFFFFF;
 	content: ''
 }
-.mui-grid-view.mui-grid-9 {
-	border: none;
-	background-color:#fff;
-}
-.mui-grid-view.mui-grid-9 .no_border {
-	border: none;
-}
-.mui-grid-view.mui-grid-9 .mui-table-view-cell {
-padding: 3px 5px;
-
-}
-.mui-grid-view.mui-grid-9 .no_border.mui-active {
-	background-color:transparent;
-}
-.mui-grid-view.mui-grid-9 .mui-media.no_border .mui-icon {
-	width: 65px;
-	height: 65px;
-	line-height: 65px;
-	font-size: 2.4em;
-}
-.mui-grid-view.mui-grid-9 .mui-media .mui-icon {
-	font-size: 2.2em;
-	position: relative;
-	color: #fff;
-	width: 50px;
-	height: 50px;
-	line-height: 50px;
-	-webkit-border-radius:50%;
-	        border-radius:50%;
-	-webkit-transition: all .6s ease;
-            transition: all .6s ease;
-}
-.mui-grid-view.mui-grid-9 .mui-media .mui-icon:active,.mui-grid-view.mui-grid-9 .mui-table-view-cell:active .mui-icon {
-	font-size: 2.6em;
-	-webkit-transform:rotate(360deg) scale(0.9);
-	        transform:rotate(360deg) scale(0.9);
-}
-.mui-table-view.mui-grid-view .mui-table-view-cell .mui-media-body {
-	font-size: .6em;
-	line-height: 17px;
-}
-.mui-table-view.mui-grid-view .mui-table-view-cell:active .mui-media-body {
-	color: #e63e04;
-}
 .color_ch{background-color: #ff6634}/*橙色*/
 .color_qi{background-color: #1ac1b3}/*青色*/
 .color_dqi{background-color: #51c690}/*淡青色*/
@@ -317,9 +273,9 @@ padding: 3px 5px;
 }
 .sms_media{
 	float: left;
-	line-height: 65px;
+	line-height: 50px;
 	width: 65px;
-	height: 65px;
+	height: 50px;
 	font-size: 50px;
 	text-align: center;
 	color: #fff;
