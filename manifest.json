@@ -458,7 +458,13 @@
 				"resources": [
 					"fonts/mui.ttf",
 					"css/mui.min.css",
-					"js/mui.min.js"
+					"js/mui.min.js",
+					"images/cbd.jpg",
+					"images/muwu.jpg",
+					"images/yuantiao.jpg",
+					"css/main.css",
+					"css/appfont.css",
+					"images/shuijiao.jpg"
 				],
 				"refer": [],
 				"priority": 0
@@ -511,7 +517,8 @@
 					"js/dao.js",
 					"js/post.js",
 					"js/apphome.js",
-					"fonts/icomoon.ttf"
+					"fonts/icomoon.ttf",
+					"js/article.js"
 				],
 				"refer": [],
 				"priority": 0
