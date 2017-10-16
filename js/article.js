@@ -1,6 +1,7 @@
 var Article = (function() {
 	var _db = new LocalDatabase();
 	var API_ARTICLE = globals.apiUrl + 'Article/';
+	var API_PHOTO = globals.apiUrl + 'AppHome/';
 
 
 	function _getNetwork() {
@@ -19,7 +20,7 @@ var Article = (function() {
 				return;
 			}
 			var user = _db.getUser();
-			AsyncPost(API_SHOP+"GetTopList", "shopId=" + shopId + "&topSize=" +topSize,
+			AsyncPost(API_ARTICLE+"GetTopList", "shopId=" + shopId + "&topSize=" +topSize,
 				function(result) {
 					if(callback) {
 						console.log('接口返回数据：' + JSON.stringify(result));

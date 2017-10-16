@@ -299,6 +299,8 @@
 								var user = datas.result;
 								_dataAccess.setUser(user);
 								toMain();
+							}else{
+								mui.toast(datas.message);
 							}
 						});
 					});
