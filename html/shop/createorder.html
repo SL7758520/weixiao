@@ -71,7 +71,7 @@
 			</div>
 			<div style="border-top: 1px solid #e8e8e8;"></div>
 			<div id="addPeople" style="text-align: center;padding: 5px;color: #F4900F;font-size: 18px;">
-				<a id="icon-plus" style="color: #F4900F;"><span class="mui-icon mui-icon-plus"></span></a> 添加人数
+				<a id="icon-plus" style="color: #F4900F;"><span class="mui-icon mui-icon-plus"></span></a> 添加联系人
 			</div>
 			<div class="line_box"></div>
 			<div class="mui-form">
@@ -159,7 +159,16 @@
 					});
 				});
 				document.getElementById("addPeople").addEventListener("tap",function(event){
-					
+					mui.openWindow({
+						id: 'select_people.html',
+						url: 'select_people.html',
+						show: {
+							aniShow: 'pop-in'
+						},
+						waiting: {
+							autoShow: false
+						}
+					});
 				});
 				document.getElementById('confirm').addEventListener('tap', function() {
 					var quantitynum = mui('#quantity').numbox().getValue();

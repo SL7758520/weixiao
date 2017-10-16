@@ -6,18 +6,57 @@
 		<title></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/appfont.css" rel="stylesheet" />
 		<link href="../../css/main.css" rel="stylesheet" />
 	</head>
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
-		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <a id="back" href="#offCanvasSide" class="mui-icon icon_app_02 mui-action-menu mui-icon-left-nav mui-pull-left"></a>
 		    <h1 class="mui-title">选择用户</h1>
 		    <button id="confirmSelected" type="button" class="mui-btn mui-btn-link mui-pull-right color_white">确定</button>
 		</header>
+		<ul class="mui-table-view" id='ulcontact' style="margin-top: 44px;"></ul>
 		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/post.js"></script>
+		<script src="../../js/localDatabase.js"></script>
+		<script src="../../js/dao.js"></script>
+		<script src="../../js/linkman.js"></script>
 		<script type="text/javascript">
-			mui.init()
+			mui.init();
+			var linkman = new LinkMan();
+			mui.plusReady(function() {
+				initdatas();
+			});
+
+			function initdatas() {
+				linkman.GetList(function(result) {
+					if(result) {
+						addList(result);
+					}
+				});
+			}
+			var addList = function(datas) {
+				var div = document.getElementById('ulcontact');
+				for(var i = 0; i < datas.length; i++) {
+					var card = createCard(datas[i]);
+					div.appendChild(card);
+				}
+			}
+			var createCard = function(entity) {
+				console.log(JSON.stringify(entity));
+				var card = document.createElement("li");
+				card.className = "mui-table-view-cell tableli";
+//				card.setAttribute('id', entity.Id);
+//				card.setAttribute("data-value", entity.Id);
+//				var status = '已完成订单';
+//				card.innerHTML = '<h6 class="font" style="float: left; width: 80%;">' + entity.ShopName + '</h6><h6 class="font" style="float: left; width: 20%;">' + status + '</h6><h6 class="font" style="width: 100%;">' +
+//					entity.ProductName + '</h6><h5 class="font" style="width: 100%;">预约：' + entity.BookedDate + '入住</h5>';
+//				card.addEventListener('tap', function() {
+//					openWindow(9, entity);
+//				}, false);
+				return card;
+			}
 		</script>
 	</body>
 

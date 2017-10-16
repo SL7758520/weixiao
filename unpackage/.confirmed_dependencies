@@ -243,7 +243,8 @@
 			"js/post.js",
 			"js/apphome.js",
 			"fonts/icomoon.ttf",
-			"js/article.js"
+			"js/article.js",
+			"fonts/mui.ttf"
 		],
 		"refer": []
 	},
@@ -327,7 +328,9 @@
 			"js/post.js",
 			"css/main.css"
 		],
-		"refer": []
+		"refer": [
+			"html/shop/select_people.html"
+		]
 	},
 	"html/shop/productpic.html": {
 		"resources": [
@@ -455,7 +458,9 @@
 			"js/mui.min.js",
 			"css/mui.min.css",
 			"js/member.js",
-			"js/dao.js"
+			"js/dao.js",
+			"js/localDatabase.js",
+			"js/post.js"
 		],
 		"refer": [
 			"html/member/shop_order_detail.html",
@@ -464,8 +469,19 @@
 	},
 	"html/member/shop_order_detail_info.html": {
 		"resources": [
-			"css/mui.min.css"
+			"css/mui.min.css",
+			"js/shop.js"
 		],
 		"refer": []
+	},
+	"html/shop/select_people.html": {
+		"resources": [
+			"css/mui.min.css",
+			"js/linkman.js",
+			"js/localDatabase.js",
+			"js/mui.min.js",
+			"js/dao.js",
+			"js/post.js"
+		]
 	}
 }
