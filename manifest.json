@@ -458,7 +458,13 @@
 				"resources": [
 					"fonts/mui.ttf",
 					"css/mui.min.css",
-					"js/mui.min.js"
+					"js/mui.min.js",
+					"images/cbd.jpg",
+					"images/muwu.jpg",
+					"images/yuantiao.jpg",
+					"css/main.css",
+					"css/appfont.css",
+					"images/shuijiao.jpg"
 				],
 				"refer": [],
 				"priority": 0

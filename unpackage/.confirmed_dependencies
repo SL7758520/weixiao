@@ -157,7 +157,13 @@
 		"resources": [
 			"fonts/mui.ttf",
 			"css/mui.min.css",
-			"js/mui.min.js"
+			"js/mui.min.js",
+			"images/cbd.jpg",
+			"images/muwu.jpg",
+			"images/yuantiao.jpg",
+			"css/main.css",
+			"css/appfont.css",
+			"images/shuijiao.jpg"
 		],
 		"refer": []
 	},
@@ -440,11 +446,7 @@
 			"images/weixinpay.png",
 			"css/mui.min.css",
 			"images/zhifubao.png",
-			"js/mui.min.js",
-			"js/localDatabase.js",
-			"js/dao.js",
-			"js/shop.js",
-			"js/post.js"
+			"js/mui.min.js"
 		],
 		"refer": []
 	},
@@ -453,9 +455,7 @@
 			"js/mui.min.js",
 			"css/mui.min.css",
 			"js/member.js",
-			"js/dao.js",
-			"js/localDatabase.js",
-			"js/post.js"
+			"js/dao.js"
 		],
 		"refer": [
 			"html/member/shop_order_detail.html",

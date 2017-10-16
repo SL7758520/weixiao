@@ -7,9 +7,9 @@
 		<title></title>
 
 		<link href="../../css/mui.min.css" rel="stylesheet" />
-		<link href="css/appfont.css" rel="stylesheet" />
+		<link href="../../css/appfont.css" rel="stylesheet" />
 		<link href="../../css/main.css" rel="stylesheet" />
-		<link href="css/chart.css" rel="stylesheet" />
+		<link href="../../css/chart.css" rel="stylesheet" />
 		<link rel="stylesheet" type="text/css" href="../../css/mui.picker.min.css" />
 
 	</head>
@@ -25,6 +25,10 @@
 				width: 100%;
 				margin-bottom: 10px;
 				padding: 15px 0
+			}
+			
+			.mui-form {
+				color: #636363;
 			}
 		</style>
 		<div class="windows_bg" id="dialog" style="display: none;">
@@ -65,31 +69,25 @@
 					<dd><input id="phone" type="text" class="input_sys2" placeholder="请填写联系人电话"></dd>
 				</div>
 			</div>
-			<div class="line_box" style="border-top: 1px solid #e8e8e8;"></div>
-			<div class="form_info">
-				<div><label style="width: 100px;">入住时长(月)</label>
-					<div class="mui-numbox" style="margin-left: 100px;" data-numbox-min='0' id="quantity">
-						<!-- "-"按钮，点击可减小当前数值 -->
-						<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
-						<input class="mui-numbox-input" type="number" />
-						<!-- "+"按钮，点击可增大当前数值 -->
-						<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
-					</div>
-					<!--<dd><input id="quantity" type="number" class="input_sys1" placeholder="未填写"></dd>-->
-				</div>
-				<div><label style="width: 100px;">入住人数</label>
-					<!--<dd><input id="peopleAmount" type="number" class="input_sys1" placeholder="未填写"></dd>-->
-					<div class="mui-numbox" style="margin-left: 100px;" data-numbox-min='0' id="peopleAmount">
-						<!-- "-"按钮，点击可减小当前数值 -->
-						<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
-						<input class="mui-numbox-input" type="number" />
-						<!-- "+"按钮，点击可增大当前数值 -->
-						<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
-					</div>
-				</div>
+			<div style="border-top: 1px solid #e8e8e8;"></div>
+			<div id="addPeople" style="text-align: center;padding: 5px;color: #F4900F;font-size: 18px;">
+				<a id="icon-plus" style="color: #F4900F;"><span class="mui-icon mui-icon-plus"></span></a> 添加人数
 			</div>
 			<div class="line_box"></div>
 			<div class="mui-form">
+				<div class="form_info">
+					<div><label style="width: 100px;">入住时长(月)</label>
+						<div class="mui-numbox" style="margin-left: 100px;" data-numbox-min='0' id="quantity">
+							<!-- "-"按钮，点击可减小当前数值 -->
+							<button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+							<input class="mui-numbox-input" type="number" />
+							<!-- "+"按钮，点击可增大当前数值 -->
+							<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+						</div>
+						<!--<dd><input id="quantity" type="number" class="input_sys1" placeholder="未填写"></dd>-->
+					</div>
+				</div>
+				<div style="border-top: 1px solid #e8e8e8;"></div>
 				<ul>
 					<li id="dtPicker">
 						<a href="#">预约时间<span id="txtOccurTime">选择</span></a>
@@ -160,6 +158,9 @@
 						picker.dispose();
 					});
 				});
+				document.getElementById("addPeople").addEventListener("tap",function(event){
+					
+				});
 				document.getElementById('confirm').addEventListener('tap', function() {
 					var quantitynum = mui('#quantity').numbox().getValue();
 					var peopleAmountnum = mui('#peopleAmount').numbox().getValue();
@@ -217,15 +218,15 @@
 					mui.back();
 				});
 				document.getElementById('notice').addEventListener('tap', function() {
-										var task = plus.webview.getWebviewById('product_details.html');
-										mui.fire(task, 'CreateOrder');
-										
+					var task = plus.webview.getWebviewById('product_details.html');
+					mui.fire(task, 'CreateOrder');
+
 					var main = plus.webview.getWebviewById('main.html');
 					mui.fire(main, 'CreateOrder', {});
 					var task = plus.webview.getWebviewById('html/member/shop_order_list.html');
 					mui.fire(task, 'listRefresh0');
 					toMain();
-//					mui.back();
+					//					mui.back();
 					plus.webview.getWebviewById('createorder.html').close();
 				});
 			}

@@ -12,7 +12,7 @@ var Article = (function() {
 	}
 
 	var access = function() {
-		//若登录后的member.ShopId为空->获取当前城市店铺列表
+		//获取新闻列表
 		this.GetTopList = function(shopId,topSize,callback) {
 			if(!_getNetwork()) {
 				mui.toast("没有网络连接，请稍后再试！");
