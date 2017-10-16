@@ -680,7 +680,8 @@
 					"js/localDatabase.js",
 					"js/dao.js",
 					"js/shop.js",
-					"js/post.js"
+					"js/post.js",
+					"css/main.css"
 				],
 				"refer": [],
 				"priority": 0

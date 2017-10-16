@@ -65,6 +65,7 @@
 			.time_btn:active {
 				background-color: #4cd964!important;
 			}
+			
 			.mui-table-view {
 				margin: 10px 0px 10px 0px;
 			}
@@ -127,25 +128,43 @@
 			</div>
 
 			<ul class="mui-table-view mui-grid-view mui-grid-9">
-		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
-		                    <span class="mui-icon mui-icon-contact"></span>
-		                    <div class="mui-media-body">养老服务</div></a></li>
-		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
-		                    <span class="mui-icon mui-icon-paperclip"></span>
-		                    <div class="mui-media-body">健康护理</div></a></li>
-		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
-		                    <span class="mui-icon mui-icon-home"></span>
-		                    <div class="mui-media-body">家庭保洁</div></a></li>
-		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
-		                    <span class="mui-icon mui-icon-paperclip"></span>
-		                    <div class="mui-media-body">保姆</div></a></li>
-		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
-		                    <span class="mui-icon mui-icon-starhalf"></span>
-		                    <div class="mui-media-body">钟点工</div></a></li>
-		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
-		                    <span class="mui-icon mui-icon-settings"><span class="mui-badge">12</span></span>
-		                    <div class="mui-media-body">更多...</div></a></li>
-		        </ul>
+				<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+					<a href="#">
+						<span class="mui-icon mui-icon-contact"></span>
+						<div class="mui-media-body">养老服务</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+					<a href="#">
+						<span class="mui-icon mui-icon-paperclip"></span>
+						<div class="mui-media-body">健康护理</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+					<a href="#">
+						<span class="mui-icon mui-icon-home"></span>
+						<div class="mui-media-body">家庭保洁</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+					<a href="#">
+						<span class="mui-icon mui-icon-paperclip"></span>
+						<div class="mui-media-body">保姆</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+					<a href="#">
+						<span class="mui-icon mui-icon-starhalf"></span>
+						<div class="mui-media-body">钟点工</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+					<a href="#">
+						<span class="mui-icon mui-icon-settings"><span class="mui-badge">12</span></span>
+						<div class="mui-media-body">更多...</div>
+					</a>
+				</li>
+			</ul>
 
 			<ul class="mui-table-view" id="ul_Artiles">
 				<li class="mui-table-view-cell mui-media">
@@ -209,41 +228,39 @@
 			});
 			showArtiles();
 		});
-		
+
 		function showArtiles() {
 			var user = _dataAccess.getUser();
 			setTimeout(function() {
 				var result = {};
-				
-				_article.GetTopList(0,5, function(result) {
-					if(result) {
+
+				_article.GetTopList(0, 5, function(datas) {
+					if(datas) {
 						document.getElementById('ul_Artiles').innerHTML = '';
 						console.log(JSON.stringify(result));
-						
+
 						for(var i = 0; i < datas.result.length; i++) {
 
 							//var card = createCard(index, datas.result[i]);
 							var liArticle = document.createElement("li");
 							liArticle.className = "mui-table-view-cell mui-media";
-							
+
 							liArticle.innerHTML = '<a href="javascript:;">';
-							liArticle.innerHTML += '<img class="mui-media-object mui-pull-right" src="'+photoUrl+datas.result[i].ImgUrl+'">';
-								liArticle.innerHTML += '<div class="mui-media-body">';
-									liArticle.innerHTML += '<p class="mui-ellipsis">'+datas.result[i].Title+'</p>';
-								liArticle.innerHTML += '</div>';
+							liArticle.innerHTML += '<img class="mui-media-object mui-pull-right" src="' + photoUrl + datas.result[i].ImgUrl + '">';
+							liArticle.innerHTML += '<div class="mui-media-body">';
+							liArticle.innerHTML += '<p class="mui-ellipsis">' + datas.result[i].Title + '</p>';
+							liArticle.innerHTML += '</div>';
 							iArticle.innerHTML += '</a>';
-						
-					
+
 							document.getElementById('ul_Artiles').appendChild(iArticle);
 						}
-							
-						
-							
+
 					}
 				});
-				
+
 			}, 1000);
 		}
+
 		function openWindow(id, href) {
 			mui.openWindow({
 				url: href,
@@ -272,7 +289,7 @@
 				}
 			});
 		}
-		
+
 		function gotoHtml(u, datas) {
 			mui.openWindow({
 				url: u,
@@ -287,7 +304,7 @@
 				},
 				extras: {
 					data: datas,
-					pageId:'html/member/shop_order_list.html'
+					pageId: 'html/member/shop_order_list.html'
 				}
 			});
 		}
