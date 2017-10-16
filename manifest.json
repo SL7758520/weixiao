@@ -511,7 +511,8 @@
 					"js/dao.js",
 					"js/post.js",
 					"js/apphome.js",
-					"fonts/icomoon.ttf"
+					"fonts/icomoon.ttf",
+					"js/article.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -789,7 +790,11 @@
 					"images/weixinpay.png",
 					"css/mui.min.css",
 					"images/zhifubao.png",
-					"js/mui.min.js"
+					"js/mui.min.js",
+					"js/localDatabase.js",
+					"js/dao.js",
+					"js/shop.js",
+					"js/post.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -799,7 +804,9 @@
 					"js/mui.min.js",
 					"css/mui.min.css",
 					"js/member.js",
-					"js/dao.js"
+					"js/dao.js",
+					"js/localDatabase.js",
+					"js/post.js"
 				],
 				"refer": [
 					"html/member/shop_order_detail.html",
