@@ -11,12 +11,69 @@
 	</head>
 
 	<body>
+		<style>
+			.tableli {
+				padding: 15px 15px 15px 15px;
+			}
+			
+			.mui-input-group .mui-input-row:after {
+				left: 0px;
+			}
+			.mui-checkbox.mui-left input[type=checkbox], .mui-radio.mui-left input[type=radio] {
+				left: 5px;
+			}
+			.info{
+				padding-right: 5px !important;
+				padding-left: 43px !important;
+				font-size: 17px;
+			}
+		</style>
 		<header class="mui-bar mui-bar-nav">
-		    <a id="back" href="#offCanvasSide" class="mui-icon icon_app_02 mui-action-menu mui-icon-left-nav mui-pull-left"></a>
-		    <h1 class="mui-title">选择用户</h1>
-		    <button id="confirmSelected" type="button" class="mui-btn mui-btn-link mui-pull-right color_white">确定</button>
+			<a id="back" href="#offCanvasSide" class="mui-icon icon_app_02 mui-action-menu mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">选择联系人
+			<!--<div class="mui-input-row mui-search search_menu">
+					<input type="search" class="mui-input-clear" placeholder="" oninput="Search(event)" onporpertychange="Search(event)" id="SearchKey">
+				</div>-->
+			</h1>
+			<button id="confirmSelected" type="button" class="mui-btn mui-btn-link mui-pull-right color_white">确定</button>
 		</header>
-		<ul class="mui-table-view" id='ulcontact' style="margin-top: 44px;"></ul>
+		<div id="addPeople" style="text-align: center;padding: 5px;color: #4cd964;font-size: 18px;margin-top: 44px;">
+				<a id="icon-plus" style="color: #4cd964;"><span class="mui-icon mui-icon-plus"></span></a> 新增联系人
+		</div>
+		<ul class="mui-table-view">
+			<form class="mui-input-group" id='ulcontact'>
+				<!--<div class="line_box" style="border-top: 1px solid #e8e8e8;"></div>
+				<div class="mui-input-row mui-checkbox mui-left" >
+					<label class="info"><span style="width: 50px">舒亮骡子</span><span style="40px">女</span><span>580************147</span></label>
+					<input name="checkbox" value="Item 1" type="checkbox" checked>
+				</div>
+				<div class="line_box" style="border-top: 1px solid #e8e8e8;"></div>
+				<div class="mui-input-row mui-checkbox mui-left">
+					<label class="info">舒亮骡子&nbsp;&nbsp;&nbsp;&nbsp;女&nbsp;&nbsp;&nbsp;580************147</label>
+					<input name="checkbox" value="Item 2" type="checkbox" checked>
+				</div>
+				<div class="line_box" style="border-top: 1px solid #e8e8e8;"></div>
+				<div class="mui-input-row mui-checkbox mui-left">
+					<label class="info">舒亮骡子&nbsp;&nbsp;&nbsp;&nbsp;女&nbsp;&nbsp;&nbsp;580************147</label>
+					<input name="checkbox" type="checkbox" >
+				</div>
+				<div class="line_box" style="border-top: 1px solid #e8e8e8;"></div>
+				<div class="mui-input-row mui-checkbox mui-left">
+					<label class="info">舒亮骡子&nbsp;&nbsp;&nbsp;&nbsp;女&nbsp;&nbsp;&nbsp;580************147</label>
+					<input name="checkbox" value="Item 1" type="checkbox">
+				</div>
+				<div class="line_box" style="border-top: 1px solid #e8e8e8;"></div>
+				<div class="mui-input-row mui-checkbox mui-left">
+					<label class="info">舒亮骡子&nbsp;&nbsp;&nbsp;&nbsp;女&nbsp;&nbsp;&nbsp;580************147</label>
+					<input name="checkbox" value="Item 2" type="checkbox" checked>
+				</div>
+				<div class="line_box" style="border-top: 1px solid #e8e8e8;"></div>
+				<div class="mui-input-row mui-checkbox mui-left">
+					<label class="info">舒亮骡子&nbsp;&nbsp;&nbsp;&nbsp;女&nbsp;&nbsp;&nbsp;580************147</label>
+					<input name="checkbox" type="checkbox" >
+				</div>-->
+			</form>
+		</ul>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/post.js"></script>
 		<script src="../../js/localDatabase.js"></script>
@@ -43,18 +100,32 @@
 					div.appendChild(card);
 				}
 			}
+			
+			/*<div class="line_box" style="border-top: 1px solid #e8e8e8;"></div>
+				<div class="mui-input-row mui-checkbox mui-left">
+					<label class="info">舒亮骡子&nbsp;&nbsp;&nbsp;&nbsp;女&nbsp;&nbsp;&nbsp;580************147</label>
+					<input name="checkbox" type="checkbox" >
+				</div>*/
+			
 			var createCard = function(entity) {
+				var id = '430525499955468415';
+				var card = document.createElement('div');
+//				var cardId = entity.IDCard.substring(0,3)+'************'+entity.IDCard.substring(15,18);
+				var cardId = id.substring(0,3)+'************'+id.substring(15,18);
 				console.log(JSON.stringify(entity));
-				var card = document.createElement("li");
-				card.className = "mui-table-view-cell tableli";
-//				card.setAttribute('id', entity.Id);
-//				card.setAttribute("data-value", entity.Id);
-//				var status = '已完成订单';
-//				card.innerHTML = '<h6 class="font" style="float: left; width: 80%;">' + entity.ShopName + '</h6><h6 class="font" style="float: left; width: 20%;">' + status + '</h6><h6 class="font" style="width: 100%;">' +
-//					entity.ProductName + '</h6><h5 class="font" style="width: 100%;">预约：' + entity.BookedDate + '入住</h5>';
-//				card.addEventListener('tap', function() {
-//					openWindow(9, entity);
-//				}, false);
+				var html ='<div class="line_box" style="border-top: 1px solid #e8e8e8;"></div><div class="mui-input-row mui-checkbox mui-left"><label class="info">'+entity.Name+'&nbsp;&nbsp;&nbsp;&nbsp;'+entity.Sex+'&nbsp;&nbsp;&nbsp;'+cardId+'</label><input name="checkbox" type="checkbox" ></div>';
+//				var card = document.createElement("li");
+//				card.className = "mui-table-view-cell tableli";
+//				card.innerHTML = '<a class="mui-navigate-right" href="#"><span>' + entity.Name + '</span></a><div class="all_sele2 mui-checkbox"><input name="checkbox1"  type="checkbox" ></div>'
+				//				card.setAttribute('id', entity.Id);
+				//				card.setAttribute("data-value", entity.Id);
+				//				var status = '已完成订单';
+				//				card.innerHTML = '<h6 class="font" style="float: left; width: 80%;">' + entity.ShopName + '</h6><h6 class="font" style="float: left; width: 20%;">' + status + '</h6><h6 class="font" style="width: 100%;">' +
+				//					entity.ProductName + '</h6><h5 class="font" style="width: 100%;">预约：' + entity.BookedDate + '入住</h5>';
+				//				card.addEventListener('tap', function() {
+				//					openWindow(9, entity);
+				//				}, false);
+				card.innerHTML = html;
 				return card;
 			}
 		</script>
