@@ -127,7 +127,7 @@
 				</div>
 			</div>
 
-			<ul class="mui-table-view mui-grid-view mui-grid-9">
+			<ul id="server_list" class="mui-table-view mui-grid-view mui-grid-9">
 				<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
 					<a href="#">
 						<span class="mui-icon mui-icon-contact"></span>
@@ -201,7 +201,8 @@
 		var user;
 		var shopId;
 		var shopName;
-		var photoUrl;
+		var NewphotoUrl;
+		var ServerphotoUrl;
 		mui.init();
 		window.addEventListener("getCity", function(e) {
 			var datas = e.detail.data;
@@ -224,11 +225,35 @@
 				openWindow("city.html", "html/apphome/city.html");
 			});
 			_article.getPhotoUrl(function(datas) {
-				photoUrl = datas;
+				NewphotoUrl = datas;
+			});
+			_appHome.getPhotoUrl(function(datas) {
+				ServerphotoUrl = datas;
 			});
 			showArtiles();
+			showServer();
 		});
 
+		function showServer(){
+			document.getElementById("server_list").innerHTML ='';
+			_appHome.GetProductCategories(5,function(datas){
+				for (var i=0;i<datas.result.length;i++) {
+					document.getElementById("server_list").appendChild(addList(datas.result[i]));
+				}
+			});
+		}
+		
+		function addList(entity){
+			var li=document.createElement("li");
+			li.setAttribute("Id",entity.Id);
+			li.className="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3";
+			li.innerHTML='<a href="#"><span class="mui-icon mui-icon-contact"></span><div class="mui-media-body">'+entity.Name+'</div></a>';
+			li.addEventListener("tap",function(event){
+				
+			});
+			return li;
+		}
+		
 		function showArtiles() {
 			var user = _dataAccess.getUser();
 			setTimeout(function() {

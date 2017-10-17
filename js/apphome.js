@@ -70,6 +70,25 @@ var AppHome = (function() {
 				});
 		};
 		
+		//获取图片路径
+		this.getPhotoUrl = function(callback) {
+			if(!_getNetwork()) {
+				mui.toast("没有网络连接，请稍后再试！");
+				return;
+			}
+			var user = _db.getUser();
+			AsyncPost(API_APPHOME + "GetImageSiteServerUrl",'serverName=Shop',
+				function(result) {
+					if(callback) {
+						console.log('接口返回数据：' + JSON.stringify(result));
+						callback.call(this, result);
+					}
+				},
+				function() {
+					mui.toast('没有网络连接，请稍后再试！');
+				});
+		};
+		
 
 	}
 	return access;
