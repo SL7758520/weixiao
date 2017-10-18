@@ -34,7 +34,7 @@
 			.infospan {}
 		</style>
 		<header class="mui-bar mui-bar-nav">
-			<a id="back" href="#offCanvasSide" class="mui-icon icon_app_02 mui-action-menu mui-icon-left-nav mui-pull-left"></a>
+			<a id="back" href="#offCanvasSide" class="mui-action-back mui-icon icon_app_02 mui-action-menu mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">选择联系人
 			<!--<div class="mui-input-row mui-search search_menu">
 					<input type="search" class="mui-input-clear" placeholder="" oninput="Search(event)" onporpertychange="Search(event)" id="SearchKey">
@@ -42,41 +42,11 @@
 			</h1>
 			<button id="confirmSelected" type="button" class="mui-btn mui-btn-link mui-pull-right color_white">确定</button>
 		</header>
-		<div id="addPeople" style="text-align: center;padding: 5px;color: #4cd964;font-size: 18px;margin-top: 44px;">
+		<div id="addLinkMan" style="text-align: center;padding: 5px;color: #4cd964;font-size: 18px;margin-top: 44px;">
 			<a id="icon-plus" style="color: #4cd964;"><span class="mui-icon mui-icon-plus"></span></a> 新增联系人
 		</div>
 		<ul class="mui-table-view">
 			<form class="mui-input-group" id='ulcontact'>
-				<!--<div class="line_box" style="border-top: 1px solid #e8e8e8;"></div>
-				<div class="mui-input-row mui-checkbox mui-left" >
-					<label class="info"><span style="min-width: 80px !important;display:inline-block ;">舒亮骡子</span><span style="width: 40px">女</span><span>580************147</span></label>
-					<input name="checkbox" value="Item 1" type="checkbox" checked>
-				</div>
-				<div class="line_box" style="border-top: 1px solid #e8e8e8;"></div>
-				<div class="mui-input-row mui-checkbox mui-left">
-					<label class="info">舒亮骡子&nbsp;&nbsp;&nbsp;&nbsp;女&nbsp;&nbsp;&nbsp;580************147</label>
-					<input name="checkbox" value="Item 2" type="checkbox" checked>
-				</div>
-				<div class="line_box" style="border-top: 1px solid #e8e8e8;"></div>
-				<div class="mui-input-row mui-checkbox mui-left">
-					<label class="info">舒亮骡子&nbsp;&nbsp;&nbsp;&nbsp;女&nbsp;&nbsp;&nbsp;580************147</label>
-					<input name="checkbox" type="checkbox" >
-				</div>
-				<div class="line_box" style="border-top: 1px solid #e8e8e8;"></div>
-				<div class="mui-input-row mui-checkbox mui-left">
-					<label class="info">舒亮骡子&nbsp;&nbsp;&nbsp;&nbsp;女&nbsp;&nbsp;&nbsp;580************147</label>
-					<input name="checkbox" value="Item 1" type="checkbox">
-				</div>
-				<div class="line_box" style="border-top: 1px solid #e8e8e8;"></div>
-				<div class="mui-input-row mui-checkbox mui-left">
-					<label class="info">舒亮骡子&nbsp;&nbsp;&nbsp;&nbsp;女&nbsp;&nbsp;&nbsp;580************147</label>
-					<input name="checkbox" value="Item 2" type="checkbox" checked>
-				</div>
-				<div class="line_box" style="border-top: 1px solid #e8e8e8;"></div>
-				<div class="mui-input-row mui-checkbox mui-left">
-					<label class="info">舒亮骡子&nbsp;&nbsp;&nbsp;&nbsp;女&nbsp;&nbsp;&nbsp;580************147</label>
-					<input name="checkbox" type="checkbox" >
-				</div>-->
 			</form>
 		</ul>
 		<script src="../../js/mui.min.js"></script>
@@ -89,19 +59,42 @@
 			var selecteddatas = [];
 			var alldatas = [];
 			var linkman = new LinkMan();
+			var pageId = '';
 			mui.plusReady(function() {
+				var _self = plus.webview.currentWebview();
+				pageId = _self.pageId;
 				initdatas();
-				//				document.getElementById('confirmSelected').addEventListener('tap',function(){
-				//					var checkedbox = document.getElementsByName('checkbox');
-				//				});
+				document.getElementById('confirmSelected').addEventListener('tap',function(){
+						var selectpage = plus.webview.getWebviewById(pageId);
+						mui.fire(selectpage,'hasSelected',{
+							data:selecteddatas
+						});
+						mui.back();
+					});
 				mui('.mui-input-group').on('change', 'input', function() {
 					var Entity = GetEntitybyId(this.getAttribute('value'));
 					if(this.checked) {
 						selecteddatas.push(Entity);
 					} else {
-						selecteddatas.splice(Entity, 1);
+						selecteddatas.splice(GetIndexbyId(this.getAttribute('value'),selecteddatas), 1);
 					}
-					console.log(JSON.stringify(selecteddatas));
+				});
+				document.getElementById('addLinkMan').addEventListener('tap',function(){
+					mui.openWindow({
+						id: '../linkman/create_linkman.html',
+						url: '../linkman/create_linkman.html',
+						show: {
+							aniShow: 'pop-in'
+						},
+						waiting: {
+							autoShow: false
+						},
+					});
+				});
+				window.addEventListener('Create',function(event){
+					alldatas = [];
+					document.getElementById('ulcontact').innerHTML = '';
+					initdatas();
 				});
 			});
 
@@ -121,6 +114,13 @@
 					}
 				}
 			}
+			var GetIndexbyId = function(value,datas) {
+				for(var i = 0; i < datas.length; i++) {
+					if(value == datas[i].Id) {
+						return i;
+					}
+				}
+			}
 
 			var addList = function(datas) {
 				var div = document.getElementById('ulcontact');
@@ -137,12 +137,12 @@
 				</div>*/
 
 			var createCard = function(entity) {
-				var id = '430525499955468415';
+//				var id = '430525499955468415';
 				var card = document.createElement('div');
-				//				var cardId = entity.IDCard.substring(0,3)+'************'+entity.IDCard.substring(15,18);
-				var cardId = id.substring(0, 3) + '************' + id.substring(15, 18);
-				console.log(JSON.stringify(entity));
-				var html = '<div class="line_box" style="border-top: 1px solid #e8e8e8;"></div><div class="mui-input-row mui-checkbox mui-left"><label class="info"><span style="min-width: 80px !important;display:inline-block;">' + entity.Name + '</span><span style="width: 40px;display:inline-block;">' + entity.Sex + '</span>&nbsp;&nbsp;&nbsp;' + cardId + '</label><input name="checkbox" type="checkbox" value="' + entity.Id + '" ></div>';
+				var cardId = entity.IDCard.substring(0,3)+'************'+entity.IDCard.substring(entity.IDCard.length-3,entity.IDCard.length);
+//				var cardId = id.substring(0, 3) + '************' + id.substring(15, 18);
+//				console.log(JSON.stringify(entity));
+				var html = '<div class="line_box" style="border-top: 1px solid #e8e8e8;"></div><div class="mui-input-row mui-checkbox mui-left"><label class="info"><span style="min-width: 80px !important;display:inline-block;">' + entity.Name + '</span><span style="width: 50px;display:inline-block;">' + entity.Sex + '</span>' + cardId + '</label><input name="checkbox" type="checkbox" value="' + entity.Id + '" ></div>';
 				//				var card = document.createElement("li");
 				//				card.className = "mui-table-view-cell tableli";
 				//				card.innerHTML = '<a class="mui-navigate-right" href="#"><span>' + entity.Name + '</span></a><div class="all_sele2 mui-checkbox"><input name="checkbox1"  type="checkbox" ></div>'
@@ -156,6 +156,9 @@
 				//				}, false);
 				card.innerHTML = html;
 				return card;
+			}
+			mui.back = function(){
+				plus.webview.currentWebview().close();
 			}
 		</script>
 	</body>

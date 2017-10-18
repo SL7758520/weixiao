@@ -30,6 +30,10 @@
 			.mui-form {
 				color: #636363;
 			}
+			.divborder{
+				line-height: 40px;
+				border-top: 1px solid #e8e8e8;
+			}
 		</style>
 		<div class="windows_bg" id="dialog" style="display: none;">
 			<!--通用弹窗标准-->
@@ -69,10 +73,21 @@
 					<dd><input id="phone" type="text" class="input_sys2" placeholder="请填写联系人电话"></dd>
 				</div>
 			</div>
+			<div class="mui-form">
+				<ul style="margin-left: 15px;" id="ullinkman">
+					<!--<div class="mui-input-row mui-left divborder" ><div style="display: flex;flex-direction: row;"><span style="min-width: 60px !important;display:inline-block;">测试</span><span style="width: 40px;display:inline-block;">男</span><span style="display:inline-block;">444************333</span><a style="margin-left: 50px;"><i class="mui-icon mui-icon-minus"></i></a></label></div>
+					<div class="mui-input-row mui-left divborder" ><div style="display: flex;flex-direction: row;"><span style="min-width: 60px !important;display:inline-block;">测试</span><span style="width: 40px;display:inline-block;">男</span><span style="display:inline-block;">444************333</span><a style="margin-left: 50px;"><i class="mui-icon mui-icon-minus"></i></a></label></div>
+					<div class="mui-input-row mui-left divborder" ><div style="display: flex;flex-direction: row;"><span style="min-width: 60px !important;display:inline-block;">测试</span><span style="width: 40px;display:inline-block;">男</span><span style="display:inline-block;">444************333</span><a style="margin-left: 50px;"><i class="mui-icon mui-icon-minus"></i></a></label></div>-->
+				</ul>
+			</div>
 			<div style="border-top: 1px solid #e8e8e8;"></div>
 			<div id="addPeople" style="text-align: center;padding: 5px;color: #4cd964;font-size: 18px;">
 				<a id="icon-plus" style="color: #4cd964;"><span class="mui-icon mui-icon-plus"></span></a> 添加联系人
 			</div>
+				<!--<div>
+					<div class="mui-input-row mui-left"><div style="display: flex;flex-direction: row;"><span style="min-width: 60px !important;display:inline-block;">测试</span><span style="width: 40px;display:inline-block;">男</span><span style="width: 150px;display:inline-block;">444************333</span><a><i class="mui-icon mui-icon-minus"></i></a></label></div>
+					<div class="mui-input-row mui-left"><div style="display: flex;flex-direction: row;"><span style="min-width: 60px !important;display:inline-block;">测试</span><span style="width: 40px;display:inline-block;">男</span><span style="width: 150px;display:inline-block;">444************333</span><a><i class="mui-icon mui-icon-minus"></i></a></label></div>
+				</div>-->
 			<div class="line_box"></div>
 			<div class="mui-form">
 				<div class="form_info">
@@ -128,6 +143,7 @@
 			var _self;
 			var bookedDate;
 			var FaultEntity;
+			var linkMains = [];
 			mui.plusReady(function() {
 				_self = plus.webview.currentWebview();
 				productId = _self.data.productId;
@@ -158,6 +174,22 @@
 						picker.dispose();
 					});
 				});
+				window.addEventListener('hasSelected',function(event){
+					var selecteds = event.detail.data;
+					linkMains = selecteds;
+					document.getElementById('ullinkman').innerHTML='';
+					if (selecteds.length==0) {
+						mui.toast('未选择');
+					} else{
+						for (var i=0;i<selecteds.length;i++) {
+							var card = createCard(selecteds[i]);
+							document.getElementById('ullinkman').appendChild(card);
+						}
+					}
+				});
+				
+				
+				
 				document.getElementById("addPeople").addEventListener("tap",function(event){
 					mui.openWindow({
 						id: 'select_people.html',
@@ -167,12 +199,15 @@
 						},
 						waiting: {
 							autoShow: false
+						},
+						extras:{
+							pageId:'createorder.html'
 						}
 					});
 				});
 				document.getElementById('confirm').addEventListener('tap', function() {
 					var quantitynum = mui('#quantity').numbox().getValue();
-					var peopleAmountnum = mui('#peopleAmount').numbox().getValue();
+					var peopleAmountnum = linkMains.length;
 					if(getValue('address') == '') {
 						mui.toast('请填写接送地址');
 						return;
@@ -181,6 +216,11 @@
 						mui.toast('请填写联系电话');
 						return;
 					}
+					if(linkMains.length == 0) {
+						mui.toast('请选择联系人');
+						return;
+					}
+					
 					if(quantitynum < FaultEntity.MinQuantity) {
 						mui.toast('入住时长不能少于' + FaultEntity.MinQuantity + '个月');
 						return;
@@ -200,7 +240,7 @@
 					plus.nativeUI.showWaiting();
 
 					console.log('productId:' + productId + 'address:' + getValue('address') + 'phone:' + getValue('phone') + 'quantity:' + quantitynum + 'peopleAmount:' + peopleAmountnum);
-					_shop.MakeOrder(productId, quantitynum, peopleAmountnum, getValue('address'), getValue('phone'), getValue('remark'), document.getElementById("txtOccurTime").innerHTML, 1, function(result) {
+					_shop.MakeOrder(productId, quantitynum, peopleAmountnum, getValue('address'), getValue('phone'), getValue('remark'), document.getElementById("txtOccurTime").innerHTML, 1,linkMains, function(result) {
 						console.log(JSON.stringify(result));
 						plus.nativeUI.closeWaiting();
 						if(result.status == 1) {
@@ -242,6 +282,27 @@
 
 			function getValue(ElementId) {
 				return document.getElementById(ElementId).value;
+			}
+			
+			//<div class="mui-input-row mui-left divborder" ><div style="display: flex;flex-direction: row;"><span style="min-width: 60px !important;display:inline-block;">测试</span><span style="width: 40px;display:inline-block;">男</span><span style="display:inline-block;">444************333</span><a style="margin-left: 50px;"><i class="mui-icon mui-icon-minus"></i></a></label></div>
+			function createCard(Entity){
+				var card = document.createElement('div');
+				card.className = 'mui-input-row mui-left divborder';
+				var cardId = Entity.IDCard.substring(0,3)+'************'+Entity.IDCard.substring(Entity.IDCard.length-3,Entity.IDCard.length);
+				card.innerHTML = '<div style="display: flex;flex-direction: row;"><span style="min-width: 60px !important;display:inline-block;">'+Entity.Name+'</span><span style="width: 50px;display:inline-block;">' + Entity.Sex + '</span><span style="display:inline-block;">' + cardId + '</span><a style="margin-left: 50px;"><i class="mui-icon mui-icon-minus" id="'+Entity.Id+'"></i></a></div>'
+				card.querySelector('i').addEventListener('tap',function(){
+					document.getElementById('ullinkman').removeChild(card);
+					linkMains.splice(GetIndexbyId(Entity.Id,linkMains), 1);
+				})
+				return card;
+			}
+			
+			var GetIndexbyId = function(value,datas) {
+				for(var i = 0; i < datas.length; i++) {
+					if(value == datas[i].Id) {
+						return i;
+					}
+				}
 			}
 
 			//			var inputTap = false;
@@ -326,6 +387,7 @@
 					});
 				}, 0);
 			};
+			
 		</script>
 	</body>
 
