@@ -31,6 +31,24 @@ var Article = (function() {
 					console.log('请求失败：');
 				});
 		};
+		//获取新闻列表详情
+		this.GetDetail = function(articelId,callback) {
+			if(!_getNetwork()) {
+				mui.toast("没有网络连接，请稍后再试！");
+				return;
+			}
+			var user = _db.getUser();
+			AsyncPost(API_ARTICLE+"GetDetail", "articelId=" + articelId,
+				function(result) {
+					if(callback) {
+						console.log('接口返回数据：' + JSON.stringify(result));
+						callback.call(this, result);
+					}
+				},
+				function() {
+					console.log('请求失败：');
+				});
+		};
 	
 		//获取图片路径
 		this.getPhotoUrl = function(callback) {

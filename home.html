@@ -128,63 +128,11 @@
 			</div>
 
 			<ul id="server_list" class="mui-table-view mui-grid-view mui-grid-9">
-				<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-					<a href="#">
-						<span class="mui-icon mui-icon-contact"></span>
-						<div class="mui-media-body">养老服务</div>
-					</a>
-				</li>
-				<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-					<a href="#">
-						<span class="mui-icon mui-icon-paperclip"></span>
-						<div class="mui-media-body">健康护理</div>
-					</a>
-				</li>
-				<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-					<a href="#">
-						<span class="mui-icon mui-icon-home"></span>
-						<div class="mui-media-body">家庭保洁</div>
-					</a>
-				</li>
-				<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-					<a href="#">
-						<span class="mui-icon mui-icon-paperclip"></span>
-						<div class="mui-media-body">保姆</div>
-					</a>
-				</li>
-				<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-					<a href="#">
-						<span class="mui-icon mui-icon-starhalf"></span>
-						<div class="mui-media-body">钟点工</div>
-					</a>
-				</li>
-				<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-					<a href="#">
-						<span class="mui-icon mui-icon-settings"><span class="mui-badge">12</span></span>
-						<div class="mui-media-body">更多...</div>
-					</a>
-				</li>
+				
 			</ul>
 
 			<ul class="mui-table-view" id="ul_Artiles">
-				<li class="mui-table-view-cell mui-media">
-					<a href="javascript:;">
-						<img class="mui-media-object mui-pull-right" src="images/yuantiao.jpg">
-						<div class="mui-media-body">
-							Article消息标题i
-							<p class='mui-ellipsis'>Title静静的看这个世界，最后终于疯了</p>
-						</div>
-					</a>
-				</li>
-				<li class="mui-table-view-cell mui-media">
-					<a href="javascript:;">
-						<img class="mui-media-object mui-pull-right" src="images/shuijiao.jpg">
-						<div class="mui-media-body">
-							Article消息标题m
-							<p class='mui-ellipsis'>Title能和心爱的人一起睡觉，是件幸福的事情；可是，打呼噜怎么办？</p>
-						</div>
-					</a>
-				</li>
+				
 			</ul>
 		</div>
 	</body>
@@ -203,6 +151,17 @@
 		var shopName;
 		var NewphotoUrl;
 		var ServerphotoUrl;
+		var titleNView = { //详情页原生导航配置
+			backgroundColor: '#f7f7f7', //导航栏背景色
+			titleText: '', //导航栏标题
+			titleColor: '#000000', //文字颜色
+			type: 'transparent', //透明渐变样式
+			autoBackButton: true, //自动绘制返回箭头
+			splitLine: { //底部分割线
+				color: '#cccccc'
+			}
+		}
+
 		mui.init();
 		window.addEventListener("getCity", function(e) {
 			var datas = e.detail.data;
@@ -214,6 +173,18 @@
 			var gallery = mui('.mui-slider');
 			gallery.slider({
 				interval: 3000 //自动轮播周期，若为0则不自动播放，默认为0；
+			});
+			//预加载详情页
+			webview_detail = mui.preload({
+				url: 'html/apphome/detail.html',
+				id: 'news_detail',
+				styles: {
+					"render": "always",
+					"popGesture": "hide",
+					"bounce": "vertical",
+					"bounceBackground": "#efeff4",
+					"titleNView": titleNView
+				}
 			});
 			user = _dataAccess.getUser();
 			shopId = user.ShopId;
@@ -234,26 +205,55 @@
 			showServer();
 		});
 
-		function showServer(){
-			document.getElementById("server_list").innerHTML ='';
-			_appHome.GetProductCategories(5,function(datas){
-				for (var i=0;i<datas.result.length;i++) {
+		function showServer() {
+			document.getElementById("server_list").innerHTML = '';
+			_appHome.GetProductCategories(5, function(datas) {
+				for(var i = 0; i < datas.result.length; i++) {
 					document.getElementById("server_list").appendChild(addList(datas.result[i]));
 				}
 			});
 		}
-		
-		function addList(entity){
-			var li=document.createElement("li");
-			li.setAttribute("Id",entity.Id);
-			li.className="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3";
-			li.innerHTML='<a href="#"><span class="mui-icon mui-icon-contact"></span><div class="mui-media-body">'+entity.Name+'</div></a>';
-			li.addEventListener("tap",function(event){
-				
-			});
+
+		function addList(entity) {
+			var li = document.createElement("li");
+			li.setAttribute("datas", entity);
+			li.className = "mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3";
+			li.innerHTML = '<a href="#"><span class="mui-icon mui-icon-contact"></span><div class="mui-media-body">' + entity.Name + '</div></a>';
 			return li;
 		}
-		
+
+		/**
+		 * 打开新闻详情
+		 * 
+		 * @param {String} guid 新闻ID
+		 * @param {String} title  新闻标题
+		 */
+		function open_detail(guid, title, author, time, cover) {
+			//若详情页尚未预加载完成，则延时等待再执行
+			if(!webview_detail) {
+				setTimeout(function() {
+					open_detail(guid);
+				}, 100);
+			}
+			//触发子窗口变更新闻详情
+			mui.fire(webview_detail, 'get_detail', {
+				guid: guid,
+				title: title,
+				author: author,
+				time: time,
+				cover: cover
+			});
+			console.log("CCCCCCCCCCCCCCCC");
+			//更改详情页原生导航条信息
+			titleNView.titleText = title;
+			webview_detail.setStyle({
+				"titleNView": titleNView
+			});
+			setTimeout(function() {
+				webview_detail.show("slide-in-right", 300);
+			}, 150);
+		}
+
 		function showArtiles() {
 			var user = _dataAccess.getUser();
 			setTimeout(function() {
@@ -267,23 +267,31 @@
 						for(var i = 0; i < datas.result.length; i++) {
 
 							//var card = createCard(index, datas.result[i]);
-							var liArticle = document.createElement("li");
-							liArticle.className = "mui-table-view-cell mui-media";
 
-							liArticle.innerHTML = '<a href="javascript:;">';
-							liArticle.innerHTML += '<img class="mui-media-object mui-pull-right" src="' + photoUrl + datas.result[i].ImgUrl + '">';
-							liArticle.innerHTML += '<div class="mui-media-body">';
-							liArticle.innerHTML += '<p class="mui-ellipsis">' + datas.result[i].Title + '</p>';
-							liArticle.innerHTML += '</div>';
-							iArticle.innerHTML += '</a>';
-
-							document.getElementById('ul_Artiles').appendChild(iArticle);
+							document.getElementById('ul_Artiles').appendChild(addLiArticle(datas.result[i]));
 						}
 
 					}
 				});
 
 			}, 1000);
+		}
+
+		function addLiArticle(entity) {
+			var liArticle = document.createElement("li");
+			liArticle.className = "mui-table-view-cell mui-media";
+
+			liArticle.innerHTML = '<a href="javascript:;">';
+			liArticle.innerHTML += '<img class="mui-media-object mui-pull-right" src="' + NewphotoUrl + entity.ImgUrl + '" onerror="this.src=\'images/bed_small.jpg\'">';
+			liArticle.innerHTML += '<div class="mui-media-body">' + entity.Title;
+			liArticle.innerHTML += '<p class="mui-ellipsis"> 哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈</p>';
+			liArticle.innerHTML += '</div>';
+			liArticle.innerHTML += '</a>';
+			liArticle.addEventListener("tap", function(event) {
+				console.log("AAAAAAAAAAAAA");
+				open_detail(entity.Id, entity.Title, entity.CreaterName, entity.CreateTime, NewphotoUrl + entity.ImgUrl);
+			});
+			return liArticle;
 		}
 
 		function openWindow(id, href) {
