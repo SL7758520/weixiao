@@ -244,9 +244,12 @@
 			"js/apphome.js",
 			"fonts/icomoon.ttf",
 			"js/article.js",
-			"fonts/mui.ttf"
+			"fonts/mui.ttf",
+			"images/bed_small.jpg"
 		],
-		"refer": []
+		"refer": [
+			"html/apphome/detail.html"
+		]
 	},
 	"splash.html": {
 		"resources": [
@@ -482,6 +485,20 @@
 			"js/localDatabase.js",
 			"js/mui.min.js",
 			"js/dao.js",
+			"js/post.js"
+		]
+	},
+	"html/apphome/detail.html": {
+		"resources": [
+			"css/mui.min.css",
+			"css/list-to-detail.css",
+			"js/vue.min.js",
+			"images/shop.jpg",
+			"js/mui.min.js",
+			"js/localDatabase.js",
+			"js/dao.js",
+			"js/apphome.js",
+			"js/article.js",
 			"js/post.js"
 		]
 	}
