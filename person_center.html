@@ -189,6 +189,9 @@
 					<li id="liemail">
 						<a href="#" class="linecss">邮箱<span id="email"></span></a>
 					</li>
+					<li id="lilinkman">
+						<a href="#" class="linecss">常用联系人<span id="address"></span></a>
+					</li>
 					<li id="liaddress">
 						<a href="#" class="linecss">居住地<span id="address"></span></a>
 					</li>
@@ -352,6 +355,15 @@
 			document.getElementById('lipsw').addEventListener('tap', function() {
 				if(getLogin()) {
 					gotoHtml('html/account/forget_password.html');
+				} else {
+					toLogin();
+				}
+			});
+			
+			//常用联系人
+			document.getElementById('lilinkman').addEventListener('tap', function() {
+				if(getLogin()) {
+					gotoHtml('html/linkman/linkman_list.html');
 				} else {
 					toLogin();
 				}

@@ -48,6 +48,44 @@ var LinkMan = (function() {
 					
 				});
 		}
+		
+		this.Delete = function(id,callback,onerror){
+			if(!_getNetwork()) {
+				mui.toast("没有网络连接，请稍后再试！");
+				return;
+			}
+			PostRequest(API_LinkMan+"Delete/"+id, '' ,
+				function(result) {
+					if(callback) {
+						callback.call(this, result);
+					}
+				},
+				function(result) {
+					if (onerror) {
+						onerror.call(this,result);
+					}
+					
+				});
+		}
+		
+		this.Edit = function(id,model,callback,onerror){
+			if(!_getNetwork()) {
+				mui.toast("没有网络连接，请稍后再试！");
+				return;
+			}
+			PostRequest(API_LinkMan+"Edit/"+id, model ,
+				function(result) {
+					if(callback) {
+						callback.call(this, result);
+					}
+				},
+				function(result) {
+					if (onerror) {
+						onerror.call(this,result);
+					}
+					
+				});
+		}
 	}
 	return access;
 })();

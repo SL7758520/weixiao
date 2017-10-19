@@ -36,8 +36,9 @@
 			}
 		</style>
 		<header id="header" class="mui-bar mui-bar-nav">
-			<h1 class="mui-title">新增联系人</h1>
+			<h1 class="mui-title">编辑联系人</h1>
 			<a id="back" href="#offCanvasSide" class="mui-action-back mui-icon icon_app_02 mui-action-menu mui-icon-left-nav mui-pull-left"></a>
+			<button id="confirmSelected" type="button" class="mui-btn mui-btn-link mui-pull-right color_white">完成</button>
 		</header>
 
 		<div class="fault_main" style="top:45px">
@@ -77,9 +78,18 @@
 			</a>
 		</div>-->
 			<div id="confirm" class="mui-content-padded">
-				<button id="btnSave" type="button" class="mui-btn button">确&nbsp;&nbsp;&nbsp;&nbsp;定</button>
+				<button id="btnSave" type="button" class="mui-btn button">删&nbsp;&nbsp;&nbsp;&nbsp;除</button>
 			</div>
 		</div>
+		<!--<div class="windows_bg" id="dialog" style="display: none;">
+			<div class="windows_box">
+				<div class="info_box two_btn" id="dialogtwo">
+					<p id="title">确定删除联系人？</p>
+					<a href="#" id="casncel">取消</a>
+					<a href="#" class="left_line" id="close">确定</a>
+				</div>
+			</div>
+		</div>-->
 	</body>
 	<script type="text/javascript" src="../../js/mui.min.js"></script>
 	<script src="../../js/mui.picker.min.js"></script>
@@ -91,14 +101,44 @@
 	<script>
 		var birthDay;
 		var Model = {};
+		var newModel = {};
 		var linkMan = new LinkMan();
 		mui.init();
 		mui.plusReady(function() {
 			initpage();
 		});
+		
 
 		function initpage() {
+			var self = plus.webview.currentWebview();
+			Model = self.data;
+			setValue('Name',Model.Name);
+			setValue('Sex',Model.Sex);
+			setValue('IDCard',Model.IDCard);
+			setValue('PhoneNumber',Model.PhoneNumber);
+			document.getElementById("BirthDay").innerHTML = Model.BirthDay;
 			document.getElementById('confirm').addEventListener('tap', function() {
+				plus.nativeUI.showWaiting();
+				linkMan.Delete(Model.Id, function(result) {
+					console.log(JSON.stringify(result));
+					plus.nativeUI.closeWaiting();
+					if(result.status == 1) {
+						mui.toast('删除联系人成功');
+						var create = plus.webview.getWebviewById('select_people.html');
+						mui.fire(create, 'Create', {});
+						var list = plus.webview.getWebviewById('html/linkman/linkman_list.html');
+						mui.fire(list, 'Changelinkman', {});
+						mui.back();
+					} else {
+						mui.toast('删除联系人失败，请重试');
+					}
+				}, function() {
+					plus.nativeUI.closeWaiting();
+					mui.toast('请求失败');
+				});
+			});
+			
+			document.getElementById('confirmSelected').addEventListener('tap',function(){
 				if(getValue('Name') == '') {
 					mui.toast('请填写姓名');
 					return;
@@ -119,31 +159,31 @@
 					mui.toast('请选择出生日期');
 					return;
 				}
-				Model.Name = getValue('Name');
-				Model.Sex = getValue('Sex');
-				Model.IDCard = getValue('IDCard');
-				Model.BirthDay = document.getElementById("BirthDay").innerHTML;
-				Model.PhoneNumber = getValue('PhoneNumber');
 				plus.nativeUI.showWaiting();
-
-				linkMan.Create(Model, function(result) {
+				newModel.Name = getValue('Name');
+				newModel.Sex = getValue('Sex');
+				newModel.IDCard = getValue('IDCard');
+				newModel.BirthDay = document.getElementById("BirthDay").innerHTML;
+				newModel.PhoneNumber = getValue('PhoneNumber');
+				linkMan.Edit(Model.Id,newModel, function(result) {
 					console.log(JSON.stringify(result));
 					plus.nativeUI.closeWaiting();
 					if(result.status == 1) {
-						mui.toast('创建联系人成功');
+						mui.toast('修改联系人信息成功');
 						var create = plus.webview.getWebviewById('select_people.html');
 						mui.fire(create, 'Create', {});
 						var list = plus.webview.getWebviewById('html/linkman/linkman_list.html');
 						mui.fire(list, 'Changelinkman', {});
 						mui.back();
 					} else {
-						mui.toast('创建联系人失败，请确认信息是否正确');
+						mui.toast('修改联系人失败，请重试');
 					}
 				}, function() {
 					plus.nativeUI.closeWaiting();
 					mui.toast('请求失败');
 				});
 			});
+			
 			mui('#dtPicker').on('tap', 'a', function() {
 				var curTime = (new Date()).Format("yyyy-MM-dd");
 				var year = new Date().getFullYear();
