@@ -268,7 +268,11 @@ var Shop = (function() {
 				mui.toast("没有网络连接，请稍后再试！");
 				return;
 			}
-			PostRequest(API_SHOP+'MakeOrder?productId='+productId+'&quantity='+quantity+'&peopleAmount='+peopleAmount+'&address='+address+'&phone='+phone+'&remark='+remark+'&bookedDate='+bookedDate+'&categoryId='+categoryId,'',function(result){
+			var LinkManID = [];
+			for(var i = 0; i < linkMains.length; i++) {
+				LinkManID.push(linkMains[i].Id+"");
+			}
+			PostRequest(API_SHOP+'MakeOrder?productId='+productId+'&quantity='+quantity+'&peopleAmount='+peopleAmount+'&address='+address+'&phone='+phone+'&remark='+remark+'&bookedDate='+bookedDate+'&categoryId='+categoryId,'LinkManID',function(result){
 				if (onSuccess) {
 					onSuccess.call(this,result);
 				}

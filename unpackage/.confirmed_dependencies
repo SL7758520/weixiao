@@ -226,7 +226,8 @@
 			"js/member.js"
 		],
 		"refer": [
-			"html/member/member_modify.html"
+			"html/member/member_modify.html",
+			"html/linkman/linkman_list.html"
 		]
 	},
 	"home.html": {
@@ -490,6 +491,22 @@
 			"js/mui.min.js",
 			"js/dao.js",
 			"js/post.js"
+		],
+		"refer": [
+			"html/linkman/create_linkman.html"
+		]
+	},
+	"html/linkman/create_linkman.html": {
+		"resources": [
+			"js/muifun.js",
+			"js/mui.picker.min.js",
+			"css/mui.picker.min.css",
+			"js/localDatabase.js",
+			"js/mui.min.js",
+			"js/dao.js",
+			"css/mui.min.css",
+			"js/linkman.js",
+			"js/post.js"
 		]
 	},
 	"html/apphome/detail.html": {
@@ -564,6 +581,32 @@
 		],
 		"refer": [
 			"html/shop/pay.html"
+		]
+	},
+	"html/linkman/linkman_list.html": {
+		"resources": [
+			"js/localDatabase.js",
+			"js/mui.min.js",
+			"js/dao.js",
+			"css/mui.min.css",
+			"js/linkman.js",
+			"js/post.js"
+		],
+		"refer": [
+			"html/linkman/create_linkman.html",
+			"html/linkman/edit_linkman.html"
+		]
+	},
+	"html/linkman/edit_linkman.html": {
+		"resources": [
+			"js/muifun.js",
+			"js/mui.picker.min.js",
+			"js/dao.js",
+			"css/mui.min.css",
+			"js/linkman.js",
+			"js/post.js",
+			"css/mui.picker.min.css",
+			"js/localDatabase.js"
 		]
 	}
 }

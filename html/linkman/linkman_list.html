@@ -35,17 +35,17 @@
 		</style>
 		<header class="mui-bar mui-bar-nav">
 			<a id="back" href="#offCanvasSide" class="mui-action-back mui-icon icon_app_02 mui-action-menu mui-icon-left-nav mui-pull-left"></a>
-			<h1 class="mui-title">选择联系人
+			<h1 class="mui-title">常用联系人
 			<!--<div class="mui-input-row mui-search search_menu">
 					<input type="search" class="mui-input-clear" placeholder="" oninput="Search(event)" onporpertychange="Search(event)" id="SearchKey">
 				</div>-->
 			</h1>
-			<button id="confirmSelected" type="button" class="mui-btn mui-btn-link mui-pull-right color_white">确定</button>
+			<button id="confirmSelected" type="button" class="mui-btn mui-btn-link mui-pull-right color_white">新增联系人</button>
 		</header>
-		<div id="addLinkMan" style="text-align: center;padding: 5px;color: #4cd964;font-size: 18px;margin-top: 44px;">
+		<!--<div id="addLinkMan" style="text-align: center;padding: 5px;color: #4cd964;font-size: 18px;margin-top: 44px;">
 			<a id="icon-plus" style="color: #4cd964;"><span class="mui-icon mui-icon-plus"></span></a> 新增联系人
-		</div>
-		<ul class="mui-table-view">
+		</div>-->
+		<ul class="mui-table-view" style="margin-top: 44px;">
 			<form class="mui-input-group" id='ulcontact'>
 			</form>
 		</ul>
@@ -64,13 +64,6 @@
 				var _self = plus.webview.currentWebview();
 				pageId = _self.pageId;
 				initdatas();
-				document.getElementById('confirmSelected').addEventListener('tap',function(){
-						var selectpage = plus.webview.getWebviewById(pageId);
-						mui.fire(selectpage,'hasSelected',{
-							data:selecteddatas
-						});
-						mui.back();
-					});
 				mui('.mui-input-group').on('change', 'input', function() {
 					var Entity = GetEntitybyId(this.getAttribute('value'));
 					if(this.checked) {
@@ -79,7 +72,7 @@
 						selecteddatas.splice(GetIndexbyId(this.getAttribute('value'),selecteddatas), 1);
 					}
 				});
-				document.getElementById('addLinkMan').addEventListener('tap',function(){
+				document.getElementById('confirmSelected').addEventListener('tap',function(){
 					mui.openWindow({
 						id: '../linkman/create_linkman.html',
 						url: '../linkman/create_linkman.html',
@@ -91,7 +84,7 @@
 						},
 					});
 				});
-				window.addEventListener('Create',function(event){
+				window.addEventListener('Changelinkman',function(event){
 					alldatas = [];
 					document.getElementById('ulcontact').innerHTML = '';
 					initdatas();
@@ -100,6 +93,7 @@
 
 			function initdatas() {
 				linkman.GetList(function(result) {
+					console.log(JSON.stringify(result));
 					if(result) {
 						alldatas = result;
 						addList(result);
@@ -140,9 +134,22 @@
 //				var id = '430525499955468415';
 				var card = document.createElement('div');
 				var cardId = entity.IDCard.substring(0,3)+'************'+entity.IDCard.substring(entity.IDCard.length-3,entity.IDCard.length);
-//				var cardId = id.substring(0, 3) + '************' + id.substring(15, 18);
-//				console.log(JSON.stringify(entity));
-				var html = '<div class="line_box" style="border-top: 1px solid #e8e8e8;"></div><div class="mui-input-row mui-checkbox mui-left"><label class="info"><span style="min-width: 80px !important;display:inline-block;">' + entity.Name + '</span><span style="width: 50px;display:inline-block;">' + entity.Sex + '</span>' + cardId + '</label><input name="checkbox" type="checkbox" value="' + entity.Id + '" ></div>';
+				var html = '<div class="line_box" style="border-top: 1px solid #e8e8e8;"></div><div class="mui-input-row mui-checkbox mui-left"><label class="info"><span style="min-width: 80px !important;display:inline-block;">' + entity.Name + '</span><span style="width: 50px;display:inline-block;">' + entity.Sex + '</span>' + cardId + '</div></div>';
+				card.addEventListener('tap', function() {
+					mui.openWindow({
+						id: '../linkman/edit_linkman.html',
+						url: '../linkman/edit_linkman.html',
+						show: {
+							aniShow: 'pop-in'
+						},
+						waiting: {
+							autoShow: false
+						},
+						extras: {
+							data:entity
+						}
+					});
+				}, false);
 				card.innerHTML = html;
 				return card;
 			}
