@@ -1,0 +1,146 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/appfont.css" rel="stylesheet" />
+		<link href="../../css/main.css" rel="stylesheet" />
+		<style type="text/css">
+			.item {
+				display: -webkit-box;
+			}
+			
+			.text {
+				width: 75%;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+			}
+			
+			.information {
+				width: 65%;
+				margin-left: 5px;
+			}
+			
+			.price {
+				width: 35%;
+				margin-left: 5px;
+			}
+			
+			.new-price {
+				font-size: 16px;
+				color: #ff7c70;
+				font-family: Impact, Arail, sans-serif;
+				font-weight: bold;
+			}
+			
+			.mui-content>.mui-table-view:first-child {
+				margin-top: 0px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a id="back" href="#offCanvasSide" class="mui-icon icon_app_02 mui-action-menu mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">服务类型</h1>
+		</header>
+		<div class="mui-content">
+			<ul id="ServerList" class="mui-table-view">
+			</ul>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/post.js"></script>
+		<script src="../../js/localDatabase.js"></script>
+		<script src="../../js/dao.js"></script>
+		<script src="../../js/apphome.js"></script>
+		<script src="../../js/shop.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			var _appHome = new AppHome();
+			var _shop = new Shop();
+			var shopId = 0;
+			var categoryId;
+			var _self;
+			var ServerList;
+			var photoUrl;
+			mui.plusReady(function() {
+				ServerList = document.getElementById("ServerList");
+				_self = plus.webview.currentWebview();
+				categoryId = _self.data;
+				console.log(categoryId);
+				_shop.getPhotoUrl(function(datas) {
+					photoUrl = datas;
+				});
+				if(categoryId) {
+					_appHome.GetProductsByCategoryId(shopId, categoryId, function(datas) {
+						if(datas.status == 1) {
+							if(datas.result.length > 0) {
+								ServerList.innerHTML = "";
+								for(var i = 0; i < datas.result.length; i++) {
+									ServerList.appendChild(addList(datas.result[i]));
+								}
+							} else {
+								mui.toast("该服务暂无产品，请选择其他服务!");
+							}
+						} else {
+							mui.toast(datas.message);
+						}
+					});
+				} else {
+					mui.toast("请选择服务!");
+				}
+			});
+
+			function addList(entity) {
+				var li = document.createElement("li");
+				li.className = 'mui-table-view-cell';
+				var HasPickUp;
+				if(entity.HasPickUp) {
+					HasPickUp = "可接送";
+				} else {
+					HasPickUp = "不可接送";
+				}
+				var imgsrc;
+				imgsrc = photoUrl + entity.PhotoUrl;
+
+				if(entity.CollectCounts == null) {
+					li.innerHTML = '<div class="item"><div ><img src=' + imgsrc + ' onerror="this.src=\'../../images/bed_small.jpg\'" style="width: 100px;height: 65px;"></div><div class="text"><div class="information"><h4>' + entity.Name + '</h4><h5 style="margin-top: 8px;">' + HasPickUp + '</h5><h5 class="mui-ellipsis" style="margin-top: 8px;">' + entity.ShortDescription + '</h5></div><div class="price"><span class="new-price">￥' + entity.Price + '/月</span></div></div></div>';
+
+				} else {
+					li.innerHTML = '<div class="item"><div ><img src=' + imgsrc + ' onerror="this.src=\'../../images/bed_small.jpg\'" style="width: 100px;height: 65px;"></div><div class="text"><div class="information"><h4>' + entity.Name + '</h4><h5 style="margin-top: 8px;">' + HasPickUp + '</h5><h5 class="mui-ellipsis" style="margin-top: 8px;">' + entity.ShortDescription + '</h5></div><div class="price"><span class="new-price">￥' + entity.Price + '/月</span><div id="" style="display: flex;align-items: center;margin-top: 5px;"><img src="../../images/heart@2x.png" style="width: 15px;height: 15px;" /><h5 style="margin-left: 5px;">' + entity.CollectCounts + '人关注</h5></div></div></div></div>';
+
+				}
+
+				li.addEventListener("tap", function(event) {
+					gotoHtml("server_detail.html", entity.Id, photoUrl);
+				});
+
+				return li;
+			}
+			
+			function gotoHtml(u, datas, photoUrl) {
+				mui.openWindow({
+					url: u,
+					id: u,
+
+					show: {
+						aniShow: 'pop-in'
+					},
+					waiting: {
+						autoShow: true, //自动显示等待框，默认为true
+						title: '正在加载...', //等待对话框上显示的提示内容
+					},
+					extras: {
+						data: datas,
+						photoUrl: photoUrl,
+					}
+				});
+			}
+		</script>
+	</body>
+
+</html>

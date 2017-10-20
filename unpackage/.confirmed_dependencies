@@ -146,7 +146,8 @@
 			"js/mui.lazyload.img.js",
 			"fonts/mui.ttf",
 			"js/member.js",
-			"images/bed.jpg"
+			"images/bed.jpg",
+			"images/shop.jpg"
 		],
 		"refer": [
 			"html/shop/product.html",
@@ -248,7 +249,8 @@
 			"images/bed_small.jpg"
 		],
 		"refer": [
-			"html/apphome/detail.html"
+			"html/apphome/detail.html",
+			"html/server/server_list.html"
 		]
 	},
 	"splash.html": {
@@ -278,7 +280,8 @@
 			"fonts/fontawesome-webfont.woff2",
 			"images/shop.jpg",
 			"js/member.js",
-			"images/bed_small.jpg"
+			"images/bed_small.jpg",
+			"fonts/icomoon.ttf"
 		],
 		"refer": [
 			"html/shop/product_details.html",
@@ -298,7 +301,8 @@
 			"js/shop.js",
 			"js/post.js",
 			"js/member.js",
-			"images/bed.jpg"
+			"images/bed.jpg",
+			"fonts/icomoon.ttf"
 		],
 		"refer": [
 			"html/shop/createorder.html"
@@ -499,7 +503,67 @@
 			"js/dao.js",
 			"js/apphome.js",
 			"js/article.js",
-			"js/post.js"
+			"js/post.js",
+			"images/bed.jpg"
+		]
+	},
+	"html/server/server_list.html": {
+		"resources": [
+			"js/localDatabase.js",
+			"js/mui.min.js",
+			"js/dao.js",
+			"css/mui.min.css",
+			"js/apphome.js",
+			"js/article.js",
+			"js/post.js",
+			"js/shop.js",
+			"css/main.css",
+			"css/appfont.css",
+			"fonts/mui.ttf",
+			"images/bed_small.jpg"
+		],
+		"refer": [
+			"html/shop/product_details.html",
+			"html/server/server_detail.html"
+		]
+	},
+	"html/server/server_detail.html": {
+		"resources": [
+			"js/localDatabase.js",
+			"js/member.js",
+			"js/mui.min.js",
+			"js/dao.js",
+			"css/mui.min.css",
+			"js/shop.js",
+			"js/post.js",
+			"images/bed.jpg",
+			"css/appfont.css",
+			"css/main.css",
+			"fonts/mui.ttf",
+			"fonts/icomoon.ttf"
+		],
+		"refer": [
+			"html/server/serverOrder.html"
+		]
+	},
+	"html/server/serverOrder.html": {
+		"resources": [
+			"js/localDatabase.js",
+			"js/muifun.js",
+			"js/mui.picker.min.js",
+			"js/mui.min.js",
+			"js/dao.js",
+			"css/mui.min.css",
+			"js/shop.js",
+			"css/mui.picker.min.css",
+			"js/post.js",
+			"css/main.css",
+			"css/appfont.css",
+			"fonts/mui.ttf",
+			"fonts/icomoon.ttf"
+		],
+		"refer": [
+			"html/shop/pay.html"
 		]
 	}
 }

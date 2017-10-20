@@ -11,10 +11,10 @@
 		<link href="css/appfont.css" rel="stylesheet" />
 		<link rel="stylesheet" type="text/css" href="../css/icons-extra.css" />
 		<link href="css/main.css" rel="stylesheet" />
-		<script src="js/post.js"></script>
+		<!--<script src="js/post.js"></script>
 		<script src="js/localDatabase.js"></script>
 		<script src="js/dao.js"></script>
-		<script src="js/apphome.js"></script>
+		<script src="js/apphome.js"></script>-->
 		<script type="text/javascript">
 			// 扩展API加载完毕后调用onPlusReady回调函数 
 			document.addEventListener('plusready', onPlusReady, false);
@@ -128,11 +128,46 @@
 			</div>
 
 			<ul id="server_list" class="mui-table-view mui-grid-view mui-grid-9">
-				
+
 			</ul>
 
 			<ul class="mui-table-view" id="ul_Artiles">
-				
+				<li class="mui-table-view-cell mui-media">
+					<a href="javascript:;">
+						<img class="mui-media-object mui-pull-right" src="images/yuantiao.jpg">
+						<div class="mui-media-body">
+							远眺
+							<p class='mui-ellipsis'>静静的看这个世界，最后终于疯了</p>
+						</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media">
+					<a href="javascript:;">
+						<img class="mui-media-object mui-pull-right" src="images/yuantiao.jpg">
+						<div class="mui-media-body">
+							远眺
+							<p class='mui-ellipsis'>静静的看这个世界，最后终于疯了</p>
+						</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media">
+					<a href="javascript:;">
+						<img class="mui-media-object mui-pull-right" src="images/yuantiao.jpg">
+						<div class="mui-media-body">
+							远眺
+							<p class='mui-ellipsis'>静静的看这个世界，最后终于疯了</p>
+						</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media">
+					<a href="javascript:;">
+						<img class="mui-media-object mui-pull-right" src="images/yuantiao.jpg">
+						<div class="mui-media-body">
+							远眺
+							<p class='mui-ellipsis'>静静的看这个世界，最后终于疯了</p>
+						</div>
+					</a>
+				</li>
 			</ul>
 		</div>
 	</body>
@@ -216,9 +251,12 @@
 
 		function addList(entity) {
 			var li = document.createElement("li");
-			li.setAttribute("datas", entity);
+			//			li.setAttribute("datas", entity);
 			li.className = "mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3";
 			li.innerHTML = '<a href="#"><span class="mui-icon mui-icon-contact"></span><div class="mui-media-body">' + entity.Name + '</div></a>';
+			li.addEventListener("tap", function(event) {
+				openWindowExtras("html/server/server_list.html", "html/server/server_list.html", entity.Id);
+			});
 			return li;
 		}
 
@@ -261,7 +299,7 @@
 
 				_article.GetTopList(0, 5, function(datas) {
 					if(datas) {
-						document.getElementById('ul_Artiles').innerHTML = '';
+//						document.getElementById('ul_Artiles').innerHTML = '';
 						console.log(JSON.stringify(result));
 
 						for(var i = 0; i < datas.result.length; i++) {
@@ -281,12 +319,7 @@
 			var liArticle = document.createElement("li");
 			liArticle.className = "mui-table-view-cell mui-media";
 
-			liArticle.innerHTML = '<a href="javascript:;">';
-			liArticle.innerHTML += '<img class="mui-media-object mui-pull-right" src="' + NewphotoUrl + entity.ImgUrl + '" onerror="this.src=\'images/bed_small.jpg\'">';
-			liArticle.innerHTML += '<div class="mui-media-body">' + entity.Title;
-			liArticle.innerHTML += '<p class="mui-ellipsis"> 哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈</p>';
-			liArticle.innerHTML += '</div>';
-			liArticle.innerHTML += '</a>';
+			liArticle.innerHTML = '<a href="javascript:;"><img class="mui-media-object mui-pull-right" src="' + NewphotoUrl + entity.ImgUrl + '" onerror="this.src=\'images/bed_small.jpg\'"><div class="mui-media-body">' + entity.Title+'<p class="mui-ellipsis">哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈</p></div></a>';
 			liArticle.addEventListener("tap", function(event) {
 				console.log("AAAAAAAAAAAAA");
 				open_detail(entity.Id, entity.Title, entity.CreaterName, entity.CreateTime, NewphotoUrl + entity.ImgUrl);

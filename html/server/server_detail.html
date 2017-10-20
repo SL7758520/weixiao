@@ -119,7 +119,7 @@
 			.mui-btn-block {
 				font-size: 18px;
 				display: block;
-				width: 49%;
+				width: 100%;
 				height: 100%;
 				padding: 15px 0
 			}
@@ -134,10 +134,12 @@
 				display: flex;
 				justify-content: space-between;
 				background-color: #EFEFF4;
+				padding-left: 5px;
+				padding-right: 5px;
 				/*border: solid 1px #ddd;*/
 				/*box-shadow: 0px -5px 5px 0px rgba(0, 0, 0, 0.05);*/
 				left: 0px;
-				bottom: 0px;
+				bottom: 3px;
 				height: 51px;
 				width: 100%;
 			}
@@ -213,15 +215,9 @@
 				<div class="vicetitle" id="DistanceDesc">单船票，宜昌登船，含宜昌码头接站</div>
 			</div>
 			<div class="fg_title" style="margin-top: 1px;">
-				床位详情...
+				服务详情
 			</div>
 			<div class="form_info" style="background-color: #FFFFFF;margin-top: -2px;">
-				<div><label>单人接送：</label>
-					<dd><input type="text" id="PickUpCostSingle" class="input_sys1" readonly="readonly"></dd>
-				</div>
-				<div><label>多人接送：</label>
-					<dd><input type="text" id="PickUpCostMultiplayer" class="input_sys1" readonly="readonly"></dd>
-				</div>
 				<div><label>最小购买数量：</label>
 					<dd><input type="text" id="MinQuantity" class="input_sys1" readonly="readonly"></dd>
 				</div>
@@ -243,24 +239,7 @@
 
 					</div>
 				</li>
-				<li class="mui-table-view-cell mui-collapse" style="padding: 12px 15px;font-size: 16px;color: #6a6a6a;">
-					<a class="mui-navigate-right" href="#">接送服务</a>
-					<div id="ShuttleDesc" class="mui-collapse-content Desc">
-
-					</div>
-				</li>
-				<li class="mui-table-view-cell mui-collapse" style="padding: 12px 15px;font-size: 16px;color: #6a6a6a;">
-					<a class="mui-navigate-right" href="#">护理标准</a>
-					<div id="NursingDesc" class="mui-collapse-content Desc">
-
-					</div>
-				</li>
-				<li class="mui-table-view-cell mui-collapse" style="padding: 12px 15px;font-size: 16px;color: #6a6a6a;">
-					<a class="mui-navigate-right" href="#">房间配套</a>
-					<div id="RoomDesc" class="mui-collapse-content Desc">
-
-					</div>
-				</li>
+				
 			</ul>
 			<!--<div class="fg_title" >
 				收费标准
@@ -294,8 +273,7 @@
 			</div>-->
 		</div>
 		<div class="hotel-footer">
-			<button id="collect" type="button" class="mui-btn mui-btn-warning mui-btn-block">收藏</button>
-			<button id="createorder" type="button" class="mui-btn mui-btn-success mui-btn-block">预约入住</button>
+			<button id="createorder" type="button" class="mui-btn mui-btn-success mui-btn-block">预约服务</button>
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/localDatabase.js"></script>
@@ -319,16 +297,6 @@
 				id = _self.data;
 				photoUrl = _self.photoUrl;
 				console.log(id + "------------" + photoUrl);
-				var ShopProductCollect = _dataAccess.getShopProductCollect();
-				console.log(JSON.stringify(ShopProductCollect));
-				if(ShopProductCollect != null) {
-					for(var i = 0; i < ShopProductCollect.length; i++) {
-						if(id == ShopProductCollect[i].ProductId) {
-							document.getElementById("collect").innerText = "已收藏";
-							break;
-						}
-					}
-				}
 				initpage();
 				_shop.GetProductModel(id, function(datas) {
 					if(datas.status == 1) {
@@ -341,40 +309,15 @@
 						//						document.getElementById("info").innerHTML = proudctInfo.Intro;
 						setHtml("TollDesc", proudctInfo.Cost);
 						setHtml("ServiceDesc", proudctInfo.Service);
-						setHtml("ShuttleDesc", proudctInfo.PickUp);
-						setHtml("NursingDesc", proudctInfo.Catering);
-						setHtml("RoomDesc", proudctInfo.HouseFacility);
 
-						setValue("MinQuantity", proudctInfo.MinQuantity + "元/公里");
-						setValue("MaxQuantity", proudctInfo.MaxQuantity + "元/公里");
-						setValue("PickUpCostSingle", proudctInfo.PickUpCostSingle + "/月");
-						setValue("PickUpCostMultiplayer", proudctInfo.PickUpCostMultiplayer + "/月");
+						setValue("MinQuantity", proudctInfo.MinQuantity + "个/人");
+						setValue("MaxQuantity", proudctInfo.MaxQuantity + "个/人");
 
 					} else {
 						mui.toast(datas.message);
 					}
 				});
-				document.getElementById("collect").addEventListener("tap", function(event) {
-					console.log(document.getElementById("collect").innerText);
-					if(document.getElementById("collect").innerText == "已收藏") {
-						_member.RemoveShopProductCollect(id, function(datas) {
-							if(datas.status == 1) {
-								document.getElementById("collect").innerText = "收藏";
-							}
-
-							mui.toast(datas.message);
-						});
-					} else {
-						_member.SetShopProductCollect(id, function(datas) {
-							if(datas.status == 1) {
-								document.getElementById("collect").innerText = "已收藏";
-							}
-
-							mui.toast(datas.message);
-						});
-					}
-
-				});
+				
 			});
 
 			function setValue(id, value) {
@@ -388,8 +331,7 @@
 			function initpage() {
 				document.getElementById('createorder').addEventListener('tap', function() {
 					entity = proudctInfo;
-					entity.productId = id;
-					opWindow('createorder.html', 'createorder.html', entity);
+					opWindow('serverOrder.html', 'serverOrder.html', entity);
 				});
 			}
 
@@ -409,12 +351,12 @@
 					}
 				});
 			}
-			window.addEventListener("CreateOrder", function(e) {
-				console.log('product_details.html');
-				var task = plus.webview.getWebviewById('html/shop/product.html');
-				mui.fire(task, 'CreateOrder', {});
-				plus.webview.getWebviewById('product_details.html').close();
-			})
+//			window.addEventListener("CreateOrder", function(e) {
+//				console.log('product_details.html');
+//				var task = plus.webview.getWebviewById('html/shop/product.html');
+//				mui.fire(task, 'CreateOrder', {});
+//				plus.webview.getWebviewById('product_details.html').close();
+//			})
 		</script>
 	</body>
 
