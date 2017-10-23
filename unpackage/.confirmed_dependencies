@@ -146,7 +146,8 @@
 			"js/mui.lazyload.img.js",
 			"fonts/mui.ttf",
 			"js/member.js",
-			"images/bed.jpg"
+			"images/bed.jpg",
+			"images/shop.jpg"
 		],
 		"refer": [
 			"html/shop/product.html",
@@ -315,7 +316,9 @@
 			"js/mui.min.js",
 			"fonts/mui.ttf",
 			"js/dao.js",
-			"js/post.js"
+			"js/post.js",
+			"css/mui.picker.min.css",
+			"js/mui.picker.min.js"
 		],
 		"refer": []
 	},
@@ -330,7 +333,8 @@
 			"js/dao.js",
 			"js/shop.js",
 			"js/post.js",
-			"css/main.css"
+			"css/main.css",
+			"js/compareTimes.js"
 		],
 		"refer": [
 			"html/shop/select_people.html"
@@ -542,7 +546,8 @@
 			"js/linkman.js",
 			"js/post.js",
 			"css/mui.picker.min.css",
-			"js/localDatabase.js"
+			"js/localDatabase.js",
+			"js/mui.min.js"
 		]
 	}
 }
