@@ -247,11 +247,13 @@
 			"fonts/icomoon.ttf",
 			"js/article.js",
 			"fonts/mui.ttf",
-			"images/bed_small.jpg"
+			"images/bed_small.jpg",
+			"images/serviceCategory.png"
 		],
 		"refer": [
 			"html/apphome/detail.html",
-			"html/server/server_list.html"
+			"html/server/server_list.html",
+			"html/apphome/city.html"
 		]
 	},
 	"splash.html": {
@@ -286,7 +288,8 @@
 		],
 		"refer": [
 			"html/shop/product_details.html",
-			"html/shop/productpic.html"
+			"html/shop/productpic.html",
+			"html/shop/shop_pic.html"
 		]
 	},
 	"html/shop/product_details.html": {
@@ -306,7 +309,8 @@
 			"fonts/icomoon.ttf"
 		],
 		"refer": [
-			"html/shop/createorder.html"
+			"html/shop/createorder.html",
+			"html/shop/productpic.html"
 		]
 	},
 	"html/member/member_modify.html": {
@@ -334,7 +338,9 @@
 			"js/dao.js",
 			"js/shop.js",
 			"js/post.js",
-			"css/main.css"
+			"css/main.css",
+			"fonts/mui.ttf",
+			"fonts/icomoon.ttf"
 		],
 		"refer": [
 			"html/shop/select_people.html"
@@ -350,7 +356,10 @@
 			"js/dao.js",
 			"js/shop.js",
 			"js/post.js",
-			"css/main.css"
+			"css/main.css",
+			"css/appfont.css",
+			"images/bed_small.jpg",
+			"fonts/icomoon.ttf"
 		],
 		"refer": []
 	},
@@ -458,7 +467,9 @@
 			"images/weixinpay.png",
 			"css/mui.min.css",
 			"images/zhifubao.png",
-			"js/mui.min.js"
+			"js/mui.min.js",
+			"css/main.css",
+			"css/appfont.css"
 		],
 		"refer": []
 	},
@@ -507,7 +518,8 @@
 			"css/mui.min.css",
 			"js/linkman.js",
 			"js/post.js"
-		]
+		],
+		"refer": []
 	},
 	"html/apphome/detail.html": {
 		"resources": [
@@ -522,7 +534,8 @@
 			"js/article.js",
 			"js/post.js",
 			"images/bed.jpg"
-		]
+		],
+		"refer": []
 	},
 	"html/server/server_list.html": {
 		"resources": [
@@ -537,7 +550,9 @@
 			"css/main.css",
 			"css/appfont.css",
 			"fonts/mui.ttf",
-			"images/bed_small.jpg"
+			"images/bed_small.jpg",
+			"fonts/icomoon.ttf",
+			"images/Service.png"
 		],
 		"refer": [
 			"html/shop/product_details.html",
@@ -560,7 +575,8 @@
 			"fonts/icomoon.ttf"
 		],
 		"refer": [
-			"html/server/serverOrder.html"
+			"html/server/serverOrder.html",
+			"html/server/server_pic.html"
 		]
 	},
 	"html/server/serverOrder.html": {
@@ -607,6 +623,36 @@
 			"js/post.js",
 			"css/mui.picker.min.css",
 			"js/localDatabase.js"
+		],
+		"refer": []
+	},
+	"html/shop/shop_pic.html": {
+		"resources": [
+			"js/localDatabase.js",
+			"js/mui.min.js",
+			"images/t0-3.jpg",
+			"js/dao.js",
+			"css/mui.min.css",
+			"js/shop.js",
+			"js/post.js"
+		]
+	},
+	"html/server/server_pic.html": {
+		"resources": [
+			"css/mui.min.css"
+		]
+	},
+	"html/apphome/city.html": {
+		"resources": [
+			"js/localDatabase.js",
+			"js/mui.min.js",
+			"js/dao.js",
+			"css/mui.min.css",
+			"js/apphome.js",
+			"css/mui.indexedlist.css",
+			"js/post.js",
+			"js/mui.indexedlist.js",
+			"fonts/mui.ttf"
 		]
 	}
 }

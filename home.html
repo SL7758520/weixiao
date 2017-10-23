@@ -21,7 +21,7 @@
 			// 扩展API加载完毕，现在可以正常调用扩展API
 			function onPlusReady() {
 				plus.geolocation.getCurrentPosition(function(p) {
-					mui.toast(p.address.city);
+					//					mui.toast(p.address.city);
 					document.getElementById("position").innerText = p.address.city;
 					_appHome.GetCityIdByCityName(p.address.city, function(datas) {
 						_dataAccess.getUser().CityId = datas;
@@ -68,6 +68,10 @@
 			
 			.mui-table-view {
 				margin: 10px 0px 10px 0px;
+			}
+			.img_server{
+				width: 32px;
+				height: 32px;
 			}
 		</style>
 	</head>
@@ -128,46 +132,11 @@
 			</div>
 
 			<ul id="server_list" class="mui-table-view mui-grid-view mui-grid-9">
-
+				
 			</ul>
 
 			<ul class="mui-table-view" id="ul_Artiles">
-				<li class="mui-table-view-cell mui-media">
-					<a href="javascript:;">
-						<img class="mui-media-object mui-pull-right" src="images/yuantiao.jpg">
-						<div class="mui-media-body">
-							远眺
-							<p class='mui-ellipsis'>静静的看这个世界，最后终于疯了</p>
-						</div>
-					</a>
-				</li>
-				<li class="mui-table-view-cell mui-media">
-					<a href="javascript:;">
-						<img class="mui-media-object mui-pull-right" src="images/yuantiao.jpg">
-						<div class="mui-media-body">
-							远眺
-							<p class='mui-ellipsis'>静静的看这个世界，最后终于疯了</p>
-						</div>
-					</a>
-				</li>
-				<li class="mui-table-view-cell mui-media">
-					<a href="javascript:;">
-						<img class="mui-media-object mui-pull-right" src="images/yuantiao.jpg">
-						<div class="mui-media-body">
-							远眺
-							<p class='mui-ellipsis'>静静的看这个世界，最后终于疯了</p>
-						</div>
-					</a>
-				</li>
-				<li class="mui-table-view-cell mui-media">
-					<a href="javascript:;">
-						<img class="mui-media-object mui-pull-right" src="images/yuantiao.jpg">
-						<div class="mui-media-body">
-							远眺
-							<p class='mui-ellipsis'>静静的看这个世界，最后终于疯了</p>
-						</div>
-					</a>
-				</li>
+
 			</ul>
 		</div>
 	</body>
@@ -203,12 +172,32 @@
 			console.log(JSON.stringify(datas));
 			document.getElementById("position").innerText = datas;
 		});
+
+		/**
+		 * 下拉刷新具体业务实现
+		 */
+		function pulldownRefresh() {
+			setTimeout(function() {
+				showArtiles();
+				showServer();
+				_self.endPullToRefresh();
+			}, 1500);
+		}
+
 		mui.plusReady(function() {
 			//获得slider插件对象
 			var gallery = mui('.mui-slider');
 			gallery.slider({
 				interval: 3000 //自动轮播周期，若为0则不自动播放，默认为0；
 			});
+			_self = plus.webview.currentWebview();
+			_self.setPullToRefresh({
+				support: true,
+				height: '100px',
+				range: '120px',
+				style: 'circle',
+				offset: '44px'
+			}, pulldownRefresh);
 			//预加载详情页
 			webview_detail = mui.preload({
 				url: 'html/apphome/detail.html',
@@ -253,7 +242,7 @@
 			var li = document.createElement("li");
 			//			li.setAttribute("datas", entity);
 			li.className = "mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3";
-			li.innerHTML = '<a href="#"><span class="mui-icon mui-icon-contact"></span><div class="mui-media-body">' + entity.Name + '</div></a>';
+			li.innerHTML = '<a href="#"><img class="img_server" src=' + (ServerphotoUrl+entity.Icon) + ' onerror="this.src=\'images/serviceCategory.png\'"/></span><div class="mui-media-body">' + entity.Name + '</div></a>';
 			li.addEventListener("tap", function(event) {
 				openWindowExtras("html/server/server_list.html", "html/server/server_list.html", entity.Id);
 			});
@@ -299,7 +288,7 @@
 
 				_article.GetTopList(0, 5, function(datas) {
 					if(datas) {
-//						document.getElementById('ul_Artiles').innerHTML = '';
+						document.getElementById('ul_Artiles').innerHTML = '';
 						console.log(JSON.stringify(result));
 
 						for(var i = 0; i < datas.result.length; i++) {
@@ -319,7 +308,7 @@
 			var liArticle = document.createElement("li");
 			liArticle.className = "mui-table-view-cell mui-media";
 
-			liArticle.innerHTML = '<a href="javascript:;"><img class="mui-media-object mui-pull-right" src="' + NewphotoUrl + entity.ImgUrl + '" onerror="this.src=\'images/bed_small.jpg\'"><div class="mui-media-body">' + entity.Title+'<p class="mui-ellipsis">哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈</p></div></a>';
+			liArticle.innerHTML = '<a href="javascript:;"><img class="mui-media-object mui-pull-right" src="' + NewphotoUrl + entity.ImgUrl + '" onerror="this.src=\'images/bed_small.jpg\'"><div class="mui-media-body">' + entity.Title + '<p class="mui-ellipsis">哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈</p></div></a>';
 			liArticle.addEventListener("tap", function(event) {
 				console.log("AAAAAAAAAAAAA");
 				open_detail(entity.Id, entity.Title, entity.CreaterName, entity.CreateTime, NewphotoUrl + entity.ImgUrl);

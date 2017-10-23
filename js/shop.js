@@ -218,7 +218,25 @@ var Shop = (function() {
 				return;
 			}
 			var user = _db.getUser();
-			AsyncPost(API_SHOP+"GetShopPhotos", "&shopId=" + shopId + "&photoTypeId=" +photoTypeId+"&isAd="+isAd,
+			AsyncPost(API_SHOP+"GetShopPhotos", "shopId=" + shopId + "&photoTypeId=" +photoTypeId+"&isAd="+isAd,
+				function(result) {
+					if(callback) {
+						console.log('接口返回数据：' + JSON.stringify(result));
+						callback.call(this, result);
+					}
+				},
+				function() {
+					console.log('请求失败：');
+				});
+		};
+		//获取床位图片列表GET /api/Shop/GetProductPhotos
+		this.GetProductPhotos = function( pageIndex,pageSize,productId,callback) {
+			if(!_getNetwork()) {
+				mui.toast("没有网络连接，请稍后再试！");
+				return;
+			}
+			var user = _db.getUser();
+			AsyncPost(API_SHOP+"GetProductPhotos", "pageIndex=" + pageIndex + "&pageSize=" +pageSize+"&productId="+productId,
 				function(result) {
 					if(callback) {
 						console.log('接口返回数据：' + JSON.stringify(result));
@@ -263,7 +281,7 @@ var Shop = (function() {
 			});
 		}
 		
-		this.MakeOrder = function(productId,quantity,peopleAmount,address,phone,remark,bookedDate,categoryId,onSuccess,onError){
+		this.MakeOrder = function(productId,quantity,peopleAmount,address,phone,remark,bookedDate,categoryId,linkMains,onSuccess,onError){
 			if(!_getNetwork()) {
 				mui.toast("没有网络连接，请稍后再试！");
 				return;

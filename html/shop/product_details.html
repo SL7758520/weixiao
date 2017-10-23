@@ -201,7 +201,7 @@
 				<div id="image" class="position-atop">
 					<img id="shop_img" src="" alt="" onerror="this.src='../../images/bed.jpg'">
 					<div class="gray-img">
-						共6张
+						相册..
 					</div>
 				</div>
 			</div>
@@ -354,6 +354,9 @@
 						mui.toast(datas.message);
 					}
 				});
+				document.getElementById("image").addEventListener("tap", function(event) {
+					gotoHtml("productpic.html", id, photoUrl);
+				});
 				document.getElementById("collect").addEventListener("tap", function(event) {
 					console.log(document.getElementById("collect").innerText);
 					if(document.getElementById("collect").innerText == "已收藏") {
@@ -390,6 +393,24 @@
 					entity = proudctInfo;
 					entity.productId = id;
 					opWindow('createorder.html', 'createorder.html', entity);
+				});
+			}
+			function gotoHtml(u, datas, photoUrl) {
+				mui.openWindow({
+					url: u,
+					id: u,
+
+					show: {
+						aniShow: 'pop-in'
+					},
+					waiting: {
+						autoShow: true, //自动显示等待框，默认为true
+						title: '正在加载...', //等待对话框上显示的提示内容
+					},
+					extras: {
+						data: datas,
+						photoUrl: photoUrl,
+					}
 				});
 			}
 

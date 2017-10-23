@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>酒店照片</title>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/main.css" rel="stylesheet" />
+		<link href="../../css/appfont.css" rel="stylesheet" />
+		<style>
+			/*.title {
+				margin: 20px 15px 10px;
+				color: #6d6d72;
+				font-size: 15px;
+			}
+			
+			.oa-contact-cell.mui-table .mui-table-cell {
+				padding: 11px 0;
+				vertical-align: middle;
+			}
+			
+			.oa-contact-cell {
+				position: relative;
+				margin: -11px 0;
+			}
+			
+			.oa-contact-avatar {
+				width: 75px;
+			}
+			
+			.oa-contact-avatar img {
+				border-radius: 50%;
+			}
+			
+			.oa-contact-content {
+				width: 100%;
+			}
+			
+			.oa-contact-name {
+				margin-right: 20px;
+			}
+			
+			.oa-contact-name,
+			oa-contact-position {
+				float: left;
+			}
+			*/
+			
+			html,
+			body {
+				background-color: #efeff4;
+			}
+			
+			.mui-bar~.mui-content .mui-fullscreen {
+				top: 44px;
+				height: auto;
+			}
+			
+			.mui-pull-top-tips {
+				position: absolute;
+				top: -20px;
+				left: 50%;
+				margin-left: -25px;
+				width: 40px;
+				height: 40px;
+				border-radius: 100%;
+				z-index: 1;
+			}
+			
+			.mui-bar~.mui-pull-top-tips {
+				top: 24px;
+			}
+			
+			.mui-pull-top-wrapper {
+				width: 42px;
+				height: 42px;
+				display: block;
+				text-align: center;
+				background-color: #efeff4;
+				border: 1px solid #ddd;
+				border-radius: 25px;
+				background-clip: padding-box;
+				box-shadow: 0 4px 10px #bbb;
+				overflow: hidden;
+			}
+			
+			.mui-pull-top-tips.mui-transitioning {
+				-webkit-transition-duration: 200ms;
+				transition-duration: 200ms;
+			}
+			
+			.mui-pull-top-tips .mui-pull-loading {
+				/*-webkit-backface-visibility: hidden;
+				-webkit-transition-duration: 400ms;
+				transition-duration: 400ms;*/
+				margin: 0;
+			}
+			
+			.mui-pull-top-wrapper .mui-icon,
+			.mui-pull-top-wrapper .mui-spinner {
+				margin-top: 7px;
+			}
+			
+			.mui-pull-top-wrapper .mui-icon.mui-reverse {
+				/*-webkit-transform: rotate(180deg) translateZ(0);*/
+			}
+			
+			.mui-pull-bottom-tips {
+				text-align: center;
+				background-color: #efeff4;
+				font-size: 15px;
+				line-height: 40px;
+				color: #777;
+			}
+			
+			.mui-pull-top-canvas {
+				overflow: hidden;
+				background-color: #fafafa;
+				border-radius: 40px;
+				box-shadow: 0 4px 10px #bbb;
+				width: 40px;
+				height: 40px;
+				margin: 0 auto;
+			}
+			
+			.mui-pull-top-canvas canvas {
+				width: 40px;
+			}
+			
+			.mui-slider-indicator.mui-segmented-control {
+				background-color: #efeff4;
+			}
+			
+			.mui-slider .mui-slider-group .mui-slider-item {
+				height: 100%;
+			}
+			
+			.hotel-pic-list {
+				margin: 0px;
+				padding: 0px;
+				text-align: center;
+				position: relative;
+			}
+			
+			.hotel-pic-list li {
+				position: relative;
+				width: 150px;
+				height: 150px;
+				display: inline-block;
+				margin: 5px 3px;
+				border: dotted 1px #ddd;
+			}
+			
+			.hotel-pic-list li img {
+				width: 100%;
+				height: 100%;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a href="#offCanvasSide" class="mui-action-back mui-icon icon_app_02 mui-action-menu mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">相册</h1>
+		</header>
+		<div class="mui-content">
+			<div id="slider" class="mui-slider mui-fullscreen">
+				<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+					<div id="scroll" class="mui-scroll">
+						<!--<a class="mui-control-item mui-active" href="#item1mobile">
+							推荐
+						</a>
+						<a class="mui-control-item" href="#item2mobile">
+							热点
+						</a>
+						<a class="mui-control-item" href="#item3mobile">
+							北京
+						</a>
+						<a class="mui-control-item" href="#item4mobile">
+							社会
+						</a>
+						<a class="mui-control-item" href="#item5mobile">
+							娱乐
+						</a>
+						<a class="mui-control-item" href="#item6mobile">
+							科技
+						</a>-->
+					</div>
+				</div>
+				<div id="slidergroup" class="mui-slider-group">
+					<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
+						<div class="mui-scroll-wrapper">
+							<div id="scroll1" class="mui-scroll">
+								
+							</div>
+						</div>
+					</div>
+					<div id="item2mobile" class="mui-slider-item mui-control-content">
+						<div class="mui-scroll-wrapper">
+							<div id="scroll2" class="mui-scroll">
+
+							</div>
+						</div>
+					</div>
+					<div id="item3mobile" class="mui-slider-item mui-control-content">
+						<div class="mui-scroll-wrapper">
+							<div id="scroll3" class="mui-scroll">
+								
+							</div>
+						</div>
+					</div>
+					<div id="item4mobile" class="mui-slider-item mui-control-content">
+						<div class="mui-scroll-wrapper">
+							<div id="scroll4" class="mui-scroll">
+
+							</div>
+						</div>
+					</div>
+					<div id="item5mobile" class="mui-slider-item mui-control-content">
+						<div class="mui-scroll-wrapper">
+							<div id="scroll5" class="mui-scroll">
+								
+							</div>
+						</div>
+					</div>
+					<div id="item6mobile" class="mui-slider-item mui-control-content">
+						<div class="mui-scroll-wrapper">
+							<div id="scroll6" class="mui-scroll">
+
+							</div>
+						</div>
+					</div>
+					<div id="item7mobile" class="mui-slider-item mui-control-content">
+						<div class="mui-scroll-wrapper">
+							<div id="scroll7" class="mui-scroll">
+
+							</div>
+						</div>
+					</div>
+					<div id="item8mobile" class="mui-slider-item mui-control-content">
+						<div class="mui-scroll-wrapper">
+							<div id="scroll8" class="mui-scroll">
+
+							</div>
+						</div>
+					</div>
+					<div id="item9mobile" class="mui-slider-item mui-control-content">
+						<div class="mui-scroll-wrapper">
+							<div id="scroll9" class="mui-scroll">
+
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/localDatabase.js"></script>
+		<script src="../../js/post.js"></script>
+		<script src="../../js/dao.js"></script>
+		<script src="../../js/shop.js"></script>
+		<script>
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			});
+			(function($) {
+				//阻尼系数
+				var deceleration = mui.os.ios ? 0.003 : 0.0009;
+				$('.mui-scroll-wrapper').scroll({
+					bounce: false,
+					indicators: true, //是否显示滚动条
+					deceleration: deceleration
+				});
+			})(mui);
+			var _dataAccess = new DataAccess();
+			var _shop = new Shop();
+			var picList;
+			var scroll;
+			var slidergroup;
+			var _self;
+			var photoUrl;
+			var shopId;
+			mui.plusReady(function() {
+				_self = plus.webview.currentWebview();
+				shopId = _self.data;
+				photoUrl=_self.photoUrl;
+				console.log(shopId+"------------"+photoUrl);
+				scroll = document.getElementById("scroll");
+				slidergroup = document.getElementById("slidergroup");
+				_shop.GetShopPhotoTypes(function(datas) {
+					if(datas.status == 1) {
+						picList = datas.result;
+						addTab(picList);
+
+					} else {
+						mui.toast(datas.message);
+					}
+				});
+
+			});
+
+			function addTab(picList) {
+				scroll.innerHTML = "";
+				//				slidergroup.innerHTML = '';
+				for(var i = 0; i < picList.length; i++) {
+					scroll.appendChild(addTabData(picList[i], (i + 1)));
+				}
+			}
+
+			function addData(datas) {
+				var li = document.createElement("li");
+				li.innerHTML = '<img src='+photoUrl+datas.PhotoUrl+' alt=""  onerror="this.src=\'../../images/shop.jpg\'"/>';
+				return li;
+
+			}
+			
+			function addList(elemId,TypeId){
+				var item = document.getElementById("scroll" + elemId);
+					item.innerHTML = '';
+					_shop.GetShopPhotos(1, TypeId, true, function(datas) {
+						if(datas.status == 1) {
+							if(datas.result.length > 0) {
+								var ul = document.createElement('ul');
+								ul.className = "hotel-pic-list";
+								for(var i = 0; i < datas.result.length; i++) {
+									ul.appendChild(addData(datas));
+								}
+								item.appendChild(ul);
+							} else {
+								var li = document.createElement("div");
+								li.innerHTML = '<img src="../../images/shop.jpg" alt="" />';
+								item.appendChild(li);
+							}
+						} else {
+							mui.toast(datas.message);
+						}
+
+					});
+					
+			}
+
+			function addTabData(entity, id) {
+				var a = document.createElement("a");
+				if(id == 1) {
+					a.className = "mui-control-item mui-active";
+					addList(id,entity.Id);
+				} else {
+					a.className = "mui-control-item";
+				}
+//				a.setAttribute("IsChick", false);
+				a.innerHTML = entity.Name;
+				a.href = "#item" + id + "mobile";
+				a.addEventListener("tap", function(event) {
+						 addList(id,entity.Id);
+
+					
+				});
+//				console.log(a.href);
+				return a;
+			}
+		</script>
+	</body>
+
+</html>

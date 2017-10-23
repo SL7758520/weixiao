@@ -232,6 +232,8 @@
 						plus.nativeUI.closeWaiting();
 						if(result.status == 1) {
 							mui.toast('创建订单成功');
+							var dialog = document.getElementById('dialog');
+							dialog.style.display = 'none';
 							gotoHtml("../shop/pay.html",result.result.Id);
 							//							plus.webview.currentWebview().close();
 						} else {
@@ -308,6 +310,8 @@
 				var dialog = document.getElementById('dialog');
 				if(dialog.style.display == 'none') {
 					dialog.style.display = 'block';
+					document.getElementById('dialogone').style.display = 'none';
+					document.getElementById('dialogtwo').style.display = 'block';
 					return;
 				} else {
 					dialog.style.display = 'none';

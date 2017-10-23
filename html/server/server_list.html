@@ -98,20 +98,20 @@
 			function addList(entity) {
 				var li = document.createElement("li");
 				li.className = 'mui-table-view-cell';
-				var HasPickUp;
-				if(entity.HasPickUp) {
-					HasPickUp = "可接送";
-				} else {
-					HasPickUp = "不可接送";
+				var Unit;
+				if(entity.Unit == "month"){
+					Unit ="月";
+				}else if(entity.Unit == "day"){
+					Unit ="天";
 				}
 				var imgsrc;
 				imgsrc = photoUrl + entity.PhotoUrl;
 
 				if(entity.CollectCounts == null) {
-					li.innerHTML = '<div class="item"><div ><img src=' + imgsrc + ' onerror="this.src=\'../../images/bed_small.jpg\'" style="width: 100px;height: 65px;"></div><div class="text"><div class="information"><h4>' + entity.Name + '</h4><h5 style="margin-top: 8px;">' + HasPickUp + '</h5><h5 class="mui-ellipsis" style="margin-top: 8px;">' + entity.ShortDescription + '</h5></div><div class="price"><span class="new-price">￥' + entity.Price + '/月</span></div></div></div>';
+					li.innerHTML = '<div class="item"><div ><img src=' + imgsrc + ' onerror="this.src=\'../../images/Service.png\'" style="width: 100px;height: 65px;"></div><div class="text"><div class="information"><h4>' + entity.Name + '</h4><h5 class="mui-ellipsis" style="margin-top: 8px;">' + entity.ShortDescription + '</h5></div><div class="price"><span class="new-price">￥' + entity.Price + '/'+Unit+'</span></div></div></div>';
 
 				} else {
-					li.innerHTML = '<div class="item"><div ><img src=' + imgsrc + ' onerror="this.src=\'../../images/bed_small.jpg\'" style="width: 100px;height: 65px;"></div><div class="text"><div class="information"><h4>' + entity.Name + '</h4><h5 style="margin-top: 8px;">' + HasPickUp + '</h5><h5 class="mui-ellipsis" style="margin-top: 8px;">' + entity.ShortDescription + '</h5></div><div class="price"><span class="new-price">￥' + entity.Price + '/月</span><div id="" style="display: flex;align-items: center;margin-top: 5px;"><img src="../../images/heart@2x.png" style="width: 15px;height: 15px;" /><h5 style="margin-left: 5px;">' + entity.CollectCounts + '人关注</h5></div></div></div></div>';
+					li.innerHTML = '<div class="item"><div ><img src=' + imgsrc + ' onerror="this.src=\'../../images/Service.png\'" style="width: 100px;height: 65px;"></div><div class="text"><div class="information"><h4>' + entity.Name + '</h4><h5 class="mui-ellipsis" style="margin-top: 8px;">' + entity.ShortDescription + '</h5></div><div class="price"><span class="new-price">￥' + entity.Price + '/'+Unit+'</span><div id="" style="display: flex;align-items: center;margin-top: 5px;"><img src="../../images/heart@2x.png" style="width: 15px;height: 15px;" /><h5 style="margin-left: 5px;">' + entity.CollectCounts + '人关注</h5></div></div></div></div>';
 
 				}
 
