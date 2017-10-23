@@ -247,13 +247,10 @@
 			"fonts/icomoon.ttf",
 			"js/article.js",
 			"fonts/mui.ttf",
-			"images/bed_small.jpg",
-			"images/serviceCategory.png"
+			"images/bed_small.jpg"
 		],
 		"refer": [
-			"html/apphome/detail.html",
-			"html/server/server_list.html",
-			"html/apphome/city.html"
+			"html/apphome/detail.html"
 		]
 	},
 	"splash.html": {
@@ -283,13 +280,11 @@
 			"fonts/fontawesome-webfont.woff2",
 			"images/shop.jpg",
 			"js/member.js",
-			"images/bed_small.jpg",
-			"fonts/icomoon.ttf"
+			"images/bed_small.jpg"
 		],
 		"refer": [
 			"html/shop/product_details.html",
-			"html/shop/productpic.html",
-			"html/shop/shop_pic.html"
+			"html/shop/productpic.html"
 		]
 	},
 	"html/shop/product_details.html": {
@@ -305,12 +300,10 @@
 			"js/shop.js",
 			"js/post.js",
 			"js/member.js",
-			"images/bed.jpg",
-			"fonts/icomoon.ttf"
+			"images/bed.jpg"
 		],
 		"refer": [
-			"html/shop/createorder.html",
-			"html/shop/productpic.html"
+			"html/shop/createorder.html"
 		]
 	},
 	"html/member/member_modify.html": {
@@ -323,7 +316,9 @@
 			"js/mui.min.js",
 			"fonts/mui.ttf",
 			"js/dao.js",
-			"js/post.js"
+			"js/post.js",
+			"css/mui.picker.min.css",
+			"js/mui.picker.min.js"
 		],
 		"refer": []
 	},
@@ -339,8 +334,7 @@
 			"js/shop.js",
 			"js/post.js",
 			"css/main.css",
-			"fonts/mui.ttf",
-			"fonts/icomoon.ttf"
+			"js/compareTimes.js"
 		],
 		"refer": [
 			"html/shop/select_people.html"
@@ -356,10 +350,7 @@
 			"js/dao.js",
 			"js/shop.js",
 			"js/post.js",
-			"css/main.css",
-			"css/appfont.css",
-			"images/bed_small.jpg",
-			"fonts/icomoon.ttf"
+			"css/main.css"
 		],
 		"refer": []
 	},
@@ -467,9 +458,7 @@
 			"images/weixinpay.png",
 			"css/mui.min.css",
 			"images/zhifubao.png",
-			"js/mui.min.js",
-			"css/main.css",
-			"css/appfont.css"
+			"js/mui.min.js"
 		],
 		"refer": []
 	},
@@ -518,8 +507,7 @@
 			"css/mui.min.css",
 			"js/linkman.js",
 			"js/post.js"
-		],
-		"refer": []
+		]
 	},
 	"html/apphome/detail.html": {
 		"resources": [
@@ -532,71 +520,7 @@
 			"js/dao.js",
 			"js/apphome.js",
 			"js/article.js",
-			"js/post.js",
-			"images/bed.jpg"
-		],
-		"refer": []
-	},
-	"html/server/server_list.html": {
-		"resources": [
-			"js/localDatabase.js",
-			"js/mui.min.js",
-			"js/dao.js",
-			"css/mui.min.css",
-			"js/apphome.js",
-			"js/article.js",
-			"js/post.js",
-			"js/shop.js",
-			"css/main.css",
-			"css/appfont.css",
-			"fonts/mui.ttf",
-			"images/bed_small.jpg",
-			"fonts/icomoon.ttf",
-			"images/Service.png"
-		],
-		"refer": [
-			"html/shop/product_details.html",
-			"html/server/server_detail.html"
-		]
-	},
-	"html/server/server_detail.html": {
-		"resources": [
-			"js/localDatabase.js",
-			"js/member.js",
-			"js/mui.min.js",
-			"js/dao.js",
-			"css/mui.min.css",
-			"js/shop.js",
-			"js/post.js",
-			"images/bed.jpg",
-			"css/appfont.css",
-			"css/main.css",
-			"fonts/mui.ttf",
-			"fonts/icomoon.ttf"
-		],
-		"refer": [
-			"html/server/serverOrder.html",
-			"html/server/server_pic.html"
-		]
-	},
-	"html/server/serverOrder.html": {
-		"resources": [
-			"js/localDatabase.js",
-			"js/muifun.js",
-			"js/mui.picker.min.js",
-			"js/mui.min.js",
-			"js/dao.js",
-			"css/mui.min.css",
-			"js/shop.js",
-			"css/mui.picker.min.css",
-			"js/post.js",
-			"css/main.css",
-			"css/appfont.css",
-			"fonts/mui.ttf",
-			"fonts/icomoon.ttf"
-		],
-		"refer": [
-			"html/shop/pay.html"
+			"js/post.js"
 		]
 	},
 	"html/linkman/linkman_list.html": {
@@ -622,37 +546,8 @@
 			"js/linkman.js",
 			"js/post.js",
 			"css/mui.picker.min.css",
-			"js/localDatabase.js"
-		],
-		"refer": []
-	},
-	"html/shop/shop_pic.html": {
-		"resources": [
 			"js/localDatabase.js",
-			"js/mui.min.js",
-			"images/t0-3.jpg",
-			"js/dao.js",
-			"css/mui.min.css",
-			"js/shop.js",
-			"js/post.js"
-		]
-	},
-	"html/server/server_pic.html": {
-		"resources": [
-			"css/mui.min.css"
-		]
-	},
-	"html/apphome/city.html": {
-		"resources": [
-			"js/localDatabase.js",
-			"js/mui.min.js",
-			"js/dao.js",
-			"css/mui.min.css",
-			"js/apphome.js",
-			"css/mui.indexedlist.css",
-			"js/post.js",
-			"js/mui.indexedlist.js",
-			"fonts/mui.ttf"
+			"js/mui.min.js"
 		]
 	}
 }

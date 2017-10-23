@@ -133,6 +133,7 @@
 		<script src="../../js/post.js"></script>
 		<script src="../../js/dao.js"></script>
 		<script src="../../js/shop.js"></script>
+		<script type="text/javascript" src="../../js/compareTimes.js" ></script>
 		<script>
 			mui.init({
 				swipeBack: true //启用右滑关闭功能
@@ -158,20 +159,29 @@
 //				console.log(FaultEntity.MinQuantity + '========' + FaultEntity.MaxQuantity);
 				//				mui('#quantity').numbox().setValue(FaultEntity.MinQuantity);
 				mui('#dtPicker').on('tap', 'a', function() {
-					var curTime = (new Date()).Format("yyyy-MM-dd");
+					var curTime = (new Date()).Format("yyyy-MM-dd hh:mm");
 					//					var curTime = document.getElementById("txtOccurTime").innerHTML;
 					var year = new Date().getFullYear();
 					var opt = {
-						"type": "date",
+						"type": "datetime",
 						"value": curTime,
-						"beginYear": year - 1,
-						"endYear": year
+						"beginYear": year,
+						"endYear": year+1
 					};
 					var picker = new mui.DtPicker(opt);
 					picker.show(function(rs) {
-						document.getElementById("txtOccurTime").innerHTML = rs.text;
-						bookedDate = rs.text;
-						picker.dispose();
+//						console.log(dateStrToMillis(rs.text)+'===结束==='+dateStrToMillis(curTime));
+						if (dateStrToMillis(rs.text)<dateStrToMillis(curTime)) {
+							mui.toast('不能选择之前的时间');
+							picker.dispose();
+						}else if((dateStrToMillis(rs.text)-dateStrToMillis(curTime))/(1000*60*60*24)>60){
+							mui.toast('抱歉，只能提前60天预约，请重新选择');
+							picker.dispose();
+						} else{
+							document.getElementById("txtOccurTime").innerHTML = rs.text;
+							bookedDate = rs.text;
+							picker.dispose();
+						}
 					});
 				});
 				window.addEventListener('hasSelected',function(event){
