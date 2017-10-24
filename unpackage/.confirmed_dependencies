@@ -247,10 +247,12 @@
 			"fonts/icomoon.ttf",
 			"js/article.js",
 			"fonts/mui.ttf",
-			"images/bed_small.jpg"
+			"images/bed_small.jpg",
+			"images/serviceCategory.png"
 		],
 		"refer": [
-			"html/apphome/detail.html"
+			"html/apphome/detail.html",
+			"html/server/server_list.html"
 		]
 	},
 	"splash.html": {
@@ -548,6 +550,52 @@
 			"css/mui.picker.min.css",
 			"js/localDatabase.js",
 			"js/mui.min.js"
+		]
+	},
+	"html/server/server_detail.html": {
+		"resources": [
+			"js/localDatabase.js",
+			"js/member.js",
+			"js/mui.min.js",
+			"js/dao.js",
+			"css/mui.min.css",
+			"js/shop.js",
+			"js/post.js"
+		],
+		"refer": [
+			"html/server/serverOrder.html"
+		]
+	},
+	"html/server/server_list.html": {
+		"resources": [
+			"js/localDatabase.js",
+			"js/mui.min.js",
+			"images/Service.png",
+			"js/dao.js",
+			"css/mui.min.css",
+			"js/shop.js",
+			"js/apphome.js",
+			"js/post.js"
+		],
+		"refer": [
+			"html/server/server_detail.html"
+		]
+	},
+	"html/server/serverOrder.html": {
+		"resources": [
+			"js/localDatabase.js",
+			"js/muifun.js",
+			"js/mui.picker.min.js",
+			"js/mui.min.js",
+			"js/dao.js",
+			"css/mui.min.css",
+			"js/shop.js",
+			"css/mui.picker.min.css",
+			"js/post.js",
+			"js/compareTimes.js"
+		],
+		"refer": [
+			"html/shop/pay.html"
 		]
 	}
 }
