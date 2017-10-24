@@ -24,6 +24,7 @@
 				width: 100%;
 				height: 100%;
 			}
+			
 			.mui-table-view {
 				background-color: #F3F3F3;
 			}
@@ -31,7 +32,8 @@
 			.img:first-of-type {
 				padding-top: 0;
 			}
-			.mui-card{
+			
+			.mui-card {
 				background-color: #FFFFFF;
 				margin-top: 15px;
 			}
@@ -103,13 +105,13 @@
 				color: #999;
 				z-index: 9999;
 			}
-			.shop_text{
+			
+			.shop_text {
 				color: #8f8f94;
 				padding-left: 10px;
 				padding-right: 10px;
 				font-size: 14px;
 			}
-
 		</style>
 	</head>
 
@@ -243,17 +245,20 @@
 			if(shopName != '') {
 				document.getElementById('title').innerHTML = shopName;
 			}
-			
-			_shop.GetHotProducts(cityId,1,4,function(datas){
-				if(datas.status ==1){
-					for(var i=0;i<4;i++){
-						document.getElementById("img"+(i+1)).src=datas.result[i].PhotoUrl;
+			_shop.getPhotoUrl(function(datas) {
+				photoUrl = datas;
+				_shop.GetHotProducts(cityId, 1, 4, function(datas) {
+					if(datas.status == 1) {
+						for(var i = 0; i < 4; i++) {
+							console.log(photoUrl + datas.result[i].PhotoUrl);
+							document.getElementById("img" + (i + 1)).src = photoUrl + datas.result[i].PhotoUrl;
+						}
+						document.getElementById("img0").src = photoUrl + datas.result[3].PhotoUrl;
+						document.getElementById("img5").src = photoUrl + datas.result[0].PhotoUrl;
+					} else {
+						mui.toast(datas.message);
 					}
-					document.getElementById("img0").src=datas.result[3].PhotoUrl;
-					document.getElementById("img5").src=datas.result[0].PhotoUrl;
-				}else{
-					mui.toast(datas.message);
-				}
+				});
 			});
 			_member.GetShopCollect(pageIndex, pageSize, function(datas) {
 				if(datas.status == 1) {
@@ -269,16 +274,13 @@
 					mui.toast(datas.message);
 				}
 			});
-			_shop.getPhotoUrl(function(datas) {
-				photoUrl = datas;
-			});
-			console.log(photoUrl);
+
 			initData();
 
 		});
 
 		function initData() {
-			if(shopId == null) {
+			if(shopId == 0) {
 				_shop.GetShopsByCityId(pageIndex, pageSize, cityId, function(datas) {
 					if(datas.status == 1) {
 						shopList = datas.result;
@@ -318,8 +320,8 @@
 			}
 			var imgsrc;
 
-				imgsrc = photoUrl + entity.PhotoUrl;
-			
+			imgsrc = photoUrl + entity.PhotoUrl;
+
 			//			console.log(globals.apiUrl + entity.PhotoUrl); 
 			//			li.innerHTML = '<div class="mui-card-header mui-card-media" style="height:40vw;background-image:url(' + entity.PhotoUrl + ')"></div><div class="mui-card-content"><div class="mui-card-content-inner"><p>' + entity.Name + '</p><p style="color: #333;">' + description + '</p></div></div><div class="mui-card-footer"><a class="mui-card-link">类型:' + entity.TypeName + '</a><a class="mui-card-link">详细..</a></div>';
 			li.innerHTML = '<dd class="img"><img src=' + imgsrc + ' onerror="this.src=\'images/shop.jpg\'"></dd><div class="content"><dd class="detail">' + entity.Name + '</dd><dd class="price"><span class="newPrice">￥' + entity.BottomPrice + '/月起</span></dd></div><div class="shop_text">' + description + '<br>地址：' + entity.Address + '</div>';

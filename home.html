@@ -69,7 +69,8 @@
 			.mui-table-view {
 				margin: 10px 0px 10px 0px;
 			}
-			.img_server{
+			
+			.img_server {
 				width: 32px;
 				height: 32px;
 			}
@@ -83,42 +84,42 @@
 			<h1 id="title" class="mui-title">微孝养老</h1>
 		</header>
 		<div class="mui-content">
-			<div id="slider" class="mui-slider" style="height: 200px;overflow:hidden;">
+			<div id="slider" class="mui-slider" style="height: 180px;">
 				<div class="mui-slider-group mui-slider-loop">
 					<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
 					<div class="mui-slider-item mui-slider-item-duplicate">
 						<a href="#">
-							<img src="images/yuantiao.jpg" id="img0">
+							<img src="" onerror="this.src='images/bed.jpg'" id="img0">
 						</a>
 					</div>
 					<!-- 第一张 -->
 					<div class="mui-slider-item">
 						<a href="#">
-							<img src="images/shuijiao.jpg" id="img1">
+							<img src="" onerror="this.src='images/bed.jpg'" id="img1">
 						</a>
 					</div>
 					<!-- 第二张 -->
 					<div class="mui-slider-item">
 						<a href="#">
-							<img src="images/muwu.jpg" id="img2">
+							<img src="" onerror="this.src='images/bed.jpg'" id="img2">
 						</a>
 					</div>
 					<!-- 第三张 -->
 					<div class="mui-slider-item">
 						<a href="#">
-							<img src="images/cbd.jpg" id="img3">
+							<img src="" onerror="this.src='images/bed.jpg'" id="img3">
 						</a>
 					</div>
 					<!-- 第四张 -->
 					<div class="mui-slider-item">
 						<a href="#">
-							<img src="images/yuantiao.jpg" id="img4">
+							<img src="" onerror="this.src='images/bed.jpg'" id="img4">
 						</a>
 					</div>
 					<!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播)-->
 					<div class="mui-slider-item mui-slider-item-duplicate">
 						<a href="#">
-							<img src="images/shuijiao.jpg" id="img5">
+							<img src="" onerror="this.src='images/bed.jpg'" id="img5">
 						</a>
 					</div>
 				</div>
@@ -132,7 +133,7 @@
 			</div>
 
 			<ul id="server_list" class="mui-table-view mui-grid-view mui-grid-9">
-				
+
 			</ul>
 
 			<ul class="mui-table-view" id="ul_Artiles">
@@ -146,10 +147,12 @@
 	<script src="js/dao.js"></script>
 	<script src="js/apphome.js"></script>
 	<script src="js/article.js"></script>
+	<script src="js/shop.js"></script>
 	<script>
 		var _dataAccess = new DataAccess();
 		var _appHome = new AppHome();
 		var _article = new Article();
+		var _shop = new Shop();
 		var user;
 		var shopId;
 		var shopName;
@@ -216,15 +219,29 @@
 			if(shopName != '') {
 				document.getElementById('title').innerHTML = shopName;
 			}
-			document.getElementById("position").addEventListener("tap", function(event) {
-				openWindow("city.html", "html/apphome/city.html");
-			});
 			_article.getPhotoUrl(function(datas) {
 				NewphotoUrl = datas;
 			});
 			_appHome.getPhotoUrl(function(datas) {
 				ServerphotoUrl = datas;
+				_shop.GetSilderPhotos(shopId, 4, function(datas) {
+					if(datas.status == 1) {
+						for(var i = 0; i < 4; i++) {
+							console.log(ServerphotoUrl + datas.result[i].PhotoUrl);
+							document.getElementById("img" + (i + 1)).src = ServerphotoUrl + datas.result[i].PhotoUrl;
+						}
+						document.getElementById("img0").src = ServerphotoUrl + datas.result[3].PhotoUrl;
+						document.getElementById("img5").src = ServerphotoUrl + datas.result[0].PhotoUrl;
+					} else {
+						mui.toast(datas.message);
+					}
+				});
 			});
+
+			document.getElementById("position").addEventListener("tap", function(event) {
+				openWindow("city.html", "html/apphome/city.html");
+			});
+
 			showArtiles();
 			showServer();
 		});
@@ -242,7 +259,7 @@
 			var li = document.createElement("li");
 			//			li.setAttribute("datas", entity);
 			li.className = "mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3";
-			li.innerHTML = '<a href="#"><img class="img_server" src=' + (ServerphotoUrl+entity.Icon) + ' onerror="this.src=\'images/serviceCategory.png\'"/></span><div class="mui-media-body">' + entity.Name + '</div></a>';
+			li.innerHTML = '<a href="#"><img class="img_server" src=' + (ServerphotoUrl + entity.Icon) + ' onerror="this.src=\'images/serviceCategory.png\'"/></span><div class="mui-media-body">' + entity.Name + '</div></a>';
 			li.addEventListener("tap", function(event) {
 				openWindowExtras("html/server/server_list.html", "html/server/server_list.html", entity.Id);
 			});
