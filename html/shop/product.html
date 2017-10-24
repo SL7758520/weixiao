@@ -415,7 +415,7 @@
 
 				});
 
-				_shop.GetProducts(pageIndex, pageSize, 1, 1, function(datas) {
+				_shop.GetProducts(pageIndex, pageSize, shopId, 1, function(datas) {
 					if(datas.status == 1) {
 						productList = datas.result;
 						addList(productList);
