@@ -30,6 +30,12 @@
 			.mui-form {
 				color: #636363;
 			}
+			.pricenum {
+				width: auto !important;
+				float: right !important;
+				color: #FFC90E !important;
+				font-size: 17px !important;
+			}
 		</style>
 		<div class="windows_bg" id="dialog" style="display: none;">
 			<!--通用弹窗标准-->
@@ -85,6 +91,11 @@
 						<!--<dd><input id="quantity" type="number" class="input_sys1" placeholder="未填写"></dd>-->
 					</div>
 				</div>
+				<div class="form_info" id="divprice" style="display: none;">
+					<div><label style="width: 100px;">金额</label>
+						<label class="pricenum" id="payprice">3999.00￥</label>
+					</div>
+				</div>
 				<div style="border-top: 1px solid #e8e8e8;"></div>
 				<ul>
 					<li id="dtPicker">
@@ -116,7 +127,7 @@
 		<script src="../../js/post.js"></script>
 		<script src="../../js/dao.js"></script>
 		<script src="../../js/shop.js"></script>
-		<script type="text/javascript" src="../../js/compareTimes.js" ></script>
+		<script type="text/javascript" src="../../js/compareTimes.js"></script>
 		<script>
 			mui.init({
 				swipeBack: true //启用右滑关闭功能
@@ -144,31 +155,47 @@
 				mui('#quantity').numbox().setOption('max', FaultEntity.MaxQuantity);
 				//				console.log(FaultEntity.MinQuantity + '========' + FaultEntity.MaxQuantity);
 				//				mui('#quantity').numbox().setValue(FaultEntity.MinQuantity);
+//				mui('#dtPicker').on('tap', 'a', function() { 
+//					var curTime = (new Date()).Format("yyyy-MM-dd");
+//					//					var curTime = document.getElementById("txtOccurTime").innerHTML;
+//					var year = new Date().getFullYear();
+//					var opt = {
+//						"type": "date",
+//						"value": curTime,
+//						"beginYear": year - 1,
+//						"endYear": year
+//					};
+//					var picker = new mui.DtPicker(opt);
+//					picker.show(function(rs) {
+//						document.getElementById("txtOccurTime").innerHTML = rs.text;
+//						bookedDate = rs.text;
+//						picker.dispose();
+//					});
+//				});
 				mui('#dtPicker').on('tap', 'a', function() {
-						var curTime = (new Date()).Format("yyyy-MM-dd hh:mm");
-						//					var curTime = document.getElementById("txtOccurTime").innerHTML;
-						var year = new Date().getFullYear();
-						var opt = {
-							"type": "datetime",
-							"value": curTime,
-							"beginYear": year,
-							"endYear": year + 1
-						};
-						var picker = new mui.DtPicker(opt);
-						picker.show(function(rs) {
-							//						console.log(dateStrToMillis(rs.text)+'===结束==='+dateStrToMillis(curTime));
-							if(dateStrToMillis(rs.text) < dateStrToMillis(curTime)) {
-								mui.toast('不能选择之前的时间');
-								picker.dispose();
-							} else if((dateStrToMillis(rs.text) - dateStrToMillis(curTime)) / (1000 * 60 * 60 * 24) > 60) {
-								mui.toast('抱歉，只能提前60天预约，请重新选择');
-								picker.dispose();
-							} else {
-								document.getElementById("txtOccurTime").innerHTML = rs.text;
-								bookedDate = rs.text;
-								picker.dispose();
-							}
-						});
+					var curTime = (new Date()).Format("yyyy-MM-dd hh:mm");
+					//					var curTime = document.getElementById("txtOccurTime").innerHTML;
+					var year = new Date().getFullYear();
+					var opt = {
+						"type": "datetime",
+						"value": curTime,
+						"beginYear": year,
+						"endYear": year + 1
+					};
+					var picker = new mui.DtPicker(opt);
+					picker.show(function(rs) {
+						//						console.log(dateStrToMillis(rs.text)+'===结束==='+dateStrToMillis(curTime));
+						if(dateStrToMillis(rs.text) < dateStrToMillis(curTime)) {
+							mui.toast('不能选择之前的时间');
+							picker.dispose();
+						} else if((dateStrToMillis(rs.text) - dateStrToMillis(curTime)) / (1000 * 60 * 60 * 24) > 60) {
+							mui.toast('抱歉，只能提前60天预约，请重新选择');
+							picker.dispose();
+						} else {
+							document.getElementById("txtOccurTime").innerHTML = rs.text;
+							bookedDate = rs.text;
+							picker.dispose();
+						}
 					});
 					document.getElementById('confirm').addEventListener('tap', function() {
 						var quantitynum = mui('#quantity').numbox().getValue();
@@ -249,11 +276,28 @@
 							mui.toast('请求失败');
 						});
 					});
-				}
+				});
+				 mui('body').on('change','.mui-numbox', function() {
+						calculateprice();
+					});
+
+			}
 
 				function getValue(ElementId) {
 					return document.getElementById(ElementId).value;
 				}
+			
+			function calculateprice() {
+				var Price = FaultEntity.Price;
+				var quantitynum = mui('#quantity').numbox().getValue();
+				var totalprice = Price * quantitynum;
+				if(totalprice!= 0) {
+					document.getElementById('divprice').style.display = 'block';
+					document.getElementById('payprice').innerHTML = toDecimal2(totalprice) + '￥';
+				}else{
+					document.getElementById('divprice').style.display = 'none';
+				}
+			}
 
 				//			var inputTap = false;
 				//			mui('.mui-card').on('tap', '.allSelect', function() {
@@ -358,6 +402,24 @@
 						});
 					}, 0);
 				};
+						//保留2位小数。
+			function toDecimal2(x) {
+				var f = parseFloat(x);
+				if(isNaN(f)) {
+					return false;
+				}
+				var f = Math.round(x * 100) / 100;
+				var s = f.toString();
+				var rs = s.indexOf('.');
+				if(rs < 0) {
+					rs = s.length;
+					s += '.';
+				}
+				while(s.length <= rs + 2) {
+					s += '0';
+				}
+				return s;
+			}
 		</script>
 	</body>
 

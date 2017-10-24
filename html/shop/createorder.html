@@ -30,9 +30,17 @@
 			.mui-form {
 				color: #636363;
 			}
-			.divborder{
+			
+			.divborder {
 				line-height: 40px;
 				border-top: 1px solid #e8e8e8;
+			}
+			
+			.pricenum {
+				width: auto !important;
+				float: right !important;
+				color: #FFC90E !important;
+				font-size: 17px !important;
 			}
 		</style>
 		<div class="windows_bg" id="dialog" style="display: none;">
@@ -84,7 +92,7 @@
 			<div id="addPeople" style="text-align: center;padding: 5px;color: #4cd964;font-size: 18px;">
 				<a id="icon-plus" style="color: #4cd964;"><span class="mui-icon mui-icon-plus"></span></a> 添加联系人
 			</div>
-				<!--<div>
+			<!--<div>
 					<div class="mui-input-row mui-left"><div style="display: flex;flex-direction: row;"><span style="min-width: 60px !important;display:inline-block;">测试</span><span style="width: 40px;display:inline-block;">男</span><span style="width: 150px;display:inline-block;">444************333</span><a><i class="mui-icon mui-icon-minus"></i></a></label></div>
 					<div class="mui-input-row mui-left"><div style="display: flex;flex-direction: row;"><span style="min-width: 60px !important;display:inline-block;">测试</span><span style="width: 40px;display:inline-block;">男</span><span style="width: 150px;display:inline-block;">444************333</span><a><i class="mui-icon mui-icon-minus"></i></a></label></div>
 				</div>-->
@@ -100,6 +108,11 @@
 							<button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
 						</div>
 						<!--<dd><input id="quantity" type="number" class="input_sys1" placeholder="未填写"></dd>-->
+					</div>
+				</div>
+				<div class="form_info" id="divprice" style="display: none;">
+					<div><label style="width: 100px;">金额</label>
+						<label class="pricenum" id="payprice">3999.00￥</label>
 					</div>
 				</div>
 				<div style="border-top: 1px solid #e8e8e8;"></div>
@@ -133,7 +146,7 @@
 		<script src="../../js/post.js"></script>
 		<script src="../../js/dao.js"></script>
 		<script src="../../js/shop.js"></script>
-		<script type="text/javascript" src="../../js/compareTimes.js" ></script>
+		<script type="text/javascript" src="../../js/compareTimes.js"></script>
 		<script>
 			mui.init({
 				swipeBack: true //启用右滑关闭功能
@@ -153,10 +166,11 @@
 			});
 
 			function initpage() {
+				console.log(JSON.stringify(FaultEntity));
 				document.getElementById('phone').value = _dataAccess.getUser().Mobile;
 				mui('#quantity').numbox().setOption('min', FaultEntity.MinQuantity);
 				mui('#quantity').numbox().setOption('max', FaultEntity.MaxQuantity);
-//				console.log(FaultEntity.MinQuantity + '========' + FaultEntity.MaxQuantity);
+				//				console.log(FaultEntity.MinQuantity + '========' + FaultEntity.MaxQuantity);
 				//				mui('#quantity').numbox().setValue(FaultEntity.MinQuantity);
 				mui('#dtPicker').on('tap', 'a', function() {
 					var curTime = (new Date()).Format("yyyy-MM-dd hh:mm");
@@ -166,41 +180,44 @@
 						"type": "datetime",
 						"value": curTime,
 						"beginYear": year,
-						"endYear": year+1
+						"endYear": year + 1
 					};
 					var picker = new mui.DtPicker(opt);
 					picker.show(function(rs) {
-//						console.log(dateStrToMillis(rs.text)+'===结束==='+dateStrToMillis(curTime));
-						if (dateStrToMillis(rs.text)<dateStrToMillis(curTime)) {
+						//						console.log(dateStrToMillis(rs.text)+'===结束==='+dateStrToMillis(curTime));
+						if(dateStrToMillis(rs.text) < dateStrToMillis(curTime)) {
 							mui.toast('不能选择之前的时间');
 							picker.dispose();
-						}else if((dateStrToMillis(rs.text)-dateStrToMillis(curTime))/(1000*60*60*24)>60){
+						} else if((dateStrToMillis(rs.text) - dateStrToMillis(curTime)) / (1000 * 60 * 60 * 24) > 60) {
 							mui.toast('抱歉，只能提前60天预约，请重新选择');
 							picker.dispose();
-						} else{
+						} else {
 							document.getElementById("txtOccurTime").innerHTML = rs.text;
 							bookedDate = rs.text;
 							picker.dispose();
 						}
 					});
 				});
-				window.addEventListener('hasSelected',function(event){
+				window.addEventListener('hasSelected', function(event) {
 					var selecteds = event.detail.data;
 					linkMains = selecteds;
-					document.getElementById('ullinkman').innerHTML='';
-					if (selecteds.length==0) {
+					document.getElementById('ullinkman').innerHTML = '';
+					if(selecteds.length == 0) {
 						mui.toast('未选择');
-					} else{
-						for (var i=0;i<selecteds.length;i++) {
+					} else {
+						for(var i = 0; i < selecteds.length; i++) {
 							var card = createCard(selecteds[i]);
 							document.getElementById('ullinkman').appendChild(card);
 						}
+						calculateprice();
 					}
 				});
 				
-				
-				
-				document.getElementById("addPeople").addEventListener("tap",function(event){
+				 mui('body').on('change','.mui-numbox', function() {
+						calculateprice();
+					});
+
+				document.getElementById("addPeople").addEventListener("tap", function(event) {
 					mui.openWindow({
 						id: 'select_people.html',
 						url: 'select_people.html',
@@ -210,8 +227,8 @@
 						waiting: {
 							autoShow: false
 						},
-						extras:{
-							pageId:'createorder.html'
+						extras: {
+							pageId: 'createorder.html'
 						}
 					});
 				});
@@ -230,7 +247,7 @@
 						mui.toast('请选择联系人');
 						return;
 					}
-					
+
 					if(quantitynum < FaultEntity.MinQuantity) {
 						mui.toast('入住时长不能少于' + FaultEntity.MinQuantity + '个月');
 						return;
@@ -250,7 +267,7 @@
 					plus.nativeUI.showWaiting();
 
 					console.log('productId:' + productId + 'address:' + getValue('address') + 'phone:' + getValue('phone') + 'quantity:' + quantitynum + 'peopleAmount:' + peopleAmountnum);
-					_shop.MakeOrder(productId, quantitynum, peopleAmountnum, getValue('address'), getValue('phone'), getValue('remark'), document.getElementById("txtOccurTime").innerHTML, 1,linkMains, function(result) {
+					_shop.MakeOrder(productId, quantitynum, peopleAmountnum, getValue('address'), getValue('phone'), getValue('remark'), document.getElementById("txtOccurTime").innerHTML, 1, linkMains, function(result) {
 						console.log(JSON.stringify(result));
 						plus.nativeUI.closeWaiting();
 						if(result.status == 1) {
@@ -288,26 +305,42 @@
 					//					mui.back();
 					plus.webview.getWebviewById('createorder.html').close();
 				});
+
 			}
 
 			function getValue(ElementId) {
 				return document.getElementById(ElementId).value;
 			}
-			
+
+			function calculateprice() {
+				var Price = FaultEntity.Price;
+//				var Price = 39.995451;
+				var peoplenum = linkMains.length;
+				var timelong = mui('#quantity').numbox().getValue();
+				var totalprice = Price * peoplenum * timelong;
+				if(timelong != 0 && peoplenum != 0) {
+					document.getElementById('divprice').style.display = 'block';
+					document.getElementById('payprice').innerHTML = toDecimal2(totalprice) + '￥';
+				}else{
+					document.getElementById('divprice').style.display = 'none';
+				}
+			}
+
 			//<div class="mui-input-row mui-left divborder" ><div style="display: flex;flex-direction: row;"><span style="min-width: 60px !important;display:inline-block;">测试</span><span style="width: 40px;display:inline-block;">男</span><span style="display:inline-block;">444************333</span><a style="margin-left: 50px;"><i class="mui-icon mui-icon-minus"></i></a></label></div>
-			function createCard(Entity){
+			function createCard(Entity) {
 				var card = document.createElement('div');
 				card.className = 'mui-input-row mui-left divborder';
-				var cardId = Entity.IDCard.substring(0,3)+'************'+Entity.IDCard.substring(Entity.IDCard.length-3,Entity.IDCard.length);
-				card.innerHTML = '<div style="display: flex;flex-direction: row;"><span style="min-width: 60px !important;display:inline-block;">'+Entity.Name+'</span><span style="width: 50px;display:inline-block;">' + Entity.Sex + '</span><span style="display:inline-block;">' + cardId + '</span><a style="margin-left: 50px;"><i class="mui-icon mui-icon-minus" id="'+Entity.Id+'"></i></a></div>'
-				card.querySelector('i').addEventListener('tap',function(){
+				var cardId = Entity.IDCard.substring(0, 3) + '************' + Entity.IDCard.substring(Entity.IDCard.length - 3, Entity.IDCard.length);
+				card.innerHTML = '<div style="display: flex;flex-direction: row;"><span style="min-width: 60px !important;display:inline-block;">' + Entity.Name + '</span><span style="width: 50px;display:inline-block;">' + Entity.Sex + '</span><span style="display:inline-block;">' + cardId + '</span><a style="margin-left: 50px;"><i class="mui-icon mui-icon-minus" id="' + Entity.Id + '"></i></a></div>'
+				card.querySelector('i').addEventListener('tap', function() {
 					document.getElementById('ullinkman').removeChild(card);
-					linkMains.splice(GetIndexbyId(Entity.Id,linkMains), 1);
+					linkMains.splice(GetIndexbyId(Entity.Id, linkMains), 1);
+					calculateprice();
 				})
 				return card;
 			}
-			
-			var GetIndexbyId = function(value,datas) {
+
+			var GetIndexbyId = function(value, datas) {
 				for(var i = 0; i < datas.length; i++) {
 					if(value == datas[i].Id) {
 						return i;
@@ -397,7 +430,25 @@
 					});
 				}, 0);
 			};
-			
+
+			//保留2位小数。
+			function toDecimal2(x) {
+				var f = parseFloat(x);
+				if(isNaN(f)) {
+					return false;
+				}
+				var f = Math.round(x * 100) / 100;
+				var s = f.toString();
+				var rs = s.indexOf('.');
+				if(rs < 0) {
+					rs = s.length;
+					s += '.';
+				}
+				while(s.length <= rs + 2) {
+					s += '0';
+				}
+				return s;
+			}
 		</script>
 	</body>
 

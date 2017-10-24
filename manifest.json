@@ -826,10 +826,7 @@
 					"js/member.js",
 					"js/dao.js",
 					"js/localDatabase.js",
-					"js/post.js",
-					"css/main.css",
-					"css/appfont.css",
-					"fonts/icomoon.ttf"
+					"js/post.js"
 				],
 				"refer": [
 					"html/member/shop_order_detail.html",
@@ -885,8 +882,7 @@
 					"js/dao.js",
 					"js/apphome.js",
 					"js/article.js",
-					"js/post.js",
-					"images/bed.jpg"
+					"js/post.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -921,14 +917,26 @@
 				"refer": [],
 				"priority": 0
 			},
+			"html/server/server_detail.html": {
+				"resources": [
+					"js/localDatabase.js",
+					"js/member.js",
+					"js/mui.min.js",
+					"js/dao.js",
+					"css/mui.min.css",
+					"js/shop.js",
+					"js/post.js"
+				],
+				"refer": [
+					"html/server/serverOrder.html"
+				],
+				"priority": 0
+			},
 			"html/server/server_list.html": {
 				"resources": [
 					"js/localDatabase.js",
-					"css/main.css",
-					"css/appfont.css",
 					"js/mui.min.js",
 					"images/Service.png",
-					"fonts/icomoon.ttf",
 					"js/dao.js",
 					"css/mui.min.css",
 					"js/shop.js",
@@ -940,32 +948,17 @@
 				],
 				"priority": 0
 			},
-			"html/server/server_detail.html": {
+			"html/server/serverOrder.html": {
 				"resources": [
-					"images/bed.jpg",
-					"js/member.js",
-					"fonts/mui.ttf",
 					"js/localDatabase.js",
-					"css/appfont.css",
-					"css/main.css",
+					"js/muifun.js",
+					"js/mui.picker.min.js",
 					"js/mui.min.js",
-					"fonts/icomoon.ttf",
 					"js/dao.js",
 					"css/mui.min.css",
 					"js/shop.js",
-					"js/post.js"
-				],
-				"refer": [
-					"html/server/serverOrder.html"
-				],
-				"priority": 0
-			},
-			"html/server/serverOrder.html": {
-				"resources": [
-					"js/muifun.js",
-					"js/mui.picker.min.js",
 					"css/mui.picker.min.css",
-					"css/mui.min.css",
+					"js/post.js",
 					"js/compareTimes.js"
 				],
 				"refer": [
