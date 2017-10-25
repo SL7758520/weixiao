@@ -144,7 +144,12 @@
 							return;
 						}
 						upinfo = document.getElementById('Sex').innerHTML;
-					} else {
+					} else if (field == 'Mail') {
+						if (!checkMail(accountBox.value)) {
+							return;
+						}
+						upinfo = accountBox.value;
+					}else {
 						if(accountBox.value == '') {
 							mui.toast('请输入正确信息');
 							return;
@@ -206,7 +211,17 @@
 				//						mui.alert("手机号码格式错误");
 				//					}
 				//				}
-			})
+			});
+			
+			function checkMail(value){
+				 var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+				   if(!myreg.test(value)){
+                  	alert('提示\n\n请输入有效的E_mail！');
+                  	return false;
+             		}else{
+             			return true;
+             		}
+			}
 		</script>
 	</body>
 

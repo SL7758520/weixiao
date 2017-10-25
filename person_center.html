@@ -440,7 +440,7 @@
 				setelementhtml('email', users.Mail);
 				if(users.IconUrl != undefined && users.IconUrl != '') {
 					//待修改
-					document.getElementById('userpic').src = users.IconUrl;
+					document.getElementById('userpic').src = users.IconUrl+"?version=" + new Date().getTime();
 //					document.getElementById('userpic').src = 'http://www.jeffsoft.cn:9801/upload/Member/201709/2017061315445799302963d1050e931.png';
 				};
 				//				setelementhtml('address',users.Address);
