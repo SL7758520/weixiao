@@ -28,7 +28,7 @@ var Article = (function() {
 					}
 				},
 				function() {
-					console.log('请求失败：');
+					mui.toast("网络不太好哦~请稍后再试!");
 				});
 		};
 		//获取新闻列表详情
@@ -46,7 +46,7 @@ var Article = (function() {
 					}
 				},
 				function() {
-					console.log('请求失败：');
+					mui.toast("网络不太好哦~请稍后再试!");
 				});
 		};
 	
@@ -65,7 +65,7 @@ var Article = (function() {
 					}
 				},
 				function() {
-					mui.toast('没有网络连接，请稍后再试！');
+					mui.toast("网络不太好哦~请稍后再试!");
 				});
 		};
 		

@@ -119,7 +119,7 @@ var Member = (function() {
 					}
 				},
 				function() {
-					console.log('请求失败：');
+					mui.toast("网络不太好哦~请稍后再试!");
 				});
 		};
 		//收藏店铺
@@ -137,7 +137,7 @@ var Member = (function() {
 					}
 				},
 				function() {
-					console.log('请求失败：');
+					mui.toast("网络不太好哦~请稍后再试!");
 				});
 		};
 		//取消收藏店铺
@@ -155,7 +155,7 @@ var Member = (function() {
 					}
 				},
 				function() {
-					console.log('请求失败：');
+					mui.toast("网络不太好哦~请稍后再试!");
 				});
 		};
 		//获取收藏床位列表
@@ -173,7 +173,7 @@ var Member = (function() {
 					}
 				},
 				function() {
-					console.log('请求失败：');
+					mui.toast("网络不太好哦~请稍后再试!");
 				});
 		};
 		//收藏床位
@@ -191,7 +191,7 @@ var Member = (function() {
 					}
 				},
 				function() {
-					console.log('请求失败：');
+					mui.toast("网络不太好哦~请稍后再试!");
 				});
 		};
 		//取消收藏床位
@@ -209,7 +209,7 @@ var Member = (function() {
 					}
 				},
 				function() {
-					console.log('请求失败：');
+					mui.toast("网络不太好哦~请稍后再试!");
 				});
 		};
 		
@@ -225,7 +225,7 @@ var Member = (function() {
 					callback.call(this,result);
 				}
 			},function(){
-				mui.toast('没有网络连接，请稍后再试！');
+				mui.toast("网络不太好哦~请稍后再试!");
 			});
 		}
 		//忘记密码
@@ -240,7 +240,7 @@ var Member = (function() {
 					callback.call(this,result);
 				}
 			},function(){
-				mui.toast('没有网络连接，请稍后再试！');
+				mui.toast("网络不太好哦~请稍后再试!");
 			});
 		}
 

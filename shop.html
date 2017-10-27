@@ -112,6 +112,10 @@
 				padding-right: 10px;
 				font-size: 14px;
 			}
+			
+			.mui-content>.mui-table-view:first-child {
+				margin-top: -1px;
+			}
 		</style>
 	</head>
 
@@ -175,7 +179,7 @@
 				</div>-->
 
 		</div>
-		<div id="pullrefresh" class="mui-scroll shoplist">
+		<div id="pullrefresh">
 			<ul id="shopList" class="mui-table-view">
 			</ul>
 		</div>
@@ -194,38 +198,57 @@
 		var shopId;
 		var shopName;
 		var div;
-		var pageIndex = 1;
-		var pageSize = 10;
+		var pageSize=10;
+		var pageIndex=1;
+		var pageObjects = {
+			pageSize: 10,
+			currentPageIndex: 0,
+			totalCount: 0,
+			recordCount: 0
+		};
 		var cityId = 6201;
 		var shopList;
 		var photoUrl;
-		if(window.plus) {
-			plusReady();
-		} else {
-			document.addEventListener("plusready", function() {
-				plusReady();
-			}, false);
-		}
-		mui.init();
+//		if(window.plus) {
+//			plusReady();
+//		} else {
+//			document.addEventListener("plusready", function() {
+//				plusReady();
+//			}, false);
+//		}
+		mui.init({
+			pullRefresh: {
+				container: '#pullrefresh',
+				down: {
+					style: 'circle', //必选，下拉刷新样式，目前支持原生5+ ‘circle’ 样式
+					color: '#2BD009', //可选，默认“#2BD009” 下拉刷新控件颜色
+					callback: pulldownRefresh
+				},
+				up: {
+					contentrefresh: '正在加载...',
+					callback: pullupRefresh
+				}
+			}
+		});
+		var count = 0;
 
-		function plusReady() {
-			_self = plus.webview.currentWebview();
-			_self.setPullToRefresh({
-				support: true,
-				height: '100px',
-				range: '120px',
-				style: 'circle',
-				offset: '44px'
-			}, pulldownRefresh);
+		function pullupRefresh() {
+			pageObjects.currentPageIndex++;
+			setTimeout(function() {
+				mui('#pullrefresh').pullRefresh().endPullup((pageObjects.currentPageIndex>pageObjects.totalCount));
+				initData(true);
+
+			}, 1500);
 		}
 
 		/**
 		 * 下拉刷新具体业务实现
 		 */
 		function pulldownRefresh() {
+			pageObjects.currentPageIndex = 1;
 			setTimeout(function() {
-				initData();
-				_self.endPullToRefresh();
+				mui('#pullrefresh').pullRefresh().endPulldown();
+				initData(false);
 			}, 1500);
 		}
 
@@ -275,25 +298,27 @@
 				}
 			});
 
-			initData();
+			initData(false);
 
 		});
 
-		function initData() {
+		function initData(isUp) {
 			if(shopId == 0) {
-				_shop.GetShopsByCityId(pageIndex, pageSize, cityId, function(datas) {
+				_shop.GetShopsByCityId(pageObjects.currentPageIndex, pageObjects.pageSize, cityId, function(datas) {
 					if(datas.status == 1) {
 						shopList = datas.result;
-						addList(shopList);
+						pageObjects.totalCount=datas.pageCount;
+						addList(shopList,isUp);
 					} else {
 						mui.toast(datas.message);
 					}
 				});
 			} else {
-				_shop.GetShopsByShopId(pageIndex, pageSize, shopId, cityId, function(datas) {
+				_shop.GetShopsByShopId(pageObjects.currentPageIndex,  pageObjects.pageSize, shopId, cityId, function(datas) {
 					if(datas.status == 1) {
 						shopList = datas.result;
-						addList(shopList);
+						pageObjects.totalCount=datas.pageCount;
+						addList(shopList,isUp);
 					} else {
 						mui.toast(datas.message);
 					}
@@ -301,15 +326,19 @@
 			}
 		}
 
-		function addList(datas) {
-			div.innerHTML = "";
+		function addList(datas,isUp) {
+			if(isUp){
+				
+			}else{
+				div.innerHTML = "";
+			}
 			for(var i = 0; i < datas.length; i++) {
 				div.appendChild(creatCard(datas[i]));
 			}
 		}
 
 		function creatCard(entity) {
-			//			console.log("AAAAAAAAAAA");
+						console.log("AAAAAAAAAAA");
 			var li = document.createElement("div");
 			li.className = 'mui-card';
 			var description;

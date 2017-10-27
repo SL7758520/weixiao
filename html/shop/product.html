@@ -8,7 +8,7 @@
 		<link href="../../css/main.css" rel="stylesheet" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/appfont.css" rel="stylesheet" />
-		
+
 		<link href="../../css/font-awesome.min.css" rel="stylesheet" />
 		<style type="text/css">
 			html,
@@ -53,7 +53,7 @@
 				height: 55px;
 				padding-left: 12px;
 				border-bottom: 1px solid #EDEDED;
-				margin:5px 0px 5px 0px;
+				margin: 5px 0px 5px 0px;
 			}
 			
 			.gray-img {
@@ -80,7 +80,6 @@
 			.vicetitle {
 				font-size: 13px;
 			}
-			
 			
 			.first-line .prices {
 				color: #f99d1c;
@@ -207,14 +206,14 @@
 			</div>
 			<div id="info" class="info"></div>
 			<ul class="mui-table-view">
-				<!--<li class="mui-table-view-cell mui-media">
+				<li class="mui-table-view-cell mui-media">
 					<i class="fa fa-map-marker mui-media-object mui-pull-left"></i>
-					<div class="mui-media-body mui-navigate-right">
-						西客站南广场东侧
+					<div id="maps" class="mui-media-body mui-navigate-right">
+						<a id="LngLat" style="color: #000000;font-size: 14px;" class="mui-ellipsis">西客站南广场东侧</a>
 						<p>点击在地图中查看</p>
 						<span class="hotel-color-blue hotel-right-text">地图</span>
 					</div>
-				</li>-->
+				</li>
 				<li class="mui-table-view-cell mui-media">
 					<i class="fa fa-phone mui-media-object mui-pull-left"></i>
 					<div id="tel" class="mui-media-body mui-navigate-right">
@@ -326,6 +325,7 @@
 		<script src="../../js/dao.js"></script>
 		<script src="../../js/shop.js"></script>
 		<script src="../../js/member.js"></script>
+		<script src="../../js/gps.js"></script>
 		<script type="text/javascript">
 			mui.init();
 			var _dataAccess = new DataAccess();
@@ -370,6 +370,7 @@
 						document.getElementById("BottomPrice").innerHTML = shopInfo.BottomPrice + "元/月起";
 						document.getElementById("info").innerHTML = shopInfo.Intro;
 						document.getElementById("Phone").innerHTML = shopInfo.Phone;
+						document.getElementById("LngLat").innerHTML = shopInfo.Address;
 						setHtml("CourtyardFacilityDesc", shopInfo.CourtyardFacilityDesc);
 						setHtml("TrafficDesc", shopInfo.TrafficDesc);
 						setHtml("HospitalDesc", shopInfo.HospitalDesc);
@@ -383,13 +384,27 @@
 					}
 				});
 
-				document.getElementById("tel").addEventListener('tap', function() {
+				document.getElementById("tel").addEventListener('tap', function(event) {
 					if(mui.os.plus) {
 						plus.device.dial(shopInfo.Phone + "");
 					} else {
 						location.href = 'tel:' + shopInfo.Phone;
 					}
 
+				});
+				document.getElementById("maps").addEventListener("tap", function(event) {
+					if('Android' === plus.os.name && navigator.userAgent.indexOf('StreamApp') > 0) {
+						plus.nativeUI.toast('当前环境暂不支持地图插件');
+						return;
+					}
+					//BD-09 to GCJ-02先将百度坐标转成中国坐标 (要 跟百度坐标位置相反)
+					var tmp = GPS.bd_decrypt(23.115747,113.40807);
+					//GCJ-02 to WGS-84再将中国坐标转成GPS坐标
+					var dstarr = GPS.gcj_decrypt_exact(tmp['lat'], tmp['lon']);
+					var dst = new plus.maps.Point(dstarr['lon'], dstarr['lat']); //目的地
+					var shop = shopInfo.Name;
+					var src = new plus.maps.Point(113.289886,23.125651); // 大钟寺
+					plus.maps.openSysMap(dst, shop, src);
 				});
 				document.getElementById("image").addEventListener("tap", function(event) {
 					gotoHtml("shop_pic.html", shopId, photoUrl);

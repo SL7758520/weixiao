@@ -9,23 +9,52 @@
 
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/mui.indexedlist.css" rel="stylesheet" />
+		<link href="../../css/appfont.css" rel="stylesheet" />
 		<style>
 			html,
 			body {
 				height: 100%;
 				overflow: hidden;
 			}
+			
+			.mui-bar {
+				background-color: #f3f3f3;
+				border-top: 1px solid #e0e0e0;
+				-webkit-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+				box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+			}
+			
+			.mui-bar-nav {
+				background-color: #4cd964;
+				border: none;
+				-webkit-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+				box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+			}
+			
+			.mui-bar .mui-title {
+				color: #fff;
+			}
+			
+			.mui-bar-nav.mui-bar .mui-icon {
+				color: #fff;
+			}
+			
+			.mui-bar .mui-icon {
+				font-size: 36px;
+				padding-top: 5px;
+				padding-bottom: 0px;
+			}
 		</style>
 	</head>
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
-			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<a href="#offCanvasSide" class="mui-action-back mui-icon icon_app_02 mui-action-menu mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">城市列表</h1>
 		</header>
 		<div class="mui-content">
 			<div id='list' class="mui-group-list">
-				<div class="mui-group-list-search mui-input-row mui-search" >
+				<div class="mui-group-list-search mui-input-row mui-search">
 					<input id="input_search" type="search" class="mui-input-clear mui-group-list-search-input" placeholder="搜索城市">
 				</div>
 				<div class="mui-group-list-bar">

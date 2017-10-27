@@ -22,16 +22,20 @@
 				-webkit-box-shadow: 0 0 0 rgba(0, 0, 0, 0);
 				box-shadow: 0 0 0 rgba(0, 0, 0, 0);
 			}
-			.mui-bar-tab .mui-tab-item.mui-active{color:#F4900F;}
+			
+			.mui-bar-tab .mui-tab-item.mui-active {
+				color: #F4900F;
+			}
 		</style>
 	</head>
 
 	<body>
+		
 		<nav class="mui-bar mui-bar-tab main_nav" style="background-color: #F3F3F3;">
 			<a id="t0" class="mui-tab-item mui-active" href="home.html">
 				<span class="mui-icon icon_app_29" id="t0icon"></span>
 				<span class="mui-tab-label">首页</span>
-			</a> 
+			</a>
 			<a id="t1" class="mui-tab-item" href="health.html">
 				<span class="mui-icon icon_app_19" id="t1icon"></span>
 				<span class="mui-tab-label">健康问诊</span>
@@ -49,16 +53,25 @@
 				<span class="mui-tab-label">我的</span>
 			</a>
 		</nav>
+		
 		<script src="js/mui.min.js"></script>
 		<script src="js/localDatabase.js"></script>
 		<script src="js/post.js"></script>
 		<script src="js/dao.js"></script>
+		<script src="js/apphome.js"></script>
+		<script src="js/article.js"></script>
+		<script src="js/shop.js"></script>
 		<script type="text/javascript" charset="utf-8">
 			//mui初始化
 			mui.init({
 				swipeBack: false,
 			});
-			var subpages = ['home.html', 'health.html','html/member/shop_order_list.html', 'shop.html', 'person_center.html'];
+			var _dataAccess = new DataAccess();
+			var _appHome = new AppHome();
+			var _article = new Article();
+			var _shop = new Shop();
+			var wgtVer = null;
+			var subpages = ['home.html', 'health.html', 'html/member/shop_order_list.html', 'shop.html', 'person_center.html'];
 			var subpage_style = {
 				top: '0px',
 				bottom: '60px'
@@ -69,22 +82,43 @@
 			};
 			// H5 plus事件处理
 			function plusReady() {
+				plus.runtime.setBadgeNumber(0);
+				plus.push.setAutoNotification(true);
+				//监听推送消息接收
+				plus.push.addEventListener('receive', function(msg) {
+					try {
+						if(plus.os.name != "iOS") return;
+
+						if(msg.payload && msg.payload.url) {
+							mui.confirm(msg.content, msg.title, ['立即查看', '知道了'], function(e) {
+								if(e.index > 0) return;
+								//								redirect(msg.payload.url);
+							});
+						} else {
+							mui.alert(msg.content, msg.title);
+						}
+					} catch(e) {
+						mui.alert(e.message, e.message);
+					}
+				});
+				//监听点击推送事件
+				plus.push.addEventListener('click', function(msg) {
+					try {
+
+						if(plus.os.name == "iOS") {
+							var data = eval('(' + msg.payload.payload + ')');
+						} else {
+							var data = eval('(' + msg.payload + ')');
+						}
+						pushCallback(data);
+					} catch(e) {
+						mui.alert(e.message + "AAAAAAAA", e.message);
+					}
+				});
+				
 				// 设置系统状态栏背景为红色
 				plus.navigator.setStatusBarBackground('#4cd964');
-//				document.getElementById('t4').addEventListener('tap',function(){
-//					mui.openWindow({
-//						id:'html/member/shop_order_list.html',
-//						url:'html/member/shop_order_list.html',
-//						show: {
-//							aniShow: 'pop-in'
-//						},
-//						waiting: {
-//							autoShow: true,
-//							title: '正在加载...'
-//						},
-//						extras: {}
-//					});
-//				});
+				
 			}
 			if(window.plus) {
 				plusReady();
@@ -95,10 +129,20 @@
 			//创建子页面，首个选项卡页面显示，其它均隐藏；
 			mui.plusReady(function() {
 				//预加载
-					preload();
-				
+				preload();
+
 			});
-			
+
+			//推送执行方法
+			function pushCallback(data) {
+				try {
+					mui.toast(data);
+
+				} catch(e) {
+					alert(e.message);
+				}
+			}
+
 			function selectTab(id) {
 				var tab = document.getElementById(id);
 				//模拟首页点击

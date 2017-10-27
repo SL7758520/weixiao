@@ -132,7 +132,7 @@
 				</div>
 			</div>
 
-			<ul id="server_list" class="mui-table-view mui-grid-view mui-grid-9">
+			<ul id="server_list" class="mui-table-view mui-grid-view mui-grid-9" style="background-color: #FFFFFF">
 
 			</ul>
 
@@ -193,6 +193,61 @@
 			gallery.slider({
 				interval: 3000 //自动轮播周期，若为0则不自动播放，默认为0；
 			});
+			setTimeout(function() {
+				// 获取本地应用资源版本号
+				plus.runtime.getProperty(plus.runtime.appid, function(inf) {
+					wgtVer = inf.version;
+					console.log("当前应用版本：" + wgtVer);
+					var shopId = _dataAccess.getShopId().shopId;
+					_appHome.GetAppVersion(shopId, "member", function(datas) {
+						console.log("检测更新成功：" + datas);
+						var newVer = datas.result.VersionNumber;
+						var WgtDownloadUrl = datas.result.WgtDownloadUrl;
+						var ApkDownloadUrl = datas.result.ApkDownloadUrl;
+						var IsFullPackage = datas.result.IsFullPackage;
+						var IsForceUpdate = datas.result.IsForceUpdate;
+						var Description = datas.result.Description; 
+						if(wgtVer && newVer && (wgtVer != newVer)) {
+							if(IsForceUpdate) {
+								console.log(IsFullPackage);
+								if(IsFullPackage) {
+									if(plus.os.name == 'iOS') {
+										var url = 'itms-apps://itunes.apple.com/cn/app/hello-h5+/id682211190?l=zh&mt=8'; // 应用在appstore的地址
+										plus.runtime.openURL(url);
+									} else {
+										downApk(WgtDownloadUrl);
+									}
+								} else {
+									downWgt(WgtDownloadUrl);
+								}
+							} else {
+								plus.nativeUI.alert(Description, function(e) {
+									var i = e.index;
+									if(i < 0) {
+										mui.toast("更新已取消!");
+									} else {
+										console.log(IsFullPackage);
+										if(IsFullPackage) {
+											if(plus.os.name == 'iOS') {
+												var url = 'itms-apps://itunes.apple.com/cn/app/hello-h5+/id682211190?l=zh&mt=8'; // 应用在appstore的地址
+												plus.runtime.openURL(url);
+											} else {
+												downApk(WgtDownloadUrl);
+											}
+										} else {
+											downWgt(WgtDownloadUrl);
+										}
+									}
+								}, "应用更新", "更新");
+							}
+
+						} else {
+							console.log("无新版本可更新！");
+						}
+					});
+				});
+			}, 5000);
+
 			_self = plus.webview.currentWebview();
 			_self.setPullToRefresh({
 				support: true,
@@ -245,6 +300,100 @@
 			showArtiles();
 			showServer();
 		});
+
+		function downWgt(wgtUrl) {
+			var w = plus.nativeUI.showWaiting("正在下载更新...\n", {
+				back: "none"
+			});
+			var dtask = plus.downloader.createDownload(wgtUrl, {
+				filename: "_doc/update/"
+			}, function(d, status) {
+				if(status == 200) {
+					console.log("下载wgt成功：" + d.filename);
+					installWgt(d.filename); // 安装wgt包
+				} else {
+					console.log("下载wgt失败！");
+					plus.nativeUI.alert("下载wgt失败！");
+				}
+				plus.nativeUI.closeWaiting();
+			});
+			dtask.addEventListener("statechanged", function(task, status) {
+				if(!dtask) {
+					return;
+				}
+				switch(task.state) {
+					case 1: // 开始
+						//						outLine("开始下载...");
+						break;
+					case 2: // 已连接到服务器
+						//						outLine("链接到服务器...");
+						break;
+					case 3: // 已接收到数据
+						w.setTitle("      正在下载更新...      \n" + task.downloadedSize + "/" + task.totalSize);
+
+						break;
+					case 4: // 下载完成
+//						outSet("下载完成！");
+						plus.nativeUI.closeWaiting();
+						break;
+				}
+			});
+			dtask.start();
+		}
+
+		function downApk(wgtUrl) {
+			var w = plus.nativeUI.showWaiting("正在下载更新...\n", {
+				back: "none"
+			});
+			var dtask = plus.downloader.createDownload(url, {}, function(d, status) {
+				if(status == 200) { // 下载成功
+					var path = d.filename;
+					console.log(d.filename);
+					plus.nativeUI.closeWaiting();
+					plus.runtime.install(path); // 安装下载的apk文件
+				} else { //下载失败
+					alert("Download failed: " + status);
+				}
+			});
+			dtask.addEventListener("statechanged", function(task, status) {
+				if(!dtask) {
+					return;
+				}
+				switch(task.state) {
+					case 1: // 开始
+						//						outLine("开始下载...");
+						break;
+					case 2: // 已连接到服务器
+						//						outLine("链接到服务器...");
+						break;
+					case 3: // 已接收到数据
+						w.setTitle("      正在下载更新...      \n" + task.downloadedSize + "/" + task.totalSize);
+
+						break;
+					case 4: // 下载完成
+//						outSet("下载完成！");
+						plus.nativeUI.closeWaiting();
+						break;
+				}
+			});
+			dtask.start();
+		}
+
+		// 更新应用资源
+		function installWgt(path) {
+			plus.nativeUI.showWaiting("安装wgt文件...");
+			plus.runtime.install(path, {}, function() {
+				plus.nativeUI.closeWaiting();
+				console.log("安装wgt文件成功！");
+				plus.nativeUI.alert("应用资源更新完成！", function() {
+					plus.runtime.restart();
+				});
+			}, function(e) {
+				plus.nativeUI.closeWaiting();
+				console.log("安装wgt文件失败[" + e.code + "]：" + e.message);
+				plus.nativeUI.alert("安装wgt文件失败[" + e.code + "]：" + e.message);
+			});
+		}
 
 		function showServer() {
 			document.getElementById("server_list").innerHTML = '';

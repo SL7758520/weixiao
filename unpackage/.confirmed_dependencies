@@ -24,7 +24,10 @@
       "fonts/mui.ttf",
       "html/member/shop_order_list.html",
       "fonts/mui-icons-extra.ttf",
-      "css/icons-extra.css"
+      "css/icons-extra.css",
+      "js/shop.js",
+      "js/apphome.js",
+      "js/article.js"
     ]
   },
   "html/account/login.html": {
@@ -164,7 +167,10 @@
       "images/yuantiao.jpg",
       "css/main.css",
       "css/appfont.css",
-      "images/shuijiao.jpg"
+      "images/shuijiao.jpg",
+      "js/localDatabase.js",
+      "js/post.js",
+      "fonts/icomoon.ttf"
     ],
     "refer": []
   },
@@ -249,11 +255,14 @@
       "fonts/mui.ttf",
       "images/bed_small.jpg",
       "images/serviceCategory.png",
-      "js/shop.js"
+      "js/shop.js",
+      "images/bed.jpg",
+      "images/shop.jpg"
     ],
     "refer": [
       "html/apphome/detail.html",
-      "html/server/server_list.html"
+      "html/server/server_list.html",
+      "html/apphome/city.html"
     ]
   },
   "splash.html": {
@@ -284,7 +293,8 @@
       "images/shop.jpg",
       "js/member.js",
       "images/bed_small.jpg",
-      "fonts/icomoon.ttf"
+      "fonts/icomoon.ttf",
+      "js/gps.js"
     ],
     "refer": [
       "html/shop/product_details.html",
@@ -371,7 +381,8 @@
       "js/mui.min.js",
       "js/dao.js",
       "js/post.js",
-      "js/mui.js"
+      "js/mui.js",
+      "fonts/icomoon.ttf"
     ],
     "refer": [
       "html/member/shop_order_detail.html",
@@ -532,7 +543,8 @@
       "images/bed.jpg",
       "fonts/mui-icons-extra.ttf",
       "css/icons-extra.css",
-      "js/feedback.js"
+      "js/feedback.js",
+      "css/appfont.css"
     ],
     "refer": []
   },
@@ -607,10 +619,28 @@
       "js/mui.picker.min.js",
       "css/mui.picker.min.css",
       "css/mui.min.css",
-      "js/compareTimes.js"
+      "js/compareTimes.js",
+      "js/localDatabase.js",
+      "js/mui.min.js",
+      "js/dao.js",
+      "js/shop.js",
+      "js/post.js"
     ],
     "refer": [
       "html/shop/pay.html"
     ]
+  },
+  "html/apphome/city.html": {
+    "resources": [
+      "js/localDatabase.js",
+      "js/mui.min.js",
+      "js/dao.js",
+      "css/mui.min.css",
+      "js/apphome.js",
+      "css/mui.indexedlist.css",
+      "js/post.js",
+      "js/mui.indexedlist.js"
+    ],
+    "refer": []
   }
 }

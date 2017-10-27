@@ -28,7 +28,7 @@ var AppHome = (function() {
 					}
 				},
 				function() {
-					console.log('请求失败：');
+					mui.toast("网络不太好哦~请稍后再试!");
 				});
 		};
 		
@@ -47,7 +47,7 @@ var AppHome = (function() {
 					}
 				},
 				function() {
-					console.log('请求失败：');
+					mui.toast("网络不太好哦~请稍后再试!");
 				});
 		};
 		
@@ -66,7 +66,26 @@ var AppHome = (function() {
 					}
 				},
 				function() {
-					console.log('请求失败：');
+					mui.toast("网络不太好哦~请稍后再试!");
+				});
+		};
+		
+		//GET /api/AppHome/GetAppVersion获取App版本
+		this.GetAppVersion = function(shopId,type,callback) {
+			if(!_getNetwork()) {
+				mui.toast("没有网络连接，请稍后再试！");
+				return;
+			}
+			var user = _db.getUser();
+			AsyncPost(API_APPHOME+"GetAppVersion","shopId=" + shopId+"&type="+type ,
+				function(result) {
+					if(callback) {
+						console.log('接口返回数据：' + JSON.stringify(result));
+						callback.call(this, result);
+					}
+				},
+				function() {
+					mui.toast("更新失败!");
 				});
 		};
 		
@@ -85,7 +104,7 @@ var AppHome = (function() {
 					}
 				},
 				function() {
-					mui.toast('没有网络连接，请稍后再试！');
+					mui.toast("网络不太好哦~请稍后再试!");
 				});
 		};
 		
