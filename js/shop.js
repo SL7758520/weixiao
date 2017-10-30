@@ -36,7 +36,7 @@ var Shop = (function() {
 					}
 				},
 				function() {
-					mui.toast("网络不太好哦~请稍后再试!");
+//					mui.toast("网络不太好哦~请稍后再试!");
 				});
 		};
 		//若登录后的member.ShopId不为空->获取当前ShopId的所有下级Shop
@@ -54,7 +54,7 @@ var Shop = (function() {
 					}
 				},
 				function() {
-					mui.toast("网络不太好哦~请稍后再试!");
+//					mui.toast("网络不太好哦~请稍后再试!");
 				});
 		};
 		
@@ -83,6 +83,7 @@ var Shop = (function() {
 				mui.toast("没有网络连接，请稍后再试！");
 				return;
 			}
+//			mui.toast("之前那个是错误的，这个才");
 			var user = _db.getUser();
 			AsyncPost(API_SHOP+"GetShopModel","shopId=" + shopId ,
 				function(result) {

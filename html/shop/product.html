@@ -397,8 +397,9 @@
 						plus.nativeUI.toast('当前环境暂不支持地图插件');
 						return;
 					}
+					var strList =splitStr(shopInfo.LngLat);
 					//BD-09 to GCJ-02先将百度坐标转成中国坐标 (要 跟百度坐标位置相反)
-					var tmp = GPS.bd_decrypt(23.115747,113.40807);
+					var tmp = GPS.bd_decrypt(strList[1],strList[0]);
 					//GCJ-02 to WGS-84再将中国坐标转成GPS坐标
 					var dstarr = GPS.gcj_decrypt_exact(tmp['lat'], tmp['lon']);
 					var dst = new plus.maps.Point(dstarr['lon'], dstarr['lat']); //目的地
@@ -450,7 +451,11 @@
 					div.appendChild(creatCard(datas[i]));
 				}
 			}
-
+			
+			function splitStr(str){
+				var strList=str.split(",");
+				return strList;
+			}
 			function creatCard(entity) {
 				//			console.log("AAAAAAAAAAA");
 				var li = document.createElement("li");

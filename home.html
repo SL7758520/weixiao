@@ -305,6 +305,7 @@
 			var w = plus.nativeUI.showWaiting("正在下载更新...\n", {
 				back: "none"
 			});
+			console.log("AAAAAAAAA"+wgtUrl);
 			var dtask = plus.downloader.createDownload(wgtUrl, {
 				filename: "_doc/update/"
 			}, function(d, status) {

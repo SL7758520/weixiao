@@ -116,6 +116,37 @@
 			.mui-content>.mui-table-view:first-child {
 				margin-top: -1px;
 			}
+			
+			.item {
+				display: -webkit-box;
+			}
+			
+			.position-abottom {
+				margin: 5px 0;
+			}
+			
+			.text {
+				width: 75%;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+			}
+			
+			.information {
+				width: 60%;
+				margin-left: 5px;
+			}
+			
+			.price {
+				width: 40%;
+			}
+			
+			.new-price {
+				font-size: 16px;
+				color: #ff7c70;
+				font-family: Impact, Arail, sans-serif;
+				font-weight: bold;
+			}
 		</style>
 	</head>
 
@@ -158,16 +189,23 @@
 							<img src="" onerror="this.src='images/bed.jpg'" id="img4">
 						</a>
 					</div>
+					<!-- 第五张 -->
+					<div class="mui-slider-item">
+						<a href="#">
+							<img src="" onerror="this.src='images/bed.jpg'" id="img5">
+						</a>
+					</div>
 					<!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播)-->
 					<div class="mui-slider-item mui-slider-item-duplicate">
 						<a href="#">
-							<img src="" onerror="this.src='images/bed.jpg'" id="img5">
+							<img src="" onerror="this.src='images/bed.jpg'" id="img6">
 						</a>
 					</div>
 				</div>
 
 				<div class="mui-slider-indicator">
 					<div class="mui-indicator mui-active"></div>
+					<div class="mui-indicator"></div>
 					<div class="mui-indicator"></div>
 					<div class="mui-indicator"></div>
 					<div class="mui-indicator"></div>
@@ -178,6 +216,10 @@
 					<button id="search" type="button" style="margin-left:10px; margin-bottom: 15px;">搜索</button>
 				</div>-->
 
+		</div>
+		<div>
+			<ul id="HotproductList" class="mui-table-view">
+			</ul>
 		</div>
 		<div id="pullrefresh">
 			<ul id="shopList" class="mui-table-view">
@@ -198,24 +240,26 @@
 		var shopId;
 		var shopName;
 		var div;
-		var pageSize=10;
-		var pageIndex=1;
+		var hotproduct;
+		var pageSize = 10;
+		var pageIndex = 1;
 		var pageObjects = {
 			pageSize: 10,
-			currentPageIndex: 0,
+			currentPageIndex: 1,
 			totalCount: 0,
 			recordCount: 0
 		};
-		var cityId = 6201;
+		var HotProductList;
+		var cityId;
 		var shopList;
 		var photoUrl;
-//		if(window.plus) {
-//			plusReady();
-//		} else {
-//			document.addEventListener("plusready", function() {
-//				plusReady();
-//			}, false);
-//		}
+		//		if(window.plus) {
+		//			plusReady();
+		//		} else {
+		//			document.addEventListener("plusready", function() {
+		//				plusReady();
+		//			}, false);
+		//		}
 		mui.init({
 			pullRefresh: {
 				container: '#pullrefresh',
@@ -235,7 +279,7 @@
 		function pullupRefresh() {
 			pageObjects.currentPageIndex++;
 			setTimeout(function() {
-				mui('#pullrefresh').pullRefresh().endPullup((pageObjects.currentPageIndex>pageObjects.totalCount));
+				mui('#pullrefresh').pullRefresh().endPullup((pageObjects.currentPageIndex > pageObjects.totalCount));
 				initData(true);
 
 			}, 1500);
@@ -249,6 +293,7 @@
 			setTimeout(function() {
 				mui('#pullrefresh').pullRefresh().endPulldown();
 				initData(false);
+				initHotProduct();
 			}, 1500);
 		}
 
@@ -261,27 +306,19 @@
 			user = _dataAccess.getUser();
 			shopId = user.ShopId;
 			shopName = user.ShopName;
+			cityId = _dataAccess.getUser().CityId;
 			document.getElementById("search").addEventListener("tap", function(event) {
 				gotoHtml("html/shop/shop_search.html", "", photoUrl);
 			});
 			div = document.getElementById("shopList");
+			hotproduct = document.getElementById("HotproductList");
 			if(shopName != '') {
 				document.getElementById('title').innerHTML = shopName;
 			}
 			_shop.getPhotoUrl(function(datas) {
 				photoUrl = datas;
-				_shop.GetHotProducts(cityId, 1, 4, function(datas) {
-					if(datas.status == 1) {
-						for(var i = 0; i < 4; i++) {
-							console.log(photoUrl + datas.result[i].PhotoUrl);
-							document.getElementById("img" + (i + 1)).src = photoUrl + datas.result[i].PhotoUrl;
-						}
-						document.getElementById("img0").src = photoUrl + datas.result[3].PhotoUrl;
-						document.getElementById("img5").src = photoUrl + datas.result[0].PhotoUrl;
-					} else {
-						mui.toast(datas.message);
-					}
-				});
+				initData(false);
+				initHotProduct();
 			});
 			_member.GetShopCollect(pageIndex, pageSize, function(datas) {
 				if(datas.status == 1) {
@@ -297,8 +334,15 @@
 					mui.toast(datas.message);
 				}
 			});
-
-			initData(false);
+			//			for (var i=0;i<4;i++) {
+			//				document.getElementById("img"+(i+1)).addEventListener("tap",function(event){
+			//					var id =this.getAttribute("id");
+			//					console.log(id);
+			//					if(HotProductList !=null){
+			//						gotoHtml("html/shop/product_details.html", id, photoUrl);
+			//					}
+			//				});
+			//			}
 
 		});
 
@@ -307,29 +351,71 @@
 				_shop.GetShopsByCityId(pageObjects.currentPageIndex, pageObjects.pageSize, cityId, function(datas) {
 					if(datas.status == 1) {
 						shopList = datas.result;
-						pageObjects.totalCount=datas.pageCount;
-						addList(shopList,isUp);
+						pageObjects.totalCount = datas.pageCount;
+						addList(shopList, isUp);
 					} else {
 						mui.toast(datas.message);
 					}
 				});
 			} else {
-				_shop.GetShopsByShopId(pageObjects.currentPageIndex,  pageObjects.pageSize, shopId, cityId, function(datas) {
+				_shop.GetShopsByShopId(pageObjects.currentPageIndex, pageObjects.pageSize, shopId, cityId, function(datas) {
 					if(datas.status == 1) {
 						shopList = datas.result;
-						pageObjects.totalCount=datas.pageCount;
-						addList(shopList,isUp);
+						pageObjects.totalCount = datas.pageCount;
+						addList(shopList, isUp);
 					} else {
 						mui.toast(datas.message);
 					}
 				});
 			}
+
 		}
 
-		function addList(datas,isUp) {
-			if(isUp){
-				
-			}else{
+		function initHotProduct() {
+			_shop.GetHotProducts(cityId, 1, 5, function(datas) {
+				if(datas.status == 1) {
+					HotProductList = datas.result;
+					hotproduct.innerHTML = '';
+					for(var i = 0; i < 4; i++) {
+						hotproduct.appendChild(addHotProductList(datas.result[i]));
+					}
+				} else {
+					mui.toast(datas.message);
+				}
+			});
+		}
+
+		function addHotProductList(entity) {
+			var li = document.createElement("li");
+			li.className = 'mui-table-view-cell';
+			var HasPickUp;
+			if(entity.HasPickUp) {
+				HasPickUp = "可接送";
+			} else {
+				HasPickUp = "不可接送";
+			}
+			var imgsrc;
+			imgsrc = photoUrl + entity.PhotoUrl;
+
+			if(entity.CollectCounts == null) {
+				li.innerHTML = '<div class="item"><div ><img src=' + imgsrc + ' onerror="this.src=\'images/bed_small.jpg\'" style="width: 100px;height: 65px;"></div><div class="text"><div class="information"><h4>' + entity.CategoryName + '</h4><h5 style="margin-top: 8px;">' + HasPickUp + '</h5><h5 class="mui-ellipsis" style="margin-top: 8px;">' + entity.ShortDescription + '</h5></div><div class="price"><span class="new-price">￥' + entity.Price + '/月</span></div></div></div>';
+
+			} else {
+				li.innerHTML = '<div class="item"><div ><img src=' + imgsrc + ' onerror="this.src=\'images/bed_small.jpg\'" style="width: 100px;height: 65px;"></div><div class="text"><div class="information"><h4>' + entity.CategoryName + '</h4><h5 style="margin-top: 8px;">' + HasPickUp + '</h5><h5 class="mui-ellipsis" style="margin-top: 8px;">' + entity.ShortDescription + '</h5></div><div class="price"><span class="new-price">￥' + entity.Price + '/月</span><div id="" style="display: flex;align-items: center;margin-top: 5px;"><img src="images/heart@2x.png" style="width: 15px;height: 15px;" /><h5 style="margin-left: 5px;">' + entity.CollectCounts + '人关注</h5></div></div></div></div>';
+
+			}
+
+			li.addEventListener("tap", function(event) {
+				gotoHtml("html/shop/product_details.html", entity.Id, photoUrl);
+			});
+
+			return li;
+		}
+
+		function addList(datas, isUp) {
+			if(isUp) {
+
+			} else {
 				div.innerHTML = "";
 			}
 			for(var i = 0; i < datas.length; i++) {
@@ -338,7 +424,6 @@
 		}
 
 		function creatCard(entity) {
-						console.log("AAAAAAAAAAA");
 			var li = document.createElement("div");
 			li.className = 'mui-card';
 			var description;

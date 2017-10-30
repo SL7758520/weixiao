@@ -5,9 +5,9 @@
 		"iPad"
 	],
 	"id": "H54FAF69E",/*应用的标识，创建应用时自动生成，勿手动修改*/
-	"name": "微孝养老",/*应用名称，程序桌面图标名称*/
+	"name": "兰亭居",/*应用名称，程序桌面图标名称*/
 	"version": {
-		"name": "1.2.0",/*应用版本名称*/
+		"name": "1.1.1",/*应用版本名称*/
 		"code": "83"
 	},
 	"description": "",/*应用描述信息*/
@@ -478,11 +478,14 @@
 					"fonts/mui.ttf",
 					"js/member.js",
 					"images/bed.jpg",
-					"images/shop.jpg"
+					"images/shop.jpg",
+					"images/heart@2x.png",
+					"images/bed_small.jpg"
 				],
 				"refer": [
 					"html/shop/product.html",
-					"html/shop/shop_search.html"
+					"html/shop/shop_search.html",
+					"html/shop/product_details.html"
 				],
 				"priority": 0
 			},
@@ -680,7 +683,8 @@
 					"js/shop.js",
 					"js/post.js",
 					"js/member.js",
-					"images/bed.jpg"
+					"images/bed.jpg",
+					"fonts/icomoon.ttf"
 				],
 				"refer": [
 					"html/shop/createorder.html"
@@ -699,7 +703,10 @@
 					"js/dao.js",
 					"js/post.js",
 					"css/mui.picker.min.css",
-					"js/mui.picker.min.js"
+					"js/mui.picker.min.js",
+					"css/appfont.css",
+					"css/main.css",
+					"fonts/icomoon.ttf"
 				],
 				"refer": [],
 				"priority": 0
@@ -716,7 +723,8 @@
 					"js/shop.js",
 					"js/post.js",
 					"css/main.css",
-					"js/compareTimes.js"
+					"js/compareTimes.js",
+					"css/appfont.css"
 				],
 				"refer": [
 					"html/shop/select_people.html"
