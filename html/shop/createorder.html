@@ -87,7 +87,7 @@
 		<div class="fault_main" style="top:45px">
 			<div class="form_info">
 				<div><label>接送地址</label>
-					<dd style="display: flex;justify-content: space-between;"><input id="address" type="text" class="input_sys1" placeholder="请填写准确地址">
+					<dd style="display: flex;justify-content: space-between;"><input id="address" type="text" class="input_sys1 mui-ellipsis" placeholder="请填写准确地址">
 						<a id="add" style="color: #4cd964;margin-top: 5px;"><span class="mui-icon mui-icon-plus"></span></a>
 					</dd>
 				</div>
@@ -229,6 +229,12 @@
 						}
 						calculateprice();
 					}
+				});
+				
+				window.addEventListener('addAddress', function(event) {
+					var address = event.detail.datas;
+					console.log(JSON.stringify(address));
+					document.getElementById("address").value=address.Address;
 				});
 
 				mui('body').on('change', '.mui-numbox', function() {

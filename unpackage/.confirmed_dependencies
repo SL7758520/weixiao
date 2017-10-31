@@ -357,7 +357,9 @@
 			"js/post.js",
 			"css/main.css",
 			"js/compareTimes.js",
-			"css/appfont.css"
+			"css/appfont.css",
+			"fonts/mui.ttf",
+			"fonts/icomoon.ttf"
 		],
 		"refer": [
 			"html/shop/select_people.html",
@@ -483,7 +485,15 @@
 			"images/weixinpay.png",
 			"css/mui.min.css",
 			"images/zhifubao.png",
-			"js/mui.min.js"
+			"js/mui.min.js",
+			"js/localDatabase.js",
+			"css/main.css",
+			"css/appfont.css",
+			"fonts/mui.ttf",
+			"fonts/icomoon.ttf",
+			"js/dao.js",
+			"js/shop.js",
+			"js/post.js"
 		],
 		"refer": []
 	},
@@ -518,7 +528,11 @@
 			"js/localDatabase.js",
 			"js/mui.min.js",
 			"js/dao.js",
-			"js/post.js"
+			"js/post.js",
+			"css/main.css",
+			"css/appfont.css",
+			"fonts/mui.ttf",
+			"fonts/icomoon.ttf"
 		],
 		"refer": [
 			"html/linkman/create_linkman.html"
@@ -631,7 +645,8 @@
 			"js/post.js"
 		],
 		"refer": [
-			"html/server/serverOrder.html"
+			"html/server/serverOrder.html",
+			"html/server/server_pic.html"
 		]
 	},
 	"html/server/serverOrder.html": {
@@ -648,7 +663,8 @@
 			"js/post.js"
 		],
 		"refer": [
-			"html/shop/pay.html"
+			"html/shop/pay.html",
+			"html/linkman/select_linkaddress.html"
 		]
 	},
 	"html/apphome/city.html": {
@@ -675,7 +691,8 @@
 			"js/dao.js",
 			"css/mui.min.css",
 			"js/post.js",
-			"images/Service.png"
+			"images/Service.png",
+			"js/member.js"
 		]
 	},
 	"html/linkman/edit_linkaddress.html": {
@@ -726,7 +743,16 @@
 			"js/localDatabase.js",
 			"js/dao.js",
 			"js/post.js",
-			"js/mui.min.js"
+			"js/mui.min.js",
+			"css/main.css",
+			"css/appfont.css"
+		]
+	},
+	"html/server/server_pic.html": {
+		"resources": [
+			"css/appfont.css",
+			"css/main.css",
+			"css/mui.min.css"
 		]
 	}
 }

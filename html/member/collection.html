@@ -165,39 +165,7 @@
 						<div class="mui-scroll-wrapper">
 							<div id="scroll0" class="mui-scroll ">
 								<ul id="Product_List" class="mui-table-view" style="margin-top: 0em;">
-									<li class="mui-table-view-cell">
-										<div class="item">
-											<div><img src='' onerror="this.src='../../images/Service.png'" style="width: 100px;height: 65px;"></div>
-											<div class="text">
-												<div class="information">
-													<h4 style="margin-top: 0px;">养老家居服务</h4>
-													<h5 class="mui-ellipsis" style="margin-top: 15px;">我也不知道在这里该写些什么</h5></div>
-												<div class="price"><button class="new-price">删除</button></div>
-											</div>
-										</div>
-									</li>
-									<li class="mui-table-view-cell">
-										<div class="item">
-											<div><img src='' onerror="this.src='../../images/Service.png'" style="width: 100px;height: 65px;"></div>
-											<div class="text">
-												<div class="information">
-													<h4 style="margin-top: 0px;">养老家居服务</h4>
-													<h5 class="mui-ellipsis" style="margin-top: 15px;">我也不知道在这里该写些什么</h5></div>
-												<div class="price"><button class="new-price">删除</button></div>
-											</div>
-										</div>
-									</li>
-									<li class="mui-table-view-cell">
-										<div class="item">
-											<div><img src='' onerror="this.src='../../images/Service.png'" style="width: 100px;height: 65px;"></div>
-											<div class="text">
-												<div class="information">
-													<h4 style="margin-top: 0px;">养老家居服务</h4>
-													<h5 class="mui-ellipsis" style="margin-top: 15px;">我也不知道在这里该写些什么</h5></div>
-												<div class="price"><button class="new-price">删除</button></div>
-											</div>
-										</div>
-									</li>
+									
 								</ul>
 							</div>
 						</div>
@@ -219,9 +187,11 @@
 		<script src="../../js/post.js"></script>
 		<script src="../../js/localDatabase.js"></script>
 		<script src="../../js/dao.js"></script>
+		<script src="../../js/member.js"></script>
 		<script>
 			var datas;
 			var isonly = false;
+			var photoUrl;
 			mui.init({
 				//				swipeBack: false,
 				//				gestureConfig:{				
@@ -254,6 +224,7 @@
 			}
 
 			var _dataAccess = new DataAccess();
+			var member = new Member();
 			var pageObjects = [];
 			var Index = 0;
 			//设置tab的选择
@@ -275,11 +246,12 @@
 			}
 
 			mui.plusReady(function() {
-
+				photoUrl=plus.webview.currentWebview().photoUrl;
 				//禁止左右滑动
 				mui('.mui-slider').slider().setStopped(false);
 
-				faultLidListener()
+				faultLidListener();
+				mui('#scroll0').pullToRefresh().pullDownLoading();
 
 			});
 
@@ -328,58 +300,48 @@
 						var self = obj;
 						setTimeout(function() {
 							var div = self.element.querySelector('.mui-table-view');
-							var result = {};
 							if(index == 0) {
-								console.log("currentID =" + currentID);
-								if(currentID != null) {
-									_dataAccess.GetStoreInWait(currentID, function(result) {
-										//										console.log(result.length);
-										if(result) {
-											datas = result;
-											if(!isUp) {
-												self.refresh(true);
-												document.getElementById('item' + index + 'mobile').querySelector('.mui-table-view').innerHTML = '';
-											}
-											//											if(!isUp) {
-											document.getElementById("btnNew").style.display = "";
-											document.getElementById('item' + index + 'mobile').querySelector('.mui-table-view').innerHTML = '';
-											//self.refresh(true);
-											//											}
-											document.getElementById('t' + index + '').innerText = "(" + result.length + ")";
-											addList1(result);
-										} else {
-											document.getElementById('item' + index + 'mobile').querySelector('.mui-table-view').innerHTML = '';
-										}
-										if(isUp) {
-											//											mui.toast("没有更多数据！");
-											self.endPullUpToRefresh(result.length < pageObjects[index].pageSize);
-										} else {
-											self.endPullUpToRefresh(result.length < pageObjects[index].pageSize);
-											self.endPullDownToRefresh(result.length < pageObjects[index].pageSize);
-										}
-									});
-								}
+								member.GetShopCollect(pageObjects[index].currentPageIndex, pageObjects[index].pageSize, function(datas) {
+									//										console.log(result.length);
+									if(datas.result) {
+										pageObjects[index].recordCount = datas.pageCount;
+
+										addList1(datas.result);
+									} else {
+										document.getElementById('item' + index + 'mobile').querySelector('.mui-table-view').innerHTML = '';
+									}
+									if(isUp) {
+										//											mui.toast("没有更多数据！");
+										self.endPullUpToRefresh(datas.result.length < pageObjects[index].pageSize);
+									} else {
+										self.endPullUpToRefresh(datas.result.length < pageObjects[index].pageSize);
+										self.endPullDownToRefresh(datas.result.length < pageObjects[index].pageSize);
+									}
+								});
 							} else if(index == 1) {}
 
 						}, 1000);
 					}
 
 					var addList1 = function(datas) {
-						Warehouse_DeAdd = datas;
 						var div = document.getElementById('item0mobile').querySelector('.mui-table-view');
-
+						div.innerHTML = '';
 						for(var i = 0; i < datas.length; i++) {
+							div.appendChild(addData1(datas[i]));
 
-							//							pageObjects[index].totalCount++;
-							//							var card = createCard(datas[i].FAULTID, datas[i].FAULTTYPE_NAME, datas[i].HAPPENTIME, datas[i].GEOGRAPHYINFO_NAME, datas[i].SYSTEM_NAME, datas[i].DES, index, datas[i]);
-							var card = document.createElement("li");
-							card.className = "mui-table-view-cell";
-							var htmls = '<div class="mui-checkbox"><input name="checkbox" value="' + i + '" type="checkbox"></div><div class="mui-table-cell"><h6 class="mui-ellipsis-2">设备名称：' + datas[i].DEVICENAME + '</h6><h6 style="height : 20px;display: flex;flex-direction: row;justify-content: space-between;align-items:center"><div>规格型号：' + datas[i].SPECMODEL + '</div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<div>数量：' + datas[i].WEIGHT + '</div></h6><h5 class="mui-h6 mui-ellipsis">添加时间：' + datas[i].CREATETIME + '</h5></div>';
-							//							var htmls = '<div class="mui-table"><div class="mui-table-cell"><h6 class="mui-ellipsis-2">设备名称：' + datas[i].DEVICENAME + '</h6><h5 class="mui-h5">规格型号：' + datas[i].SPECMODEL + '</h5><h5 class="mui-h5">数量：' + datas[i].WEIGHT + '</h5><h5 class="mui-h5">添加时间：' + datas[i].CREATETIME + '</h5></div><div class="mui-checkbox"><input name="checkbox" value="Item 1" type="checkbox"></div></div>';
-							card.innerHTML = htmls;
-							div.appendChild(card);
 						}
 					}
+					function addData1(entity){
+						console.log(photoUrl);
+						var card=document.createElement("li");
+						card.classList="mui-table-view-cell";
+						card.innerHTML='<div class="item"><div><img src="'+(photoUrl+entity.PhotoUrl)+'" onerror="this.src=\'../../images/Service.png\'" style="width: 100px;height: 65px;"></div><div class="text"><div class="information"><h4 style="margin-top: 5px;font-size: 18px;">'+entity.Name+'</h4><h5 class="mui-ellipsis" style="margin-top: 10px;font-size: 16px;">'+entity.ShortDescription+'</h5></div><div class="price"><button class="new-price">删除</button></div></div></div>';
+						card.querySelector("button").addEventListener("tap",function(event){
+							
+						});
+						return card;
+					}
+					
 					var addList2 = function(datas, index) {
 						Warehouse_fults = datas;
 						var div = document.getElementById('item' + index + 'mobile').querySelector('.mui-table-view');

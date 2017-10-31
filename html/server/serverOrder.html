@@ -37,6 +37,18 @@
 				color: #FFC90E !important;
 				font-size: 17px !important;
 			}
+			.form_info {
+				border-bottom: 1px solid #F3F3F3;
+			}
+			
+			.form_info label {
+				width: 75px;
+				font-size: 16px;
+			}
+			
+			.form_info .input_sys1 {
+				font-size: 16px;
+			}
 		</style>
 		<div class="windows_bg" id="dialog" style="display: none;">
 			<!--通用弹窗标准-->
@@ -71,14 +83,17 @@
 
 		<div class="fault_main" style="top:45px">
 			<div class="form_info">
-				<div><label>服务地址</label>
-					<dd><input id="address" type="text" class="input_sys2" placeholder="请填写准确地址"></dd>
-				</div>
-				<div style="margin:10px 0px 10px 0px;"><label>联系电话</label>
-					<dd><input id="phone" type="text" class="input_sys2" placeholder="请填写联系人电话"></dd>
+				<div><label>接送地址</label>
+					<dd style="display: flex;justify-content: space-between;"><input id="address" type="text" class="input_sys1 mui-ellipsis" placeholder="请填写准确地址">
+						<a id="add" style="color: #4cd964;margin-top: 5px;"><span class="mui-icon mui-icon-plus"></span></a>
+					</dd>
 				</div>
 			</div>
-			<div class="line_box"></div>
+			<div class="form_info">
+				<div><label>联系电话</label>
+					<dd><input id="phone" type="text" class="input_sys1" placeholder="请填写联系人电话"></dd>
+				</div>
+			</div>
 			<div class="mui-form">
 				<div class="form_info">
 					<div><label style="width: 100px;">数量</label>
@@ -97,7 +112,7 @@
 						<label class="pricenum" id="payprice">3999.00￥</label>
 					</div>
 				</div>
-				<div style="border-top: 1px solid #e8e8e8;"></div>
+<!--				<div style="border-top: 1px solid #e8e8e8;"></div>-->
 				<ul>
 					<li id="dtPicker">
 						<a href="#">预约时间<span id="txtOccurTime">选择</span></a>
@@ -149,6 +164,12 @@
 				FaultEntity = _self.data;
 				initpage();
 			});
+			
+			window.addEventListener('addAddress', function(event) {
+					var address = event.detail.datas;
+					console.log(JSON.stringify(address));
+					document.getElementById("address").value=address.Address;
+				});
 
 			function initpage() {
 				var dialog = document.getElementById('dialog');
@@ -242,6 +263,21 @@
 					//						plus.nativeUI.closeWaiting();
 					//						mui.toast('请求失败');
 					//					});
+				});
+				document.getElementById("add").addEventListener("tap",function(event){
+					mui.openWindow({
+						id: '../linkman/select_linkaddress.html',
+						url: '../linkman/select_linkaddress.html',
+						show: {
+							aniShow: 'pop-in'
+						},
+						waiting: {
+							autoShow: false
+						},
+						extras: {
+							pageId: 'serverOrder.html'
+						}
+					});
 				});
 				document.getElementById('casncel').addEventListener('tap', function() {
 					dialog.style.display = 'none';

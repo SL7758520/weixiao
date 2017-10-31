@@ -65,7 +65,7 @@
 			<a id="icon-plus" style="color: #4cd964;"><span class="mui-icon mui-icon-plus"></span></a> 新增联系人
 		</div>-->
 		<ul id="ulcontact" class="mui-table-view" style="margin-top: 44px;background-color: #F3F3F3;">
-		
+
 		</ul>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/post.js"></script>
@@ -77,8 +77,10 @@
 			var selecteddatas = [];
 			var alldatas = [];
 			var linkaddress = new LinkAddress();
+			var pageId;
 			mui.plusReady(function() {
-
+				var _self = plus.webview.currentWebview();
+				pageId = _self.pageId;
 				initdatas();
 				mui('.mui-input-group').on('change', 'input', function() {
 					var Entity = GetEntitybyId(this.getAttribute('value'));
@@ -135,14 +137,38 @@
 				//				var id = '430525499955468415';
 				var card = document.createElement('li');
 				card.classList = "address";
-				var html = '<div class="infospan"><p style = "font-size: 16px;" > ' + entity.LinkManName + '</p><p style = "font-size: 16px;" > ' + entity.Phone + ' </p></div><p style = "padding: 0px 0px 0px 8px; font-size: 16px;" class = "mui-ellipsis-2" >地址：' + entity.Address + '</p><p style = "padding: 0px 0px 8px 8px; font-size: 16px;" >邮政编码：'+ entity.PostCode + '</p>';
+				var html = '<div class="infospan"><p style = "font-size: 16px;" > ' + entity.LinkManName + '</p><p style = "font-size: 16px;" > ' + entity.Phone + ' </p></div><p style = "padding: 0px 0px 0px 8px; font-size: 16px;" class = "mui-ellipsis-2" >地址：' + entity.Address + '</p><p style = "padding: 0px 0px 8px 8px; font-size: 16px;" >邮政编码：' + entity.PostCode + '</p>';
 				card.innerHTML = html;
-				card
+				card.addEventListener("tap", function(event) {
+					var main = plus.webview.getWebviewById(pageId);
+					mui.fire(main, 'addAddress', {
+						datas: entity
+					});
+					mui.back();
+				});
 
 				return card;
 			}
 			mui.back = function() {
 				plus.webview.currentWebview().close();
+			}
+
+			function gotoHtml(u, datas) {
+				mui.openWindow({
+					url: u,
+					id: u,
+
+					show: {
+						aniShow: 'pop-in'
+					},
+					waiting: {
+						autoShow: true, //自动显示等待框，默认为true
+						title: '正在加载...', //等待对话框上显示的提示内容
+					},
+					extras: {
+						data: datas
+					}
+				});
 			}
 		</script>
 	</body>

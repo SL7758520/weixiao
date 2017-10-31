@@ -225,29 +225,35 @@
 	<script src="js/account.js"></script>
 	<script src="js/mui.enterfocus.js"></script>
 	<script src="js/app.js"></script>
+	<script src="js/shop.js"></script>
 	<script src="js/member.js"></script>
 	<script>
 		/*NickName  50
-			Sex 2
-			Mail 50
-			Address 100
-			Mobile  20
-			IconUrl  100*/
+					Sex 2
+					Mail 50
+					Address 100
+					Mobile  20
+					IconUrl  100*/
 		mui.init();
 		var _dataAccess = new DataAccess();
+		var _shop = new Shop();
 		var Token;
 		var member = new Member();
 		var isLogin = false;
+		var photoUrl;
 		mui.plusReady(function() {
 			initClick();
 			initpage();
-//			GetMemberDetail();
+			//			GetMemberDetail();
 			isLogin = getLogin();
 			if(isLogin) {
 				document.getElementById('btnSave').innerHTML = '退出登录';
 			} else {
 				document.getElementById('btnSave').innerHTML = '登录';
 			}
+			_shop.getPhotoUrl(function(datas) {
+				photoUrl = datas;
+			});
 			document.getElementById('btnSave').addEventListener('tap', function() {
 				if(getLogin()) {
 					var btnArray = ['是', '否'];
@@ -316,7 +322,7 @@
 			//修改用户名
 			document.getElementById('linickname').addEventListener('tap', function() {
 				if(getLogin()) {
-					opWindow('html/member/member_modify.html','html/member/member_modify.html','NickName',getelementhtml('nickname'),'修改用户名');
+					opWindow('html/member/member_modify.html', 'html/member/member_modify.html', 'NickName', getelementhtml('nickname'), '修改用户名');
 				} else {
 					toLogin();
 				}
@@ -324,7 +330,7 @@
 			//修改性别
 			document.getElementById('lisex').addEventListener('tap', function() {
 				if(getLogin()) {
-					opWindow('html/member/member_modify.html','html/member/member_modify.html','Sex',getelementhtml('sex'),'修改性别');
+					opWindow('html/member/member_modify.html', 'html/member/member_modify.html', 'Sex', getelementhtml('sex'), '修改性别');
 				} else {
 					toLogin();
 				}
@@ -334,7 +340,7 @@
 				mui.toast('暂不提供修改');
 				return;
 				if(getLogin()) {
-					opWindow('html/member/member_modify.html','html/member/member_modify.html','Mobile',getelementhtml('mobile'),'修改手机号');
+					opWindow('html/member/member_modify.html', 'html/member/member_modify.html', 'Mobile', getelementhtml('mobile'), '修改手机号');
 				} else {
 					toLogin();
 				}
@@ -342,7 +348,7 @@
 			//修改邮箱
 			document.getElementById('liemail').addEventListener('tap', function() {
 				if(getLogin()) {
-					opWindow('html/member/member_modify.html','html/member/member_modify.html','Mail',getelementhtml('email'),'修改邮箱');
+					opWindow('html/member/member_modify.html', 'html/member/member_modify.html', 'Mail', getelementhtml('email'), '修改邮箱');
 				} else {
 					toLogin();
 				}
@@ -350,71 +356,74 @@
 			//修改密码
 			document.getElementById('lipsw').addEventListener('tap', function() {
 				if(getLogin()) {
-					gotoHtml('html/account/forget_password.html');
+					gotoHtml('html/account/forget_password.html','');
 				} else {
 					toLogin();
 				}
 			});
 			//收藏
-			document.getElementById("licollection").addEventListener("tap",function(event){
+			document.getElementById("licollection").addEventListener("tap", function(event) {
 				if(getLogin()) {
-					gotoHtml('html/member/collection.html');
+					gotoHtml('html/member/collection.html', photoUrl);
 				} else {
 					toLogin();
 				}
 			});
 			//常用地址
-			document.getElementById("liaddress").addEventListener("tap",function(event){
+			document.getElementById("liaddress").addEventListener("tap", function(event) {
 				if(getLogin()) {
-					gotoHtml('html/linkman/linkaddress_list.html');
+					gotoHtml('html/linkman/linkaddress_list.html','');
 				} else {
 					toLogin();
 				}
 			});
-			
+
 			//常用联系人
 			document.getElementById('lilinkman').addEventListener('tap', function() {
 				if(getLogin()) {
-					gotoHtml('html/linkman/linkman_list.html');
+					gotoHtml('html/linkman/linkman_list.html','');
 				} else {
 					toLogin();
 				}
 			});
-			
-		}
-		
-		function gotoHtml(u) {
-				mui.openWindow({
-					url: u,
-					id: u,
 
-					show: {
-						aniShow: 'pop-in'
-					},
-					waiting: {
-						autoShow: true, //自动显示等待框，默认为true
-						title: '正在加载...', //等待对话框上显示的提示内容
-					},
-				});
-			}
-		
-		function opWindow(id,url,field,fieldValue,title){
+		}
+
+		function gotoHtml(u, photoUrl) {
 			mui.openWindow({
-						id: id,
-						url: url,
-						show: {
-							aniShow: 'pop-in'
-						},
-						waiting: {
-							autoShow: true,
-							title: '正在加载...'
-						},
-						extras: {
-							field: field,
-							fieldValue:fieldValue,
-							title:title
-						}
-					});
+				url: u,
+				id: u,
+
+				show: {
+					aniShow: 'pop-in'
+				},
+				waiting: {
+					autoShow: true, //自动显示等待框，默认为true
+					title: '正在加载...', //等待对话框上显示的提示内容
+				},
+				extras: {
+					photoUrl: photoUrl,
+				}
+			});
+		}
+
+		function opWindow(id, url, field, fieldValue, title) {
+			mui.openWindow({
+				id: id,
+				url: url,
+				show: {
+					aniShow: 'pop-in'
+				},
+				waiting: {
+					autoShow: true,
+					title: '正在加载...'
+				},
+				extras: {
+					field: field,
+					fieldValue: fieldValue,
+					title: title
+				}
+			});
 		}
 
 		function toLogin() {
@@ -438,36 +447,37 @@
 				return false;
 			}
 		}
-		
-		function initpage() {
-				var users = _dataAccess.getUser();
-				if (users.Token!=null&&users.Token!='') {
-					Token =users.Token;
-				}else{
-					mui.toast('登录已失效，请重新登录');
-				}
-				setelementhtml('nickname', users.NickName);
-				setelementhtml('mobile', users.Mobile);
-				setelementhtml('sex', users.Sex);
-				setelementhtml('email', users.Mail);
-				if(users.IconUrl != undefined && users.IconUrl != '') {
-					//待修改
-					document.getElementById('userpic').src = users.IconUrl+"?version=" + new Date().getTime();
-//					document.getElementById('userpic').src = 'http://www.jeffsoft.cn:9801/upload/Member/201709/2017061315445799302963d1050e931.png';
-				};
-				//				setelementhtml('address',users.Address);
-				console.log(JSON.stringify(users));
-			}
 
-			function setelementhtml(ElementId, value) {
-				if(value == undefined) {
-					value = '';
-				}
-				document.getElementById(ElementId).innerHTML = value;
+		function initpage() {
+			var users = _dataAccess.getUser();
+			if(users.Token != null && users.Token != '') {
+				Token = users.Token;
+			} else {
+				mui.toast('登录已失效，请重新登录');
 			}
-			function getelementhtml(ElementId) {
-				return document.getElementById(ElementId).innerHTML;
+			setelementhtml('nickname', users.NickName);
+			setelementhtml('mobile', users.Mobile);
+			setelementhtml('sex', users.Sex);
+			setelementhtml('email', users.Mail);
+			if(users.IconUrl != undefined && users.IconUrl != '') {
+				//待修改
+				document.getElementById('userpic').src = users.IconUrl + "?version=" + new Date().getTime();
+				//					document.getElementById('userpic').src = 'http://www.jeffsoft.cn:9801/upload/Member/201709/2017061315445799302963d1050e931.png';
+			};
+			//				setelementhtml('address',users.Address);
+			console.log(JSON.stringify(users));
+		}
+
+		function setelementhtml(ElementId, value) {
+			if(value == undefined) {
+				value = '';
 			}
+			document.getElementById(ElementId).innerHTML = value;
+		}
+
+		function getelementhtml(ElementId) {
+			return document.getElementById(ElementId).innerHTML;
+		}
 
 		function getImage() {
 			var c = plus.camera.getCamera();
@@ -481,13 +491,13 @@
 							dst: '_doc/' + zipFileName,
 							overwrite: true,
 							quality: 50,
-							width:"50%",
-							height:"50%"
+							width: "50%",
+							height: "50%"
 						}, function(zip) {
 							console.log(zip.target);
 							document.getElementById("userpic").src = s;
 							upload(zip.target);
-//							self._addFile(zip.target);
+							//							self._addFile(zip.target);
 						}, function(zipe) {
 							mui.toast('压缩失败！')
 						});
@@ -495,43 +505,44 @@
 						mui.toast("读取拍照文件错误!");
 					});
 				}
-			/*
-				plus.io.resolveLocalFileSystemURL(e, function(entry) {
-					//将拍照的目录路径变成本地URL路径，如：file:///之类。
-					var s = entry.toLocalURL() + "?version=" + new Date().getTime();
-					//					console.log('设置里面拍摄的图片是++++++++++++++++++' + s);
-					document.getElementById("userpic").src = s;
-					//						upload(s);暂未有接口
-					//目前仅有一张图片，暂时如此处理，后续需要通过标准组件实现
-				}, function(e) {});
-			}*/
-			, function(s) {}, {
-				filename: "_doc/" + _dataAccess.getUser().IconUrl
-			})
+				/*
+					plus.io.resolveLocalFileSystemURL(e, function(entry) {
+						//将拍照的目录路径变成本地URL路径，如：file:///之类。
+						var s = entry.toLocalURL() + "?version=" + new Date().getTime();
+						//					console.log('设置里面拍摄的图片是++++++++++++++++++' + s);
+						document.getElementById("userpic").src = s;
+						//						upload(s);暂未有接口
+						//目前仅有一张图片，暂时如此处理，后续需要通过标准组件实现
+					}, function(e) {});
+				}*/
+				,
+				function(s) {}, {
+					filename: "_doc/" + _dataAccess.getUser().IconUrl
+				})
 		}
 
 		function galleryImg() {
 			plus.gallery.pick(function(path) {
 				plus.io.resolveLocalFileSystemURL(path, function(entry) {
-						//						alert("path" + path);
-						var s = entry.toLocalURL() + "?version=" + new Date().getTime();
-						var zipFileName = path.substr(path.lastIndexOf("/") + 1);
-						plus.zip.compressImage({
-							src: path,
-							dst: '_doc/' + zipFileName,
-							overwrite: true,
-							quality: 50,
-							width:"50%",
-							height:"50%"
-						}, function(zip) {
-							console.log(zip.target);
-							document.getElementById("userpic").src = s;
-							upload(zip.target);
-//							self._addFile(zip.target);
-						}, function(zipe) {
-							mui.toast('压缩失败！')
-						});
-					}, function(e) {});
+					//						alert("path" + path);
+					var s = entry.toLocalURL() + "?version=" + new Date().getTime();
+					var zipFileName = path.substr(path.lastIndexOf("/") + 1);
+					plus.zip.compressImage({
+						src: path,
+						dst: '_doc/' + zipFileName,
+						overwrite: true,
+						quality: 50,
+						width: "50%",
+						height: "50%"
+					}, function(zip) {
+						console.log(zip.target);
+						document.getElementById("userpic").src = s;
+						upload(zip.target);
+						//							self._addFile(zip.target);
+					}, function(zipe) {
+						mui.toast('压缩失败！')
+					});
+				}, function(e) {});
 			}, function(a) {}, {
 				filter: "image"
 			})
@@ -539,7 +550,7 @@
 		// 上传文件
 		function upload(file) {
 			console.log(JSON.stringify(_dataAccess.getUser()));
-			var task = plus.uploader.createUpload(globals.apiUrl + 'Member/Upload_ICON?memberid='+_dataAccess.getUser().MemberId, {
+			var task = plus.uploader.createUpload(globals.apiUrl + 'Member/Upload_ICON?memberid=' + _dataAccess.getUser().MemberId, {
 				method: 'post',
 				timeout: 5000,
 			}, function(t, status) {
@@ -550,28 +561,29 @@
 				if(status == 200) {
 					if(rsp.result) {
 						//更新用户信息
-					GetMemberDetail();
-					console.log('成功'+JSON.stringify(rsp));
+						GetMemberDetail();
+						console.log('成功' + JSON.stringify(rsp));
 					}
 				} else {
-					console.log('失败：'+JSON.stringify(rsp))
+					console.log('失败：' + JSON.stringify(rsp))
 					self._refreshPlaceholder(file, 3);
 				}
-			},function(t){
+			}, function(t) {
 				console.log(JSON.stringify(JSON.parse(t.responseText)));
 			});
-			task.setRequestHeader('Authorization',_dataAccess.getUser().Token);
-//			task.addData("memberid", _dataAccess.getUser().MemberId);
+			task.setRequestHeader('Authorization', _dataAccess.getUser().Token);
+			//			task.addData("memberid", _dataAccess.getUser().MemberId);
 			task.addFile(file, {
 				key: file
 			});
 			task.start();
 		}
-		window.addEventListener('Refresh',function(){
+		window.addEventListener('Refresh', function() {
 			GetMemberDetail();
 		});
-		function GetMemberDetail(){
-			member.GetMemberDetail(function(result){
+
+		function GetMemberDetail() {
+			member.GetMemberDetail(function(result) {
 				var user = result.result;
 				user.Token = Token;
 				_dataAccess.setUser(user);

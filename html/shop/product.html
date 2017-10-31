@@ -353,7 +353,7 @@
 				console.log(JSON.stringify(shopCollects));
 				if(shopCollects != null) {
 					for(var i = 0; i < shopCollects.length; i++) {
-						if(shopId == shopCollects[i].ShopId) {
+						if(shopId == shopCollects[i].Id) {
 							document.getElementById("collect").innerText = "已收藏";
 							break;
 						}
