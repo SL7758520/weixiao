@@ -634,7 +634,8 @@
 				],
 				"refer": [
 					"html/member/member_modify.html",
-					"html/linkman/linkman_list.html"
+					"html/linkman/linkman_list.html",
+					"html/member/collection.html"
 				],
 				"priority": 0
 			},
@@ -727,7 +728,8 @@
 					"css/appfont.css"
 				],
 				"refer": [
-					"html/shop/select_people.html"
+					"html/shop/select_people.html",
+					"html/linkman/select_linkaddress.html"
 				],
 				"priority": 0
 			},
@@ -914,7 +916,11 @@
 					"js/dao.js",
 					"css/mui.min.css",
 					"js/linkman.js",
-					"js/post.js"
+					"js/post.js",
+					"css/main.css",
+					"css/appfont.css",
+					"fonts/mui.ttf",
+					"fonts/icomoon.ttf"
 				],
 				"refer": [],
 				"priority": 0
@@ -947,7 +953,10 @@
 					"js/dao.js",
 					"css/mui.min.css",
 					"js/linkman.js",
-					"js/post.js"
+					"js/post.js",
+					"css/main.css",
+					"css/appfont.css",
+					"fonts/icomoon.ttf"
 				],
 				"refer": [
 					"html/linkman/create_linkman.html",
@@ -965,7 +974,11 @@
 					"js/post.js",
 					"css/mui.picker.min.css",
 					"js/localDatabase.js",
-					"js/mui.min.js"
+					"js/mui.min.js",
+					"css/main.css",
+					"css/appfont.css",
+					"fonts/mui.ttf",
+					"fonts/icomoon.ttf"
 				],
 				"refer": [],
 				"priority": 0
@@ -978,7 +991,9 @@
 					"js/dao.js",
 					"css/mui.min.css",
 					"js/shop.js",
-					"js/post.js"
+					"js/post.js",
+					"images/bed.jpg",
+					"fonts/mui.ttf"
 				],
 				"refer": [
 					"html/server/serverOrder.html"
@@ -1032,6 +1047,79 @@
 					"css/mui.indexedlist.css",
 					"js/post.js",
 					"js/mui.indexedlist.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/member/collection.html": {
+				"resources": [
+					"js/localDatabase.js",
+					"js/mui.pullToRefresh.js",
+					"css/main.css",
+					"js/mui.min.js",
+					"js/mui.pullToRefresh.material.js",
+					"fonts/mui.ttf",
+					"js/dao.js",
+					"css/mui.min.css",
+					"js/post.js",
+					"images/Service.png"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/linkman/edit_linkaddress.html": {
+				"resources": [
+					"js/localDatabase.js",
+					"js/muifun.js",
+					"js/mui.picker.js",
+					"js/linkaddress.js",
+					"js/mui.poppicker.js",
+					"js/dao.js",
+					"css/mui.poppicker.css",
+					"css/mui.picker.css",
+					"css/icons-extra.css",
+					"js/post.js",
+					"js/city.data-3.js",
+					"css/mui.min.css",
+					"js/city.data.js",
+					"css/appfont.css",
+					"css/main.css",
+					"fonts/mui.ttf",
+					"js/mui.min.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/linkman/create_linkaddress.html": {
+				"resources": [
+					"js/mui.picker.js",
+					"js/mui.poppicker.js",
+					"js/city.data.js",
+					"css/mui.poppicker.css",
+					"css/mui.picker.css",
+					"js/city.data-3.js",
+					"css/mui.min.css",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/appfont.css",
+					"css/main.css",
+					"css/icons-extra.css",
+					"js/localDatabase.js",
+					"js/linkaddress.js",
+					"js/dao.js",
+					"js/post.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/linkman/select_linkaddress.html": {
+				"resources": [
+					"js/linkaddress.js",
+					"css/mui.min.css",
+					"js/localDatabase.js",
+					"js/dao.js",
+					"js/post.js",
+					"js/mui.min.js"
 				],
 				"refer": [],
 				"priority": 0

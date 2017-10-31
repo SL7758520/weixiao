@@ -1,0 +1,207 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/mui.picker.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../css/appfont.css" rel="stylesheet" />
+		<link href="../../css/main.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/icons-extra.css" />
+
+		<style type="text/css">
+			html,
+			body {
+				background-color: #F3F3F3;
+			}
+			
+			.form_info {
+				border-bottom: 1px solid #F3F3F3;
+			}
+			
+			.form_info label {
+				width: 75px;
+				font-size: 16px;
+			}
+			
+			.form_info .input_sys1 {
+				font-size: 14px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<button id="confirmSelected" type="button" class="mui-btn mui-btn-link mui-pull-right color_white">完成</button>
+			<h1 class="mui-title">创建地址</h1>
+		</header>
+		<div class="mui-content">
+			<div class="form_info">
+				<div><label>联系人</label>
+					<dd><input id="name" type="text" class="input_sys1" placeholder="请输入联系人"></dd>
+				</div>
+			</div>
+			<div class="form_info">
+				<div><label>联系电话</label>
+					<dd><input id="phoneNumber" type="text" class="input_sys1" placeholder="请输入联系电话"></dd>
+				</div>
+			</div>
+			<div class="form_info">
+				<div><label>邮政编码</label>
+					<dd><input id="postalCode" type="text" class="input_sys1" placeholder="请输入邮政编码（非必填）"></dd>
+				</div>
+			</div>
+			<div class="mui-form">
+				<ul>
+					<li id="showUserPicker">
+						<a href="#" style="color: #000;">所在地区<span id="region">选择</span></a>
+					</li>
+				</ul>
+			</div>
+			<div class="mui-form">
+				<ul>
+					<li><textarea id="txtDescription" class="text_box" style="font-size: 14px;" placeholder="详细地址"></textarea></li>
+				</ul>
+			</div>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<!--<script src="../js/mui.picker.min.js"></script>-->
+		<script src="../../js/mui.picker.js"></script>
+		<script src="../../js/mui.poppicker.js"></script>
+		<script src="../../js/city.data.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/city.data-3.js" type="text/javascript" charset="utf-8"></script>
+		<!--<script src="../../js/muifun.js"></script>-->
+		<script src="../../js/localDatabase.js"></script>
+		<script src="../../js/post.js"></script>
+		<script src="../../js/dao.js"></script>
+		<script src="../../js/linkaddress.js"></script>
+		<script>
+			(function($, doc) {
+				$.init();
+				$.ready(function() {
+					/**
+					 * 获取对象属性的值
+					 * 主要用于过滤三级联动中，可能出现的最低级的数据不存在的情况，实际开发中需要注意这一点；
+					 * @param {Object} obj 对象
+					 * @param {String} param 属性名
+					 */
+					var _getParam = function(obj, param) {
+						return obj[param] || '';
+					};
+					//					//级联示例
+					var cityPicker3 = new $.PopPicker({
+						layer: 3
+					});
+					cityPicker3.setData(cityData3);
+					var showCityPickerButton = doc.getElementById('showUserPicker');
+					var cityResult3 = doc.getElementById('region');
+					showCityPickerButton.addEventListener('tap', function(event) {
+						cityPicker3.show(function(items) {
+							cityResult3.innerText = _getParam(items[0], 'text') + _getParam(items[1], 'text') + _getParam(items[2], 'text');
+							//返回 false 可以阻止选择框的关闭
+							//return false;
+						});
+					}, false);
+				});
+			})(mui, document);
+			var Model = {};
+			var linkaddress = new LinkAddress();
+			mui.init();
+			mui.plusReady(function() {
+				var _getParam = function(obj, param) {
+					return obj[param] || '';
+				};
+				initpage();
+			});
+
+			function initpage() {
+				
+				document.getElementById('confirmSelected').addEventListener('tap', function() {
+					if(getValue('name') == '') {
+						mui.toast('请填写姓名');
+						return;
+					}
+					if(!phonecheck(getValue('phoneNumber'))) {
+						return;
+					}
+					if(document.getElementById("region").innerHTML == '选择') {
+						mui.toast('请选择所在地区');
+						return;
+					}
+					if(document.getElementById("txtDescription").value == '') {
+						mui.toast('请填写详细地址');
+						return;
+					}
+					plus.nativeUI.showWaiting();
+					Model.LinkManName = getValue('name');
+					Model.Phone = getValue('phoneNumber');
+					Model.Address = mergeStr(document.getElementById("region").innerHTML, document.getElementById("txtDescription").value);
+					console.log(Model.Address);
+					console.log(getValue('postalCode'));
+					Model.PostCode = getValue('postalCode');
+					linkaddress.Create(Model, function(result) {
+						console.log(JSON.stringify(result));
+						plus.nativeUI.closeWaiting();
+						if(result.status == 1) {
+							mui.toast('新增地址成功');
+							var list = plus.webview.getWebviewById('html/linkman/linkaddress_list.html');
+							mui.fire(list, 'Changelinkman', {});
+							mui.back();
+						} else {
+							mui.toast('新增地址失败，请重试');
+						}
+					}, function() {
+						plus.nativeUI.closeWaiting();
+						mui.toast('请求失败');
+					});
+				});
+
+			}
+
+			function getValue(id) {
+				return document.getElementById(id).value;
+			}
+
+			function setValue(id, value) {
+				document.getElementById(id).value = value;
+			}
+
+			function splitStr(str) {
+				var strlist = str.split(" ");
+				return strlist;
+			}
+
+			function mergeStr(str1, str2) {
+				return str1 + " " + str2;
+			}
+
+			//手机号码验证：
+			function phonecheck(tel) {
+				if(tel.length == 0) {
+					mui.toast('请输入手机号码！');
+					return false;
+				}
+				if(tel.length != 11) {
+					mui.toast('请输入有效的手机号码！');
+					return false;
+				}
+				var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+				if(!myreg.test(tel)) {
+					mui.toast('请输入有效的手机号码！');
+					return false;
+				} else {
+					return true;
+				}
+			}
+
+			mui.back = function() {
+				plus.webview.currentWebview().close();
+			}
+		</script>
+	</body>
+
+</html>

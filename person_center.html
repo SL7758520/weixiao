@@ -189,11 +189,17 @@
 					<li id="liemail">
 						<a href="#" class="linecss">邮箱<span id="email"></span></a>
 					</li>
+					<li id="licollection">
+						<a href="#" class="linecss">收藏<span id="collection"></span></a>
+					</li>
+					<li id="liinvoice">
+						<a href="#" class="linecss">发票<span id="invoice"></span></a>
+					</li>
 					<li id="lilinkman">
 						<a href="#" class="linecss">常用联系人<span id="address"></span></a>
 					</li>
 					<li id="liaddress">
-						<a href="#" class="linecss">居住地<span id="address"></span></a>
+						<a href="#" class="linecss">常用地址<span id="address"></span></a>
 					</li>
 					<li id="lipsw">
 						<a href="#" class="linecss">修改密码<span></span></a>
@@ -341,20 +347,26 @@
 					toLogin();
 				}
 			});
-			//修改居住地
-			document.getElementById('liaddress').addEventListener('tap', function() {
-				mui.toast('暂不提供修改');
-				return;
-				if(getLogin()) {
-					opWindow('html/member/member_modify.html','html/member/member_modify.html','Address',getelementhtml('address'),'修改居住地');
-				} else {
-					toLogin();
-				}
-			});
 			//修改密码
 			document.getElementById('lipsw').addEventListener('tap', function() {
 				if(getLogin()) {
 					gotoHtml('html/account/forget_password.html');
+				} else {
+					toLogin();
+				}
+			});
+			//收藏
+			document.getElementById("licollection").addEventListener("tap",function(event){
+				if(getLogin()) {
+					gotoHtml('html/member/collection.html');
+				} else {
+					toLogin();
+				}
+			});
+			//常用地址
+			document.getElementById("liaddress").addEventListener("tap",function(event){
+				if(getLogin()) {
+					gotoHtml('html/linkman/linkaddress_list.html');
 				} else {
 					toLogin();
 				}
