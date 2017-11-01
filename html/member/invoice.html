@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/appfont.css" rel="stylesheet" />
+		<link href="../../css/main.css" rel="stylesheet" />
+		<style>
+			.tableli {
+				padding: 15px 15px 15px 15px;
+			}
+			
+			.hotel-footer {
+				position: fixed;
+				display: flex;
+				justify-content: space-between;
+				background-color: #EFEFF4;
+				/*border: solid 1px #ddd;*/
+				/*box-shadow: 0px -5px 5px 0px rgba(0, 0, 0, 0.05);*/
+				left: 0px;
+				bottom: 1px;
+				height: 44px;
+				width: 100%;
+			}
+			
+			.mui-btn-block {
+				font-size: 16px;
+				display: block;
+				width: 90px;
+				height: 100%;
+				padding: 10px 0
+			}
+			
+			.check_box {
+				width: 30%;
+				display: flex;
+				justify-content: space-between;
+				text-align: center;
+				padding-top: 5px;
+			}
+			
+			.Total {
+				width: 70%;
+				display: flex;
+				justify-content: flex-end;
+				text-align: center;
+			}
+			.price{
+				padding-top: 12px;
+				margin-right: 4px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--主界面部分-->
+		<header id="header" class="mui-bar mui-bar-nav">
+			<h1 class="mui-title">发票索取</h1>
+			<a href="#offCanvasSide" class="mui-action-back mui-icon icon_app_02 mui-action-menu mui-icon-left-nav mui-pull-left"></a>
+			<a id="btnNew" style="font-size: 14px;" class="mui-btn mui-btn-link mui-pull-right">发票索取历史</a>
+		</header>
+		<div id="pullrefresh">
+			<ul class="mui-table-view" id='ulorderlists' style="margin-top: 44px;"></ul>
+		</div>
+		<div class="hotel-footer">
+			<div class="check_box">
+				<div class="mui-input-row mui-checkbox mui-left">
+					<label>全选</label>
+					<input name="checkbox" value="Item 1" type="checkbox">
+				</div>
+			</div>
+			<div class="Total">
+				<div class="price">
+					<label>合计：<span style="color: red;font-size: 16px;" id="price">¥ 199999.0</span></label>
+				</div>
+				<button id="next" type="button" class="mui-btn mui-btn-danger mui-btn-block">下一步</button>
+			</div>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/post.js"></script>
+		<script src="../../js/localDatabase.js"></script>
+		<script src="../../js/dao.js"></script>
+		<script src="../../js/member.js"></script>
+		<script type="text/javascript">
+			mui.init()
+		</script>
+	</body>
+
+</html>

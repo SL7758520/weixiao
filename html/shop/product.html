@@ -117,9 +117,7 @@
 				font-weight: bold;
 			}
 			
-			.mui-table-view-cell {
-				padding: 5px 5px 0px 5px;
-			}
+			
 			
 			.hotel-footer {
 				position: fixed;
@@ -408,7 +406,7 @@
 					plus.maps.openSysMap(dst, shop, src);
 				});
 				document.getElementById("image").addEventListener("tap", function(event) {
-					gotoHtml("shop_pic.html", shopId, photoUrl);
+					gotoHtml("shop_pic.html","shop_pic.html", shopId, photoUrl);
 				});
 				document.getElementById("collect").addEventListener("tap", function(event) {
 					if(document.getElementById("collect").innerText == "已收藏") {
@@ -478,16 +476,16 @@
 				}
 
 				li.addEventListener("tap", function(event) {
-					gotoHtml("product_details.html", entity.Id, photoUrl);
+					gotoHtml("product_details.html","product_details.html", entity.Id, photoUrl);
 				});
 
 				return li;
 			}
 
-			function gotoHtml(u, datas, photoUrl) {
+			function gotoHtml(id,u, datas, photoUrl) {
 				mui.openWindow({
 					url: u,
-					id: u,
+					id: id,
 
 					show: {
 						aniShow: 'pop-in'

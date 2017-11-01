@@ -29,6 +29,11 @@
 				height: auto;
 			}
 			
+			.mui-slider .mui-slider-group .mui-slider-item {
+				height: 100%;
+
+			}
+			
 			.mui-pull-top-tips {
 				position: absolute;
 				top: -20px;
@@ -115,7 +120,7 @@
 			.text {
 				width: 75%;
 				display: flex;
-				justify-content: space-between;
+				justify-content: space-around;
 				align-items: center;
 			}
 			
@@ -153,10 +158,13 @@
 				<div style="padding: 6px 6px;">
 					<div id="segmentedControl" class="mui-segmented-control">
 						<a id="a0" class="mui-control-item mui-active" href="#item0mobile">
-							旅居产品<span id="t0"></span>
+							旅居店铺<span id="t0"></span>
 						</a>
 						<a id="a1" class="mui-control-item " href="#item1mobile">
-							养老服务<span id="t1"></span>
+							旅居产品<span id="t1"></span>
+						</a>
+						<a id="a2" class="mui-control-item " href="#item2mobile">
+							养老服务<span id="t2"></span>
 						</a>
 					</div>
 				</div>
@@ -165,7 +173,7 @@
 						<div class="mui-scroll-wrapper">
 							<div id="scroll0" class="mui-scroll ">
 								<ul id="Product_List" class="mui-table-view" style="margin-top: 0em;">
-									
+
 								</ul>
 							</div>
 						</div>
@@ -177,7 +185,13 @@
 							</div>
 						</div>
 					</div>
-
+					<div id="item2mobile" class="mui-slider-item mui-control-content">
+						<div class="mui-scroll-wrapper">
+							<div id="scroll2" class="mui-scroll">
+								<ul id="category_List" class="mui-table-view mui-table-view-chevron"></ul>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -209,6 +223,10 @@
 				mui('#scroll1').pullToRefresh().pullDownLoading();
 				selectTab(1);
 			});
+			window.addEventListener("listRefresh2", function(e) {
+				mui('#scroll2').pullToRefresh().pullDownLoading();
+				selectTab(2);
+			});
 
 			function selectTab(index) {
 				if(index == 0 && Warehouse_DeAdd) {
@@ -231,6 +249,7 @@
 			function selectTabs(currentIndex) {
 				Index = currentIndex;
 				var scrollIndex = '#scroll' + currentIndex;
+				mui('#scroll' + currentIndex).pullToRefresh().pullDownLoading();
 				//				if(currentIndex == 2){
 				//					mui(scrollIndex).pullToRefresh().pullUpLoading();
 				//				}
@@ -246,7 +265,7 @@
 			}
 
 			mui.plusReady(function() {
-				photoUrl=plus.webview.currentWebview().photoUrl;
+				photoUrl = plus.webview.currentWebview().photoUrl;
 				//禁止左右滑动
 				mui('.mui-slider').slider().setStopped(false);
 
@@ -300,9 +319,8 @@
 						var self = obj;
 						setTimeout(function() {
 							var div = self.element.querySelector('.mui-table-view');
-							if(index == 0) {
-								member.GetShopCollect(pageObjects[index].currentPageIndex, pageObjects[index].pageSize, function(datas) {
-									//										console.log(result.length);
+							if(index == 1) {
+								member.GetShopProductCollect(pageObjects[index].currentPageIndex, pageObjects[index].pageSize, function(datas) {
 									if(datas.result) {
 										pageObjects[index].recordCount = datas.pageCount;
 
@@ -318,53 +336,125 @@
 										self.endPullDownToRefresh(datas.result.length < pageObjects[index].pageSize);
 									}
 								});
-							} else if(index == 1) {}
+							} else if(index == 2) {
+								member.GetShopProductCollect(pageObjects[index].currentPageIndex, pageObjects[index].pageSize, function(datas) {
+									//										console.log(result.length);
+									if(datas.result) {
+										pageObjects[index].recordCount = datas.pageCount;
+
+										addList2(datas.result);
+									} else {
+										document.getElementById('item' + index + 'mobile').querySelector('.mui-table-view').innerHTML = '';
+									}
+									if(isUp) {
+										//											mui.toast("没有更多数据！");
+										self.endPullUpToRefresh(datas.result.length < pageObjects[index].pageSize);
+									} else {
+										self.endPullUpToRefresh(datas.result.length < pageObjects[index].pageSize);
+										self.endPullDownToRefresh(datas.result.length < pageObjects[index].pageSize);
+									}
+								});
+							} else if(index == 0) {
+								member.GetShopCollect(pageObjects[index].currentPageIndex, pageObjects[index].pageSize, function(datas) {
+									if(datas.result) {
+										pageObjects[index].recordCount = datas.pageCount;
+
+										addList0(datas.result);
+									} else {
+										document.getElementById('item' + index + 'mobile').querySelector('.mui-table-view').innerHTML = '';
+									}
+									if(isUp) {
+										//											mui.toast("没有更多数据！");
+										self.endPullUpToRefresh(datas.result.length < pageObjects[index].pageSize);
+									} else {
+										self.endPullUpToRefresh(datas.result.length < pageObjects[index].pageSize);
+										self.endPullDownToRefresh(datas.result.length < pageObjects[index].pageSize);
+									}
+								});
+							}
 
 						}, 1000);
 					}
 
-					var addList1 = function(datas) {
+					var addList0 = function(datas) {
 						var div = document.getElementById('item0mobile').querySelector('.mui-table-view');
 						div.innerHTML = '';
 						for(var i = 0; i < datas.length; i++) {
-							div.appendChild(addData1(datas[i]));
-
+							div.appendChild(addData0(datas[i]));
 						}
 					}
-					function addData1(entity){
+
+					function addData0(entity) {
 						console.log(photoUrl);
-						var card=document.createElement("li");
-						card.classList="mui-table-view-cell";
-						card.innerHTML='<div class="item"><div><img src="'+(photoUrl+entity.PhotoUrl)+'" onerror="this.src=\'../../images/Service.png\'" style="width: 100px;height: 65px;"></div><div class="text"><div class="information"><h4 style="margin-top: 5px;font-size: 18px;">'+entity.Name+'</h4><h5 class="mui-ellipsis" style="margin-top: 10px;font-size: 16px;">'+entity.ShortDescription+'</h5></div><div class="price"><button class="new-price">删除</button></div></div></div>';
-						card.querySelector("button").addEventListener("tap",function(event){
-							
+						var card = document.createElement("li");
+						card.classList = "mui-table-view-cell";
+						card.innerHTML = '<div class="item"><div><img src="' + (photoUrl + entity.PhotoUrl) + '" onerror="this.src=\'../../images/Service.png\'" style="width: 100px;height: 65px;"></div><div class="text"><div class="information"><h4 style="margin-top: 5px;font-size: 18px;">' + entity.Name + '</h4><h5 class="mui-ellipsis" style="margin-top: 10px;font-size: 16px;">' + entity.ShortDescription + '</h5></div><div class="price"><button class="new-price">删除</button></div></div></div>';
+						card.querySelector("button").addEventListener("tap", function(event) {
+							member.RemoveShopCollect(entity.Id, function(datas) {
+								mui.toast(datas.message);
+							});
+						});
+						card.addEventListener("tap", function(event) {
+							gotoHtml("product.html", "../shop/product.html", entity.Id, photoUrl);
 						});
 						return card;
 					}
-					
-					var addList2 = function(datas, index) {
-						Warehouse_fults = datas;
-						var div = document.getElementById('item' + index + 'mobile').querySelector('.mui-table-view');
-						if(datas && datas.length > 0) {
-							for(var i = 0; i < datas.length; i++) {
-								var card = document.createElement("li");
-								card.setAttribute("guid", datas[i].GUID);
-								card.setAttribute("id", i);
-								card.className = "mui-table-view-cell mui-media";
 
-								var startDate = (new Date(datas[i].ADDTIME)).Format("yyyy-MM-dd");
-								card.innerHTML = '<a class="mui-navigate-right"><h6><div class="font">状态：' + datas[i].STATUSNAME + '</div></h6><h6><div class="font">入库单编号：' + datas[i].CHANGENO + '</div></h6><h6><div class="font" style="float: left;text-align: center;padding-right: 3em;">路段：' + datas[i].ROADNAME + '</div><div class="font" style="text-align: center;">入库类型：' + datas[i].STORETYPE + '</div></h6><h6 ><div class="font" style="float: left;text-align: center;">添加人：' + datas[i].ADDSERID + '</div><div class="font" style="text-align: center;">添加时间：' + startDate + '</div></h6>'
-
-								//								var htmls = '<a class="mui-navigate-right"><div style=" display: flex;"><div style="width: 50%;"><h5 >状态：' + datas[i].STATUSNAME + '</h5><h5>路段:' + datas[i].ROADNAME + '</h5><h5>入库类型:' + datas[i].STORETYPE + '</h5></div><div style="width: 50%;"><h5>添加人:' + datas[i].ADDSERID + '</h5><h5 class="mui-ellipsis">编号:' + splitStr(datas[i].CHANGENO) + '</h5><h5 class="mui-ellipsis">添加时间:' + datas[i].ADDTIME + '</h5></div></div>';
-
-								//								var htmls = '<button id="' + i + '" class="mui-btn">查看</button><div class="mui-table"><div class="mui-table-cell"><h6 class="mui-ellipsis-2">设备型号：' + datas[i].CHANGENO + '</h6><h6 style="height : 25px;display: flex;flex-direction: row;justify-content: space-between;align-items:center"><div>添加时间：' + datas[i].ADDTIME + '</div><div>状态：' + datas[i].STATUSNAME + '</div></h6><h5 class="mui-h6 mui-ellipsis">GUID:' + datas[i].GUID + '</h5></div></div>';
-								//								card.innerHTML = htmls;
-
-								//下拉刷新，新纪录插到最前面；
-								div.insertBefore(card, div.firstChild);
-							}
+					var addList1 = function(datas) {
+						var div = document.getElementById('item1mobile').querySelector('.mui-table-view');
+						div.innerHTML = '';
+						for(var i = 0; i < datas.length; i++) {
+							if(datas[i].CategoryId == 0) {
+								div.appendChild(addData1(datas[i]));
+							} else {}
 						}
 					}
+
+					function addData1(entity) {
+						console.log(photoUrl);
+						var card = document.createElement("li");
+						card.classList = "mui-table-view-cell";
+						card.innerHTML = '<div class="item"><div><img src="' + (photoUrl + entity.PhotoUrl) + '" onerror="this.src=\'../../images/Service.png\'" style="width: 100px;height: 65px;"></div><div class="text"><div class="information"><h4 style="margin-top: 5px;font-size: 18px;">' + entity.Name + '</h4><h5 class="mui-ellipsis" style="margin-top: 10px;font-size: 16px;">' + entity.ShortDescription + '</h5></div><div class="price"><button class="new-price">删除</button></div></div></div>';
+						card.querySelector("button").addEventListener("tap", function(event) {
+							member.RemoveShopProductCollect(entity.Id, function(datas) {
+								mui.toast(datas.message);
+							});
+						});
+						card.addEventListener("tap", function(event) {
+							gotoHtml("product_details.html", "../shop/product_details.html", entity.Id, photoUrl);
+						});
+						return card;
+					}
+
+					var addList2 = function(datas) {
+						var div = document.getElementById('item2mobile').querySelector('.mui-table-view');
+						div.innerHTML = '';
+						for(var i = 0; i < datas.length; i++) {
+							if(datas[i].CategoryId == 0) {
+
+							} else {
+								div.appendChild(addData2(datas[i]));
+							}
+
+						}
+					}
+
+					function addData2(entity) {
+						console.log(photoUrl);
+						var card = document.createElement("li");
+						card.classList = "mui-table-view-cell";
+						card.innerHTML = '<div class="item"><div><img src="' + (photoUrl + entity.PhotoUrl) + '" onerror="this.src=\'../../images/Service.png\'" style="width: 100px;height: 65px;"></div><div class="text"><div class="information"><h4 style="margin-top: 5px;font-size: 18px;">' + entity.Name + '</h4><h5 class="mui-ellipsis" style="margin-top: 10px;font-size: 16px;">' + entity.ShortDescription + '</h5></div><div class="price"><button class="new-price">删除</button></div></div></div>';
+						card.querySelector("button").addEventListener("tap", function(event) {
+							member.RemoveShopProductCollect(entity.Id, function(datas) {
+								mui.toast(datas.message);
+							});
+						});
+						card.addEventListener("tap", function(event) {
+							gotoHtml("server_detail.html", "../server/server_detail.html", entity.Id, photoUrl);
+						});
+						return card;
+					}
+
 					var addList3 = function(datas, index) {
 						Warehouse_receipts = datas;
 						var div = document.getElementById('item' + index + 'mobile').querySelector('.mui-table-view');
@@ -473,10 +563,10 @@
 				});
 			})(mui);
 
-			function gotoHtml(u, datas) {
+			function gotoHtml(id, u, datas, photoUrl) {
 				mui.openWindow({
 					url: u,
-					id: u,
+					id: id,
 
 					show: {
 						aniShow: 'pop-in'
@@ -487,8 +577,8 @@
 					},
 					extras: {
 						data: datas,
+						photoUrl: photoUrl,
 					}
-
 				});
 			}
 		</script>

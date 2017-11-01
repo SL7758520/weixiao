@@ -30,7 +30,7 @@
 	</head>
 
 	<body>
-		
+
 		<nav class="mui-bar mui-bar-tab main_nav" style="background-color: #F3F3F3;">
 			<a id="t0" class="mui-tab-item mui-active" href="home.html">
 				<span class="mui-icon icon_app_29" id="t0icon"></span>
@@ -53,7 +53,7 @@
 				<span class="mui-tab-label">我</span>
 			</a>
 		</nav>
-		
+
 		<script src="js/mui.min.js"></script>
 		<script src="js/localDatabase.js"></script>
 		<script src="js/post.js"></script>
@@ -86,39 +86,29 @@
 				plus.push.setAutoNotification(true);
 				//监听推送消息接收
 				plus.push.addEventListener('receive', function(msg) {
-					try {
-						if(plus.os.name != "iOS") return;
-
-						if(msg.payload && msg.payload.url) {
-							mui.confirm(msg.content, msg.title, ['立即查看', '知道了'], function(e) {
-								if(e.index > 0) return;
-								//								redirect(msg.payload.url);
-							});
-						} else {
-							mui.alert(msg.content, msg.title);
-						}
-					} catch(e) {
-						mui.alert(e.message, e.message);
-					}
+					mui.toast(JSON.stringify(msg));
+					//					if(msg.aps) { // Apple APNS message
+					//						mui.toast("接收到在线APNS消息：");
+					//					} else {
+					//						mui.toast("接收到在线透传消息：");
+					//					}
 				});
 				//监听点击推送事件
 				plus.push.addEventListener('click', function(msg) {
-					try {
-
-						if(plus.os.name == "iOS") {
-							var data = eval('(' + msg.payload.payload + ')');
-						} else {
-							var data = eval('(' + msg.payload + ')');
-						}
-						pushCallback(data);
-					} catch(e) {
-						mui.alert(e.message + "AAAAAAAA", e.message);
-					}
+					mui.toast(JSON.stringify(msg));
+					//					try {
+					//
+					//						if(plus.os.name == "iOS") {
+					//							var data = msg.payload.payload
+					//						} else {
+					//							var data = msg.payload
+					//						}
+					//						pushCallback(data);
+					//					} catch(e) {
+					//						mui.alert(e.message + "AAAAAAAA", e.message);
+					//					}
 				});
-				
-				// 设置系统状态栏背景为红色
-				plus.navigator.setStatusBarBackground('#4cd964');
-				
+
 			}
 			if(window.plus) {
 				plusReady();

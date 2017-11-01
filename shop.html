@@ -308,7 +308,7 @@
 			shopName = user.ShopName;
 			cityId = _dataAccess.getUser().CityId;
 			document.getElementById("search").addEventListener("tap", function(event) {
-				gotoHtml("html/shop/shop_search.html", "", photoUrl);
+				gotoHtml("shop_search.html","html/shop/shop_search.html", "", photoUrl);
 			});
 			div = document.getElementById("shopList");
 			hotproduct = document.getElementById("HotproductList");
@@ -406,7 +406,7 @@
 			}
 
 			li.addEventListener("tap", function(event) {
-				gotoHtml("html/shop/product_details.html", entity.Id, photoUrl);
+				gotoHtml("product_details.html","html/shop/product_details.html", entity.Id, photoUrl);
 			});
 
 			return li;
@@ -441,16 +441,16 @@
 			li.innerHTML = '<dd class="img"><img src=' + imgsrc + ' onerror="this.src=\'images/shop.jpg\'"></dd><div class="content"><dd class="detail">' + entity.Name + '</dd><dd class="price"><span class="newPrice">￥' + entity.BottomPrice + '/月起</span></dd></div><div class="shop_text">' + description + '<br>地址：' + entity.Address + '</div>';
 			li.addEventListener("tap", function(event) {
 				//				console.log("AAAAAAAAAAA"); 
-				gotoHtml("html/shop/product.html", entity.Id, photoUrl);
+				gotoHtml("product.html","html/shop/product.html", entity.Id, photoUrl);
 			});
 
 			return li;
 		}
 
-		function gotoHtml(u, datas, photoUrl) {
+		function gotoHtml(id,u, datas, photoUrl) {
 			mui.openWindow({
 				url: u,
-				id: u,
+				id: id,
 
 				show: {
 					aniShow: 'pop-in'

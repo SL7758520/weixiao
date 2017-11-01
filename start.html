@@ -24,6 +24,8 @@
 			var _dataAccess = new DataAccess();
 			var _account = new Account();
 			mui.plusReady(function() {
+				// 设置系统状态栏背景为红色
+				plus.navigator.setStatusBarBackground('#4cd964');
 				setTimeout(function() {
 					_dataAccess.setShopId({
 						shopId: 1

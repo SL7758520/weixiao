@@ -193,7 +193,7 @@
 						<a href="#" class="linecss">收藏<span id="collection"></span></a>
 					</li>
 					<li id="liinvoice">
-						<a href="#" class="linecss">发票<span id="invoice"></span></a>
+						<a href="#" class="linecss">发票索取<span id="invoice"></span></a>
 					</li>
 					<li id="lilinkman">
 						<a href="#" class="linecss">常用联系人<span id="address"></span></a>
@@ -365,6 +365,13 @@
 			document.getElementById("licollection").addEventListener("tap", function(event) {
 				if(getLogin()) {
 					gotoHtml('html/member/collection.html', photoUrl);
+				} else {
+					toLogin();
+				}
+			});
+			document.getElementById("liinvoice").addEventListener("tap",function(event){
+				if(getLogin()) {
+					gotoHtml('html/member/invoice.html', photoUrl);
 				} else {
 					toLogin();
 				}
