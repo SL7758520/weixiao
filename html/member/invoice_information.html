@@ -19,7 +19,7 @@
 				display: flex;
 				justify-content: space-between;
 				align-items: center;
-				padding: 10px;
+				padding: 5px;
 			}
 			
 			.mui-content>.mui-table-view:first-child {
@@ -109,17 +109,17 @@
 			<a href="#offCanvasSide" class="mui-action-back mui-icon icon_app_02 mui-action-menu mui-icon-left-nav mui-pull-left"></a>
 		</header>
 		<div class="mui-content">
-			<ul class="mui-table-view">
+			<ul class="mui-table-view" id="addresslist">
 				<li class="mui-table-view-cell mui-media">
 					<i class="fa fa-map-marker mui-media-object mui-pull-left"></i>
-					<div id="maps" class="mui-media-body mui-navigate-right" style="display: none;">
+					<div id="current_maps" class="mui-media-body mui-navigate-right" style="display: none;">
 						<div class="infospan">
-							<p style="font-size: 16px;">舒亮</p>
-							<p style="font-size: 16px;">18170836326</p>
+							<p style="font-size: 16px;" id="name">舒亮</p>
+							<p style="font-size: 16px;" id="phone">18170836326</p>
 						</div>
-						<p style="margin-top: 5px;" class="mui-ellipsis-2">点击在地图中查看啥看不到卡斯比你接口但是尽可能的健康按按实际的南沙端屎端尿阿萨德</p>
+						<p  class="mui-ellipsis-2" id="address">点击在地图中查看啥看不到卡斯比你接口但是尽可能的健康按按实际的南沙端屎端尿阿萨德</p>
 					</div>
-					<div id="maps" class="mui-media-body mui-navigate-right">
+					<div id="maps" class="mui-media-body mui-navigate-right" >
 						<label class="default">您还没有选择发票寄送地址，请选择!</label>
 					</div>
 				</li>
@@ -129,12 +129,12 @@
 					<li class="form_tp">发票类型</li>
 					<form class="infospan mui-input-group">
 						<div class="mui-input-row mui-radio mui-left">
-							<label>个人</label>
-							<input name="radio1" type="radio" checked="">
+							<label>个人发票</label>
+							<input name="radio1" type="radio" checked="" value="0">
 						</div>
 						<div class="mui-input-row mui-radio mui-left">
-							<label>企业</label>
-							<input name="radio1" type="radio">
+							<label>企业发票</label>
+							<input name="radio1" type="radio" value="1">
 						</div>
 					</form>
 				</ul>
@@ -153,7 +153,75 @@
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script type="text/javascript">
-			mui.init()
+			mui.init();
+			var _self;
+			var address;
+			window.addEventListener('addAddress', function(event) {
+				 address= event.detail.datas;
+				console.log(JSON.stringify(address));
+				if(address != null) {
+					document.getElementById("maps").style.display = "none";
+					document.getElementById("current_maps").style.display = "block";
+					document.getElementById("name").innerHTML = address.LinkManName;
+					document.getElementById("phone").innerHTML = address.Phone;
+					document.getElementById("address").innerHTML = address.Address;
+				}
+			});
+			var type=0;
+			mui.plusReady(function() {
+				_self = plus.webview.currentWebview();
+				var ShopOrderIdList = _self.data;
+				var price=_self.price;
+				document.getElementById("addresslist").addEventListener("tap", function(event) {
+					mui.openWindow({
+						id: 'select_linkaddress.html',
+						url: '../linkman/select_linkaddress.html',
+						show: {
+							aniShow: 'pop-in'
+						},
+						waiting: {
+							autoShow: false
+						},
+						extras: {
+							pageId: 'invoice_information.html'
+						}
+					});
+				});
+				mui('.mui-input-group').on('change', 'input', function() {
+					type = this.value;
+				});
+				document.getElementById("price").innerHTML="¥ "+price;
+				document.getElementById("next").addEventListener("tap",function(event){
+					if(address != null){
+						if(type == 0){
+							gotoHtml("invoice_personal.html", "invoice_personal.html", ShopOrderIdList,price,address);
+						}else if(type == 1){
+							gotoHtml("invoice_enterprise.html", "invoice_enterprise.html", ShopOrderIdList,price,address);
+						}
+						
+					}else{
+						mui.toast("请选择发票寄送地址!");
+					}
+				});
+			});
+			function gotoHtml(id, u, datas,price,address) {
+				mui.openWindow({
+					url: u,
+					id: id,
+					show: {
+						aniShow: 'pop-in'
+					},
+					waiting: {
+						autoShow: true, //自动显示等待框，默认为true
+						title: '正在加载...', //等待对话框上显示的提示内容
+					},
+					extras: {
+						data: datas,
+						price:price,
+						address:address
+					}
+				});
+			}
 		</script>
 	</body>
 

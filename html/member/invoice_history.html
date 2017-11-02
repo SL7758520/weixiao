@@ -1,0 +1,188 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>已完成订单</title>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/appfont.css" rel="stylesheet" />
+		<link href="../../css/main.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<style>
+			.tableli {
+				padding: 15px 15px 15px 15px;
+			}
+			
+			.dev_box {
+				border: 1px solid #F3F3F3;
+				background-color: #fff;
+				-webkit-border-radius: 4px;
+				border-radius: 0px;
+				position: relative;
+				margin-top: 0px;
+			}
+			
+			.dev_box a {
+				float: left;
+				padding: 0px;
+				padding-left: 8px;
+				padding-top: 5px;
+				width: 100%;
+				height: 100%;
+				-webkit-border-radius: 4px;
+				border-radius: 4px;
+			}
+			
+			.dev_box b {
+				margin-top: 5px;
+				font-size: 14px;
+				color: #1d1d1d;
+				max-height: 45px;
+				margin-left: 0px;
+			}
+			
+			.contact_box {
+				float: left;
+				width: 100%;
+				height: 25px;
+				line-height: 25px;
+				font-size: 14px;
+				color: #404040;
+			}
+			.contact_add{
+				margin-top: 2px;
+			}
+		</style>
+		<!--主界面部分-->
+		<header id="header" class="mui-bar mui-bar-nav">
+			<h1 class="mui-title">发票索取历史</h1>
+			<a href="#offCanvasSide" class="mui-action-back mui-icon icon_app_02 mui-action-menu mui-icon-left-nav mui-pull-left"></a>
+		</header>
+		<div id="pullrefresh">
+			<ul class="mui-table-view" id='ulorderlists' style="margin-top: 44px;">
+				
+			</ul>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/post.js"></script>
+		<script src="../../js/localDatabase.js"></script>
+		<script src="../../js/dao.js"></script>
+		<script src="../../js/member.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				pullRefresh: {
+					container: '#pullrefresh',
+					down: {
+						style: 'circle', //必选，下拉刷新样式，目前支持原生5+ ‘circle’ 样式
+						color: '#2BD009', //可选，默认“#2BD009” 下拉刷新控件颜色
+						callback: pulldownRefresh
+					},
+					up: {
+						contentrefresh: '正在加载...',
+						callback: pullupRefresh
+					}
+				}
+			});
+			var pageObjects = {
+				pageSize: 20,
+				currentPageIndex: 1,
+				totalCount: 0,
+				recordCount: 0
+			};
+			var count = 0;
+
+			function pullupRefresh() {
+				pageObjects.currentPageIndex++;
+				setTimeout(function() {
+					mui('#pullrefresh').pullRefresh().endPullup((pageObjects.currentPageIndex > pageObjects.totalCount));
+					initdatas(true);
+
+				}, 1500);
+			}
+
+			/**
+			 * 下拉刷新具体业务实现
+			 */
+			function pulldownRefresh() {
+				pageObjects.currentPageIndex = 1;
+				setTimeout(function() {
+					mui('#pullrefresh').pullRefresh().endPulldown();
+					initdatas(false);
+				}, 1500);
+			}
+			var member = new Member();
+			mui.plusReady(function() {
+
+				initdatas(false);
+			});
+
+			function initdatas(isUp) {
+				member.GetOrderInviceList(pageObjects.currentPageIndex, pageObjects.pageSize, function(result) {
+					if(result) {
+						pageObjects.totalCount = result.pageCount;
+						addList(result.result, isUp);
+					}
+				});
+			}
+			var addList = function(datas, isUp) {
+				var div = document.getElementById('ulorderlists');
+				if(isUp) {
+
+				} else {
+					div.innerHTML = "";
+				}
+
+				for(var i = 0; i < datas.length; i++) {
+					var card = createCard(datas[i]);
+					div.appendChild(card);
+				}
+			}
+			var createCard = function(entity) {
+				//				console.log(JSON.stringify(entity));
+				var card = document.createElement("div");
+				card.className = "dev_box";
+				card.setAttribute('id', entity.Id);
+				card.innerHTML = '<div class="n_info2">' + entity.ApplyDate + '</div>\
+						<a href="#">\
+							<div class="other_bg"><i class="icon_app_12"></i>' + entity.StatusName + '</div>\
+							<div class="contact_add">承运公司:' + entity.ExpressCompany + '</div>\
+							<div class="contact_add">运单编号:' + entity.ExpressNumber + '</div>\
+							<div class="contact_box">\
+								<!--此项如无数据时，请隐藏-->\
+								<span class="fl">收货人:' + entity.InvoiceTitle + '</span>\
+								<span class="fr">金额：<i style="color: red;">￥' + entity.Money + '</i></span>\
+							</div>\
+						</a>';
+//				card.addEventListener('tap', function() {
+//					openWindow(9, entity);
+//				}, false);
+				return card;
+			}
+			//打开窗体
+			function openWindow(index, entity) {
+				//来源，数据实体
+				var id = 'shop_order_detail_info.html';
+				var url = 'shop_order_detail_info.html';
+				mui.openWindow({
+					id: id,
+					url: url,
+					show: {
+						aniShow: 'pop-in'
+					},
+					waiting: {
+						autoShow: true,
+						title: '正在加载...'
+					},
+					extras: {
+						data: entity,
+						from: 9 //来源：0:待受理；1:待支付；2：待到达 3：已到达
+					}
+				});
+			}
+		</script>
+	</body>
+
+</html>

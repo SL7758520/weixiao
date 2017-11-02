@@ -1154,6 +1154,22 @@
 				],
 				"refer": [],
 				"priority": 0
+			},
+			"html/member/invoice.html": {
+				"resources": [],
+				"refer": [
+					"html/member/invoice_information.html",
+					"html/member/invoice_history.html"
+				],
+				"priority": 0
+			},
+			"html/member/invoice_information.html": {
+				"resources": [],
+				"refer": [
+					"html/linkman/select_linkaddress.html",
+					"html/member/invoice_personal.html"
+				],
+				"priority": 0
 			}
 		},
 		"idle": {

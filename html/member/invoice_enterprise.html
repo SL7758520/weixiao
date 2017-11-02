@@ -23,6 +23,7 @@
 				justify-content: space-between;
 				align-items: center;
 			}
+			
 			.mui-input-group:before {
 				background-color: #F3F3F3;
 			}
@@ -78,6 +79,29 @@
 	</head>
 
 	<body>
+		<div class="windows_bg" id="dialog" style="display: none;">
+			<!--通用弹窗标准-->
+			<div class="windows_box">
+				<!--一按钮状态-->
+				<div class="info_box" id="dialogone" style="display: none;text-align: left;">
+					<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;您好，因为旅居需要入住的时间周期较长，在您支付前，商家需要最终为您确定并安排床位，在商家确认并安排好您的入住床位和行程后，您就可以支付并完成最终预定了。</br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;请您密切关注我们的通知消息或【待支付】订单！</p>
+					<a href="#" id="notice" style="text-align: center;">确定</a>
+				</div>
+				<!--两按钮状态-->
+				<div class="info_box two_btn" id="dialogtwo">
+					<p id="title">订单就要完成了，你确定要离开吗？</p>
+					<a href="#" id="casncel">继续填写</a>
+					<a href="#" class="left_line" id="close">确定</a>
+				</div>
+				<!--三按钮状态-->
+				<!--<div class="info_box nbg_bgn">
+		<p>请先选路段，再选备件仓库请先选路段，再选备件仓库请先选路段，再选备件仓库请先选路段，再选备件仓库</p>
+		<a href="#">重试</a>
+		<a href="#">确认绑定</a>
+		<a href="#">暂存</a>
+		</div>-->
+			</div>
+		</div>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<h1 class="mui-title">企业发票申请</h1>
@@ -99,13 +123,28 @@
 				</ul>
 			</div>
 			<div class="form_info">
+				<div><label>发票金额</label>
+					<dd><input id="price" type="text" class="input_sys1" readonly></dd>
+				</div>
+			</div>
+			<div class="form_info">
 				<div><label>单位名称</label>
 					<dd><input id="phoneNumber" type="text" class="input_sys1" placeholder="请输入单位名称"></dd>
 				</div>
 			</div>
 			<div class="form_info">
 				<div><label>税号</label>
-					<dd><input id="phoneNumber" type="text" class="input_sys1" placeholder="请输入税号"></dd>
+					<dd><input id="paragraph" type="text" class="input_sys1" placeholder="请输入税号"></dd>
+				</div>
+			</div>
+			<div class="form_info">
+				<div><label>开户行</label>
+					<dd><input id="bankName" type="text" class="input_sys1" placeholder="请输入开户行"></dd>
+				</div>
+			</div>
+			<div class="form_info">
+				<div><label>银行账户</label>
+					<dd><input id="bankAccount" type="text" class="input_sys1" placeholder="请输入银行账户"></dd>
 				</div>
 			</div>
 			<div class="form_info">
@@ -128,7 +167,7 @@
 			<div class="mui-form">
 				<ul>
 					<li class="form_tp">备注</li>
-					<li><textarea id="txtDescription" class="text_box" style="font-size: 14px;" placeholder="请添加备注"></textarea></li>
+					<li><textarea id="txt" class="text_box" style="font-size: 14px;" placeholder="请添加备注"></textarea></li>
 				</ul>
 			</div>
 
@@ -147,6 +186,7 @@
 		<script src="../../js/post.js"></script>
 		<script src="../../js/dao.js"></script>
 		<script src="../../js/linkaddress.js"></script>
+		<script src="../../js/member.js"></script>
 		<script>
 			(function($, doc) {
 				$.init();
@@ -176,10 +216,18 @@
 					}, false);
 				});
 			})(mui, document);
-			var Model = {};
+			var price;
+			var ShopOrderIdList;
+			var address;
 			var linkaddress = new LinkAddress();
+			var member = new Member();
+			var type = 0;
 			mui.init();
 			mui.plusReady(function() {
+				var _self = plus.webview.currentWebview();
+				price = _self.price;
+				ShopOrderIdList = _self.data;
+				address = _self.address;
 				var _getParam = function(obj, param) {
 					return obj[param] || '';
 				};
@@ -187,16 +235,29 @@
 			});
 
 			function initpage() {
-				var self = plus.webview.currentWebview();
-				Model = self.data;
-				setValue('name', Model.LinkManName);
-				setValue('phoneNumber', Model.Phone);
-				setValue('postalCode', Model.PostCode);
-				document.getElementById('region').innerHTML = splitStr(Model.Address)[0];
-				document.getElementById('txtDescription').value = splitStr(Model.Address)[1];
+				setValue('name', address.LinkManName);
+				setValue('phoneNumber', address.Phone);
+				setValue('price', "￥ " + price);
+				document.getElementById('region').innerHTML = splitStr(address.Address)[0];
+				document.getElementById('txtDescription').value = splitStr(address.Address)[1];
+				mui('.mui-input-group').on('change', 'input', function() {
+					type = this.value;
+				});
 				document.getElementById('confirm').addEventListener('tap', function() {
 					if(getValue('name') == '') {
-						mui.toast('请填写姓名');
+						mui.toast('请填写单位名称');
+						return;
+					}
+					if(getValue('paragraph') == '') {
+						mui.toast('请填写税号');
+						return;
+					}
+					if(getValue('bankName') == '') {
+						mui.toast('请填写开户行');
+						return;
+					}
+					if(getValue('bankAccount') == '') {
+						mui.toast('请填写银行账户');
 						return;
 					}
 					if(!phonecheck(getValue('phoneNumber'))) {
@@ -211,22 +272,16 @@
 						return;
 					}
 					plus.nativeUI.showWaiting();
-					Model.LinkManName = getValue('name');
-					Model.Phone = getValue('phoneNumber');
-					Model.Address = mergeStr(document.getElementById("region").innerHTML, document.getElementById("txtDescription").value);
-					console.log(Model.Address);
-					console.log(getValue('postalCode'));
-					Model.PostCode = getValue('postalCode');
-					linkaddress.Edit(Model.Id, Model, function(result) {
-						console.log(JSON.stringify(result));
+					var currentaddress = mergeStr(document.getElementById("region").innerHTML, document.getElementById("txtDescription").value);
+					console.log(JSON.stringify(ShopOrderIdList));
+					member.OrderInvoiceApply(address.Id, type, getValue('name'), getValue('paragraph'), getValue('bankName'), getValue('bankAccount'), currentaddress, getValue('phoneNumber'), getValue('txt') == "" ? null : getValue('txt'), price, ShopOrderIdList, function(datas) {
 						plus.nativeUI.closeWaiting();
-						if(result.status == 1) {
-							mui.toast('修改地址信息成功');
-							var list = plus.webview.getWebviewById('html/linkman/linkaddress_list.html');
-							mui.fire(list, 'Changelinkman', {});
-							mui.back();
+						if(datas.status == 1) {
+							dialog.style.display = 'block';
+							document.getElementById('dialogone').style.display = 'block';
+							document.getElementById('dialogtwo').style.display = 'none';
 						} else {
-							mui.toast('修改地址信息失败，请重试');
+							mui.toast(datas.message);
 						}
 					}, function() {
 						plus.nativeUI.closeWaiting();
@@ -270,6 +325,103 @@
 				} else {
 					return true;
 				}
+			}
+			//银行卡号Luhn校验算法
+			//luhn校验规则：16位银行卡号（19位通用）: 
+			//1.将未带校验位的 15（或18）位卡号从右依次编号 1 到 15（18），位于奇数位号上的数字乘以 2。
+			//2.将奇位乘积的个十位全部相加，再加上所有偶数位上的数字。
+			//3.将加法和加上校验位能被 10 整除。
+
+			//bankno为银行卡号
+			function luhnCheck(bankno) {
+				var lastNum = bankno.substr(bankno.length - 1, 1); //取出最后一位（与luhn进行比较）
+
+				var first15Num = bankno.substr(0, bankno.length - 1); //前15或18位
+				var newArr = new Array();
+				for(var i = first15Num.length - 1; i > -1; i--) { //前15或18位倒序存进数组
+					newArr.push(first15Num.substr(i, 1));
+				}
+				var arrJiShu = new Array(); //奇数位*2的积 <9
+				var arrJiShu2 = new Array(); //奇数位*2的积 >9
+
+				var arrOuShu = new Array(); //偶数位数组
+				for(var j = 0; j < newArr.length; j++) {
+					if((j + 1) % 2 == 1) { //奇数位
+						if(parseInt(newArr[j]) * 2 < 9)
+							arrJiShu.push(parseInt(newArr[j]) * 2);
+						else
+							arrJiShu2.push(parseInt(newArr[j]) * 2);
+					} else //偶数位
+						arrOuShu.push(newArr[j]);
+				}
+
+				var jishu_child1 = new Array(); //奇数位*2 >9 的分割之后的数组个位数
+				var jishu_child2 = new Array(); //奇数位*2 >9 的分割之后的数组十位数
+				for(var h = 0; h < arrJiShu2.length; h++) {
+					jishu_child1.push(parseInt(arrJiShu2[h]) % 10);
+					jishu_child2.push(parseInt(arrJiShu2[h]) / 10);
+				}
+
+				var sumJiShu = 0; //奇数位*2 < 9 的数组之和
+				var sumOuShu = 0; //偶数位数组之和
+				var sumJiShuChild1 = 0; //奇数位*2 >9 的分割之后的数组个位数之和
+				var sumJiShuChild2 = 0; //奇数位*2 >9 的分割之后的数组十位数之和
+				var sumTotal = 0;
+				for(var m = 0; m < arrJiShu.length; m++) {
+					sumJiShu = sumJiShu + parseInt(arrJiShu[m]);
+				}
+
+				for(var n = 0; n < arrOuShu.length; n++) {
+					sumOuShu = sumOuShu + parseInt(arrOuShu[n]);
+				}
+
+				for(var p = 0; p < jishu_child1.length; p++) {
+					sumJiShuChild1 = sumJiShuChild1 + parseInt(jishu_child1[p]);
+					sumJiShuChild2 = sumJiShuChild2 + parseInt(jishu_child2[p]);
+				}
+				//计算总和
+				sumTotal = parseInt(sumJiShu) + parseInt(sumOuShu) + parseInt(sumJiShuChild1) + parseInt(sumJiShuChild2);
+
+				//计算luhn值
+				var k = parseInt(sumTotal) % 10 == 0 ? 10 : parseInt(sumTotal) % 10;
+				var luhn = 10 - k;
+
+				if(lastNum == luhn) {
+					console.log("验证通过");
+					return true;
+				} else {
+					mui.toast("银行卡号必须符合luhn校验");
+					return false;
+				}
+			}
+
+			//检查银行卡号
+			function CheckBankNo(bankno) {
+				var bankno = bankno.replace(/\s/g, '');
+				if(bankno == "") {
+					mui.toast("请填写银行卡号");
+					return false;
+				}
+				if(bankno.length < 16 || bankno.length > 19) {
+					mui.toast("银行卡号长度必须在16到19之间");
+					return false;
+				}
+				var num = /^\d*$/; //全数字
+				if(!num.exec(bankno)) {
+					mui.toast("银行卡号必须全为数字");
+					return false;
+				}
+				//开头6位
+				var strBin = "10,18,30,35,37,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,58,60,62,65,68,69,84,87,88,94,95,98,99";
+				if(strBin.indexOf(bankno.substring(0, 2)) == -1) {
+					mui.toast("银行卡号开头6位不符合规范");
+					return false;
+				}
+				//Luhn校验
+				if(!luhnCheck(bankno)) {
+					return false;
+				}
+				return true;
 			}
 
 			mui.back = function() {
