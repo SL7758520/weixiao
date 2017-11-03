@@ -388,14 +388,17 @@
 						console.log(photoUrl);
 						var card = document.createElement("li");
 						card.classList = "mui-table-view-cell";
-						card.innerHTML = '<div class="item"><div><img src="' + (photoUrl + entity.PhotoUrl) + '" onerror="this.src=\'../../images/Service.png\'" style="width: 100px;height: 65px;"></div><div class="text"><div class="information"><h4 style="margin-top: 5px;font-size: 18px;">' + entity.Name + '</h4><h5 class="mui-ellipsis" style="margin-top: 10px;font-size: 16px;">' + entity.ShortDescription + '</h5></div><div class="price"><button class="new-price">删除</button></div></div></div>';
-						card.querySelector("button").addEventListener("tap", function(event) {
-							member.RemoveShopCollect(entity.Id, function(datas) {
-								mui.toast(datas.message);
-							});
-						});
+						card.innerHTML = '<div class="item"><div><img src="' + (photoUrl + entity.PhotoUrl) + '" onerror="this.src=\'../../images/Service.png\'" style="width: 100px;height: 65px;"></div><div class="text"><div class="information"><h4 style="margin-top: 5px;font-size: 18px;">' + entity.Name + '</h4><h5 class="mui-ellipsis" style="margin-top: 10px;font-size: 16px;">' + entity.ShortDescription + '</h5></div><div class="price"><button class="new-price" id="delete">删除</button></div></div></div>';
+						
 						card.addEventListener("tap", function(event) {
 							gotoHtml("product.html", "../shop/product.html", entity.Id, photoUrl);
+						});
+						card.querySelector("#delete").addEventListener("tap", function(event) {
+							event.stopPropagation();
+							member.RemoveShopCollect(entity.Id, function(datas) {
+								mui.toast(datas.message);
+								mui('#scroll0').pullToRefresh().pullDownLoading();
+							});
 						});
 						return card;
 					}
@@ -404,7 +407,7 @@
 						var div = document.getElementById('item1mobile').querySelector('.mui-table-view');
 						div.innerHTML = '';
 						for(var i = 0; i < datas.length; i++) {
-							if(datas[i].CategoryId == 0) {
+							if(datas[i].CategoryId == 1) {
 								div.appendChild(addData1(datas[i]));
 							} else {}
 						}
@@ -414,14 +417,17 @@
 						console.log(photoUrl);
 						var card = document.createElement("li");
 						card.classList = "mui-table-view-cell";
-						card.innerHTML = '<div class="item"><div><img src="' + (photoUrl + entity.PhotoUrl) + '" onerror="this.src=\'../../images/Service.png\'" style="width: 100px;height: 65px;"></div><div class="text"><div class="information"><h4 style="margin-top: 5px;font-size: 18px;">' + entity.Name + '</h4><h5 class="mui-ellipsis" style="margin-top: 10px;font-size: 16px;">' + entity.ShortDescription + '</h5></div><div class="price"><button class="new-price">删除</button></div></div></div>';
-						card.querySelector("button").addEventListener("tap", function(event) {
-							member.RemoveShopProductCollect(entity.Id, function(datas) {
-								mui.toast(datas.message);
-							});
-						});
+						card.innerHTML = '<div class="item"><div><img src="' + (photoUrl + entity.PhotoUrl) + '" onerror="this.src=\'../../images/Service.png\'" style="width: 100px;height: 65px;"></div><div class="text"><div class="information"><h4 style="margin-top: 5px;font-size: 18px;">' + entity.Name + '</h4><h5 class="mui-ellipsis" style="margin-top: 10px;font-size: 16px;">' + entity.ShortDescription + '</h5></div><div class="price"><button class="new-price" id="delete">删除</button></div></div></div>';
+						
 						card.addEventListener("tap", function(event) {
 							gotoHtml("product_details.html", "../shop/product_details.html", entity.Id, photoUrl);
+						});
+						card.querySelector("#delete").addEventListener("tap", function(event) {
+							event.stopPropagation();
+							member.RemoveShopProductCollect(entity.Id, function(datas) {
+								mui.toast(datas.message);
+								mui('#scroll1').pullToRefresh().pullDownLoading();
+							});
 						});
 						return card;
 					}
@@ -430,7 +436,7 @@
 						var div = document.getElementById('item2mobile').querySelector('.mui-table-view');
 						div.innerHTML = '';
 						for(var i = 0; i < datas.length; i++) {
-							if(datas[i].CategoryId == 0) {
+							if(datas[i].CategoryId == 1) {
 
 							} else {
 								div.appendChild(addData2(datas[i]));
@@ -443,14 +449,17 @@
 						console.log(photoUrl);
 						var card = document.createElement("li");
 						card.classList = "mui-table-view-cell";
-						card.innerHTML = '<div class="item"><div><img src="' + (photoUrl + entity.PhotoUrl) + '" onerror="this.src=\'../../images/Service.png\'" style="width: 100px;height: 65px;"></div><div class="text"><div class="information"><h4 style="margin-top: 5px;font-size: 18px;">' + entity.Name + '</h4><h5 class="mui-ellipsis" style="margin-top: 10px;font-size: 16px;">' + entity.ShortDescription + '</h5></div><div class="price"><button class="new-price">删除</button></div></div></div>';
-						card.querySelector("button").addEventListener("tap", function(event) {
-							member.RemoveShopProductCollect(entity.Id, function(datas) {
-								mui.toast(datas.message);
-							});
-						});
+						card.innerHTML = '<div class="item"><div><img src="' + (photoUrl + entity.PhotoUrl) + '" onerror="this.src=\'../../images/Service.png\'" style="width: 100px;height: 65px;"></div><div class="text"><div class="information"><h4 style="margin-top: 5px;font-size: 18px;">' + entity.Name + '</h4><h5 class="mui-ellipsis" style="margin-top: 10px;font-size: 16px;">' + entity.ShortDescription + '</h5></div><div class="price"><button class="new-price" id="delete">删除</button></div></div></div>';
+						
 						card.addEventListener("tap", function(event) {
 							gotoHtml("server_detail.html", "../server/server_detail.html", entity.Id, photoUrl);
+						});
+						card.querySelector("#delete").addEventListener("tap", function(event) {
+							event.stopPropagation();
+							member.RemoveShopProductCollect(entity.Id, function(datas) {
+								mui.toast(datas.message);
+								mui('#scroll2').pullToRefresh().pullDownLoading();
+							});
 						});
 						return card;
 					}

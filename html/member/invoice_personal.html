@@ -50,7 +50,7 @@
 			<div class="windows_box">
 				<!--一按钮状态-->
 				<div class="info_box" id="dialogone" style="display: none;text-align: left;">
-					<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;您好，因为旅居需要入住的时间周期较长，在您支付前，商家需要最终为您确定并安排床位，在商家确认并安排好您的入住床位和行程后，您就可以支付并完成最终预定了。</br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;请您密切关注我们的通知消息或【待支付】订单！</p>
+					<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;您好，您的发票申请订单已经成功提交，请您到发票索取历史查看当前订单进度以及物流信息，如有疑问，请致电客服服务热线010-88888888</p>
 					<a href="#" id="notice" style="text-align: center;">确定</a>
 				</div>
 				<!--两按钮状态-->
@@ -212,6 +212,23 @@
 						plus.nativeUI.closeWaiting();
 						mui.toast('请求失败');
 					});
+				});
+				document.getElementById('casncel').addEventListener('tap', function() {
+					dialog.style.display = 'none';
+				});
+				document.getElementById('close').addEventListener('tap', function() {
+					plus.webview.currentWebview().close();
+				});
+				document.getElementById('back').addEventListener('tap', function() {
+					mui.back();
+				});
+				document.getElementById('notice').addEventListener('tap', function() {
+					console.log("AAAAAAAAAAA");
+					var task = plus.webview.getWebviewById('invoice_information.html');
+					mui.fire(task, 'CreateInvoice');
+
+					//					mui.back();
+					plus.webview.getWebviewById('invoice_personal.html').close();
 				});
 
 			}

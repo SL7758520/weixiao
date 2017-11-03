@@ -1289,11 +1289,11 @@ padding: 15px 15px;
 	text-align: center;
 	background-color: rgba(0,0,0,0.2);
 }
-.dev_box:active{
+/*.dev_box:active{
 	border: 1px solid #f3f3f3;
-}
-.dev_box a:active,.dev_box:active{background-color: #4cd964;}
-.dev_box a:active b,.dev_box a:active p,.dev_box a:active .contact_box,.dev_box a:active .contact_box i,.dev_box:active .txt_pt{color: #fff;}
+}*/
+/*.dev_box a:active,.dev_box:active{background-color: #4cd964;}
+.dev_box a:active b,.dev_box a:active p,.dev_box a:active .contact_box,.dev_box a:active .contact_box i,.dev_box:active .txt_pt{color: #fff;}*/
 .dev_box b,.dev_box p,.txt_pt{
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -1487,6 +1487,6 @@ background-color: #4cd964;
 	font-size: 14px;
 	color: #404040;
 }
-.dev_box:active .contact_add,.dev_box:active .n_info2{color: #fff;}
-.dev_box:active .other_bg{border: 1px solid #fff;}
+/*.dev_box:active .contact_add,.dev_box:active .n_info2{color: #fff;}*/
+/*.dev_box:active .other_bg{border: 1px solid #fff;}*/
 

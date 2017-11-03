@@ -379,7 +379,7 @@
 			//常用地址
 			document.getElementById("liaddress").addEventListener("tap", function(event) {
 				if(getLogin()) {
-					gotoHtml('html/linkman/linkaddress_list.html','');
+					gotoHtmls("linkaddress_list.html", "html/linkman/linkaddress_list.html");
 				} else {
 					toLogin();
 				}
@@ -395,6 +395,21 @@
 			});
 
 		}
+		
+		function gotoHtmls(id, u) {
+				mui.openWindow({
+					url: u,
+					id: id,
+
+					show: {
+						aniShow: 'pop-in'
+					},
+					waiting: {
+						autoShow: true, //自动显示等待框，默认为true
+						title: '正在加载...', //等待对话框上显示的提示内容
+					}
+				});
+			}
 
 		function gotoHtml(u, photoUrl) {
 			mui.openWindow({

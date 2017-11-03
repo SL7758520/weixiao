@@ -23,6 +23,7 @@
 				border-radius: 0px;
 				position: relative;
 				margin-top: 0px;
+				padding: 5px;
 			}
 			
 			.dev_box a {
@@ -156,29 +157,30 @@
 								<span class="fr">金额：<i style="color: red;">￥' + entity.Money + '</i></span>\
 							</div>\
 						</a>';
-//				card.addEventListener('tap', function() {
-//					openWindow(9, entity);
-//				}, false);
+				card.addEventListener('tap', function() {
+					member.GetOrderInvoiceDetail(entity.Id, function(result) {
+					if(result) {
+						gotoHtml("invoice_details.html","invoice_details.html",result.result);
+					}
+				});
+					
+				}, false);
 				return card;
 			}
-			//打开窗体
-			function openWindow(index, entity) {
-				//来源，数据实体
-				var id = 'shop_order_detail_info.html';
-				var url = 'shop_order_detail_info.html';
+			function gotoHtml(id, u, datas) {
 				mui.openWindow({
+					url: u,
 					id: id,
-					url: url,
+
 					show: {
 						aniShow: 'pop-in'
 					},
 					waiting: {
-						autoShow: true,
-						title: '正在加载...'
+						autoShow: true, //自动显示等待框，默认为true
+						title: '正在加载...', //等待对话框上显示的提示内容
 					},
 					extras: {
-						data: entity,
-						from: 9 //来源：0:待受理；1:待支付；2：待到达 3：已到达
+						data: datas
 					}
 				});
 			}

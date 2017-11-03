@@ -154,7 +154,7 @@
 						plus.nativeUI.closeWaiting();
 						if(result.status == 1) {
 							mui.toast('修改地址信息成功');
-							var list = plus.webview.getWebviewById('html/linkman/linkaddress_list.html');
+							var list = plus.webview.getWebviewById('linkaddress_list.html');
 							mui.fire(list, 'Changelinkman', {});
 							mui.back();
 						} else {

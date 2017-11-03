@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/appfont.css" rel="stylesheet" />
+		<link href="../../css/main.css" rel="stylesheet" />
+		<link href="../../css/font-awesome.min.css" rel="stylesheet" />
+		<style type="text/css">
+			.name_list2 li {
+				float: left;
+				margin: 0px 5px 5px 5px;
+				text-align: center;
+				color: #61bc24;
+				font-size: 10px;
+				position: relative;
+				padding: 2px 22px 2px 14px;
+				display: inline-block;
+				border: 1px solid #61bc24;
+				border-radius: 99px;
+			}
+			
+			.name_list2 li a {
+				color: #61bc24;
+			}
+			
+			i.mui-media-object {
+				color: #ccc;
+				font-size: 25px;
+			}
+			
+			.name_list2 li:active {
+				color: #fff;
+				border: 1px solid #61bc24;
+				background-color: #61bc24;
+			}
+			
+			.name_list2 li:active a {
+				color: #fff;
+			}
+			
+			.name_list2 li:active .close_btn:after {
+				color: #fff;
+			}
+			
+			.name_list2 .close_btn:active:after {
+				color: #fff;
+			}
+			
+			.name_list2 .close_btn:after {
+				font-family: Muiicons;
+				font-size: 24px;
+				font-weight: 400;
+				font-style: normal;
+				line-height: 1;
+				display: inline-block;
+				text-decoration: none;
+				-webkit-font-smoothing: antialiased;
+				content: '\e460';
+				border: none;
+				color: #61bc24;
+				position: absolute;
+				right: 2px;
+				top: 2px;
+			}
+			
+			.name_list2 .close_btn {
+				width: 15px;
+				height: 15px;
+			}
+			
+			.nd_btn {
+				width: 100%;
+			}
+			
+			.infospan {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding-right: 15px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<style>
+			.orderstatus {
+				padding: 10px 15px 5px 15px !important;
+			}
+			
+			.orderid {
+				padding: 5px 15px 10px 15px !important;
+			}
+			
+			html,
+			body {
+				background-color: #efeff4;
+			}
+			
+			.name_list2 {
+				margin: 10px 10px 2px 2px;
+				border: none;
+			}
+			
+			.shopinfo {
+				background-color: #4cd964;
+				color: white;
+			}
+			
+			.shopli {
+				line-height: 0px;
+				border-bottom: 0px !important;
+			}
+			
+			.mui-form li a span:after {
+				font-family: Muiicons;
+				font-size: 18px;
+				font-weight: 400;
+				font-style: normal;
+				line-height: 1;
+				display: none;
+				text-decoration: none;
+				-webkit-font-smoothing: antialiased;
+				position: absolute;
+			}
+			
+			.form_info .input_sys1 {
+				width: 99%;
+				height: 35px;
+				border: none;
+				line-height: 35px;
+				background-color: #FFFFFF;
+				outline: none;
+				color: #6f6f6f;
+				display: block;
+				font-size: 16px;
+				border-radius: 0px;
+				-webkit-transition: all 1s ease;
+				transition: all 1s ease;
+			}
+			
+			.hotel-footer {
+				position: fixed;
+				display: flex;
+				justify-content: space-between;
+				background-color: #EFEFF4;
+				/*border: solid 1px #ddd;*/
+				/*box-shadow: 0px -5px 5px 0px rgba(0, 0, 0, 0.05);*/
+				left: 0px;
+				bottom: 0px;
+				height: 51px;
+				width: 100%;
+			}
+		</style>
+		<div class="windows_bg" id="dialog" style="display: none;">
+			<!--通用弹窗标准-->
+			<div class="windows_box">
+				<div class="info_box" id="dialogone" style="display: none;text-align: left;">
+					<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;请确认您是否已经完成入住，并计划退离当前养老院？</p>
+					<a href="#" id="notice" style="text-align: center;">确定</a>
+				</div>
+				<!--两按钮状态-->
+				<div class="info_box two_btn" id="dialogtwo">
+					<p id="confirmtitle">正在进行确认操作，请确定</p>
+					<a href="#" id="casncel">确定</a>
+					<a href="#" class="left_line" id="close">取消</a>
+				</div>
+			</div>
+		</div>
+		<!--主界面部分-->
+		<header id="header" class="mui-bar mui-bar-nav">
+			<h1 class="mui-title">订单信息</h1>
+			<a href="#offCanvasSide" class="mui-action-back mui-icon icon_app_02 mui-action-menu mui-icon-left-nav mui-pull-left"></a>
+		</header>
+		<div class="fault_main" style="top:45px;background-color: #efeff4;">
+			<ul class="mui-table-view" id="addresslist">
+				<li class="mui-table-view-cell mui-media">
+					<i class="fa fa-map-marker mui-media-object mui-pull-left"></i>
+					<div id="current_maps" class="mui-media-body">
+						<div class="infospan">
+							<p style="font-size: 16px;" id="name">收货人：舒亮</p>
+							<p style="font-size: 16px;" id="phone">18170836326</p>
+						</div>
+						<p class="mui-ellipsis-2" id="address">收货地址：斯比你接口但是尽可能的健康按按实际的南沙端屎端尿阿萨德</p>
+					</div>
+				</li>
+			</ul>
+			<div class="form_info" style="background-color: #FFFFFF;margin-top: 5px;">
+				<div style="border-bottom: 1px solid #e8e8e8;"><label>订单状态：</label>
+					<dd><input type="text" id="StatusName" class="input_sys1" readonly="readonly"></dd>
+				</div>
+				<div style="border-bottom: 1px solid #e8e8e8;"><label>运单编号：</label>
+					<dd><input type="text" id="ExpressNumber" class="input_sys1" readonly="readonly"></dd>
+				</div>
+				<div><label>物流公司：</label>
+					<dd><input type="text" id="ExpressCompany" class="input_sys1" readonly="readonly"></dd>
+				</div>
+			</div>
+			<div class="form_info" style="background-color: #FFFFFF;margin-top: 5px;">
+				<div><label>发票类型：</label>
+					<dd><input type="text" id="Type" class="input_sys1" readonly="readonly"></dd>
+				</div>
+				<div><label>单位名称：</label>
+					<dd><input type="text" id="InvoiceTitle" class="input_sys1" readonly="readonly"></dd>
+				</div>
+				<div><label>联系方式：</label>
+					<dd><input type="text" id="Phone" class="input_sys1" readonly="readonly"></dd>
+				</div>
+			</div>
+
+			<div class="form_info" style="background-color: #FFFFFF;margin-top: 5px;">
+				<div><label>税号：</label>
+					<dd><input type="text" id="TaxNumber" class="input_sys1" readonly="readonly"></dd>
+				</div>
+				<div><label>开户行：</label>
+					<dd><input type="text" id="BankName" class="input_sys1" readonly="readonly"></dd>
+				</div>
+				<div><label>银行账户：</label>
+					<dd><input type="text" id="BankAccount" class="input_sys1" readonly="readonly"></dd>
+				</div>
+			</div>
+
+			<div class="form_info" style="background-color: #FFFFFF;margin-top: 5px;">
+				<div><label>订单金额：</label>
+					<dd><input type="text" id="Money" class="input_sys1" readonly="readonly"></dd>
+				</div>
+			</div>
+
+			<!--<div class="fault_bar three_btn" style="position: relative;">
+				<a href="#" id="btnSaveLocal" class="mui-hidden">
+				<i class="mui-icon icon_local"></i><span>完成入住</span>
+			</a>
+				<a href="#" class="h_btn" id="btnCancel">
+					<i class="mui-icon icon_trash"></i><span id="cancelmes">取消订单</span>
+				</a>
+				<a href="#" class="fault_btn_ok" id="btnPay">
+					<i class="mui-icon icon_cloud"></i><span id="paymes">支付</span>
+				</a>
+			</div>-->
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/post.js"></script>
+		<script src="../../js/localDatabase.js"></script>
+		<script src="../../js/dao.js"></script>
+		<script src="../../js/member.js"></script>
+		<script src="../../js/shop.js"></script>
+		<script>
+			mui.init();
+			var _self;
+			var FaultEntity;
+			var member = new Member();
+			var shop = new Shop();
+			mui.plusReady(function() {
+				_self = plus.webview.currentWebview();
+				FaultEntity = _self.data;
+				initpage();
+			});
+
+			function initpage() {
+				setHtmls("name", "收货人：" + FaultEntity.ExpLinkManName);
+				setHtmls("phone", FaultEntity.ExpPhone);
+				setHtmls("address", "收货地址：" + FaultEntity.ExpAddress);
+				setValue("StatusName", FaultEntity.StatusName);
+				setValue("ExpressNumber", FaultEntity.ExpressNumber);
+				setValue("ExpressCompany", FaultEntity.ExpressCompany);
+				setValue("Type", FaultEntity.Type == 0 ? "增值税普通发票" : "增值税专用发票");
+				setValue("InvoiceTitle", FaultEntity.InvoiceTitle);
+				setValue("Phone", FaultEntity.Phone);
+				setValue("TaxNumber", FaultEntity.TaxNumber);
+				setValue("BankName", FaultEntity.BankName);
+				setValue("BankAccount", FaultEntity.BankAccount);
+				setValue("Money", "￥ "+FaultEntity.Money);
+			}
+
+			function setValue(ElementId, value) {
+				if(value == null) {
+					document.getElementById(ElementId).value = "无";
+				} else {
+					document.getElementById(ElementId).value = value;
+				}
+			}
+
+			function setHtmls(ElementId, value) {
+				if(value == null) {
+					document.getElementById(ElementId).innerHTML = "无";
+				} else {
+					document.getElementById(ElementId).innerHTML = value;
+				}
+
+			}
+
+			//			function gotoHtml(u, datas) {
+			//				mui.openWindow({
+			//					url: u,
+			//					id: u,
+			//
+			//					show: {
+			//						aniShow: 'pop-in'
+			//					},
+			//					waiting: {
+			//						autoShow: true, //自动显示等待框，默认为true
+			//						title: '正在加载...', //等待对话框上显示的提示内容
+			//					},
+			//					extras: {
+			//						data: datas,
+			//						pageId: 'shop_order_detail.html'
+			//					}
+			//				});
+			//			}
+			//			window.addEventListener("cancelOrder", function(e) {
+			//				var list = plus.webview.getWebviewById('html/member/shop_order_list.html');
+			//				mui.fire(list, 'listRefresh' + status);
+			//				plus.webview.currentWebview().close();
+			//			});
+		</script>
+	</body>
+
+</html>

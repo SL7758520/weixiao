@@ -1083,7 +1083,8 @@
 				],
 				"refer": [
 					"html/shop/product_details.html",
-					"html/shop/product.html"
+					"html/shop/product.html",
+					"html/server/server_detail.html"
 				],
 				"priority": 0
 			},
@@ -1167,7 +1168,15 @@
 				"resources": [],
 				"refer": [
 					"html/linkman/select_linkaddress.html",
-					"html/member/invoice_personal.html"
+					"html/member/invoice_personal.html",
+					"html/member/invoice_enterprise.html"
+				],
+				"priority": 0
+			},
+			"html/member/invoice_history.html": {
+				"resources": [],
+				"refer": [
+					"html/member/invoice_details.html"
 				],
 				"priority": 0
 			}

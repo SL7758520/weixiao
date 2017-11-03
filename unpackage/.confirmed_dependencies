@@ -697,7 +697,8 @@
 		],
 		"refer": [
 			"html/shop/product_details.html",
-			"html/shop/product.html"
+			"html/shop/product.html",
+			"html/server/server_detail.html"
 		]
 	},
 	"html/linkman/edit_linkaddress.html": {
@@ -773,7 +774,13 @@
 	"html/member/invoice_information.html": {
 		"refer": [
 			"html/linkman/select_linkaddress.html",
-			"html/member/invoice_personal.html"
+			"html/member/invoice_personal.html",
+			"html/member/invoice_enterprise.html"
+		]
+	},
+	"html/member/invoice_history.html": {
+		"refer": [
+			"html/member/invoice_details.html"
 		]
 	}
 }

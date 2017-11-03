@@ -36,7 +36,7 @@
 			
 			i.mui-media-object {
 				color: #ccc;
-				font-size: 30px;
+				font-size: 25px;
 			}
 			
 			.mui-table-view-cell p {
@@ -146,7 +146,7 @@
 			</div>
 			<div class="Total">
 				<div class="price">
-					<label>合计：<span style="color: red;font-size: 16px;" id="price">¥ 199999.0</span></label>
+					<label>合计：<span style="color: red;font-size: 16px;" id="price">¥ 0</span></label>
 				</div>
 				<button id="next" type="button" class="mui-btn mui-btn-danger mui-btn-block">完成</button>
 			</div>
@@ -167,6 +167,11 @@
 					document.getElementById("address").innerHTML = address.Address;
 				}
 			});
+			window.addEventListener("CreateInvoice", function(e) {
+				var task = plus.webview.getWebviewById('html/member/invoice.html');
+				mui.fire(task, 'CreateInvoice', {});
+				plus.webview.getWebviewById('invoice_information.html').close();
+			})
 			var type=0;
 			mui.plusReady(function() {
 				_self = plus.webview.currentWebview();
