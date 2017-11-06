@@ -14,6 +14,7 @@ var LocalDatabase= (function() {
 	var KEY_TEMPORAYR_INSPECTION="$KEY_TEMPORAYR_INSPECTION";//临时修改巡检情况的保存
 	var KEY_SHOPCOLLECT='$SHOPCOLLECT';
 	var KEY_SHOPPRODUCTCOLLECT='$SHOPPRODUCTCOLLECT';
+	var KEY_LASTLOGIN = '$LASTLOGIN';
 	function _getDatas(KEY){
 		var jsonText = localStorage.getItem(KEY) || "[]";
 		var datas=JSON.parse(jsonText);
@@ -119,6 +120,14 @@ var LocalDatabase= (function() {
 		this.getShopProductCollect = function() {
 			return _getDatas(KEY_SHOPPRODUCTCOLLECT);
 		};
+		//当前用户
+		this.getLastLogin = function() {
+			return _getData(KEY_LASTLOGIN);
+		};
+		this.setLastLogin = function(currentlogin) {
+			_setData(KEY_LASTLOGIN,currentlogin||'');
+		};
+		
 		//设置用户对应的路段
 		this.setWaySections= function(sections){
 			var datas=_getDatas(KEY_WAY_SECTIONS);

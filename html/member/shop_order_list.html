@@ -126,6 +126,12 @@
 			.tableli {
 				padding-right: 15px !important;
 			}
+			
+			.pricenum {
+				color: #FFC90E !important;
+				font-size: 15px !important;
+				text-align: right;
+			}
 		</style>
 	</head>
 
@@ -190,12 +196,6 @@
 						<div class="mui-scroll-wrapper">
 							<div id="scroll2" class="mui-scroll">
 								<ul class="mui-table-view mui-table-view-chevron">
-									<!--<li class="mui-table-view-cell">
-										<a class="mui-navigate-right" href="examples/accordion.html">
-											accordion（折叠面板）<br />
-											AAAAA
-										</a>
-									</li>-->
 								</ul>
 							</div>
 						</div>
@@ -380,9 +380,9 @@
 										addList(index, result.result);
 									}
 									if(isUp) {
-										self.endPullUpToRefresh(result.total < 8);
+										self.endPullUpToRefresh(result.result.length < 8);
 									} else {
-										self.endPullDownToRefresh(result.total < 8);
+										self.endPullDownToRefresh(result.result.length < 8);
 									}
 								},function(){
 									if(isUp) {
@@ -419,7 +419,7 @@
 							//							var startDate = string2date(entity.BEGINDATE).Format("yyyy-MM-dd");
 							//							var endDate = string2date(entity.ENDDATE).Format("yyyy-MM-dd");
 							card.innerHTML = '<h6 class="font" style="float: left; width: 80%;">' + entity.ShopName + '</h6><h6 class="font" style="float: left; width: 20%;">' + status + '</h6><h6 class="font" style="width: 100%;">' +
-								entity.ProductName + '</h6><h5 class="font" style="width: 100%;">预约：' + entity.BookedDate + '入住</h5>' + buttonnum;
+								entity.ProductName + '</h6><h5 class="font" style="float: left; width: 60%;">预约：' + entity.BookedDate + '</h5><h6 class="pricenum" style="float: left; width: 40%;">￥：' + toDecimal2(entity.Cost) + '</h6>' + buttonnum;
 							if(index == 1) {
 								var buttons = card.querySelectorAll('button');
 								for(var i = 0; i < buttons.length; i++) {
@@ -503,6 +503,24 @@
 						pageId:'html/member/shop_order_list.html'
 					}
 				});
+			}
+			//保留2位小数。
+			function toDecimal2(x) {
+				var f = parseFloat(x);
+				if(isNaN(f)) {
+					return false;
+				}
+				var f = Math.round(x * 100) / 100;
+				var s = f.toString();
+				var rs = s.indexOf('.');
+				if(rs < 0) {
+					rs = s.length;
+					s += '.';
+				}
+				while(s.length <= rs + 2) {
+					s += '0';
+				}
+				return s;
 			}
 		</script>
 	</body>

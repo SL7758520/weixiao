@@ -308,7 +308,7 @@ var Shop = (function() {
 			for(var i = 0; i < linkMains.length; i++) {
 				LinkManID.push(linkMains[i].Id+"");
 			}
-			PostRequest(API_SHOP+'MakeOrder?productId='+productId+'&quantity='+quantity+'&peopleAmount='+peopleAmount+'&address='+address+'&phone='+phone+'&remark='+remark+'&bookedDate='+bookedDate+'&categoryId='+categoryId,LinkManID,function(result){
+			PostRequest(API_SHOP+'MakeOrder?productId='+productId+'&categoryId='+categoryId+'&quantity='+quantity+'&peopleAmount='+peopleAmount+'&address='+address+'&phone='+phone+'&remark='+remark+'&bookedDate='+bookedDate,JSON.stringify(LinkManID),function(result){
 				if (onSuccess) {
 					onSuccess.call(this,result);
 				}

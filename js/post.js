@@ -90,6 +90,8 @@ function postrequest(apiUrl,isAsync, dataStr, onSuccess,onError){
         dataType:'json',  
         type:'post',
         async:isAsync,
+        traditional: true,
+        contentType: "application/json; charset=utf-8",
         timeout:10000,  
         success:function(data){
         	onSuccess.call(this,data);

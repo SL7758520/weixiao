@@ -60,7 +60,13 @@ var DataAccess = (function() {
 		this.setShopProductCollect = function(datas) {
 			_db.setShopProductCollect(datas);
 		};
-		
+		//当前用户
+		this.getLastLogin = function() {
+			return _db.getLastLogin();
+		};
+		this.setLastLogin = function(currentlogin) {
+			_db.setLastLogin(currentlogin);
+		};
 
 	}
 	return access;

@@ -13,7 +13,12 @@
 	<body>
 		<style>
 			.tableli {
-				padding: 15px 15px 15px 15px;
+				padding: 15px 10px 15px 10px;
+			}
+			.pricenum {
+				color: #FFC90E !important;
+				font-size: 15px !important;
+				text-align: right;
 			}
 		</style>
 		<!--主界面部分-->
@@ -74,7 +79,10 @@
 			var member = new Member();
 			mui.plusReady(function() {
 				setTimeout(function() {
-					plus.webview.getWebviewById('shop_order_detail.html').close();
+					var details = plus.webview.getWebviewById('shop_order_detail.html');
+					if (details!=null) {
+						details.close();
+					}
 				}, 1000);
 
 				initdatas(false);
@@ -109,7 +117,7 @@
 				card.setAttribute("data-value", entity.Id);
 				var status = '已完成订单';
 				card.innerHTML = '<h6 class="font" style="float: left; width: 80%;">' + entity.ShopName + '</h6><h6 class="font" style="float: left; width: 20%;">' + status + '</h6><h6 class="font" style="width: 100%;">' +
-					entity.ProductName + '</h6><h5 class="font" style="width: 100%;">预约：' + entity.BookedDate + '入住</h5>';
+					entity.ProductName + '</h6><h5 class="font" style="float: left; width: 60%;">预约：' + entity.BookedDate + '</h5><h6 class="pricenum" style="float: left; width: 40%;">￥：' + toDecimal2(entity.Cost) + '</h6>';
 				card.addEventListener('tap', function() {
 					openWindow(9, entity);
 				}, false);
@@ -135,6 +143,24 @@
 						from: 9 //来源：0:待受理；1:待支付；2：待到达 3：已到达
 					}
 				});
+			}
+			//保留2位小数。
+			function toDecimal2(x) {
+				var f = parseFloat(x);
+				if(isNaN(f)) {
+					return false;
+				}
+				var f = Math.round(x * 100) / 100;
+				var s = f.toString();
+				var rs = s.indexOf('.');
+				if(rs < 0) {
+					rs = s.length;
+					s += '.';
+				}
+				while(s.length <= rs + 2) {
+					s += '0';
+				}
+				return s;
 			}
 		</script>
 	</body>

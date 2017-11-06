@@ -278,6 +278,10 @@
 					var autoLoginButton = doc.getElementById("autoLogin");
 					var regButton = doc.getElementById('reg');
 					var forgetButton = doc.getElementById('forgetPassword');
+					var lastlogin = _dataAccess.getLastLogin();
+					if (JSON.stringify(lastlogin)!='{}'&&lastlogin!='') {
+						accountBox.value = lastlogin;
+					}
 					//					settings.autoLogin = true;
 					loginButton.addEventListener('tap', function(event) {
 						var loginInfo = {
@@ -298,6 +302,7 @@
 								mui.toast("登录成功!");
 								var user = datas.result;
 								_dataAccess.setUser(user);
+								_dataAccess.setLastLogin(accountBox.value);
 								toMain();
 							}else{
 								mui.toast(datas.message);
