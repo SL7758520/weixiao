@@ -41,6 +41,13 @@ var DataAccess = (function() {
 			_db.setSetting(setting);
 		};
 		
+		this.getShopId = function() {
+			return _db.getShopId();
+		};
+		this.setShopId = function(shopid) {
+			_db.setShopId(shopid);
+		};
+		
 		this.getShopCollect = function() {
 			return _db.getShopCollect();
 		};

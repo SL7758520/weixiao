@@ -1,0 +1,374 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/appfont.css" rel="stylesheet" />
+		<link href="../../css/main.css" rel="stylesheet" />
+		<link href="../../css/chart.css" rel="stylesheet" />
+		<style>
+			html,
+			body {
+				background-color: #F3F3F3;
+			}
+			
+			.tableli {
+				padding: 15px 15px 15px 15px;
+			}
+			
+			.hotel-footer {
+				position: fixed;
+				display: flex;
+				justify-content: space-between;
+				background-color: #EFEFF4;
+				/*border: solid 1px #ddd;*/
+				/*box-shadow: 0px -5px 5px 0px rgba(0, 0, 0, 0.05);*/
+				left: 0px;
+				bottom: 0px;
+				height: 44px;
+				width: 100%;
+			}
+			
+			.mui-btn-block {
+				font-size: 16px;
+				display: block;
+				width: 90px;
+				height: 100%;
+				padding: 10px 0
+			}
+			
+			.check_box {
+				width: 30%;
+				display: flex;
+				justify-content: space-between;
+				text-align: center;
+				padding-top: 5px;
+			}
+			
+			.Total {
+				width: 70%;
+				display: flex;
+				justify-content: flex-end;
+				text-align: center;
+			}
+			
+			.price {
+				padding-top: 12px;
+				margin-right: 4px;
+			}
+			
+			.dev_box a {
+				float: left;
+				padding: 2px;
+				padding-top: 5px;
+				width: 100%;
+				height: 100%;
+				-webkit-border-radius: 4px;
+				border-radius: 4px;
+			}
+			
+			.dev_box b {
+				margin-top: 5px;
+				font-size: 14px;
+				color: #1d1d1d;
+				max-height: 45px;
+				margin-left: 0px;
+			}
+			
+			.contact_box {
+				float: left;
+				width: 100%;
+				height: 25px;
+				line-height: 25px;
+				font-size: 14px;
+				color: #404040;
+			}
+			
+			.infospan {
+				display: flex;
+				justify-content: flex-start;
+				align-items: center;
+				background-color: #FFFFFF;
+				border: 1px solid #F3F3F3;
+			}
+			
+			.mui-checkbox.mui-left label,
+			.mui-radio.mui-left label {
+				padding-right: 0px;
+				padding-left: 40px;
+			}
+			
+			.mui-checkbox input[type=checkbox],
+			.mui-radio input[type=radio] {
+				position: absolute;
+				top: 1px;
+				right: 5px;
+				display: inline-block;
+				width: 28px;
+				height: 26px;
+				border: 0;
+				outline: 0!important;
+				background-color: transparent;
+				-webkit-appearance: none;
+			}
+			
+			.mui-checkbox.mui-left input[type=checkbox],
+			.mui-radio.mui-left input[type=radio] {
+				left: 5px;
+			}
+			
+			.dev_box {
+				border: 0px solid #e9e9e9;
+				background-color: #fff;
+				-webkit-border-radius: 4px;
+				border-radius: 0px;
+				position: relative;
+				margin-top: 0px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<!--主界面部分-->
+		<header id="header" class="mui-bar mui-bar-nav">
+			<h1 class="mui-title">发票索取</h1>
+			<a href="#offCanvasSide" class="mui-action-back mui-icon icon_app_02 mui-action-menu mui-icon-left-nav mui-pull-left"></a>
+			<a id="btnNew" style="font-size: 14px;" class="mui-btn mui-btn-link mui-pull-right">发票索取历史</a>
+		</header>
+		<div class="mui-content" style="margin-bottom: 44px;">
+			<div id="pullrefresh">
+				<ul class="mui-table-view" id='ulorderlists'>
+					<!--<div class="infospan">
+						<div class="mui-input-row mui-checkbox mui-left">
+							<label></label>
+							<input id="checkbox" name="checkbox" value="Item 1" type="checkbox">
+						</div>
+						<div class="dev_box">
+							<div class="n_info2">156156</div>
+							<a href="#">
+								<div class="other_bg"><i class="icon_app_12"></i>5615</div>
+								<b>44561</b>
+								<div class="contact_add">51513</div>
+								<div class="contact_box">
+									此项如无数据时，请隐藏
+									<span class="fl">订单号：56156</span>
+									<span class="fr">金额：<i style="color: red;">￥156</i></span>
+								</div>
+							</a>
+						</div>
+					</div>-->
+				</ul>
+			</div>
+		</div>
+
+		<div class="hotel-footer">
+			<div class="check_box">
+				<div class="mui-input-row mui-checkbox mui-left">
+					<label>全选</label>
+					<input style="top: 5px;" name="checkbox" value="Item 1" type="checkbox" id="allselect">
+				</div>
+			</div>
+			<div class="Total">
+				<div class="price">
+					<label>合计：<span style="color: red;font-size: 16px;" id="price">¥ 0</span></label>
+				</div>
+				<button id="next" type="button" class="mui-btn mui-btn-danger mui-btn-block">下一步</button>
+			</div>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/post.js"></script>
+		<script src="../../js/localDatabase.js"></script>
+		<script src="../../js/dao.js"></script>
+		<script src="../../js/member.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				pullRefresh: {
+					container: '#pullrefresh',
+					down: {
+						style: 'circle', //必选，下拉刷新样式，目前支持原生5+ ‘circle’ 样式
+						callback: pulldownRefresh
+					},
+					up: {
+						contentrefresh: '正在加载...',
+						callback: pullupRefresh
+					}
+				}
+			});
+			var pageObjects = {
+				pageSize: 10,
+				currentPageIndex: 1,
+				totalCount: 0,
+				recordCount: 0
+			};
+			var member = new Member();
+			var ShopOrderList;
+			var orderMoney = 0;
+			var ShopOrderIdList = [];
+
+			function pullupRefresh() {
+				pageObjects.currentPageIndex++;
+				setTimeout(function() {
+					mui('#pullrefresh').pullRefresh().endPullup((pageObjects.currentPageIndex > pageObjects.totalCount));
+					initdatas(true);
+
+				}, 1500);
+			}
+
+			window.addEventListener("CreateInvoice", function(e) {
+				initdatas(false);
+				console.log("AAAAAAAAAAAAAAAAA");
+//				initdatas(true);
+			})
+
+			/**
+			 * 下拉刷新具体业务实现
+			 */
+			function pulldownRefresh() {
+				pageObjects.currentPageIndex = 1;
+				setTimeout(function() {
+					mui('#pullrefresh').pullRefresh().endPulldown();
+					initdatas(false);
+				}, 1500);
+			}
+
+			mui.plusReady(function() {
+
+				initdatas(false);
+				document.getElementById("allselect").addEventListener("click", function(event) {
+					if(this.checked) {
+						if(ShopOrderList != null) {
+							orderMoney = 0;
+							getCheckBoxRes("checkbox", true);
+							for(var i = 0; i < ShopOrderList.length; i++) {
+								orderMoney += ShopOrderList[i].Cost;
+								ShopOrderIdList.push(ShopOrderList[i].Id+"");
+							}
+							document.getElementById("price").innerHTML = "￥ " + orderMoney;
+						}
+					} else {
+						getCheckBoxRes("checkbox", false);
+						orderMoney = 0;
+						ShopOrderIdList = [];
+						document.getElementById("price").innerHTML = "￥ " + orderMoney;
+					}
+				});
+				document.getElementById("btnNew").addEventListener("tap", function(event) {
+					gotoHtml("invoice_history.html", "invoice_history.html", "", "");
+				});
+				document.getElementById("next").addEventListener("tap", function(event) {
+					if(ShopOrderIdList.length > 0 && orderMoney > 0) {
+						gotoHtml("invoice_information.html", "invoice_information.html", ShopOrderIdList, orderMoney);
+					} else {
+						mui.toast("请选择需要索取发票的订单！");
+					}
+				});
+			});
+
+			function getCheckBoxRes(Name, ischeck) {
+				var rdsObj = document.getElementsByName(Name);
+				console.log(rdsObj.length);
+				var k = 0;
+				for(i = 0; i < rdsObj.length; i++) {
+					if(ischeck) {
+						if(rdsObj[i].checked) {
+
+						} else {
+							rdsObj[i].checked = true;
+						}
+					} else {
+						if(rdsObj[i].checked) {
+							rdsObj[i].checked = false;
+						}
+					}
+				}
+			}
+
+			function initdatas(isUp) {
+				member.GetShopOrderItemsForInvoice(pageObjects.currentPageIndex, pageObjects.pageSize, function(result) {
+					if(result) {
+						ShopOrderList = result.result;
+						pageObjects.totalCount = result.pageCount;
+						addList(result.result, isUp);
+					}
+				});
+			}
+			var addList = function(datas, isUp) {
+				var div = document.getElementById('ulorderlists');
+				if(isUp) {
+
+				} else {
+					div.innerHTML = "";
+				}
+
+				for(var i = 0; i < datas.length; i++) {
+					var card = createCard(datas[i]);
+					div.appendChild(card);
+				}
+			}
+			var createCard = function(entity) {
+				//				console.log(JSON.stringify(entity));
+				var card = document.createElement("div");
+				card.className = "infospan";
+				card.setAttribute('id', entity.Id);
+				card.innerHTML = '<div class="mui-input-row mui-checkbox mui-left">\
+						<label></label>\
+						<input id="checkbox" name="checkbox" value="Item 1" type="checkbox">\
+					</div>\
+					<div class="dev_box">\
+						<div class="n_info2">' + entity.OrderDate + '</div>\
+						<a href="#">\
+							<div class="other_bg"><i class="icon_app_12"></i>' + entity.CategoryName + '</div>\
+							<b>' + entity.ShopName + '</b>\
+							<div class="contact_add">' + entity.ProductName + '</div>\
+							<div class="contact_box">\
+								<!--此项如无数据时，请隐藏-->\
+								<span class="fl">订单号：' + entity.Id + '</span>\
+								<span class="fr">金额：<i style="color: red;">￥' + entity.Cost + '</i></span>\
+							</div>\
+						</a>\
+					</div>';
+				card.querySelector("#checkbox").addEventListener("click", function(event) {
+					if(this.checked) {
+						orderMoney += entity.Cost;
+						ShopOrderIdList.push(entity.Id+"");
+					} else {
+						orderMoney -= entity.Cost;
+						for(var i = 0; i < ShopOrderIdList.length; i++) {
+							if(ShopOrderIdList[i] == entity.Id+"") {
+								console.log(i);
+								ShopOrderIdList.splice(i, 1);
+							}
+						}
+
+					}
+					document.getElementById("price").innerHTML = "￥ " + orderMoney;
+					console.log(JSON.stringify(ShopOrderIdList));
+				});
+				return card;
+			}
+
+			function gotoHtml(id, u, datas, price) {
+				mui.openWindow({
+					url: u,
+					id: id,
+
+					show: {
+						aniShow: 'pop-in'
+					},
+					waiting: {
+						autoShow: true, //自动显示等待框，默认为true
+						title: '正在加载...', //等待对话框上显示的提示内容
+					},
+					extras: {
+						data: datas,
+						price: price
+					}
+				});
+			}
+		</script>
+	</body>
+
+</html>

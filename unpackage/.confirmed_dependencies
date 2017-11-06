@@ -24,7 +24,10 @@
 			"fonts/mui.ttf",
 			"html/member/shop_order_list.html",
 			"fonts/mui-icons-extra.ttf",
-			"css/icons-extra.css"
+			"css/icons-extra.css",
+			"js/shop.js",
+			"js/apphome.js",
+			"js/article.js"
 		]
 	},
 	"html/account/login.html": {
@@ -147,11 +150,14 @@
 			"fonts/mui.ttf",
 			"js/member.js",
 			"images/bed.jpg",
-			"images/shop.jpg"
+			"images/shop.jpg",
+			"images/heart@2x.png",
+			"images/bed_small.jpg"
 		],
 		"refer": [
 			"html/shop/product.html",
-			"html/shop/shop_search.html"
+			"html/shop/shop_search.html",
+			"html/shop/product_details.html"
 		]
 	},
 	"health.html": {
@@ -164,7 +170,10 @@
 			"images/yuantiao.jpg",
 			"css/main.css",
 			"css/appfont.css",
-			"images/shuijiao.jpg"
+			"images/shuijiao.jpg",
+			"js/localDatabase.js",
+			"js/post.js",
+			"fonts/icomoon.ttf"
 		],
 		"refer": []
 	},
@@ -227,7 +236,9 @@
 		],
 		"refer": [
 			"html/member/member_modify.html",
-			"html/linkman/linkman_list.html"
+			"html/linkman/linkman_list.html",
+			"html/member/collection.html",
+			"html/member/invoice.html"
 		]
 	},
 	"home.html": {
@@ -249,11 +260,14 @@
 			"fonts/mui.ttf",
 			"images/bed_small.jpg",
 			"images/serviceCategory.png",
-			"js/shop.js"
+			"js/shop.js",
+			"images/bed.jpg",
+			"images/shop.jpg"
 		],
 		"refer": [
 			"html/apphome/detail.html",
-			"html/server/server_list.html"
+			"html/server/server_list.html",
+			"html/apphome/city.html"
 		]
 	},
 	"splash.html": {
@@ -284,7 +298,8 @@
 			"images/shop.jpg",
 			"js/member.js",
 			"images/bed_small.jpg",
-			"fonts/icomoon.ttf"
+			"fonts/icomoon.ttf",
+			"js/gps.js"
 		],
 		"refer": [
 			"html/shop/product_details.html",
@@ -304,7 +319,8 @@
 			"js/shop.js",
 			"js/post.js",
 			"js/member.js",
-			"images/bed.jpg"
+			"images/bed.jpg",
+			"fonts/icomoon.ttf"
 		],
 		"refer": [
 			"html/shop/createorder.html"
@@ -322,7 +338,10 @@
 			"js/dao.js",
 			"js/post.js",
 			"css/mui.picker.min.css",
-			"js/mui.picker.min.js"
+			"js/mui.picker.min.js",
+			"css/appfont.css",
+			"css/main.css",
+			"fonts/icomoon.ttf"
 		],
 		"refer": []
 	},
@@ -338,10 +357,14 @@
 			"js/shop.js",
 			"js/post.js",
 			"css/main.css",
-			"js/compareTimes.js"
+			"js/compareTimes.js",
+			"css/appfont.css",
+			"fonts/mui.ttf",
+			"fonts/icomoon.ttf"
 		],
 		"refer": [
-			"html/shop/select_people.html"
+			"html/shop/select_people.html",
+			"html/linkman/select_linkaddress.html"
 		]
 	},
 	"html/shop/productpic.html": {
@@ -371,7 +394,8 @@
 			"js/mui.min.js",
 			"js/dao.js",
 			"js/post.js",
-			"js/mui.js"
+			"js/mui.js",
+			"fonts/icomoon.ttf"
 		],
 		"refer": [
 			"html/member/shop_order_detail.html",
@@ -462,7 +486,15 @@
 			"images/weixinpay.png",
 			"css/mui.min.css",
 			"images/zhifubao.png",
-			"js/mui.min.js"
+			"js/mui.min.js",
+			"js/localDatabase.js",
+			"css/main.css",
+			"css/appfont.css",
+			"fonts/mui.ttf",
+			"fonts/icomoon.ttf",
+			"js/dao.js",
+			"js/shop.js",
+			"js/post.js"
 		],
 		"refer": []
 	},
@@ -497,7 +529,11 @@
 			"js/localDatabase.js",
 			"js/mui.min.js",
 			"js/dao.js",
-			"js/post.js"
+			"js/post.js",
+			"css/main.css",
+			"css/appfont.css",
+			"fonts/mui.ttf",
+			"fonts/icomoon.ttf"
 		],
 		"refer": [
 			"html/linkman/create_linkman.html"
@@ -513,7 +549,11 @@
 			"js/dao.js",
 			"css/mui.min.css",
 			"js/linkman.js",
-			"js/post.js"
+			"js/post.js",
+			"css/main.css",
+			"css/appfont.css",
+			"fonts/mui.ttf",
+			"fonts/icomoon.ttf"
 		],
 		"refer": []
 	},
@@ -532,7 +572,8 @@
 			"images/bed.jpg",
 			"fonts/mui-icons-extra.ttf",
 			"css/icons-extra.css",
-			"js/feedback.js"
+			"js/feedback.js",
+			"css/appfont.css"
 		],
 		"refer": []
 	},
@@ -543,7 +584,10 @@
 			"js/dao.js",
 			"css/mui.min.css",
 			"js/linkman.js",
-			"js/post.js"
+			"js/post.js",
+			"css/main.css",
+			"css/appfont.css",
+			"fonts/icomoon.ttf"
 		],
 		"refer": [
 			"html/linkman/create_linkman.html",
@@ -560,7 +604,11 @@
 			"js/post.js",
 			"css/mui.picker.min.css",
 			"js/localDatabase.js",
-			"js/mui.min.js"
+			"js/mui.min.js",
+			"css/main.css",
+			"css/appfont.css",
+			"fonts/mui.ttf",
+			"fonts/icomoon.ttf"
 		],
 		"refer": []
 	},
@@ -598,7 +646,8 @@
 			"js/post.js"
 		],
 		"refer": [
-			"html/server/serverOrder.html"
+			"html/server/serverOrder.html",
+			"html/server/server_pic.html"
 		]
 	},
 	"html/server/serverOrder.html": {
@@ -615,7 +664,123 @@
 			"js/post.js"
 		],
 		"refer": [
-			"html/shop/pay.html"
+			"html/shop/pay.html",
+			"html/linkman/select_linkaddress.html"
+		]
+	},
+	"html/apphome/city.html": {
+		"resources": [
+			"js/localDatabase.js",
+			"js/mui.min.js",
+			"js/dao.js",
+			"css/mui.min.css",
+			"js/apphome.js",
+			"css/mui.indexedlist.css",
+			"js/post.js",
+			"js/mui.indexedlist.js"
+		],
+		"refer": []
+	},
+	"html/member/collection.html": {
+		"resources": [
+			"js/localDatabase.js",
+			"js/mui.pullToRefresh.js",
+			"css/main.css",
+			"js/mui.min.js",
+			"js/mui.pullToRefresh.material.js",
+			"fonts/mui.ttf",
+			"js/dao.js",
+			"css/mui.min.css",
+			"js/post.js",
+			"images/Service.png",
+			"js/member.js"
+		],
+		"refer": [
+			"html/shop/product_details.html",
+			"html/shop/product.html",
+			"html/server/server_detail.html"
+		]
+	},
+	"html/linkman/edit_linkaddress.html": {
+		"resources": [
+			"js/localDatabase.js",
+			"js/muifun.js",
+			"js/mui.picker.js",
+			"js/linkaddress.js",
+			"js/mui.poppicker.js",
+			"js/dao.js",
+			"css/mui.poppicker.css",
+			"css/mui.picker.css",
+			"css/icons-extra.css",
+			"js/post.js",
+			"js/city.data-3.js",
+			"css/mui.min.css",
+			"js/city.data.js",
+			"css/appfont.css",
+			"css/main.css",
+			"fonts/mui.ttf",
+			"js/mui.min.js"
+		],
+		"refer": []
+	},
+	"html/linkman/create_linkaddress.html": {
+		"resources": [
+			"js/mui.picker.js",
+			"js/mui.poppicker.js",
+			"js/city.data.js",
+			"css/mui.poppicker.css",
+			"css/mui.picker.css",
+			"js/city.data-3.js",
+			"css/mui.min.css",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/appfont.css",
+			"css/main.css",
+			"css/icons-extra.css",
+			"js/localDatabase.js",
+			"js/linkaddress.js",
+			"js/dao.js",
+			"js/post.js"
+		],
+		"refer": []
+	},
+	"html/linkman/select_linkaddress.html": {
+		"resources": [
+			"js/linkaddress.js",
+			"css/mui.min.css",
+			"js/localDatabase.js",
+			"js/dao.js",
+			"js/post.js",
+			"js/mui.min.js",
+			"css/main.css",
+			"css/appfont.css"
+		],
+		"refer": []
+	},
+	"html/server/server_pic.html": {
+		"resources": [
+			"css/appfont.css",
+			"css/main.css",
+			"css/mui.min.css"
+		],
+		"refer": []
+	},
+	"html/member/invoice.html": {
+		"refer": [
+			"html/member/invoice_information.html",
+			"html/member/invoice_history.html"
+		]
+	},
+	"html/member/invoice_information.html": {
+		"refer": [
+			"html/linkman/select_linkaddress.html",
+			"html/member/invoice_personal.html",
+			"html/member/invoice_enterprise.html"
+		]
+	},
+	"html/member/invoice_history.html": {
+		"refer": [
+			"html/member/invoice_details.html"
 		]
 	}
 }

@@ -1,6 +1,7 @@
 var LocalDatabase= (function() {
 	var KEY_USER='$USER';
 	var KEY_SETTING='$SETTING';
+	var KEY_SHOPID='$SHOPID';
 	var KEY_ATTACHMENTS='$ATTACHMENTS';
 	var KEY_FAULT='$FAULT';
 	var KEY_FAULT_DEVICES='$FAULT_DEVICES';
@@ -91,6 +92,15 @@ var LocalDatabase= (function() {
 		//获取用户配置
 		this.getSetting = function() {
 			return _getData(KEY_SETTING);
+		};
+		
+		//保存shopid
+		this.setShopId = function(shopid) {
+			_setData(KEY_SHOPID,shopid||{});
+		};
+		//获取shopid
+		this.getShopId = function() {
+			return _getData(KEY_SHOPID);
 		};
 		
 		//保存收藏店铺列表

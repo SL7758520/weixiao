@@ -18,7 +18,7 @@
 			// 扩展API加载完毕，现在可以正常调用扩展API
 			function onPlusReady() {
 				plus.geolocation.getCurrentPosition(function(p) {
-					mui.toast(p.address.city);
+//					mui.toast(p.address.city);
 					document.getElementById("position").innerText = p.address.city;
 					_appHome.GetCityIdByCityName(p.address.city, function(datas) {
 						_dataAccess.getUser().CityId = datas;
@@ -148,9 +148,9 @@
 					</li>
 					<li class="mui-table-view-cell"><a href="" class="mui-navigate-right">眼科</a>
 					</li>
-					<li class="mui-table-view-cell"><a href="" class="mui-navigate-right">Item 7</a>
+					<li class="mui-table-view-cell"><a href="" class="mui-navigate-right">兰亭居</a>
 					</li>
-					<li class="mui-table-view-cell"><a href="" class="mui-navigate-right">Item 8</a>
+					<li class="mui-table-view-cell"><a href="" class="mui-navigate-right">微孝养老</a>
 					</li>
 					<li class="mui-table-view-cell"><a href="" class="mui-navigate-right">Item 9</a>
 					</li>

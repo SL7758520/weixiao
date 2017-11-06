@@ -22,10 +22,14 @@
 		<script type="text/javascript">
 			mui.init();
 			var _dataAccess = new DataAccess();
-				var _account = new Account();
+			var _account = new Account();
 			mui.plusReady(function() {
+				// 设置系统状态栏背景为红色
+				plus.navigator.setStatusBarBackground('#4cd964');
 				setTimeout(function() {
-					
+					_dataAccess.setShopId({
+						shopId: 1
+					});
 					var settings = app.getSettings();
 					if(!settings.autoLogin) {
 						settings.autoLogin = true;
@@ -67,7 +71,7 @@
 							}
 						});
 					}
-				}, 2000);
+				}, 200);
 			})
 		</script>
 	</body>

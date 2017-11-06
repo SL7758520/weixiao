@@ -36,7 +36,7 @@ var Shop = (function() {
 					}
 				},
 				function() {
-					console.log('请求失败：');
+//					mui.toast("网络不太好哦~请稍后再试!");
 				});
 		};
 		//若登录后的member.ShopId不为空->获取当前ShopId的所有下级Shop
@@ -54,7 +54,7 @@ var Shop = (function() {
 					}
 				},
 				function() {
-					console.log('请求失败：');
+//					mui.toast("网络不太好哦~请稍后再试!");
 				});
 		};
 		
@@ -73,7 +73,7 @@ var Shop = (function() {
 					}
 				},
 				function() {
-					console.log('请求失败：');
+					mui.toast("网络不太好哦~请稍后再试!");
 				});
 		};
 		
@@ -83,6 +83,7 @@ var Shop = (function() {
 				mui.toast("没有网络连接，请稍后再试！");
 				return;
 			}
+//			mui.toast("之前那个是错误的，这个才");
 			var user = _db.getUser();
 			AsyncPost(API_SHOP+"GetShopModel","shopId=" + shopId ,
 				function(result) {
@@ -92,7 +93,7 @@ var Shop = (function() {
 					}
 				},
 				function() {
-					console.log('请求失败：');
+					mui.toast("网络不太好哦~请稍后再试!");
 				});
 		};
 		
@@ -111,7 +112,7 @@ var Shop = (function() {
 					}
 				},
 				function() {
-					console.log('请求失败：');
+					mui.toast("网络不太好哦~请稍后再试!");
 				});
 		};
 		
@@ -130,7 +131,7 @@ var Shop = (function() {
 					}
 				},
 				function() {
-					console.log('请求失败：');
+					mui.toast("网络不太好哦~请稍后再试!");
 				});
 		};
 		
@@ -149,7 +150,7 @@ var Shop = (function() {
 					}
 				},
 				function() {
-					console.log('请求失败：');
+					mui.toast("网络不太好哦~请稍后再试!");
 				});
 		};
 	
@@ -168,7 +169,7 @@ var Shop = (function() {
 					}
 				},
 				function() {
-					console.log('请求失败：');
+					mui.toast("网络不太好哦~请稍后再试!");
 				});
 		};
 		
@@ -187,7 +188,7 @@ var Shop = (function() {
 					}
 				},
 				function() {
-					console.log('请求失败：');
+					mui.toast("网络不太好哦~请稍后再试!");
 				});
 		};
 		
@@ -206,7 +207,7 @@ var Shop = (function() {
 					}
 				},
 				function() {
-					console.log('请求失败：');
+					mui.toast("网络不太好哦~请稍后再试!");
 				});
 		};
 		
@@ -225,7 +226,7 @@ var Shop = (function() {
 					}
 				},
 				function() {
-					console.log('请求失败：');
+					mui.toast("网络不太好哦~请稍后再试!");
 				});
 		};
 		//获取店铺图片列表
@@ -243,7 +244,7 @@ var Shop = (function() {
 					}
 				},
 				function() {
-					console.log('请求失败：');
+					mui.toast("网络不太好哦~请稍后再试!");
 				});
 		};
 		//获取床位图片列表GET /api/Shop/GetProductPhotos
@@ -261,7 +262,7 @@ var Shop = (function() {
 					}
 				},
 				function() {
-					console.log('请求失败：');
+					mui.toast("网络不太好哦~请稍后再试!");
 				});
 		};
 		//获取图片路径
@@ -279,7 +280,7 @@ var Shop = (function() {
 					}
 				},
 				function() {
-					mui.toast('没有网络连接，请稍后再试！');
+					mui.toast("网络不太好哦~请稍后再试!");
 				});
 		};
 		
@@ -294,7 +295,7 @@ var Shop = (function() {
 					onSuccess.call(this,result);
 				}
 			},function(){
-				mui.toast('没有网络连接，请稍后再试！');
+				mui.toast("网络不太好哦~请稍后再试!");
 			});
 		}
 		
@@ -307,12 +308,12 @@ var Shop = (function() {
 			for(var i = 0; i < linkMains.length; i++) {
 				LinkManID.push(linkMains[i].Id+"");
 			}
-			PostRequest(API_SHOP+'MakeOrder?productId='+productId+'&quantity='+quantity+'&peopleAmount='+peopleAmount+'&address='+address+'&phone='+phone+'&remark='+remark+'&bookedDate='+bookedDate+'&categoryId='+categoryId,'LinkManID',function(result){
+			PostRequest(API_SHOP+'MakeOrder?productId='+productId+'&quantity='+quantity+'&peopleAmount='+peopleAmount+'&address='+address+'&phone='+phone+'&remark='+remark+'&bookedDate='+bookedDate+'&categoryId='+categoryId,LinkManID,function(result){
 				if (onSuccess) {
 					onSuccess.call(this,result);
 				}
 			},function(){
-				mui.toast('没有网络连接，请稍后再试！');
+				mui.toast("网络不太好哦~请稍后再试!");
 			});
 		}
 		this.OrderCancel = function(orderId,reason,onSuccess,onError){
@@ -325,7 +326,7 @@ var Shop = (function() {
 					onSuccess.call(this,result);
 				}
 			},function(){
-				mui.toast('没有网络连接，请稍后再试！');
+				mui.toast("网络不太好哦~请稍后再试!");
 			});
 		}
 		//订单评价
@@ -339,7 +340,7 @@ var Shop = (function() {
 					onSuccess.call(this,result);
 				}
 			},function(){
-				mui.toast('没有网络连接，请稍后再试！');
+				mui.toast("网络不太好哦~请稍后再试!");
 			});
 		}
 		//申请退款
@@ -353,7 +354,7 @@ var Shop = (function() {
 					onSuccess.call(this,result);
 				}
 			},function(){
-				mui.toast('没有网络连接，请稍后再试！');
+				mui.toast("网络不太好哦~请稍后再试!");
 			});
 		}
 		//完成入住
@@ -367,7 +368,7 @@ var Shop = (function() {
 					onSuccess.call(this,result);
 				}
 			},function(){
-				mui.toast('没有网络连接，请稍后再试！');
+				mui.toast("网络不太好哦~请稍后再试!");
 			});
 		}
 

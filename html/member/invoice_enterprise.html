@@ -1,0 +1,469 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/mui.picker.css" rel="stylesheet" />
+		<link href="../../css/mui.poppicker.css" rel="stylesheet" />
+		<link href="../../css/appfont.css" rel="stylesheet" />
+		<link href="../../css/main.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/icons-extra.css" />
+
+		<style type="text/css">
+			html,
+			body {
+				background-color: #F3F3F3;
+			}
+			
+			.infospan {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+			}
+			
+			.mui-input-group:before {
+				background-color: #F3F3F3;
+			}
+			
+			.mui-input-group:after {
+				background-color: #F3F3F3;
+			}
+			
+			.mui-input-group .mui-input-row:after {
+				background-color: #FFFFFF;
+			}
+			
+			.form_info {
+				border-bottom: 1px solid #F3F3F3;
+			}
+			
+			.form_info label {
+				width: 75px;
+				font-size: 16px;
+			}
+			/*.mui-checkbox.mui-left label,
+			.mui-radio.mui-left label {
+				padding-right: 0px;
+				padding-left: 40px;
+			}
+			
+			.mui-checkbox.mui-left input[type=checkbox],
+			.mui-radio.mui-left input[type=radio] {
+				left: 5px;
+			}*/
+			
+			.form_info .input_sys1 {
+				font-size: 14px;
+			}
+			
+			.button {
+				color: #fff;
+				border: 1px solid #4cd964;
+				background-color: #4cd964;
+				font-size: 18px;
+				display: block;
+				width: 100%;
+				margin-bottom: 10px;
+				padding: 15px 0
+			}
+			
+			.form_tp {
+				padding: 5px 15px;
+				background-color: #F3F3F3;
+				font-size: 18px;
+			}
+			
+			.text_box {
+				width: 100%;
+				height: 40px;
+				border: none;
+				outline: none;
+				color: #363636;
+				font-size: 12px;
+				margin: 0px;
+				border-radius: 0px;
+				clear: both;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="windows_bg" id="dialog" style="display: none;">
+			<!--通用弹窗标准-->
+			<div class="windows_box">
+				<!--一按钮状态-->
+				<div class="info_box" id="dialogone" style="display: none;text-align: left;">
+					<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;您好，您的发票申请订单已经成功提交，请您到发票索取历史查看当前订单进度以及物流信息，如有疑问，请致电客服服务热线010-88888888</p>
+					<a href="#" id="notice" style="text-align: center;">确定</a>
+				</div>
+				<!--两按钮状态-->
+				<div class="info_box two_btn" id="dialogtwo">
+					<p id="title">订单就要完成了，你确定要离开吗？</p>
+					<a href="#" id="casncel">继续填写</a>
+					<a href="#" class="left_line" id="close">确定</a>
+				</div>
+				<!--三按钮状态-->
+				<!--<div class="info_box nbg_bgn">
+		<p>请先选路段，再选备件仓库请先选路段，再选备件仓库请先选路段，再选备件仓库请先选路段，再选备件仓库</p>
+		<a href="#">重试</a>
+		<a href="#">确认绑定</a>
+		<a href="#">暂存</a>
+		</div>-->
+			</div>
+		</div>
+		<header class="mui-bar mui-bar-nav">
+			<a id="back" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">企业发票申请</h1>
+		</header>
+		<div class="mui-content">
+			<div class="mui-form">
+				<ul>
+					<li class="form_tp">发票类型</li>
+					<form class="infospan mui-input-group">
+						<div class="mui-input-row mui-radio mui-left">
+							<label style="font-size: 14px;">增值税普通发票</label>
+							<input name="radio1" type="radio" checked="">
+						</div>
+						<div class="mui-input-row mui-radio mui-left">
+							<label style="font-size: 14px;">增值税专用发票</label>
+							<input name="radio1" type="radio">
+						</div>
+					</form>
+				</ul>
+			</div>
+			<div class="form_info">
+				<div><label>发票金额</label>
+					<dd><input id="price" type="text" class="input_sys1" readonly></dd>
+				</div>
+			</div>
+			<div class="form_info">
+				<div><label>单位名称</label>
+					<dd><input id="name" type="text" class="input_sys1" placeholder="请输入单位名称"></dd>
+				</div>
+			</div>
+			<div class="form_info">
+				<div><label>税号</label>
+					<dd><input id="paragraph" type="text" class="input_sys1" placeholder="请输入税号"></dd>
+				</div>
+			</div>
+			<div class="form_info">
+				<div><label>开户行</label>
+					<dd><input id="bankName" type="text" class="input_sys1" placeholder="请输入开户行"></dd>
+				</div>
+			</div>
+			<div class="form_info">
+				<div><label>银行账户</label>
+					<dd><input id="bankAccount" type="text" class="input_sys1" placeholder="请输入银行账户"></dd>
+				</div>
+			</div>
+			<div class="form_info">
+				<div><label>联系电话</label>
+					<dd><input id="phoneNumber" type="text" class="input_sys1" placeholder="请输入联系电话"></dd>
+				</div>
+			</div>
+			<div class="mui-form">
+				<ul>
+					<li id="showUserPicker">
+						<a href="#" style="color: #000;">所在地区<span id="region">选择</span></a>
+					</li>
+				</ul>
+			</div>
+			<div class="mui-form">
+				<ul>
+					<li><textarea id="txtDescription" class="text_box" style="font-size: 14px;" placeholder="详细地址"></textarea></li>
+				</ul>
+			</div>
+			<div class="mui-form">
+				<ul>
+					<li class="form_tp">备注</li>
+					<li><textarea id="txt" class="text_box" style="font-size: 14px;" placeholder="请添加备注"></textarea></li>
+				</ul>
+			</div>
+
+		</div>
+		<div id="confirm" class="mui-content-padded">
+			<button id="btnSave" type="button" class="mui-btn button">提&nbsp;&nbsp;&nbsp;&nbsp;交</button>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<!--<script src="../js/mui.picker.min.js"></script>-->
+		<script src="../../js/mui.picker.js"></script>
+		<script src="../../js/mui.poppicker.js"></script>
+		<script src="../../js/city.data.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/city.data-3.js" type="text/javascript" charset="utf-8"></script>
+		<!--<script src="../../js/muifun.js"></script>-->
+		<script src="../../js/localDatabase.js"></script>
+		<script src="../../js/post.js"></script>
+		<script src="../../js/dao.js"></script>
+		<script src="../../js/linkaddress.js"></script>
+		<script src="../../js/member.js"></script>
+		<script>
+			(function($, doc) {
+				$.init();
+				$.ready(function() {
+					/**
+					 * 获取对象属性的值
+					 * 主要用于过滤三级联动中，可能出现的最低级的数据不存在的情况，实际开发中需要注意这一点；
+					 * @param {Object} obj 对象
+					 * @param {String} param 属性名
+					 */
+					var _getParam = function(obj, param) {
+						return obj[param] || '';
+					};
+					//					//级联示例
+					var cityPicker3 = new $.PopPicker({
+						layer: 3
+					});
+					cityPicker3.setData(cityData3);
+					var showCityPickerButton = doc.getElementById('showUserPicker');
+					var cityResult3 = doc.getElementById('region');
+					showCityPickerButton.addEventListener('tap', function(event) {
+						cityPicker3.show(function(items) {
+							cityResult3.innerText = _getParam(items[0], 'text') + _getParam(items[1], 'text') + _getParam(items[2], 'text');
+							//返回 false 可以阻止选择框的关闭
+							//return false;
+						});
+					}, false);
+				});
+			})(mui, document);
+			var price;
+			var ShopOrderIdList;
+			var address;
+			var linkaddress = new LinkAddress();
+			var member = new Member();
+			var type = 0;
+			mui.init();
+			mui.plusReady(function() {
+				var _self = plus.webview.currentWebview();
+				price = _self.price;
+				ShopOrderIdList = _self.data;
+				address = _self.address;
+				var _getParam = function(obj, param) {
+					return obj[param] || '';
+				};
+				initpage();
+			});
+
+			function initpage() {
+				setValue('name', address.LinkManName);
+				setValue('phoneNumber', address.Phone);
+				setValue('price', "￥ " + price);
+				document.getElementById('region').innerHTML = splitStr(address.Address)[0];
+				document.getElementById('txtDescription').value = splitStr(address.Address)[1];
+				mui('.mui-input-group').on('change', 'input', function() {
+					type = this.value;
+				});
+				document.getElementById('confirm').addEventListener('tap', function() {
+					if(getValue('name') == '') {
+						mui.toast('请填写单位名称');
+						return;
+					}
+					if(getValue('paragraph') == '') {
+						mui.toast('请填写税号');
+						return;
+					}
+					if(getValue('bankName') == '') {
+						mui.toast('请填写开户行');
+						return;
+					}
+					console.log(getValue('bankAccount'));
+					if(!CheckBankNo(getValue('bankAccount'))) {
+						mui.toast('请填写银行账户');
+						return;
+					}
+					if(!phonecheck(getValue('phoneNumber'))) {
+						return;
+					}
+					if(document.getElementById("region").innerHTML == '选择') {
+						mui.toast('请选择所在地区');
+						return;
+					}
+					if(document.getElementById("txtDescription").value == '') {
+						mui.toast('请填写详细地址');
+						return;
+					}
+					plus.nativeUI.showWaiting();
+					var currentaddress = mergeStr(document.getElementById("region").innerHTML, document.getElementById("txtDescription").value);
+					console.log(JSON.stringify(ShopOrderIdList));
+					member.OrderInvoiceApply(address.Id, type, getValue('name'), getValue('paragraph'), getValue('bankName'), getValue('bankAccount'), currentaddress, getValue('phoneNumber'), getValue('txt') == "" ? null : getValue('txt'), price, ShopOrderIdList, function(datas) {
+						plus.nativeUI.closeWaiting();
+						if(datas.status == 1) {
+							dialog.style.display = 'block';
+							document.getElementById('dialogone').style.display = 'block';
+							document.getElementById('dialogtwo').style.display = 'none';
+						} else {
+							mui.toast(datas.message);
+						}
+					}, function() {
+						plus.nativeUI.closeWaiting();
+						mui.toast('请求失败');
+					});
+				});
+				document.getElementById('casncel').addEventListener('tap', function() {
+					dialog.style.display = 'none';
+				});
+				document.getElementById('close').addEventListener('tap', function() {
+					plus.webview.currentWebview().close();
+				});
+				document.getElementById('back').addEventListener('tap', function() {
+					mui.back();
+				});
+				document.getElementById('notice').addEventListener('tap', function() {
+					console.log("AAAAAAAAAAA");
+					var task = plus.webview.getWebviewById('invoice_information.html');
+					mui.fire(task, 'CreateInvoice');
+
+					//					mui.back();
+					plus.webview.getWebviewById('invoice_enterprise.html').close();
+				});
+
+			}
+
+			function getValue(id) {
+				return document.getElementById(id).value;
+			}
+
+			function setValue(id, value) {
+				document.getElementById(id).value = value;
+			}
+
+			function splitStr(str) {
+				var strlist = str.split(" ");
+				return strlist;
+			}
+
+			function mergeStr(str1, str2) {
+				return str1 + " " + str2;
+			}
+
+			//手机号码验证：
+			function phonecheck(tel) {
+
+				if(tel.length == 0) {
+					mui.toast('请输入手机号码！');
+					return false;
+				}
+				console.log("BBBBBBBB");
+				if(tel.length != 11) {
+					mui.toast('请输入有效的手机号码！');
+					return false;
+				}
+				console.log("ccccccccccc");
+				var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+				if(!myreg.test(tel)) {
+					mui.toast('请输入有效的手机号码！');
+					return false;
+				} else {
+					return true;
+				}
+			}
+			//银行卡号Luhn校验算法
+			//luhn校验规则：16位银行卡号（19位通用）: 
+			//1.将未带校验位的 15（或18）位卡号从右依次编号 1 到 15（18），位于奇数位号上的数字乘以 2。
+			//2.将奇位乘积的个十位全部相加，再加上所有偶数位上的数字。
+			//3.将加法和加上校验位能被 10 整除。
+
+			//bankno为银行卡号
+			function luhnCheck(bankno) {
+				var lastNum = bankno.substr(bankno.length - 1, 1); //取出最后一位（与luhn进行比较）
+
+				var first15Num = bankno.substr(0, bankno.length - 1); //前15或18位
+				var newArr = new Array();
+				for(var i = first15Num.length - 1; i > -1; i--) { //前15或18位倒序存进数组
+					newArr.push(first15Num.substr(i, 1));
+				}
+				var arrJiShu = new Array(); //奇数位*2的积 <9
+				var arrJiShu2 = new Array(); //奇数位*2的积 >9
+
+				var arrOuShu = new Array(); //偶数位数组
+				for(var j = 0; j < newArr.length; j++) {
+					if((j + 1) % 2 == 1) { //奇数位
+						if(parseInt(newArr[j]) * 2 < 9)
+							arrJiShu.push(parseInt(newArr[j]) * 2);
+						else
+							arrJiShu2.push(parseInt(newArr[j]) * 2);
+					} else //偶数位
+						arrOuShu.push(newArr[j]);
+				}
+
+				var jishu_child1 = new Array(); //奇数位*2 >9 的分割之后的数组个位数
+				var jishu_child2 = new Array(); //奇数位*2 >9 的分割之后的数组十位数
+				for(var h = 0; h < arrJiShu2.length; h++) {
+					jishu_child1.push(parseInt(arrJiShu2[h]) % 10);
+					jishu_child2.push(parseInt(arrJiShu2[h]) / 10);
+				}
+
+				var sumJiShu = 0; //奇数位*2 < 9 的数组之和
+				var sumOuShu = 0; //偶数位数组之和
+				var sumJiShuChild1 = 0; //奇数位*2 >9 的分割之后的数组个位数之和
+				var sumJiShuChild2 = 0; //奇数位*2 >9 的分割之后的数组十位数之和
+				var sumTotal = 0;
+				for(var m = 0; m < arrJiShu.length; m++) {
+					sumJiShu = sumJiShu + parseInt(arrJiShu[m]);
+				}
+
+				for(var n = 0; n < arrOuShu.length; n++) {
+					sumOuShu = sumOuShu + parseInt(arrOuShu[n]);
+				}
+
+				for(var p = 0; p < jishu_child1.length; p++) {
+					sumJiShuChild1 = sumJiShuChild1 + parseInt(jishu_child1[p]);
+					sumJiShuChild2 = sumJiShuChild2 + parseInt(jishu_child2[p]);
+				}
+				//计算总和
+				sumTotal = parseInt(sumJiShu) + parseInt(sumOuShu) + parseInt(sumJiShuChild1) + parseInt(sumJiShuChild2);
+
+				//计算luhn值
+				var k = parseInt(sumTotal) % 10 == 0 ? 10 : parseInt(sumTotal) % 10;
+				var luhn = 10 - k;
+				console.log("lastNum=" + lastNum + "======luhn=" + luhn);
+				if(lastNum == luhn) {
+					console.log("验证通过");
+					return true;
+				} else {
+					console.log("AAAAAAA");
+					mui.toast("银行卡号必须符合luhn校验");
+					return false;
+				}
+			}
+
+			//检查银行卡号
+			function CheckBankNo(bankno) {
+				console.log("AAAAAAAbankno=" + bankno);
+				var bankno = bankno.replace(/\s/g, '');
+				console.log("AAAAAAAbankno=" + bankno);
+				if(bankno == "") {
+					mui.toast("请填写银行卡号");
+					return false;
+				}
+				if(bankno.length < 16 || bankno.length > 19) {
+					mui.toast("银行卡号长度必须在16到19之间");
+					return false;
+				}
+				var num = /^\d*$/; //全数字
+				if(!num.exec(bankno)) {
+					mui.toast("银行卡号必须全为数字");
+					return false;
+				}
+				//开头6位
+				var strBin = "10,18,30,35,37,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,58,60,62,65,68,69,84,87,88,94,95,98,99";
+				if(strBin.indexOf(bankno.substring(0, 2)) == -1) {
+					mui.toast("银行卡号开头6位不符合规范");
+					return false;
+				}
+				//Luhn校验
+				if(!luhnCheck(bankno)) {
+					return false;
+				}
+				return true;
+			}
+
+			mui.back = function() {
+				plus.webview.currentWebview().close();
+			}
+		</script>
+	</body>
+
+</html>

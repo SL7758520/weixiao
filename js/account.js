@@ -33,24 +33,24 @@ var Account = (function() {
 					}
 				},
 				function() {
-					console.log('请求失败：');
+					mui.toast("网络不太好哦~请稍后再试!");
 				});
 		};
 		//注册第三步，验证短信验证码RegisterByMobile_VerifySmsCode
-		this.RegisterByMobile_VerifySmsCode = function(mobile,password,smsCode, callback) {
+		this.RegisterByMobile_VerifySmsCode = function(shopId,mobile,password,smsCode, callback) {
 			if(!_getNetwork()) {
 				mui.toast("没有网络连接，请稍后再试！");
 				return;
 			}
 			var user = _db.getUser();
-			AsyncPost(API_LOGIN+"RegisterByMobile_VerifySmsCode", "mobile=" + mobile + "&password=" +password + "&smsCode=" +smsCode,
+			AsyncPost(API_LOGIN+"RegisterByMobile_VerifySmsCode", "shopId="+shopId+"&mobile=" + mobile + "&password=" +password + "&smsCode=" +smsCode,
 				function(result) {
 					if(callback) {
 						callback.call(this, result);
 					}
 				},
 				function() {
-					console.log('请求失败：');
+					mui.toast("网络不太好哦~请稍后再试!");
 				});
 		};
 
@@ -69,7 +69,7 @@ var Account = (function() {
 					}
 				},
 				function() {
-					mui.toast("没有网络连接，请稍后再试！");
+					mui.toast("网络不太好哦~请稍后再试!");
 				});
 		};
 		
@@ -88,7 +88,7 @@ var Account = (function() {
 					}
 				},
 				function() {
-					console.log('请求失败：');
+					mui.toast("网络不太好哦~请稍后再试!");
 				});
 		};
 		
@@ -107,7 +107,7 @@ var Account = (function() {
 					}
 				},
 				function() {
-					console.log('请求失败：');
+					mui.toast("网络不太好哦~请稍后再试!");
 				});
 		};
 		
@@ -126,7 +126,7 @@ var Account = (function() {
 					}
 				},
 				function() {
-					console.log('请求失败：');
+					mui.toast("网络不太好哦~请稍后再试!");
 				});
 		};
 		//第三方认证登录
@@ -144,7 +144,7 @@ var Account = (function() {
 					}
 				},
 				function() {
-					console.log('请求失败：');
+					mui.toast("网络不太好哦~请稍后再试!");
 				});
 		};
 

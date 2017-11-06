@@ -9,7 +9,6 @@
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/appfont.css" rel="stylesheet" />
 		<link href="../../css/main.css" rel="stylesheet" />
-		<link href="../../css/chart.css" rel="stylesheet" />
 		<link rel="stylesheet" type="text/css" href="../../css/mui.picker.min.css" />
 
 	</head>
@@ -41,6 +40,19 @@
 				float: right !important;
 				color: #FFC90E !important;
 				font-size: 17px !important;
+			}
+			
+			.form_info {
+				border-bottom: 1px solid #F3F3F3;
+			}
+			
+			.form_info label {
+				width: 75px;
+				font-size: 16px;
+			}
+			
+			.form_info .input_sys1 {
+				font-size: 16px;
 			}
 		</style>
 		<div class="windows_bg" id="dialog" style="display: none;">
@@ -75,12 +87,17 @@
 		<div class="fault_main" style="top:45px">
 			<div class="form_info">
 				<div><label>接送地址</label>
-					<dd><input id="address" type="text" class="input_sys2" placeholder="请填写准确地址，方便我们接送"></dd>
-				</div>
-				<div style="margin:10px 0px 10px 0px;"><label>联系电话</label>
-					<dd><input id="phone" type="text" class="input_sys2" placeholder="请填写联系人电话"></dd>
+					<dd style="display: flex;justify-content: space-between;"><input id="address" type="text" class="input_sys1 mui-ellipsis" placeholder="请填写准确地址">
+						<a id="add" style="color: #4cd964;margin-top: 5px;"><span class="mui-icon mui-icon-plus"></span></a>
+					</dd>
 				</div>
 			</div>
+			<div class="form_info">
+				<div><label>联系电话</label>
+					<dd><input id="phone" type="text" class="input_sys1" placeholder="请填写联系人电话"></dd>
+				</div>
+			</div>
+
 			<div class="mui-form">
 				<ul style="margin-left: 15px;" id="ullinkman">
 					<!--<div class="mui-input-row mui-left divborder" ><div style="display: flex;flex-direction: row;"><span style="min-width: 60px !important;display:inline-block;">测试</span><span style="width: 40px;display:inline-block;">男</span><span style="display:inline-block;">444************333</span><a style="margin-left: 50px;"><i class="mui-icon mui-icon-minus"></i></a></label></div>
@@ -88,7 +105,7 @@
 					<div class="mui-input-row mui-left divborder" ><div style="display: flex;flex-direction: row;"><span style="min-width: 60px !important;display:inline-block;">测试</span><span style="width: 40px;display:inline-block;">男</span><span style="display:inline-block;">444************333</span><a style="margin-left: 50px;"><i class="mui-icon mui-icon-minus"></i></a></label></div>-->
 				</ul>
 			</div>
-			<div style="border-top: 1px solid #e8e8e8;"></div>
+			<!--<div style="border-top: 1px solid #e8e8e8;"></div>-->
 			<div id="addPeople" style="text-align: center;padding: 5px;color: #4cd964;font-size: 18px;">
 				<a id="icon-plus" style="color: #4cd964;"><span class="mui-icon mui-icon-plus"></span></a> 添加联系人
 			</div>
@@ -170,6 +187,7 @@
 				document.getElementById('phone').value = _dataAccess.getUser().Mobile;
 				mui('#quantity').numbox().setOption('min', FaultEntity.MinQuantity);
 				mui('#quantity').numbox().setOption('max', FaultEntity.MaxQuantity);
+				mui('#quantity').numbox().setValue(FaultEntity.MinQuantity);
 				//				console.log(FaultEntity.MinQuantity + '========' + FaultEntity.MaxQuantity);
 				//				mui('#quantity').numbox().setValue(FaultEntity.MinQuantity);
 				mui('#dtPicker').on('tap', 'a', function() {
@@ -213,9 +231,15 @@
 					}
 				});
 				
-				 mui('body').on('change','.mui-numbox', function() {
-						calculateprice();
-					});
+				window.addEventListener('addAddress', function(event) {
+					var address = event.detail.datas;
+					console.log(JSON.stringify(address));
+					document.getElementById("address").value=address.Address;
+				});
+
+				mui('body').on('change', '.mui-numbox', function() {
+					calculateprice();
+				});
 
 				document.getElementById("addPeople").addEventListener("tap", function(event) {
 					mui.openWindow({
@@ -284,6 +308,22 @@
 						mui.toast('请求失败');
 					});
 				});
+				document.getElementById("add").addEventListener("tap",function(event){
+					mui.openWindow({
+						id: 'select_linkaddress.html',
+						url: '../linkman/select_linkaddress.html',
+						show: {
+							aniShow: 'pop-in'
+						},
+						waiting: {
+							autoShow: false
+						},
+						extras: {
+							pageId: 'createorder.html'
+						}
+					});
+				});
+				
 				document.getElementById('casncel').addEventListener('tap', function() {
 					dialog.style.display = 'none';
 				});
@@ -314,14 +354,14 @@
 
 			function calculateprice() {
 				var Price = FaultEntity.Price;
-//				var Price = 39.995451;
+				//				var Price = 39.995451;
 				var peoplenum = linkMains.length;
 				var timelong = mui('#quantity').numbox().getValue();
 				var totalprice = Price * peoplenum * timelong;
 				if(timelong != 0 && peoplenum != 0) {
 					document.getElementById('divprice').style.display = 'block';
 					document.getElementById('payprice').innerHTML = toDecimal2(totalprice) + '￥';
-				}else{
+				} else {
 					document.getElementById('divprice').style.display = 'none';
 				}
 			}

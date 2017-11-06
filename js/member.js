@@ -119,7 +119,7 @@ var Member = (function() {
 					}
 				},
 				function() {
-					console.log('请求失败：');
+					mui.toast("网络不太好哦~请稍后再试!");
 				});
 		};
 		//收藏店铺
@@ -137,7 +137,7 @@ var Member = (function() {
 					}
 				},
 				function() {
-					console.log('请求失败：');
+					mui.toast("网络不太好哦~请稍后再试!");
 				});
 		};
 		//取消收藏店铺
@@ -155,7 +155,7 @@ var Member = (function() {
 					}
 				},
 				function() {
-					console.log('请求失败：');
+					mui.toast("网络不太好哦~请稍后再试!");
 				});
 		};
 		//获取收藏床位列表
@@ -173,7 +173,7 @@ var Member = (function() {
 					}
 				},
 				function() {
-					console.log('请求失败：');
+					mui.toast("网络不太好哦~请稍后再试!");
 				});
 		};
 		//收藏床位
@@ -191,7 +191,7 @@ var Member = (function() {
 					}
 				},
 				function() {
-					console.log('请求失败：');
+					mui.toast("网络不太好哦~请稍后再试!");
 				});
 		};
 		//取消收藏床位
@@ -209,10 +209,82 @@ var Member = (function() {
 					}
 				},
 				function() {
-					console.log('请求失败：');
+					mui.toast("网络不太好哦~请稍后再试!");
 				});
 		};
 		
+		//GET /api/Member/GetShopOrderItemsForInvoice
+		this.GetShopOrderItemsForInvoice = function(pageIndex,pageSize,callback) {
+			if(!_getNetwork()) {
+				mui.toast("没有网络连接，请稍后再试！");
+				return;
+			}
+			var user = _db.getUser();
+			AsyncPost(API_MEMBER+"GetShopOrderItemsForInvoice","pageIndex=" + pageIndex+"&pageSize="+pageSize,
+				function(result) {
+					if(callback) {
+						console.log('接口返回数据：' + JSON.stringify(result));
+						callback.call(this, result);
+					}
+				},
+				function() {
+					mui.toast("网络不太好哦~请稍后再试!");
+				});
+		};
+		///api/Member/OrderInvoiceApply提交发票申请
+		this.OrderInvoiceApply = function(memberAddressId,invoiceType,invoiceTitle,taxNumber,bankName,bankAccount,address,phone,remark,money,orderIdArray,onSuccess,onError){
+			if(!_getNetwork()) {
+				mui.toast("没有网络连接，请稍后再试！");
+				return;
+			}
+
+			PostRequest(API_MEMBER+'OrderInvoiceApply?memberAddressId='+memberAddressId+'&invoiceType='+invoiceType+'&invoiceTitle='+invoiceTitle+'&taxNumber='+taxNumber+'&bankName='+bankName+'&bankAccount='+bankAccount+'&address='+address+'&phone='+phone+"&remark="+remark+"&money="+money,orderIdArray,function(result){
+				if (onSuccess) {
+					console.log('接口返回数据：' + JSON.stringify(result));
+					onSuccess.call(this,result);
+				}
+			},function(){
+				mui.toast("网络不太好哦~请稍后再试!");
+			});
+		}
+		
+		//api/Member/GetOrderInviceList已经申请的发票信息列表
+		this.GetOrderInviceList = function(pageIndex,pageSize,callback) {
+			if(!_getNetwork()) {
+				mui.toast("没有网络连接，请稍后再试！");
+				return;
+			}
+			var user = _db.getUser();
+			AsyncPost(API_MEMBER+"GetOrderInviceList","pageIndex=" + pageIndex+"&pageSize="+pageSize,
+				function(result) {
+					if(callback) {
+						console.log('接口返回数据：' + JSON.stringify(result));
+						callback.call(this, result);
+					}
+				},
+				function() {
+					mui.toast("网络不太好哦~请稍后再试!");
+				});
+		};
+		
+		///api/Member/GetOrderInvoiceDetail获取发票详情
+		this.GetOrderInvoiceDetail = function(invoiceId,callback) {
+			if(!_getNetwork()) {
+				mui.toast("没有网络连接，请稍后再试！");
+				return;
+			}
+			var user = _db.getUser();
+			AsyncPost(API_MEMBER+"GetOrderInvoiceDetail","invoiceId=" + invoiceId,
+				function(result) {
+					if(callback) {
+						console.log('接口返回数据：' + JSON.stringify(result));
+						callback.call(this, result);
+					}
+				},
+				function() {
+					mui.toast("网络不太好哦~请稍后再试!");
+				});
+		};
 		//修改密码
 		this.ChangPassword = function(oldPassword,newPassword,callback){
 			if(!_getNetwork()) {
@@ -225,7 +297,7 @@ var Member = (function() {
 					callback.call(this,result);
 				}
 			},function(){
-				mui.toast('没有网络连接，请稍后再试！');
+				mui.toast("网络不太好哦~请稍后再试!");
 			});
 		}
 		//忘记密码
@@ -240,7 +312,7 @@ var Member = (function() {
 					callback.call(this,result);
 				}
 			},function(){
-				mui.toast('没有网络连接，请稍后再试！');
+				mui.toast("网络不太好哦~请稍后再试!");
 			});
 		}
 

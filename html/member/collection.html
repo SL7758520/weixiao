@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>故障管理</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/main.css" />
+		<style>
+			html,
+			body {
+				background-color: #efeff4;
+			}
+			
+			.green {
+				color: green;
+			}
+			
+			.red {
+				color: red;
+			}
+			
+			.mui-bar~.mui-content .mui-fullscreen {
+				top: 44px;
+				height: auto;
+			}
+			
+			.mui-slider .mui-slider-group .mui-slider-item {
+				height: 100%;
+
+			}
+			
+			.mui-pull-top-tips {
+				position: absolute;
+				top: -20px;
+				left: 50%;
+				margin-left: -25px;
+				width: 40px;
+				height: 40px;
+				border-radius: 100%;
+				z-index: 1;
+			}
+			
+			.mui-bar~.mui-pull-top-tips {
+				top: 24px;
+			}
+			
+			.mui-pull-top-wrapper {
+				width: 42px;
+				height: 42px;
+				display: block;
+				text-align: center;
+				background-color: #efeff4;
+				border: 1px solid #ddd;
+				border-radius: 25px;
+				background-clip: padding-box;
+				box-shadow: 0 4px 10px #bbb;
+				overflow: hidden;
+			}
+			
+			.mui-pull-top-tips.mui-transitioning {
+				-webkit-transition-duration: 200ms;
+				transition-duration: 200ms;
+			}
+			
+			.mui-pull-top-tips .mui-pull-loading {
+				/*-webkit-backface-visibility: hidden;
+				-webkit-transition-duration: 400ms;
+				transition-duration: 400ms;*/
+				margin: 0;
+			}
+			
+			.mui-pull-top-wrapper .mui-icon,
+			.mui-pull-top-wrapper .mui-spinner {
+				margin-top: 7px;
+			}
+			
+			.mui-pull-top-wrapper .mui-icon.mui-reverse {
+				/*-webkit-transform: rotate(180deg) translateZ(0);*/
+			}
+			
+			.mui-pull-bottom-tips {
+				text-align: center;
+				background-color: #efeff4;
+				font-size: 15px;
+				line-height: 40px;
+				color: #777;
+			}
+			
+			.mui-pull-top-canvas {
+				overflow: hidden;
+				background-color: #fafafa;
+				border-radius: 40px;
+				box-shadow: 0 4px 10px #bbb;
+				width: 40px;
+				height: 40px;
+				margin: 0 auto;
+			}
+			
+			.mui-pull-top-canvas canvas {
+				width: 40px;
+			}
+			
+			.mui-slider-indicator.mui-segmented-control {
+				background-color: #efeff4;
+			}
+			
+			.mui-btn {
+				margin-top: 0px;
+			}
+			
+			.item {
+				display: -webkit-box;
+			}
+			
+			.text {
+				width: 75%;
+				display: flex;
+				justify-content: space-around;
+				align-items: center;
+			}
+			
+			.information {
+				width: 70%;
+				margin-left: 5px;
+			}
+			
+			.price {
+				width: 30%;
+			}
+			
+			.new-price {
+				font-size: 16px;
+				color: #ff7c70;
+				font-family: Impact, Arail, sans-serif;
+				font-weight: bold;
+			}
+			
+			.mui-table-view-cell {
+				padding: 5px 5px 0px 5px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" id="backBtn"></a>
+			<!--<a id="btnNew" class="mui-btn mui-btn-link mui-pull-right" style="display: none;">生成入库单</a>-->
+			<h1 class="mui-title">我的收藏</h1>
+
+		</header>
+		<div class="mui-content">
+			<div id="slider" class="mui-slider mui-fullscreen">
+				<div style="padding: 6px 6px;">
+					<div id="segmentedControl" class="mui-segmented-control">
+						<a id="a0" class="mui-control-item mui-active" href="#item0mobile">
+							旅居店铺<span id="t0"></span>
+						</a>
+						<a id="a1" class="mui-control-item " href="#item1mobile">
+							旅居产品<span id="t1"></span>
+						</a>
+						<a id="a2" class="mui-control-item " href="#item2mobile">
+							养老服务<span id="t2"></span>
+						</a>
+					</div>
+				</div>
+				<div class="mui-slider-group" style="padding-bottom: 60px;">
+					<div id="item0mobile" class="mui-slider-item mui-control-content mui-active ">
+						<div class="mui-scroll-wrapper">
+							<div id="scroll0" class="mui-scroll ">
+								<ul id="Product_List" class="mui-table-view" style="margin-top: 0em;">
+
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div id="item1mobile" class="mui-slider-item mui-control-content">
+						<div class="mui-scroll-wrapper">
+							<div id="scroll1" class="mui-scroll">
+								<ul id="Shop_List" class="mui-table-view mui-table-view-chevron"></ul>
+							</div>
+						</div>
+					</div>
+					<div id="item2mobile" class="mui-slider-item mui-control-content">
+						<div class="mui-scroll-wrapper">
+							<div id="scroll2" class="mui-scroll">
+								<ul id="category_List" class="mui-table-view mui-table-view-chevron"></ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/mui.pullToRefresh.js"></script>
+		<script src="../../js/mui.pullToRefresh.material.js"></script>
+		<script src="../../js/post.js"></script>
+		<script src="../../js/localDatabase.js"></script>
+		<script src="../../js/dao.js"></script>
+		<script src="../../js/member.js"></script>
+		<script>
+			var datas;
+			var isonly = false;
+			var photoUrl;
+			mui.init({
+				//				swipeBack: false,
+				//				gestureConfig:{				
+				//					swipe: false, //默认为true
+				//					drag: false //默认为true
+				//				}
+			});
+
+			window.addEventListener("listRefresh0", function(e) {
+				//console.log('进行刷新数据');
+				mui('#scroll0').pullToRefresh().pullDownLoading();
+				selectTab(0);
+			});
+			window.addEventListener("listRefresh1", function(e) {
+				mui('#scroll1').pullToRefresh().pullDownLoading();
+				selectTab(1);
+			});
+			window.addEventListener("listRefresh2", function(e) {
+				mui('#scroll2').pullToRefresh().pullDownLoading();
+				selectTab(2);
+			});
+
+			function selectTab(index) {
+				if(index == 0 && Warehouse_DeAdd) {
+					document.getElementById("btnNew").style.display = "block";
+				}
+				mui('#slider').slider().gotoItem(index);
+				var tab = document.getElementById("a" + index);
+				var tabs = document.querySelectorAll(".mui-control-item");
+				for(var i = 0; i < tabs.length; i++) {
+					tabs[i].classList.remove('mui-active');
+				}
+				tab.classList.add('mui-active');
+			}
+
+			var _dataAccess = new DataAccess();
+			var member = new Member();
+			var pageObjects = [];
+			var Index = 0;
+			//设置tab的选择
+			function selectTabs(currentIndex) {
+				Index = currentIndex;
+				var scrollIndex = '#scroll' + currentIndex;
+				mui('#scroll' + currentIndex).pullToRefresh().pullDownLoading();
+				//				if(currentIndex == 2){
+				//					mui(scrollIndex).pullToRefresh().pullUpLoading();
+				//				}
+				//				 //.pullDownLoading();
+				selectTab(currentIndex);
+			}
+			//界面滑动监听
+			var faultLidListener = function() {
+				document.getElementById('slider').addEventListener('slide', function(e) {
+					selectTabs(e.detail.slideNumber);
+				});
+
+			}
+
+			mui.plusReady(function() {
+				photoUrl = plus.webview.currentWebview().photoUrl;
+				//禁止左右滑动
+				mui('.mui-slider').slider().setStopped(false);
+
+				faultLidListener();
+				mui('#scroll0').pullToRefresh().pullDownLoading();
+
+			});
+
+			(function($) {
+				//阻尼系数
+				var deceleration = mui.os.ios ? 0.003 : 0.0009;
+				$('.mui-scroll-wrapper').scroll({
+					bounce: false,
+					indicators: true, //是否显示滚动条
+					deceleration: deceleration
+				});
+				$.ready(function() {
+					//循环初始化所有下拉刷新，上拉加载。
+					$.each(document.querySelectorAll('.mui-slider-group .mui-scroll'), function(index, pullRefreshEl) {
+						pageObjects.push({
+							pageSize: 10,
+							currentPageIndex: 1,
+							totalCount: 0,
+							recordCount: 0
+						});
+						$(pullRefreshEl).pullToRefresh({
+							down: {
+								callback: function() {
+									var self = this;
+									pullRefresh(self, false, index);
+								}
+							},
+							up: {
+								contentnomore: '没有更多数据',
+								callback: function() {
+									var self = this;
+									pullRefresh(self, true, index);
+								}
+							}
+						});
+					});
+
+					function pullRefresh(obj, isUp, index) {
+						if(isUp) {
+							pageObjects[index].currentPageIndex++;
+						} else {
+							pageObjects[index].currentPageIndex = 1;
+							pageObjects[index].recordCount = 0;
+							pageObjects[index].totalCount = 0;
+						}
+						var self = obj;
+						setTimeout(function() {
+							var div = self.element.querySelector('.mui-table-view');
+							if(index == 1) {
+								member.GetShopProductCollect(pageObjects[index].currentPageIndex, pageObjects[index].pageSize, function(datas) {
+									if(datas.result) {
+										pageObjects[index].recordCount = datas.pageCount;
+
+										addList1(datas.result);
+									} else {
+										document.getElementById('item' + index + 'mobile').querySelector('.mui-table-view').innerHTML = '';
+									}
+									if(isUp) {
+										//											mui.toast("没有更多数据！");
+										self.endPullUpToRefresh(datas.result.length < pageObjects[index].pageSize);
+									} else {
+										self.endPullUpToRefresh(datas.result.length < pageObjects[index].pageSize);
+										self.endPullDownToRefresh(datas.result.length < pageObjects[index].pageSize);
+									}
+								});
+							} else if(index == 2) {
+								member.GetShopProductCollect(pageObjects[index].currentPageIndex, pageObjects[index].pageSize, function(datas) {
+									//										console.log(result.length);
+									if(datas.result) {
+										pageObjects[index].recordCount = datas.pageCount;
+
+										addList2(datas.result);
+									} else {
+										document.getElementById('item' + index + 'mobile').querySelector('.mui-table-view').innerHTML = '';
+									}
+									if(isUp) {
+										//											mui.toast("没有更多数据！");
+										self.endPullUpToRefresh(datas.result.length < pageObjects[index].pageSize);
+									} else {
+										self.endPullUpToRefresh(datas.result.length < pageObjects[index].pageSize);
+										self.endPullDownToRefresh(datas.result.length < pageObjects[index].pageSize);
+									}
+								});
+							} else if(index == 0) {
+								member.GetShopCollect(pageObjects[index].currentPageIndex, pageObjects[index].pageSize, function(datas) {
+									if(datas.result) {
+										pageObjects[index].recordCount = datas.pageCount;
+
+										addList0(datas.result);
+									} else {
+										document.getElementById('item' + index + 'mobile').querySelector('.mui-table-view').innerHTML = '';
+									}
+									if(isUp) {
+										//											mui.toast("没有更多数据！");
+										self.endPullUpToRefresh(datas.result.length < pageObjects[index].pageSize);
+									} else {
+										self.endPullUpToRefresh(datas.result.length < pageObjects[index].pageSize);
+										self.endPullDownToRefresh(datas.result.length < pageObjects[index].pageSize);
+									}
+								});
+							}
+
+						}, 1000);
+					}
+
+					var addList0 = function(datas) {
+						var div = document.getElementById('item0mobile').querySelector('.mui-table-view');
+						div.innerHTML = '';
+						for(var i = 0; i < datas.length; i++) {
+							div.appendChild(addData0(datas[i]));
+						}
+					}
+
+					function addData0(entity) {
+						console.log(photoUrl);
+						var card = document.createElement("li");
+						card.classList = "mui-table-view-cell";
+						card.innerHTML = '<div class="item"><div><img src="' + (photoUrl + entity.PhotoUrl) + '" onerror="this.src=\'../../images/Service.png\'" style="width: 100px;height: 65px;"></div><div class="text"><div class="information"><h4 style="margin-top: 5px;font-size: 18px;">' + entity.Name + '</h4><h5 class="mui-ellipsis" style="margin-top: 10px;font-size: 16px;">' + entity.ShortDescription + '</h5></div><div class="price"><button class="new-price" id="delete">删除</button></div></div></div>';
+						
+						card.addEventListener("tap", function(event) {
+							gotoHtml("product.html", "../shop/product.html", entity.Id, photoUrl);
+						});
+						card.querySelector("#delete").addEventListener("tap", function(event) {
+							event.stopPropagation();
+							member.RemoveShopCollect(entity.Id, function(datas) {
+								mui.toast(datas.message);
+								mui('#scroll0').pullToRefresh().pullDownLoading();
+							});
+						});
+						return card;
+					}
+
+					var addList1 = function(datas) {
+						var div = document.getElementById('item1mobile').querySelector('.mui-table-view');
+						div.innerHTML = '';
+						for(var i = 0; i < datas.length; i++) {
+							if(datas[i].CategoryId == 1) {
+								div.appendChild(addData1(datas[i]));
+							} else {}
+						}
+					}
+
+					function addData1(entity) {
+						console.log(photoUrl);
+						var card = document.createElement("li");
+						card.classList = "mui-table-view-cell";
+						card.innerHTML = '<div class="item"><div><img src="' + (photoUrl + entity.PhotoUrl) + '" onerror="this.src=\'../../images/Service.png\'" style="width: 100px;height: 65px;"></div><div class="text"><div class="information"><h4 style="margin-top: 5px;font-size: 18px;">' + entity.Name + '</h4><h5 class="mui-ellipsis" style="margin-top: 10px;font-size: 16px;">' + entity.ShortDescription + '</h5></div><div class="price"><button class="new-price" id="delete">删除</button></div></div></div>';
+						
+						card.addEventListener("tap", function(event) {
+							gotoHtml("product_details.html", "../shop/product_details.html", entity.Id, photoUrl);
+						});
+						card.querySelector("#delete").addEventListener("tap", function(event) {
+							event.stopPropagation();
+							member.RemoveShopProductCollect(entity.Id, function(datas) {
+								mui.toast(datas.message);
+								mui('#scroll1').pullToRefresh().pullDownLoading();
+							});
+						});
+						return card;
+					}
+
+					var addList2 = function(datas) {
+						var div = document.getElementById('item2mobile').querySelector('.mui-table-view');
+						div.innerHTML = '';
+						for(var i = 0; i < datas.length; i++) {
+							if(datas[i].CategoryId == 1) {
+
+							} else {
+								div.appendChild(addData2(datas[i]));
+							}
+
+						}
+					}
+
+					function addData2(entity) {
+						console.log(photoUrl);
+						var card = document.createElement("li");
+						card.classList = "mui-table-view-cell";
+						card.innerHTML = '<div class="item"><div><img src="' + (photoUrl + entity.PhotoUrl) + '" onerror="this.src=\'../../images/Service.png\'" style="width: 100px;height: 65px;"></div><div class="text"><div class="information"><h4 style="margin-top: 5px;font-size: 18px;">' + entity.Name + '</h4><h5 class="mui-ellipsis" style="margin-top: 10px;font-size: 16px;">' + entity.ShortDescription + '</h5></div><div class="price"><button class="new-price" id="delete">删除</button></div></div></div>';
+						
+						card.addEventListener("tap", function(event) {
+							gotoHtml("server_detail.html", "../server/server_detail.html", entity.Id, photoUrl);
+						});
+						card.querySelector("#delete").addEventListener("tap", function(event) {
+							event.stopPropagation();
+							member.RemoveShopProductCollect(entity.Id, function(datas) {
+								mui.toast(datas.message);
+								mui('#scroll2').pullToRefresh().pullDownLoading();
+							});
+						});
+						return card;
+					}
+
+					var addList3 = function(datas, index) {
+						Warehouse_receipts = datas;
+						var div = document.getElementById('item' + index + 'mobile').querySelector('.mui-table-view');
+						if(datas && datas.length > 0) {
+							for(var i = 0; i < datas.length; i++) {
+								var card = document.createElement("li");
+								card.setAttribute("guid", datas[i].GUID);
+								card.setAttribute("id", i);
+								card.className = "mui-table-view-cell mui-media";
+								var startDate = (new Date(datas[i].ADDTIME)).Format("yyyy-MM-dd");
+								card.innerHTML = '<a class="mui-navigate-right"><h6><div class="font">状态：' + datas[i].STATUSNAME + '</div></h6><h6><div class="font">入库单编号：' + datas[i].CHANGENO + '</div></h6><h6><div class="font" style="float: left;text-align: center;padding-right: 3em;">路段：' + datas[i].ROADNAME + '</div><div class="font" style="text-align: center;">入库类型：' + datas[i].STORETYPE + '</div></h6><h6 ><div class="font" style="float: left;text-align: center;">添加人：' + datas[i].ADDSERID + '</div><div class="font" style="text-align: center;">添加时间：' + startDate + '</div></h6>'
+
+								//								var htmls = '<a class="mui-navigate-right"><div style=" display: flex;"><div style="width: 50%;"><h5 >状态：' + datas[i].STATUSNAME + '</h5><h5>路段:' + datas[i].ROADNAME + '</h5><h5>入库类型:' + datas[i].STORETYPE + '</h5></div><div style="width: 50%;"><h5>添加人:' + datas[i].ADDSERID + '</h5><h5 class="mui-ellipsis">编号:' + splitStr(datas[i].CHANGENO) + '</h5><h5 class="mui-ellipsis">添加时间:' + datas[i].ADDTIME + '</h5></div></div>';
+								//								var htmls = '<button id="' + i + '" class="mui-btn">查看</button><div class="mui-table"><div class="mui-table-cell"><h6 class="mui-ellipsis-2">设备型号:' + datas[i].CHANGENO + '</h6><h6 style="height : 25px;display: flex;flex-direction: row;justify-content: space-between;align-items:center"><div>添加时间:' + datas[i].ADDTIME + '</div><div>状态:' + datas[i].STATUSNAME + '</div></h6><h5 class="mui-h6 mui-ellipsis">GUID:' + datas[i].GUID + '</h5></div></div>';
+								//								card.innerHTML = htmls;
+
+								div.insertBefore(card, div.firstChild);
+							}
+						}
+					}
+
+					function splitStr(str) {
+						var newstr
+						var strs = new Array(); //定义一数组 
+						strs = str.split("-"); //字符分割 
+						newstr = strs[0] + "-" + strs[3] + "-" + strs[4];
+						return newstr;
+					}
+
+					//拨打电话号码的函数
+					function callPhone(number) {
+						if(plus.os.name == "Android") {
+							var Intent = plus.android.importClass("android.content.Intent");
+							var Uri = plus.android.importClass("android.net.Uri");
+							var main = plus.android.runtimeMainActivity();
+							var uri = Uri.parse("tel:" + number);
+							var call = new Intent("android.intent.action.CALL", uri);
+							main.startActivity(call);
+						} else {
+							//plus.device.dial(number, false);
+							var UIAPP = plus.ios.importClass("UIApplication");
+							var NSURL = plus.ios.importClass("NSURL");
+
+							var app = UIAPP.sharedApplication();
+
+							app.openURL(NSURL.URLWithString("tel://" + number));
+						}
+					}
+					var createCard = function(id, fault_type, occur_time, position_name, sys_id, falut_description, index, entity) {
+						var card = document.createElement("li");
+						card.className = "mui-table-view-cell";
+						var time = (string2date(occur_time)).Format("yyyy-MM-dd hh:mm");
+						var faultTypeStr = fault_type;
+						if(faultTypeStr == '') {
+							faultTypeStr = "未知类型";
+						}
+						//												console.log(JSON.stringify(entity));
+						var htmls = '<div class="mui-table">\
+	                    <div class="mui-table-cell">\
+	                    <h6 class="mui-ellipsis-2">[' + faultTypeStr + '] ' + time + '\
+	                    </h6><h6 style="height : 25px;display: flex;flex-direction: row;justify-content: space-between;align-items:center"><div>报修人：' + entity.UPREALNAME + '；</div><div>电话：' + '<a id="call_btn">' + entity.UIDTEL + '\</a></div><img style="height: 20px;width: 20px;" src="../images/search_current_location.png"></img></h6>\
+	                    <h5 class="mui-h6 mui-ellipsis">' + position_name + '；' + falut_description + '；</h5></div></div>';
+						//						+ '<div>电话号码：<a>' + entity.UIDTEL + '</a></div>'
+						card.innerHTML = htmls;
+						//						console.log(htmls);
+						var isPhone = false;
+						card.querySelector('a').addEventListener('tap', function() {
+							//							window.location.href = "tel:" + entity.UIDTEL;
+							callPhone(entity.UIDTEL);
+							event.stopPropagation();
+						});
+						card.querySelector('img').addEventListener('tap', function() {
+							event.stopPropagation();
+							if(entity.LONGITUDE == "" && entity.LATITUDE == "" || index == 2) {
+								mui.toast("暂无故障坐标");
+								return;
+							}
+							mui.openWindow({
+								id: 'device_map.html',
+								url: 'device_map.html',
+								waiting: {
+									autoShow: false,
+									title: '正在加载...'
+								},
+								extras: {
+									from: "gz"
+								}
+							});
+							setTimeout(function() {
+								var task = plus.webview.getWebviewById('device_map.html');
+								mui.fire(task, 'backSearch', {
+									'jd': entity.LONGITUDE,
+									'wd': entity.LATITUDE,
+									'isBack': true
+								});
+							}, 1000);
+						});
+						card.addEventListener('tap', function() {
+							console.log(JSON.stringify(entity));
+							if(!isPhone) {
+								openWindow(index, entity);
+							}
+						}, false);
+						return card;
+					}
+				});
+			})(mui);
+
+			function gotoHtml(id, u, datas, photoUrl) {
+				mui.openWindow({
+					url: u,
+					id: id,
+
+					show: {
+						aniShow: 'pop-in'
+					},
+					waiting: {
+						autoShow: true, //自动显示等待框，默认为true
+						title: '正在加载...', //等待对话框上显示的提示内容
+					},
+					extras: {
+						data: datas,
+						photoUrl: photoUrl,
+					}
+				});
+			}
+		</script>
+	</body>
+
+</html>

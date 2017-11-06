@@ -15,14 +15,57 @@
 			.tableli {
 				padding: 15px 15px 15px 15px;
 			}
+			
+			.dev_box {
+				border: 1px solid #F3F3F3;
+				background-color: #fff;
+				-webkit-border-radius: 4px;
+				border-radius: 0px;
+				position: relative;
+				margin-top: 0px;
+				padding: 5px;
+			}
+			
+			.dev_box a {
+				float: left;
+				padding: 0px;
+				padding-left: 8px;
+				padding-top: 5px;
+				width: 100%;
+				height: 100%;
+				-webkit-border-radius: 4px;
+				border-radius: 4px;
+			}
+			
+			.dev_box b {
+				margin-top: 5px;
+				font-size: 14px;
+				color: #1d1d1d;
+				max-height: 45px;
+				margin-left: 0px;
+			}
+			
+			.contact_box {
+				float: left;
+				width: 100%;
+				height: 25px;
+				line-height: 25px;
+				font-size: 14px;
+				color: #404040;
+			}
+			.contact_add{
+				margin-top: 2px;
+			}
 		</style>
 		<!--主界面部分-->
 		<header id="header" class="mui-bar mui-bar-nav">
-			<h1 class="mui-title">已完成订单</h1>
+			<h1 class="mui-title">发票索取历史</h1>
 			<a href="#offCanvasSide" class="mui-action-back mui-icon icon_app_02 mui-action-menu mui-icon-left-nav mui-pull-left"></a>
 		</header>
 		<div id="pullrefresh">
-			<ul class="mui-table-view" id='ulorderlists' style="margin-top: 44px;"></ul>
+			<ul class="mui-table-view" id='ulorderlists' style="margin-top: 44px;">
+				
+			</ul>
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/post.js"></script>
@@ -73,17 +116,14 @@
 			}
 			var member = new Member();
 			mui.plusReady(function() {
-				setTimeout(function() {
-					plus.webview.getWebviewById('shop_order_detail.html').close();
-				}, 1000);
 
 				initdatas(false);
 			});
 
 			function initdatas(isUp) {
-				member.GetShopOrders(pageObjects.currentPageIndex, pageObjects.pageSize, 9, function(result) {
+				member.GetOrderInviceList(pageObjects.currentPageIndex, pageObjects.pageSize, function(result) {
 					if(result) {
-						pageObjects.totalCount=result.pageCount;
+						pageObjects.totalCount = result.pageCount;
 						addList(result.result, isUp);
 					}
 				});
@@ -103,36 +143,44 @@
 			}
 			var createCard = function(entity) {
 				//				console.log(JSON.stringify(entity));
-				var card = document.createElement("li");
-				card.className = "mui-table-view-cell tableli";
+				var card = document.createElement("div");
+				card.className = "dev_box";
 				card.setAttribute('id', entity.Id);
-				card.setAttribute("data-value", entity.Id);
-				var status = '已完成订单';
-				card.innerHTML = '<h6 class="font" style="float: left; width: 80%;">' + entity.ShopName + '</h6><h6 class="font" style="float: left; width: 20%;">' + status + '</h6><h6 class="font" style="width: 100%;">' +
-					entity.ProductName + '</h6><h5 class="font" style="width: 100%;">预约：' + entity.BookedDate + '入住</h5>';
+				card.innerHTML = '<div class="n_info2">' + entity.ApplyDate + '</div>\
+						<a href="#">\
+							<div class="other_bg"><i class="icon_app_12"></i>' + entity.StatusName + '</div>\
+							<div class="contact_add">承运公司:' + entity.ExpressCompany + '</div>\
+							<div class="contact_add">运单编号:' + entity.ExpressNumber + '</div>\
+							<div class="contact_box">\
+								<!--此项如无数据时，请隐藏-->\
+								<span class="fl">收货人:' + entity.InvoiceTitle + '</span>\
+								<span class="fr">金额：<i style="color: red;">￥' + entity.Money + '</i></span>\
+							</div>\
+						</a>';
 				card.addEventListener('tap', function() {
-					openWindow(9, entity);
+					member.GetOrderInvoiceDetail(entity.Id, function(result) {
+					if(result) {
+						gotoHtml("invoice_details.html","invoice_details.html",result.result);
+					}
+				});
+					
 				}, false);
 				return card;
 			}
-			//打开窗体
-			function openWindow(index, entity) {
-				//来源，数据实体
-				var id = 'shop_order_detail_info.html';
-				var url = 'shop_order_detail_info.html';
+			function gotoHtml(id, u, datas) {
 				mui.openWindow({
+					url: u,
 					id: id,
-					url: url,
+
 					show: {
 						aniShow: 'pop-in'
 					},
 					waiting: {
-						autoShow: true,
-						title: '正在加载...'
+						autoShow: true, //自动显示等待框，默认为true
+						title: '正在加载...', //等待对话框上显示的提示内容
 					},
 					extras: {
-						data: entity,
-						from: 9 //来源：0:待受理；1:待支付；2：待到达 3：已到达
+						data: datas
 					}
 				});
 			}

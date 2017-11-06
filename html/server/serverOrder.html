@@ -30,11 +30,24 @@
 			.mui-form {
 				color: #636363;
 			}
+			
 			.pricenum {
 				width: auto !important;
 				float: right !important;
 				color: #FFC90E !important;
 				font-size: 17px !important;
+			}
+			.form_info {
+				border-bottom: 1px solid #F3F3F3;
+			}
+			
+			.form_info label {
+				width: 75px;
+				font-size: 16px;
+			}
+			
+			.form_info .input_sys1 {
+				font-size: 16px;
 			}
 		</style>
 		<div class="windows_bg" id="dialog" style="display: none;">
@@ -70,14 +83,17 @@
 
 		<div class="fault_main" style="top:45px">
 			<div class="form_info">
-				<div><label>服务地址</label>
-					<dd><input id="address" type="text" class="input_sys2" placeholder="请填写准确地址"></dd>
-				</div>
-				<div style="margin:10px 0px 10px 0px;"><label>联系电话</label>
-					<dd><input id="phone" type="text" class="input_sys2" placeholder="请填写联系人电话"></dd>
+				<div><label>接送地址</label>
+					<dd style="display: flex;justify-content: space-between;"><input id="address" type="text" class="input_sys1 mui-ellipsis" placeholder="请填写准确地址">
+						<a id="add" style="color: #4cd964;margin-top: 5px;"><span class="mui-icon mui-icon-plus"></span></a>
+					</dd>
 				</div>
 			</div>
-			<div class="line_box"></div>
+			<div class="form_info">
+				<div><label>联系电话</label>
+					<dd><input id="phone" type="text" class="input_sys1" placeholder="请填写联系人电话"></dd>
+				</div>
+			</div>
 			<div class="mui-form">
 				<div class="form_info">
 					<div><label style="width: 100px;">数量</label>
@@ -96,7 +112,7 @@
 						<label class="pricenum" id="payprice">3999.00￥</label>
 					</div>
 				</div>
-				<div style="border-top: 1px solid #e8e8e8;"></div>
+<!--				<div style="border-top: 1px solid #e8e8e8;"></div>-->
 				<ul>
 					<li id="dtPicker">
 						<a href="#">预约时间<span id="txtOccurTime">选择</span></a>
@@ -148,30 +164,38 @@
 				FaultEntity = _self.data;
 				initpage();
 			});
+			
+			window.addEventListener('addAddress', function(event) {
+					var address = event.detail.datas;
+					console.log(JSON.stringify(address));
+					document.getElementById("address").value=address.Address;
+				});
 
 			function initpage() {
+				var dialog = document.getElementById('dialog');
 				document.getElementById('phone').value = _dataAccess.getUser().Mobile;
 				mui('#quantity').numbox().setOption('min', FaultEntity.MinQuantity);
 				mui('#quantity').numbox().setOption('max', FaultEntity.MaxQuantity);
+				mui('#quantity').numbox().setValue(FaultEntity.MinQuantity);
 				//				console.log(FaultEntity.MinQuantity + '========' + FaultEntity.MaxQuantity);
 				//				mui('#quantity').numbox().setValue(FaultEntity.MinQuantity);
-//				mui('#dtPicker').on('tap', 'a', function() { 
-//					var curTime = (new Date()).Format("yyyy-MM-dd");
-//					//					var curTime = document.getElementById("txtOccurTime").innerHTML;
-//					var year = new Date().getFullYear();
-//					var opt = {
-//						"type": "date",
-//						"value": curTime,
-//						"beginYear": year - 1,
-//						"endYear": year
-//					};
-//					var picker = new mui.DtPicker(opt);
-//					picker.show(function(rs) {
-//						document.getElementById("txtOccurTime").innerHTML = rs.text;
-//						bookedDate = rs.text;
-//						picker.dispose();
-//					});
-//				});
+				//				mui('#dtPicker').on('tap', 'a', function() { 
+				//					var curTime = (new Date()).Format("yyyy-MM-dd");
+				//					//					var curTime = document.getElementById("txtOccurTime").innerHTML;
+				//					var year = new Date().getFullYear();
+				//					var opt = {
+				//						"type": "date",
+				//						"value": curTime,
+				//						"beginYear": year - 1,
+				//						"endYear": year
+				//					};
+				//					var picker = new mui.DtPicker(opt);
+				//					picker.show(function(rs) {
+				//						document.getElementById("txtOccurTime").innerHTML = rs.text;
+				//						bookedDate = rs.text;
+				//						picker.dispose();
+				//					});
+				//				});
 				mui('#dtPicker').on('tap', 'a', function() {
 					var curTime = (new Date()).Format("yyyy-MM-dd hh:mm");
 					//					var curTime = document.getElementById("txtOccurTime").innerHTML;
@@ -197,212 +221,232 @@
 							picker.dispose();
 						}
 					});
-					document.getElementById('confirm').addEventListener('tap', function() {
-						var quantitynum = mui('#quantity').numbox().getValue();
-						if(getValue('address') == '') {
-							mui.toast('请填写服务地址');
-							return;
-						}
-						if(getValue('phone') == '') {
-							mui.toast('请填写联系电话');
-							return;
-						}
-						if(quantitynum < FaultEntity.MinQuantity) {
-							mui.toast('数量不能少于' + FaultEntity.MinQuantity);
-							return;
-						}
-						if(quantitynum > FaultEntity.MaxQuantity) {
-							mui.toast('数量不能大于' + FaultEntity.MaxQuantity);
-							return;
-						}
-						if(document.getElementById("txtOccurTime").innerHTML == '选择') {
-							mui.toast('请选择预约时间');
-							return;
-						}
-						//					plus.nativeUI.showWaiting();
-						document.getElementById("text").innerHTML = '&nbsp;&nbsp;&nbsp;服务地址：' + getValue('address') + '</br>&nbsp;&nbsp;&nbsp;联系电话：' + getValue('phone') + '</br>&nbsp;&nbsp;&nbsp;数量：' + quantitynum + '</br>&nbsp;&nbsp;&nbsp;价格：' + (quantitynum * FaultEntity.Price) + '元</br>&nbsp;&nbsp;&nbsp;预约时间：' + document.getElementById("txtOccurTime").innerHTML + '</br>&nbsp;&nbsp;&nbsp;预约备注：' + getValue('remark') ;
-						dialog.style.display = 'block';
-						document.getElementById('dialogone').style.display = 'block';
-						document.getElementById('dialogtwo').style.display = 'none';
-						//					console.log('productId:' + productId + 'address:' + getValue('address') + 'phone:' + getValue('phone') + 'quantity:' + quantitynum + 'peopleAmount:' + peopleAmountnum);
-						//					_shop.MakeOrder(productId, quantitynum, peopleAmountnum, getValue('address'), getValue('phone'), getValue('remark'), document.getElementById("txtOccurTime").innerHTML, 1, function(result) {
-						//						console.log(JSON.stringify(result));
-						//						plus.nativeUI.closeWaiting();
-						//						if(result.status == 1) {
-						//							mui.toast('创建订单成功');
-						//							//							plus.webview.currentWebview().close();
-						//						} else {
-						//							mui.toast('创建订单失败，请确认信息是否正确');
-						//						}
-						//					}, function() {
-						//						plus.nativeUI.closeWaiting();
-						//						mui.toast('请求失败');
-						//					});
-					}); document.getElementById('casncel').addEventListener('tap', function() {
-						dialog.style.display = 'none';
-					}); document.getElementById('continue').addEventListener('tap', function() {
-						dialog.style.display = 'none';
-					}); document.getElementById('close').addEventListener('tap', function() {
-						plus.webview.currentWebview().close();
-					}); document.getElementById('back').addEventListener('tap', function() {
-						mui.back();
-					}); document.getElementById('notice').addEventListener('tap', function() {
-						//					var task = plus.webview.getWebviewById('product_details.html');
-						//					mui.fire(task, 'CreateOrder');
-						//
-						//					var main = plus.webview.getWebviewById('main.html');
-						//					mui.fire(main, 'CreateOrder', {});
-						//					var task = plus.webview.getWebviewById('html/member/shop_order_list.html');
-						//					mui.fire(task, 'listRefresh0');
-						//					toMain();
-						//					//					mui.back();
-						//					plus.webview.getWebviewById('createorder.html').close();
-						var quantitynum = mui('#quantity').numbox().getValue();
-						plus.nativeUI.showWaiting();
-						_shop.MakeServiceOrder(productId, categoryId, quantitynum, getValue('address'), getValue('phone'), getValue('remark'), document.getElementById("txtOccurTime").innerHTML, function(result) {
-							console.log(JSON.stringify(result));
-							plus.nativeUI.closeWaiting();
-							if(result.status == 1) {
-								mui.toast('创建订单成功');
-								var dialog = document.getElementById('dialog');
-								dialog.style.display = 'none';
-								gotoHtml("../shop/pay.html", result.result.Id);
-								//							plus.webview.currentWebview().close();
-							} else {
-								mui.toast('创建订单失败，请确认信息是否正确');
-							}
-						}, function() {
-							plus.nativeUI.closeWaiting();
-							mui.toast('请求失败');
-						});
-					});
 				});
-				 mui('body').on('change','.mui-numbox', function() {
-						calculateprice();
-					});
-
-			}
-
-				function getValue(ElementId) {
-					return document.getElementById(ElementId).value;
-				}
-			
-			function calculateprice() {
-				var Price = FaultEntity.Price;
-				var quantitynum = mui('#quantity').numbox().getValue();
-				var totalprice = Price * quantitynum;
-				if(totalprice!= 0) {
-					document.getElementById('divprice').style.display = 'block';
-					document.getElementById('payprice').innerHTML = toDecimal2(totalprice) + '￥';
-				}else{
-					document.getElementById('divprice').style.display = 'none';
-				}
-			}
-
-				//			var inputTap = false;
-				//			mui('.mui-card').on('tap', '.allSelect', function() {
-				//				inputTap = true;
-				//			});
-				//			mui('.mui-card').on('tap', '.mui-navigate-right', function() {
-				//				if(inputTap) {
-				//					inputTap = false;
-				//					return;
-				//				}
-				//				//记录状态
-				//				var li = this.parentNode;
-				//				var ul = this.parentNode.querySelector('.mui-table-view');
-				//				var _style = ul.style.display;
-				//				//关闭同级菜单
-				//				var parent = this.parentNode.parentNode.children;
-				//				for(var i = 0; i < parent.length; i++) {
-				//					if(!!parent[i].querySelector('.mui-table-view')) {
-				//						parent[i].querySelector('.mui-table-view').style.display = '';
-				//						removeClass(parent[i], 'mui-active');
-				//					}
-				//				}
-				//				//更改状态
-				//				if(_style == 'block') {
-				//					ul.style.display = '';
-				//					removeClass(li, 'mui-active');
-				//				} else {
-				//					ul.style.display = 'block';
-				//					addClass(li, 'mui-active');
-				//				}
-				//				//关闭下级子菜单
-				//				var children = ul.children;
-				//				for(var i = 0; i < children.length; i++) {
-				//					var child = children[i].querySelector('.mui-table-view');
-				//					if(!!child) {
-				//						child.style.display = '';
-				//						removeClass(children[i], 'mui-active');
-				//					}
-				//				}
-				//			});
-
-				function hasClass(obj, cls) {
-					return obj.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));
-				}
-
-				function addClass(obj, cls) {
-					if(!this.hasClass(obj, cls)) obj.className += " " + cls;
-				}
-
-				function removeClass(obj, cls) {
-					if(hasClass(obj, cls)) {
-						var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
-						obj.className = obj.className.replace(reg, '');
-					}
-
-				}
-				var old_back = mui.back;
-				mui.back = function(event) {
-					var dialog = document.getElementById('dialog');
-					if(dialog.style.display == 'none') {
-						dialog.style.display = 'block';
-						document.getElementById('dialogone').style.display = 'none';
-						document.getElementById('dialogtwo').style.display = 'block';
-						return;
-					} else {
-						dialog.style.display = 'none';
+				document.getElementById('confirm').addEventListener('tap', function() {
+					var quantitynum = mui('#quantity').numbox().getValue();
+					if(getValue('address') == '') {
+						mui.toast('请填写服务地址');
 						return;
 					}
-					return false;
-				};
-
-				function gotoHtml(u, datas) {
+					if(getValue('phone') == '') {
+						mui.toast('请填写联系电话');
+						return;
+					}
+					if(quantitynum < FaultEntity.MinQuantity) {
+						mui.toast('数量不能少于' + FaultEntity.MinQuantity);
+						return;
+					}
+					if(quantitynum > FaultEntity.MaxQuantity) {
+						mui.toast('数量不能大于' + FaultEntity.MaxQuantity);
+						return;
+					}
+					if(document.getElementById("txtOccurTime").innerHTML == '选择') {
+						mui.toast('请选择预约时间');
+						return;
+					}
+					//					plus.nativeUI.showWaiting();
+					document.getElementById("text").innerHTML = '&nbsp;&nbsp;&nbsp;服务地址：' + getValue('address') + '</br>&nbsp;&nbsp;&nbsp;联系电话：' + getValue('phone') + '</br>&nbsp;&nbsp;&nbsp;数量：' + quantitynum + '</br>&nbsp;&nbsp;&nbsp;价格：' + (quantitynum * FaultEntity.Price) + '元</br>&nbsp;&nbsp;&nbsp;预约时间：' + document.getElementById("txtOccurTime").innerHTML + '</br>&nbsp;&nbsp;&nbsp;预约备注：' + getValue('remark');
+					dialog.style.display = 'block';
+					document.getElementById('dialogone').style.display = 'block';
+					document.getElementById('dialogtwo').style.display = 'none';
+					//					console.log('productId:' + productId + 'address:' + getValue('address') + 'phone:' + getValue('phone') + 'quantity:' + quantitynum + 'peopleAmount:' + peopleAmountnum);
+					//					_shop.MakeOrder(productId, quantitynum, peopleAmountnum, getValue('address'), getValue('phone'), getValue('remark'), document.getElementById("txtOccurTime").innerHTML, 1, function(result) {
+					//						console.log(JSON.stringify(result));
+					//						plus.nativeUI.closeWaiting();
+					//						if(result.status == 1) {
+					//							mui.toast('创建订单成功');
+					//							//							plus.webview.currentWebview().close();
+					//						} else {
+					//							mui.toast('创建订单失败，请确认信息是否正确');
+					//						}
+					//					}, function() {
+					//						plus.nativeUI.closeWaiting();
+					//						mui.toast('请求失败');
+					//					});
+				});
+				document.getElementById("add").addEventListener("tap",function(event){
 					mui.openWindow({
-						url: u,
-						id: u,
-
+						id: '../linkman/select_linkaddress.html',
+						url: '../linkman/select_linkaddress.html',
 						show: {
 							aniShow: 'pop-in'
 						},
 						waiting: {
-							autoShow: true, //自动显示等待框，默认为true
-							title: '正在加载...', //等待对话框上显示的提示内容
+							autoShow: false
 						},
 						extras: {
-							data: datas,
 							pageId: 'serverOrder.html'
 						}
 					});
+				});
+				document.getElementById('casncel').addEventListener('tap', function() {
+					dialog.style.display = 'none';
+				});
+				document.getElementById('continue').addEventListener('tap', function() {
+					dialog.style.display = 'none';
+				});
+				document.getElementById('close').addEventListener('tap', function() {
+					plus.webview.currentWebview().close();
+				});
+				document.getElementById('back').addEventListener('tap', function() {
+					mui.back();
+				});
+				document.getElementById('notice').addEventListener('tap', function() {
+					//					var task = plus.webview.getWebviewById('product_details.html');
+					//					mui.fire(task, 'CreateOrder');
+					//
+					//					var main = plus.webview.getWebviewById('main.html');
+					//					mui.fire(main, 'CreateOrder', {});
+					//					var task = plus.webview.getWebviewById('html/member/shop_order_list.html');
+					//					mui.fire(task, 'listRefresh0');
+					//					toMain();
+					//					//					mui.back();
+					//					plus.webview.getWebviewById('createorder.html').close();
+					var quantitynum = mui('#quantity').numbox().getValue();
+					plus.nativeUI.showWaiting();
+					_shop.MakeServiceOrder(productId, categoryId, quantitynum, getValue('address'), getValue('phone'), getValue('remark'), document.getElementById("txtOccurTime").innerHTML, function(result) {
+						console.log(JSON.stringify(result));
+						plus.nativeUI.closeWaiting();
+						if(result.status == 1) {
+							mui.toast('创建订单成功');
+							var dialog = document.getElementById('dialog');
+							dialog.style.display = 'none';
+							gotoHtml("../shop/pay.html", result.result.Id);
+							//							plus.webview.currentWebview().close();
+						} else {
+							mui.toast('创建订单失败，请确认信息是否正确');
+						}
+					}, function() {
+						plus.nativeUI.closeWaiting();
+						mui.toast('请求失败');
+					});
+				});
+				mui('body').on('change', '.mui-numbox', function() {
+					calculateprice();
+				});
+
+			}
+
+			function getValue(ElementId) {
+				return document.getElementById(ElementId).value;
+			}
+
+			function calculateprice() {
+				var Price = FaultEntity.Price;
+				var quantitynum = mui('#quantity').numbox().getValue();
+				var totalprice = Price * quantitynum;
+				if(totalprice != 0) {
+					document.getElementById('divprice').style.display = 'block';
+					document.getElementById('payprice').innerHTML = toDecimal2(totalprice) + '￥';
+				} else {
+					document.getElementById('divprice').style.display = 'none';
 				}
-				var toMain = function() {
-					//						$.fire(mainPage, 'show', null);
-					setTimeout(function() {
-						mui.openWindow({
-							id: 'main.html',
-							url: '../../main.html',
-							show: {
-								aniShow: 'pop-in'
-							},
-							waiting: {
-								autoShow: false
-							}
-						});
-					}, 0);
-				};
-						//保留2位小数。
+			}
+
+			//			var inputTap = false;
+			//			mui('.mui-card').on('tap', '.allSelect', function() {
+			//				inputTap = true;
+			//			});
+			//			mui('.mui-card').on('tap', '.mui-navigate-right', function() {
+			//				if(inputTap) {
+			//					inputTap = false;
+			//					return;
+			//				}
+			//				//记录状态
+			//				var li = this.parentNode;
+			//				var ul = this.parentNode.querySelector('.mui-table-view');
+			//				var _style = ul.style.display;
+			//				//关闭同级菜单
+			//				var parent = this.parentNode.parentNode.children;
+			//				for(var i = 0; i < parent.length; i++) {
+			//					if(!!parent[i].querySelector('.mui-table-view')) {
+			//						parent[i].querySelector('.mui-table-view').style.display = '';
+			//						removeClass(parent[i], 'mui-active');
+			//					}
+			//				}
+			//				//更改状态
+			//				if(_style == 'block') {
+			//					ul.style.display = '';
+			//					removeClass(li, 'mui-active');
+			//				} else {
+			//					ul.style.display = 'block';
+			//					addClass(li, 'mui-active');
+			//				}
+			//				//关闭下级子菜单
+			//				var children = ul.children;
+			//				for(var i = 0; i < children.length; i++) {
+			//					var child = children[i].querySelector('.mui-table-view');
+			//					if(!!child) {
+			//						child.style.display = '';
+			//						removeClass(children[i], 'mui-active');
+			//					}
+			//				}
+			//			});
+
+			function hasClass(obj, cls) {
+				return obj.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));
+			}
+
+			function addClass(obj, cls) {
+				if(!this.hasClass(obj, cls)) obj.className += " " + cls;
+			}
+
+			function removeClass(obj, cls) {
+				if(hasClass(obj, cls)) {
+					var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
+					obj.className = obj.className.replace(reg, '');
+				}
+
+			}
+			var old_back = mui.back;
+			mui.back = function(event) {
+				var dialog = document.getElementById('dialog');
+				if(dialog.style.display == 'none') {
+					dialog.style.display = 'block';
+					document.getElementById('dialogone').style.display = 'none';
+					document.getElementById('dialogtwo').style.display = 'block';
+					return;
+				} else {
+					dialog.style.display = 'none';
+					return;
+				}
+				return false;
+			};
+
+			function gotoHtml(u, datas) {
+				mui.openWindow({
+					url: u,
+					id: u,
+
+					show: {
+						aniShow: 'pop-in'
+					},
+					waiting: {
+						autoShow: true, //自动显示等待框，默认为true
+						title: '正在加载...', //等待对话框上显示的提示内容
+					},
+					extras: {
+						data: datas,
+						pageId: 'serverOrder.html'
+					}
+				});
+			}
+			var toMain = function() {
+				//						$.fire(mainPage, 'show', null);
+				setTimeout(function() {
+					mui.openWindow({
+						id: 'main.html',
+						url: '../../main.html',
+						show: {
+							aniShow: 'pop-in'
+						},
+						waiting: {
+							autoShow: false
+						}
+					});
+				}, 0);
+			};
+			//保留2位小数。
 			function toDecimal2(x) {
 				var f = parseFloat(x);
 				if(isNaN(f)) {

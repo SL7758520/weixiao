@@ -5,9 +5,9 @@
 		"iPad"
 	],
 	"id": "H54FAF69E",/*应用的标识，创建应用时自动生成，勿手动修改*/
-	"name": "微孝养老",/*应用名称，程序桌面图标名称*/
+	"name": "兰亭居",/*应用名称，程序桌面图标名称*/
 	"version": {
-		"name": "1.0.0",/*应用版本名称*/
+		"name": "1.1.0",/*应用版本名称*/
 		"code": "83"
 	},
 	"description": "",/*应用描述信息*/
@@ -93,11 +93,12 @@
 		"Geolocation": {},
 		"Maps": {},
 		"Audio": {},
-		
+
 		"Speech": {},
 		"Barcode": {},
 		"Contacts": {},
-		"Messaging": {}
+		"Messaging": {},
+		"Push": {}
 	},
 	"plus": {
 		"splashscreen": {
@@ -108,10 +109,17 @@
 		"signature": "Sk9JTiBVUyBtYWlsdG86aHIyMDEzQGRjbG91ZC5pbw==",/*可选，保留给应用签名，暂不使用*/
 		"distribute": {
 			"plugins": {
+				"push": {
+					"igexin": {
+						"appid": "tL5QZI1r1J9XvC16emHGh2",
+						"appkey": "mfu87KeXuN84JVNdnbLU15",
+						"appsecret": "EPQ9QG8Cj3A6NcR4dfV9X3"
+					}
+				},
 				"maps": {
 					"baidu": {
 						"appkey_ios": "",
-						"appkey_android": "LFfXxfirYLsijapAZuKXlk2VZSpVwYiN",
+						"appkey_android": "3WfurezwgSTt1QHjIiuh6V5TMpyMd0Ug",
 						"appkey": "",
 						"description": ""
 					}
@@ -120,9 +128,6 @@
 					"alipay": {
 						"description": "阿里支付",
 						"scheme": ""
-					},
-					"appleiap": {
-						"description": "Apple应用内支付"
 					}
 				},
 				"oauth": {}
@@ -140,7 +145,41 @@
 				"keystore": "",/*Android应用打包使用的密钥库文件*/
 				"password": "",/*Android应用打包使用密钥库中证书的密码*/
 				"aliasname": "",/*Android应用打包使用密钥库中证书的别名*/
-				"permissions": ["<uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\"/>","<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>","<uses-permission android:name=\"android.permission.READ_CONTACTS\"/>","<uses-permission android:name=\"android.permission.VIBRATE\"/>","<uses-permission android:name=\"android.permission.READ_LOGS\"/>","<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>","<uses-feature android:name=\"android.hardware.camera.autofocus\"/>","<uses-permission  android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\"/>","<uses-permission android:name=\"android.permission.WRITE_CONTACTS\"/>","<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>","<uses-permission android:name=\"android.permission.RECEIVE_BOOT_COMPLETED\"/>","<uses-permission android:name=\"com.android.launcher.permission.UNINSTALL_SHORTCUT\"/>","<uses-permission android:name=\"android.permission.CAMERA\"/>","<uses-permission android:name=\"android.permission.RECORD_AUDIO\"/>","<uses-permission android:name=\"android.permission.GET_ACCOUNTS\"/>","<uses-permission android:name=\"com.android.launcher.permission.INSTALL_SHORTCUT\"/>","<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\"/>","<uses-permission android:name=\"android.permission.SEND_SMS\"/>","<uses-permission android:name=\"android.permission.INTERNET\"/>","<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>","<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>","<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>","<uses-permission android:name=\"android.permission.CALL_PHONE\"/>","<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>","<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>","<uses-feature android:name=\"android.hardware.camera\"/>","<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\"/>","<uses-permission android:name=\"android.permission.RECEIVE_USER_PRESENT\"/>","<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\"/>","<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>","<uses-permission android:name=\"android.permission.WRITE_SMS\"/>","<uses-permission android:name=\"android.permission.READ_SMS\"/>"]
+				"permissions": [
+					"<uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\"/>",
+					"<uses-permission android:name=\"android.permission.READ_CONTACTS\"/>",
+					"<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>",
+					"<uses-permission android:name=\"android.permission.VIBRATE\"/>",
+					"<uses-permission android:name=\"android.permission.READ_LOGS\"/>",
+					"<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>",
+					"<uses-feature android:name=\"android.hardware.camera.autofocus\"/>",
+					"<uses-permission  android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\"/>",
+					"<uses-permission android:name=\"android.permission.SYSTEM_ALERT_WINDOW\"/>",
+					"<uses-permission android:name=\"android.permission.WRITE_CONTACTS\"/>",
+					"<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>",
+					"<uses-permission android:name=\"android.permission.RECEIVE_BOOT_COMPLETED\"/>",
+					"<uses-permission android:name=\"com.android.launcher.permission.UNINSTALL_SHORTCUT\"/>",
+					"<uses-permission android:name=\"android.permission.CAMERA\"/>",
+					"<uses-permission android:name=\"android.permission.RECORD_AUDIO\"/>",
+					"<uses-permission android:name=\"android.permission.GET_ACCOUNTS\"/>",
+					"<uses-permission android:name=\"com.android.launcher.permission.INSTALL_SHORTCUT\"/>",
+					"<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\"/>",
+					"<uses-permission android:name=\"android.permission.SEND_SMS\"/>",
+					"<uses-permission android:name=\"android.permission.INTERNET\"/>",
+					"<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>",
+					"<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>",
+					"<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>",
+					"<uses-permission android:name=\"android.permission.CALL_PHONE\"/>",
+					"<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>",
+					"<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>",
+					"<uses-feature android:name=\"android.hardware.camera\"/>",
+					"<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\"/>",
+					"<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\"/>",
+					"<uses-permission android:name=\"android.permission.RECEIVE_USER_PRESENT\"/>",
+					"<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>",
+					"<uses-permission android:name=\"android.permission.WRITE_SMS\"/>",
+					"<uses-permission android:name=\"android.permission.READ_SMS\"/>"
+				]
 			},
 			"orientation": [
 				"portrait-primary",
@@ -253,7 +292,10 @@
 					"js/post.js",
 					"html/member/shop_order_list.html",
 					"fonts/mui-icons-extra.ttf",
-					"css/icons-extra.css"
+					"css/icons-extra.css",
+					"js/shop.js",
+					"js/apphome.js",
+					"js/article.js"
 				],
 				"refer": [
 					"setting.html",
@@ -436,11 +478,14 @@
 					"fonts/mui.ttf",
 					"js/member.js",
 					"images/bed.jpg",
-					"images/shop.jpg"
+					"images/shop.jpg",
+					"images/heart@2x.png",
+					"images/bed_small.jpg"
 				],
 				"refer": [
 					"html/shop/product.html",
-					"html/shop/shop_search.html"
+					"html/shop/shop_search.html",
+					"html/shop/product_details.html"
 				],
 				"priority": 0
 			},
@@ -454,7 +499,10 @@
 					"images/yuantiao.jpg",
 					"css/main.css",
 					"css/appfont.css",
-					"images/shuijiao.jpg"
+					"images/shuijiao.jpg",
+					"js/localDatabase.js",
+					"js/post.js",
+					"fonts/icomoon.ttf"
 				],
 				"refer": [],
 				"priority": 0
@@ -512,11 +560,14 @@
 					"fonts/mui.ttf",
 					"images/bed_small.jpg",
 					"images/serviceCategory.png",
-					"js/shop.js"
+					"js/shop.js",
+					"images/bed.jpg",
+					"images/shop.jpg"
 				],
 				"refer": [
 					"html/apphome/detail.html",
-					"html/server/server_list.html"
+					"html/server/server_list.html",
+					"html/apphome/city.html"
 				],
 				"priority": 0
 			},
@@ -583,7 +634,9 @@
 				],
 				"refer": [
 					"html/member/member_modify.html",
-					"html/linkman/linkman_list.html"
+					"html/linkman/linkman_list.html",
+					"html/member/collection.html",
+					"html/member/invoice.html"
 				],
 				"priority": 0
 			},
@@ -610,7 +663,8 @@
 					"fonts/fontawesome-webfont.woff2",
 					"images/shop.jpg",
 					"js/member.js",
-					"images/bed_small.jpg"
+					"images/bed_small.jpg",
+					"js/gps.js"
 				],
 				"refer": [
 					"html/shop/product_details.html",
@@ -631,7 +685,8 @@
 					"js/shop.js",
 					"js/post.js",
 					"js/member.js",
-					"images/bed.jpg"
+					"images/bed.jpg",
+					"fonts/icomoon.ttf"
 				],
 				"refer": [
 					"html/shop/createorder.html"
@@ -650,7 +705,10 @@
 					"js/dao.js",
 					"js/post.js",
 					"css/mui.picker.min.css",
-					"js/mui.picker.min.js"
+					"js/mui.picker.min.js",
+					"css/appfont.css",
+					"css/main.css",
+					"fonts/icomoon.ttf"
 				],
 				"refer": [],
 				"priority": 0
@@ -667,10 +725,14 @@
 					"js/shop.js",
 					"js/post.js",
 					"css/main.css",
-					"js/compareTimes.js"
+					"js/compareTimes.js",
+					"css/appfont.css",
+					"fonts/mui.ttf",
+					"fonts/icomoon.ttf"
 				],
 				"refer": [
-					"html/shop/select_people.html"
+					"html/shop/select_people.html",
+					"html/linkman/select_linkaddress.html"
 				],
 				"priority": 0
 			},
@@ -702,7 +764,8 @@
 					"js/mui.min.js",
 					"js/dao.js",
 					"js/post.js",
-					"js/mui.js"
+					"js/mui.js",
+					"fonts/icomoon.ttf"
 				],
 				"refer": [
 					"html/member/shop_order_detail.html",
@@ -804,7 +867,11 @@
 					"js/localDatabase.js",
 					"js/dao.js",
 					"js/shop.js",
-					"js/post.js"
+					"js/post.js",
+					"css/main.css",
+					"css/appfont.css",
+					"fonts/mui.ttf",
+					"fonts/icomoon.ttf"
 				],
 				"refer": [],
 				"priority": 0
@@ -839,7 +906,11 @@
 					"js/localDatabase.js",
 					"js/mui.min.js",
 					"js/dao.js",
-					"js/post.js"
+					"js/post.js",
+					"css/main.css",
+					"css/appfont.css",
+					"fonts/mui.ttf",
+					"fonts/icomoon.ttf"
 				],
 				"refer": [
 					"html/linkman/create_linkman.html"
@@ -856,7 +927,11 @@
 					"js/dao.js",
 					"css/mui.min.css",
 					"js/linkman.js",
-					"js/post.js"
+					"js/post.js",
+					"css/main.css",
+					"css/appfont.css",
+					"fonts/mui.ttf",
+					"fonts/icomoon.ttf"
 				],
 				"refer": [],
 				"priority": 0
@@ -875,7 +950,9 @@
 					"js/post.js",
 					"fonts/mui-icons-extra.ttf",
 					"css/icons-extra.css",
-					"js/feedback.js"
+					"js/feedback.js",
+					"css/appfont.css",
+					"images/bed.jpg"
 				],
 				"refer": [],
 				"priority": 0
@@ -887,7 +964,10 @@
 					"js/dao.js",
 					"css/mui.min.css",
 					"js/linkman.js",
-					"js/post.js"
+					"js/post.js",
+					"css/main.css",
+					"css/appfont.css",
+					"fonts/icomoon.ttf"
 				],
 				"refer": [
 					"html/linkman/create_linkman.html",
@@ -905,7 +985,11 @@
 					"js/post.js",
 					"css/mui.picker.min.css",
 					"js/localDatabase.js",
-					"js/mui.min.js"
+					"js/mui.min.js",
+					"css/main.css",
+					"css/appfont.css",
+					"fonts/mui.ttf",
+					"fonts/icomoon.ttf"
 				],
 				"refer": [],
 				"priority": 0
@@ -918,10 +1002,16 @@
 					"js/dao.js",
 					"css/mui.min.css",
 					"js/shop.js",
-					"js/post.js"
+					"js/post.js",
+					"images/bed.jpg",
+					"fonts/mui.ttf",
+					"css/appfont.css",
+					"css/main.css",
+					"fonts/icomoon.ttf"
 				],
 				"refer": [
-					"html/server/serverOrder.html"
+					"html/server/serverOrder.html",
+					"html/server/server_pic.html"
 				],
 				"priority": 0
 			},
@@ -934,7 +1024,10 @@
 					"css/mui.min.css",
 					"js/shop.js",
 					"js/apphome.js",
-					"js/post.js"
+					"js/post.js",
+					"css/main.css",
+					"css/appfont.css",
+					"fonts/icomoon.ttf"
 				],
 				"refer": [
 					"html/server/server_detail.html"
@@ -955,7 +1048,135 @@
 					"js/compareTimes.js"
 				],
 				"refer": [
-					"html/shop/pay.html"
+					"html/shop/pay.html",
+					"html/linkman/select_linkaddress.html"
+				],
+				"priority": 0
+			},
+			"html/apphome/city.html": {
+				"resources": [
+					"js/localDatabase.js",
+					"js/mui.min.js",
+					"js/dao.js",
+					"css/mui.min.css",
+					"js/apphome.js",
+					"css/mui.indexedlist.css",
+					"js/post.js",
+					"js/mui.indexedlist.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/member/collection.html": {
+				"resources": [
+					"js/localDatabase.js",
+					"js/mui.pullToRefresh.js",
+					"css/main.css",
+					"js/mui.min.js",
+					"js/mui.pullToRefresh.material.js",
+					"fonts/mui.ttf",
+					"js/dao.js",
+					"css/mui.min.css",
+					"js/post.js",
+					"images/Service.png",
+					"js/member.js"
+				],
+				"refer": [
+					"html/shop/product_details.html",
+					"html/shop/product.html",
+					"html/server/server_detail.html"
+				],
+				"priority": 0
+			},
+			"html/linkman/edit_linkaddress.html": {
+				"resources": [
+					"js/localDatabase.js",
+					"js/muifun.js",
+					"js/mui.picker.js",
+					"js/linkaddress.js",
+					"js/mui.poppicker.js",
+					"js/dao.js",
+					"css/mui.poppicker.css",
+					"css/mui.picker.css",
+					"css/icons-extra.css",
+					"js/post.js",
+					"js/city.data-3.js",
+					"css/mui.min.css",
+					"js/city.data.js",
+					"css/appfont.css",
+					"css/main.css",
+					"fonts/mui.ttf",
+					"js/mui.min.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/linkman/create_linkaddress.html": {
+				"resources": [
+					"js/mui.picker.js",
+					"js/mui.poppicker.js",
+					"js/city.data.js",
+					"css/mui.poppicker.css",
+					"css/mui.picker.css",
+					"js/city.data-3.js",
+					"css/mui.min.css",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/appfont.css",
+					"css/main.css",
+					"css/icons-extra.css",
+					"js/localDatabase.js",
+					"js/linkaddress.js",
+					"js/dao.js",
+					"js/post.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/linkman/select_linkaddress.html": {
+				"resources": [
+					"js/linkaddress.js",
+					"css/mui.min.css",
+					"js/localDatabase.js",
+					"js/dao.js",
+					"js/post.js",
+					"js/mui.min.js",
+					"css/main.css",
+					"css/appfont.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/server/server_pic.html": {
+				"resources": [
+					"css/appfont.css",
+					"css/main.css",
+					"css/mui.min.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"html/member/invoice.html": {
+				"resources": [],
+				"refer": [
+					"html/member/invoice_information.html",
+					"html/member/invoice_history.html"
+				],
+				"priority": 0
+			},
+			"html/member/invoice_information.html": {
+				"resources": [],
+				"refer": [
+					"html/linkman/select_linkaddress.html",
+					"html/member/invoice_personal.html",
+					"html/member/invoice_enterprise.html"
+				],
+				"priority": 0
+			},
+			"html/member/invoice_history.html": {
+				"resources": [],
+				"refer": [
+					"html/member/invoice_details.html"
 				],
 				"priority": 0
 			}

@@ -1,0 +1,195 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/appfont.css" rel="stylesheet" />
+		<link href="../../css/main.css" rel="stylesheet" />
+	</head>
+
+	<body>
+		<style>
+			html,
+			body {
+				background-color: #F3F3F3;
+			}
+			
+			.tableli {
+				padding: 15px 15px 15px 15px;
+			}
+			
+			.mui-input-group .mui-input-row:after {
+				left: 0px;
+			}
+			
+			.mui-checkbox.mui-left input[type=checkbox],
+			.mui-radio.mui-left input[type=radio] {
+				left: 5px;
+			}
+			
+			.info {
+				padding-right: 5px !important;
+				padding-left: 43px !important;
+				font-size: 17px;
+			}
+			
+			.infospan {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding: 8px;
+			}
+			
+			.address {
+				margin-top: 8px;
+				background-color: #FFFFFF;
+			}
+			
+			a {
+				text-decoration: none;
+				color: #8f8f94;
+			}
+		</style>
+		<header class="mui-bar mui-bar-nav">
+			<a id="back" href="#offCanvasSide" class="mui-action-back mui-icon icon_app_02 mui-action-menu mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">常用地址
+			<!--<div class="mui-input-row mui-search search_menu">
+					<input type="search" class="mui-input-clear" placeholder="" oninput="Search(event)" onporpertychange="Search(event)" id="SearchKey">
+				</div>-->
+			</h1>
+			<button id="confirmSelected" type="button" class="mui-btn mui-btn-link mui-pull-right color_white">新增地址</button>
+		</header>
+		<!--<div id="addLinkMan" style="text-align: center;padding: 5px;color: #4cd964;font-size: 18px;margin-top: 44px;">
+			<a id="icon-plus" style="color: #4cd964;"><span class="mui-icon mui-icon-plus"></span></a> 新增联系人
+		</div>-->
+		<ul id="ulcontact" class="mui-table-view" style="margin-top: 44px;background-color: #F3F3F3;">
+		
+		</ul>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/post.js"></script>
+		<script src="../../js/localDatabase.js"></script>
+		<script src="../../js/dao.js"></script>
+		<script src="../../js/linkaddress.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			var selecteddatas = [];
+			var alldatas = [];
+			var linkaddress = new LinkAddress();
+			mui.plusReady(function() {
+
+				initdatas();
+				mui('.mui-input-group').on('change', 'input', function() {
+					var Entity = GetEntitybyId(this.getAttribute('value'));
+					if(this.checked) {
+						selecteddatas.push(Entity);
+					} else {
+						selecteddatas.splice(GetIndexbyId(this.getAttribute('value'), selecteddatas), 1);
+					}
+				});
+				document.getElementById('confirmSelected').addEventListener('tap', function() {
+					mui.openWindow({
+						id: '../linkman/create_linkaddress.html',
+						url: '../linkman/create_linkaddress.html',
+						show: {
+							aniShow: 'pop-in'
+						},
+						waiting: {
+							autoShow: false
+						},
+					});
+				});
+				window.addEventListener('Changelinkman', function(event) {
+					alldatas = [];
+					initdatas();
+				});
+			});
+
+			function initdatas() {
+				linkaddress.GetList(function(result) {
+					console.log(JSON.stringify(result));
+					if(result) {
+						alldatas = result;
+						addList(result);
+					}
+				});
+			}
+
+			var GetEntitybyId = function(value) {
+				for(var i = 0; i < alldatas.length; i++) {
+					if(value == alldatas[i].Id) {
+						return alldatas[i];
+					}
+				}
+			}
+			var GetIndexbyId = function(value, datas) {
+				for(var i = 0; i < datas.length; i++) {
+					if(value == datas[i].Id) {
+						return i;
+					}
+				}
+			}
+
+			var addList = function(datas) {
+				var div = document.getElementById('ulcontact');
+				div.innerHTML = '';
+				for(var i = 0; i < datas.length; i++) {
+					var card = createCard(datas[i]);
+					div.appendChild(card);
+				}
+			}
+
+			/*<div class="line_box" style="border-top: 1px solid #e8e8e8;"></div>
+				<div class="mui-input-row mui-checkbox mui-left">
+					<label class="info"><span style="min-width: 80px !important;display:inline-block ;">舒亮骡子</span><span style="width: 40px">女</span><span>580************147</span></label>
+					<input name="checkbox" type="checkbox" >
+				</div>*/
+
+			var createCard = function(entity) {
+				//				var id = '430525499955468415';
+				var card = document.createElement('li');
+				card.classList = "address";
+				var html = '<div class="infospan"><p style = "font-size: 16px;" > ' + entity.LinkManName + '</p><p style = "font-size: 16px;" > ' + entity.Phone + ' </p></div><p style = "padding: 0px 0px 0px 8px; font-size: 16px;" class = "mui-ellipsis-2" > ' + entity.Address + '</p><div class = "infospan" ><a id = "edit" ><span class = "mui-icon mui-icon-compose" > </span>编辑</a><a id = "delete" ><span class = "mui-icon mui-icon-trash" ></span>删除</a></div>';
+				card.innerHTML = html;
+				card.querySelector("#edit").addEventListener("tap", function(event) {
+					mui.openWindow({
+						id: '../linkman/edit_linkaddress.html',
+						url: '../linkman/edit_linkaddress.html',
+						show: {
+							aniShow: 'pop-in'
+						},
+						waiting: {
+							autoShow: false
+						},
+						extras: {
+							data: entity
+						}
+					});
+				});
+				card.querySelector("#delete").addEventListener("tap", function(event) {
+					var bts = ["删除","取消"];
+					plus.nativeUI.confirm("确认要删除该地址吗？", function(e) {
+						var i = e.index;
+						console.log(i);
+						if(i == 0){
+							linkaddress.Delete(entity.Id,function(datas){
+								mui.toast(datas.message);
+								initdatas();
+							});
+						}else{
+							
+						}
+					}, "删除地址", bts);
+				});
+
+				return card;
+			}
+			mui.back = function() {
+				plus.webview.currentWebview().close();
+			}
+		</script>
+	</body>
+
+</html>

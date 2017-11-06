@@ -323,7 +323,7 @@
 				console.log(JSON.stringify(ShopProductCollect));
 				if(ShopProductCollect != null) {
 					for(var i = 0; i < ShopProductCollect.length; i++) {
-						if(id == ShopProductCollect[i].ProductId) {
+						if(id == ShopProductCollect[i].Id) {
 							document.getElementById("collect").innerText = "已收藏";
 							break;
 						}
@@ -345,10 +345,10 @@
 						setHtml("NursingDesc", proudctInfo.Catering);
 						setHtml("RoomDesc", proudctInfo.HouseFacility);
 
-						setValue("MinQuantity", proudctInfo.MinQuantity + "元/公里");
-						setValue("MaxQuantity", proudctInfo.MaxQuantity + "元/公里");
-						setValue("PickUpCostSingle", proudctInfo.PickUpCostSingle + "/月");
-						setValue("PickUpCostMultiplayer", proudctInfo.PickUpCostMultiplayer + "/月");
+						setValue("PickUpCostSingle", proudctInfo.MinQuantity + "元/公里");
+						setValue("PickUpCostMultiplayer", proudctInfo.MaxQuantity + "元/公里");
+						setValue("MinQuantity", proudctInfo.PickUpCostSingle + "/月");
+						setValue("MaxQuantity", proudctInfo.PickUpCostMultiplayer + "/月");
 
 					} else {
 						mui.toast(datas.message);

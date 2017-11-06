@@ -134,12 +134,12 @@
 				display: flex;
 				justify-content: space-between;
 				background-color: #EFEFF4;
-				padding-left: 5px;
-				padding-right: 5px;
-				/*border: solid 1px #ddd;*/
-				/*box-shadow: 0px -5px 5px 0px rgba(0, 0, 0, 0.05);*/
+				padding-left: 1px;
+				padding-right: 1px;
+				border: solid 1px #ddd;
+				box-shadow: 0px -5px 5px 0px rgba(0, 0, 0, 0.05);
 				left: 0px;
-				bottom: 3px;
+				bottom: 1px;
 				height: 51px;
 				width: 100%;
 			}
@@ -239,7 +239,7 @@
 
 					</div>
 				</li>
-				
+
 			</ul>
 			<!--<div class="fg_title" >
 				收费标准
@@ -273,7 +273,8 @@
 			</div>-->
 		</div>
 		<div class="hotel-footer">
-			<button id="createorder" type="button" class="mui-btn mui-btn-success mui-btn-block">预约服务</button>
+			<button id="collect" type="button" class="mui-btn mui-btn-warning mui-btn-block">收藏</button>
+			<button id="createorder" type="button" class="mui-btn mui-btn-success mui-btn-block">预约入住</button>
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/localDatabase.js"></script>
@@ -297,6 +298,16 @@
 				id = _self.data;
 				photoUrl = _self.photoUrl;
 				console.log(id + "------------" + photoUrl);
+				var ShopProductCollect = _dataAccess.getShopProductCollect();
+				console.log(JSON.stringify(ShopProductCollect));
+				if(ShopProductCollect != null) {
+					for(var i = 0; i < ShopProductCollect.length; i++) {
+						if(id == ShopProductCollect[i].Id) {
+							document.getElementById("collect").innerText = "已收藏";
+							break;
+						}
+					}
+				}
 				initpage();
 				_shop.GetProductModel(id, function(datas) {
 					if(datas.status == 1) {
@@ -317,11 +328,32 @@
 						mui.toast(datas.message);
 					}
 				});
-				
+				document.getElementById("collect").addEventListener("tap", function(event) {
+					console.log(document.getElementById("collect").innerText);
+					if(document.getElementById("collect").innerText == "已收藏") {
+						_member.RemoveShopProductCollect(id, function(datas) {
+							if(datas.status == 1) {
+								document.getElementById("collect").innerText = "收藏";
+							}
+
+							mui.toast(datas.message);
+						});
+					} else {
+						_member.SetShopProductCollect(id, function(datas) {
+							if(datas.status == 1) {
+								document.getElementById("collect").innerText = "已收藏";
+							}
+
+							mui.toast(datas.message);
+						});
+					}
+
+				});
+
 				document.getElementById("image").addEventListener("tap", function(event) {
 					gotoHtml("server_pic.html", id, photoUrl);
 				});
-				
+
 			});
 
 			function setValue(id, value) {
@@ -338,6 +370,7 @@
 					opWindow('serverOrder.html', 'serverOrder.html', entity);
 				});
 			}
+
 			function gotoHtml(u, datas, photoUrl) {
 				mui.openWindow({
 					url: u,
@@ -357,7 +390,6 @@
 				});
 			}
 
-
 			function opWindow(id, url, entity) {
 				mui.openWindow({
 					id: id,
@@ -374,12 +406,12 @@
 					}
 				});
 			}
-//			window.addEventListener("CreateOrder", function(e) {
-//				console.log('product_details.html');
-//				var task = plus.webview.getWebviewById('html/shop/product.html');
-//				mui.fire(task, 'CreateOrder', {});
-//				plus.webview.getWebviewById('product_details.html').close();
-//			})
+			//			window.addEventListener("CreateOrder", function(e) {
+			//				console.log('product_details.html');
+			//				var task = plus.webview.getWebviewById('html/shop/product.html');
+			//				mui.fire(task, 'CreateOrder', {});
+			//				plus.webview.getWebviewById('product_details.html').close();
+			//			})
 		</script>
 	</body>
 

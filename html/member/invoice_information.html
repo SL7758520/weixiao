@@ -1,0 +1,233 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/appfont.css" rel="stylesheet" />
+		<link href="../../css/main.css" rel="stylesheet" />
+		<link href="../../css/font-awesome.min.css" rel="stylesheet" />
+		<style type="text/css">
+			/*html,
+			body {
+				background-color: #efeff4;
+			}*/
+			
+			.infospan {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding: 5px;
+			}
+			
+			.mui-content>.mui-table-view:first-child {
+				margin-top: 0px;
+			}
+			
+			.mui-table-view .mui-media-object.mui-pull-left {
+				margin-right: 15px;
+			}
+			
+			.mui-table-view-cell {
+				padding: 10px 15px 0px 15px;
+			}
+			
+			i.mui-media-object {
+				color: #ccc;
+				font-size: 25px;
+			}
+			
+			.mui-table-view-cell p {
+				margin-bottom: 5px;
+				margin-right: 19px;
+			}
+			
+			.default {
+				color: red;
+			}
+			
+			.mui-input-group:before {
+				background-color: #FFFFFF;
+			}
+			
+			.mui-input-group:after {
+				background-color: #FFFFFF;
+			}
+			
+			.mui-input-group .mui-input-row:after {
+				background-color: #FFFFFF;
+			}
+			
+			.hotel-footer {
+				position: fixed;
+				display: flex;
+				justify-content: space-between;
+				background-color: #EFEFF4;
+				/*border: solid 1px #ddd;*/
+				/*box-shadow: 0px -5px 5px 0px rgba(0, 0, 0, 0.05);*/
+				left: 0px;
+				bottom: 1px;
+				height: 44px;
+				width: 100%;
+			}
+			
+			.mui-btn-block {
+				font-size: 16px;
+				display: block;
+				width: 90px;
+				height: 100%;
+				padding: 10px 0
+			}
+			
+			.check_box {
+				width: 30%;
+				display: flex;
+				justify-content: space-between;
+				text-align: center;
+				padding-top: 5px;
+			}
+			
+			.Total {
+				width: 70%;
+				display: flex;
+				justify-content: flex-end;
+				text-align: center;
+			}
+			
+			.price {
+				padding-top: 12px;
+				margin-right: 4px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header id="header" class="mui-bar mui-bar-nav">
+			<h1 class="mui-title">填写发票信息</h1>
+			<a href="#offCanvasSide" class="mui-action-back mui-icon icon_app_02 mui-action-menu mui-icon-left-nav mui-pull-left"></a>
+		</header>
+		<div class="mui-content">
+			<ul class="mui-table-view" id="addresslist">
+				<li class="mui-table-view-cell mui-media">
+					<i class="fa fa-map-marker mui-media-object mui-pull-left"></i>
+					<div id="current_maps" class="mui-media-body mui-navigate-right" style="display: none;">
+						<div class="infospan">
+							<p style="font-size: 16px;" id="name">舒亮</p>
+							<p style="font-size: 16px;" id="phone">18170836326</p>
+						</div>
+						<p  class="mui-ellipsis-2" id="address">点击在地图中查看啥看不到卡斯比你接口但是尽可能的健康按按实际的南沙端屎端尿阿萨德</p>
+					</div>
+					<div id="maps" class="mui-media-body mui-navigate-right" >
+						<label class="default">您还没有选择发票寄送地址，请选择!</label>
+					</div>
+				</li>
+			</ul>
+			<div class="mui-form">
+				<ul>
+					<li class="form_tp">发票类型</li>
+					<form class="infospan mui-input-group">
+						<div class="mui-input-row mui-radio mui-left">
+							<label>个人发票</label>
+							<input name="radio1" type="radio" checked="" value="0">
+						</div>
+						<div class="mui-input-row mui-radio mui-left">
+							<label>企业发票</label>
+							<input name="radio1" type="radio" value="1">
+						</div>
+					</form>
+				</ul>
+			</div>
+
+		</div>
+		<div class="hotel-footer">
+			<div class="check_box">
+			</div>
+			<div class="Total">
+				<div class="price">
+					<label>合计：<span style="color: red;font-size: 16px;" id="price">¥ 0</span></label>
+				</div>
+				<button id="next" type="button" class="mui-btn mui-btn-danger mui-btn-block">完成</button>
+			</div>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init();
+			var _self;
+			var address;
+			window.addEventListener('addAddress', function(event) {
+				 address= event.detail.datas;
+				console.log(JSON.stringify(address));
+				if(address != null) {
+					document.getElementById("maps").style.display = "none";
+					document.getElementById("current_maps").style.display = "block";
+					document.getElementById("name").innerHTML = address.LinkManName;
+					document.getElementById("phone").innerHTML = address.Phone;
+					document.getElementById("address").innerHTML = address.Address;
+				}
+			});
+			window.addEventListener("CreateInvoice", function(e) {
+				var task = plus.webview.getWebviewById('html/member/invoice.html');
+				mui.fire(task, 'CreateInvoice', {});
+				plus.webview.getWebviewById('invoice_information.html').close();
+			})
+			var type=0;
+			mui.plusReady(function() {
+				_self = plus.webview.currentWebview();
+				var ShopOrderIdList = _self.data;
+				var price=_self.price;
+				document.getElementById("addresslist").addEventListener("tap", function(event) {
+					mui.openWindow({
+						id: 'select_linkaddress.html',
+						url: '../linkman/select_linkaddress.html',
+						show: {
+							aniShow: 'pop-in'
+						},
+						waiting: {
+							autoShow: false
+						},
+						extras: {
+							pageId: 'invoice_information.html'
+						}
+					});
+				});
+				mui('.mui-input-group').on('change', 'input', function() {
+					type = this.value;
+				});
+				document.getElementById("price").innerHTML="¥ "+price;
+				document.getElementById("next").addEventListener("tap",function(event){
+					if(address != null){
+						if(type == 0){
+							gotoHtml("invoice_personal.html", "invoice_personal.html", ShopOrderIdList,price,address);
+						}else if(type == 1){
+							gotoHtml("invoice_enterprise.html", "invoice_enterprise.html", ShopOrderIdList,price,address);
+						}
+						
+					}else{
+						mui.toast("请选择发票寄送地址!");
+					}
+				});
+			});
+			function gotoHtml(id, u, datas,price,address) {
+				mui.openWindow({
+					url: u,
+					id: id,
+					show: {
+						aniShow: 'pop-in'
+					},
+					waiting: {
+						autoShow: true, //自动显示等待框，默认为true
+						title: '正在加载...', //等待对话框上显示的提示内容
+					},
+					extras: {
+						data: datas,
+						price:price,
+						address:address
+					}
+				});
+			}
+		</script>
+	</body>
+
+</html>
