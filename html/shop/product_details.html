@@ -331,6 +331,7 @@
 				}
 				initpage();
 				_shop.GetProductModel(id, function(datas) {
+					console.log(JSON.stringify(datas));
 					if(datas.status == 1) {
 						proudctInfo = datas.result;
 						document.getElementById("title").innerHTML = proudctInfo.Name;

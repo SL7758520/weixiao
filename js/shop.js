@@ -371,6 +371,41 @@ var Shop = (function() {
 				mui.toast("网络不太好哦~请稍后再试!");
 			});
 		}
+		
+		//获取指定产品类型的协议
+		this.GetProtocols = function(categoryId,onSuccess,onError){
+			if(!_getNetwork()) {
+				mui.toast("没有网络连接，请稍后再试！");
+				return;
+			}
+			AsyncPost(API_SHOP+"GetProtocols", "categoryId=" + categoryId ,
+				function(result) {
+					if(onSuccess) {
+						console.log('接口返回数据：' + JSON.stringify(result));
+						onSuccess.call(this, result);
+					}
+				},
+				function() {
+					mui.toast("网络不太好哦~请稍后再试!");
+				});
+		}
+		//获取协议详情
+		this.GetProtocolDetail = function(protocolId,onSuccess,onError){
+			if(!_getNetwork()) {
+				mui.toast("没有网络连接，请稍后再试！");
+				return;
+			}
+			AsyncPost(API_SHOP+"GetProtocolDetail", "protocolId=" + protocolId ,
+				function(result) {
+					if(onSuccess) {
+						console.log('接口返回数据：' + JSON.stringify(result));
+						onSuccess.call(this, result);
+					}
+				},
+				function() {
+					mui.toast("网络不太好哦~请稍后再试!");
+				});
+		}
 
 	}
 	return access;

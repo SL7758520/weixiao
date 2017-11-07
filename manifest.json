@@ -1052,7 +1052,8 @@
 					"js/shop.js",
 					"css/mui.picker.min.css",
 					"js/post.js",
-					"js/compareTimes.js"
+					"js/compareTimes.js",
+					"css/chart.css"
 				],
 				"refer": [
 					"html/shop/pay.html",

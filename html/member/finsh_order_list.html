@@ -20,6 +20,7 @@
 				font-size: 15px !important;
 				text-align: right;
 			}
+			
 		</style>
 		<!--主界面部分-->
 		<header id="header" class="mui-bar mui-bar-nav">
@@ -116,8 +117,8 @@
 				card.setAttribute('id', entity.Id);
 				card.setAttribute("data-value", entity.Id);
 				var status = '已完成订单';
-				card.innerHTML = '<h6 class="font" style="float: left; width: 80%;">' + entity.ShopName + '</h6><h6 class="font" style="float: left; width: 20%;">' + status + '</h6><h6 class="font" style="width: 100%;">' +
-					entity.ProductName + '</h6><h5 class="font" style="float: left; width: 60%;">预约：' + entity.BookedDate + '</h5><h6 class="pricenum" style="float: left; width: 40%;">￥：' + toDecimal2(entity.Cost) + '</h6>';
+				card.innerHTML = '<h6 class="font" style="width: 100%;">编号：'+entity.Id+'</h6><h6 class="font" style="float: left; width: 80%;">' + entity.ShopName + '</h6><h6 class="font" style="float: left; width: 20%;">' + status + '</h6><h6 class="font" style="width: 100%;">' +
+					entity.ProductName + '</h6><h6 class="font" style="float: left; width: 60%;">预约：' + entity.BookedDate + '</h6><h6 class="pricenum" style="float: left; width: 40%;">￥：' + toDecimal2(entity.Cost) + '</h6>';
 				card.addEventListener('tap', function() {
 					openWindow(9, entity);
 				}, false);

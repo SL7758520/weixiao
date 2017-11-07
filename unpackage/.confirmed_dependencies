@@ -668,7 +668,8 @@
 			"js/mui.min.js",
 			"js/dao.js",
 			"js/shop.js",
-			"js/post.js"
+			"js/post.js",
+			"css/chart.css"
 		],
 		"refer": [
 			"html/shop/pay.html",

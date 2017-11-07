@@ -49,6 +49,25 @@
 			.form_info .input_sys1 {
 				font-size: 16px;
 			}
+			.protocolbox {
+				background-color: #f3f3f3;
+				display: flex;
+				flex-direction: row;
+				font-size: 14px;
+				padding: 10px;
+			}
+			
+			.protocolli {
+				display: flex;
+				flex-direction: column;
+				color: #F1232B;
+				line-height: 1.1;
+				font-size: 14px;
+				padding: 7px 7px;
+			}
+			.protocolli div{
+				line-height: 21px;
+			}
 		</style>
 		<div class="windows_bg" id="dialog" style="display: none;">
 			<!--通用弹窗标准-->
@@ -61,10 +80,15 @@
 					<a href="#" id="notice" style="text-align: center;">下订单</a>
 				</div>
 				<!--两按钮状态-->
-				<div class="info_box two_btn" id="dialogtwo">
+				<div class="info_box two_btn" id="dialogtwo"  style="display: none;">
 					<p id="title">订单就要完成了，你确定要离开吗？</p>
 					<a href="#" id="casncel">继续填写</a>
 					<a href="#" class="left_line" id="close">确定</a>
+				</div>
+				<div class="info_box" id="dialogprotocol" style="display: none;text-align: left;">
+					<h4 style="text-align: center;" id="Name"></h4>
+					<p id="detail"></p>
+					<a href="#" id="confrimclose" style="text-align: center;">确定</a>
 				</div>
 				<!--三按钮状态-->
 				<!--<div class="info_box nbg_bgn">
@@ -127,6 +151,14 @@
 				</ul>
 			</div>
 			<div class="line_box"></div>
+			<div class="protocolbox">
+				<div class="mui-input-row mui-checkbox mui-left">
+					<label>我已阅读</label>
+					<input name="checkbox" type="checkbox" checked="checked">
+				</div>
+				<div class="protocolli" id="protocollist">
+				</div>
+			</div>
 			<!--<div>
 				<a href="#" class="fault_btn_ok long_btn" id="confirm">
 				<i class="mui-icon icon_cloud"></i><span>确定订单</span>
@@ -196,6 +228,21 @@
 				//						picker.dispose();
 				//					});
 				//				});
+				_shop.GetProtocols(categoryId,function(result){
+					var protocollist = document.getElementById('protocollist');
+					for (var i=0;i<result.result.length;i++) {
+						addProtocol(protocollist,result.result[i]);
+					}
+					console.log(JSON.stringify(result));
+				});
+				var checkbox = document.getElementsByName('checkbox');
+				checkbox[0].addEventListener('change', function(){
+					if (this.checked) {
+						document.getElementById('confirm').style.display = 'block';
+					} else{
+						document.getElementById('confirm').style.display = 'none';
+					}
+				})
 				mui('#dtPicker').on('tap', 'a', function() {
 					var curTime = (new Date()).Format("yyyy-MM-dd hh:mm");
 					//					var curTime = document.getElementById("txtOccurTime").innerHTML;
@@ -281,6 +328,11 @@
 				});
 				document.getElementById('casncel').addEventListener('tap', function() {
 					dialog.style.display = 'none';
+				});
+				document.getElementById('confrimclose').addEventListener('tap',function(){
+					document.getElementById('dialog').style.display = 'none';
+					document.getElementById('dialogprotocol').style.display = 'none';
+					document.getElementById('detail').innerHTML = '';
 				});
 				document.getElementById('continue').addEventListener('tap', function() {
 					dialog.style.display = 'none';
@@ -398,9 +450,25 @@
 				}
 
 			}
+			function addProtocol(Element,entity){
+				var div = document.createElement('div');
+				div.innerHTML = '《'+entity.Name+'》';
+				div.addEventListener('tap',function(){
+					document.getElementById('dialog').style.display = '';
+					document.getElementById('dialogprotocol').style.display = ''
+					_shop.GetProtocolDetail(entity.Id,function(result){
+						document.getElementById('Name').innerHTML= result.result.Name;
+						document.getElementById('detail').innerHTML = '&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp'+result.result.Detail;
+						console.log(JSON.stringify(result));
+					})
+				});
+				Element.appendChild(div);
+			}
+			
 			var old_back = mui.back;
 			mui.back = function(event) {
 				var dialog = document.getElementById('dialog');
+				var dialogtwo = document.getElementById('dialogtwo');
 				if(dialog.style.display == 'none') {
 					dialog.style.display = 'block';
 					document.getElementById('dialogone').style.display = 'none';
@@ -408,6 +476,7 @@
 					return;
 				} else {
 					dialog.style.display = 'none';
+					dialogtwo.style.display = 'none';
 					return;
 				}
 				return false;
