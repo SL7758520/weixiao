@@ -238,7 +238,7 @@ var Member = (function() {
 				return;
 			}
 
-			PostRequest(API_MEMBER+'OrderInvoiceApply?memberAddressId='+memberAddressId+'&invoiceType='+invoiceType+'&invoiceTitle='+invoiceTitle+'&taxNumber='+taxNumber+'&bankName='+bankName+'&bankAccount='+bankAccount+'&address='+address+'&phone='+phone+"&remark="+remark+"&money="+money,orderIdArray,function(result){
+			PostRequest(API_MEMBER+'OrderInvoiceApply?memberAddressId='+memberAddressId+'&invoiceType='+invoiceType+'&invoiceTitle='+invoiceTitle+'&taxNumber='+taxNumber+'&bankName='+bankName+'&bankAccount='+bankAccount+'&address='+address+'&phone='+phone+"&remark="+remark+"&money="+money,JSON.stringify(orderIdArray),function(result){
 				if (onSuccess) {
 					console.log('接口返回数据：' + JSON.stringify(result));
 					onSuccess.call(this,result);

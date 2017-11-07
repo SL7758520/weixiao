@@ -1164,7 +1164,15 @@
 				"priority": 0
 			},
 			"html/member/invoice.html": {
-				"resources": [],
+				"resources": [
+					"js/localDatabase.js",
+					"js/member.js",
+					"js/mui.min.js",
+					"js/dao.js",
+					"css/mui.min.css",
+					"css/chart.css",
+					"js/post.js"
+				],
 				"refer": [
 					"html/member/invoice_information.html",
 					"html/member/invoice_history.html"
@@ -1172,7 +1180,11 @@
 				"priority": 0
 			},
 			"html/member/invoice_information.html": {
-				"resources": [],
+				"resources": [
+					"css/mui.min.css",
+					"css/font-awesome.min.css",
+					"fonts/fontawesome-webfont.woff2"
+				],
 				"refer": [
 					"html/linkman/select_linkaddress.html",
 					"html/member/invoice_personal.html",
@@ -1185,6 +1197,24 @@
 				"refer": [
 					"html/member/invoice_details.html"
 				],
+				"priority": 0
+			},
+			"html/member/invoice_personal.html": {
+				"resources": [
+					"js/localDatabase.js",
+					"js/mui.picker.js",
+					"js/member.js",
+					"js/linkaddress.js",
+					"js/mui.poppicker.js",
+					"js/dao.js",
+					"js/city.data.js",
+					"css/mui.poppicker.css",
+					"css/mui.picker.css",
+					"css/icons-extra.css",
+					"js/post.js",
+					"js/city.data-3.js"
+				],
+				"refer": [],
 				"priority": 0
 			}
 		},
