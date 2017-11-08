@@ -87,7 +87,7 @@
 				</div>
 				<div class="info_box" id="dialogprotocol" style="display: none;text-align: left;">
 					<h4 style="text-align: center;" id="Name"></h4>
-					<p id="detail"></p>
+					<textarea readonly="readonly" id="detail" style="min-height: 180px;margin-bottom: 0px;"></textarea>
 					<a href="#" id="confrimclose" style="text-align: center;">确定</a>
 				</div>
 				<!--三按钮状态-->
@@ -190,10 +190,16 @@
 			mui.plusReady(function() {
 				_self = plus.webview.currentWebview();
 				console.log(JSON.stringify(_self.data));
+				if (_self==undefined) {
+					mui.toast('网络异常，请稍后再试');
+					plus.webview.currentWebview().close();
+					return;
+				}
 				productId = _self.data.ProductId;
 				categoryId = _self.data.CategoryId;
 				console.log(productId + "______________" + categoryId);
 				FaultEntity = _self.data;
+//				console.log(JSON.stringify(FaultEntity));
 				initpage();
 			});
 			
@@ -386,7 +392,7 @@
 			function calculateprice() {
 				var Price = FaultEntity.Price;
 				var quantitynum = mui('#quantity').numbox().getValue();
-				var totalprice = Price * quantitynum;
+				var totalprice = Price * quantitynum*FaultEntity.PaymentRate;
 				if(totalprice != 0) {
 					document.getElementById('divprice').style.display = 'block';
 					document.getElementById('payprice').innerHTML = toDecimal2(totalprice) + '￥';
