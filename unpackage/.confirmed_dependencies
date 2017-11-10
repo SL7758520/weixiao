@@ -8,7 +8,8 @@
 			"shop.html",
 			"health.html",
 			"person_center.html",
-			"html/member/shop_order_list.html"
+			"html/member/shop_order_list.html",
+			"travel.html"
 		],
 		"resources": [
 			"js/app.js",

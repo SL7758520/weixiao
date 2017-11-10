@@ -303,7 +303,8 @@
 					"member.html",
 					"shop.html",
 					"health.html",
-					"person_center.html"
+					"person_center.html",
+					"travel.html"
 				],
 				"priority": 1
 			},

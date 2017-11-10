@@ -284,6 +284,7 @@
 					}
 					//					settings.autoLogin = true;
 					loginButton.addEventListener('tap', function(event) {
+						plus.nativeUI.showWaiting("登录中...");
 						var loginInfo = {
 							mobile: accountBox.value,
 							password: passwordBox.value
@@ -298,6 +299,7 @@
 						}
 						_account.Login(loginInfo, function(datas) {
 							console.log(JSON.stringify(datas));
+							plus.nativeUI.closeWaiting();
 							if(datas.status == 1) {
 								mui.toast("登录成功!");
 								var user = datas.result;

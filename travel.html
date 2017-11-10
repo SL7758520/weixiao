@@ -1,0 +1,118 @@
+<!DOCTYPE HTML>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<meta name="HandheldFriendly" content="true" />
+		<meta name="MobileOptimized" content="320" />
+		<title>Hello H5+</title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/appfont.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../css/icons-extra.css" />
+		<link href="css/main.css" rel="stylesheet" />
+		<script type="text/javascript" src="../js/common.js"></script>
+		<script type="text/javascript" charset="utf-8">
+		</script>
+		<style type="text/css">
+			.nvbt {
+				width: 15%;
+				height: 100%;
+				float: left;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+			
+			.nvbt:active {
+				background-color: rgba(170, 170, 170, 0.1);
+			}
+			
+			.refresh {
+				position: absolute;
+				top: 50%;
+				left: 40%;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header id="header" class="mui-bar mui-bar-nav">
+			<h1 id="title" class="mui-title">旅游订票</h1>
+		</header>
+		<div class="mui-content">
+			<div class="refresh" id="refresh" style="display: none;">
+				点击刷新
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="js/mui.min.js"></script>
+	<script type="text/javascript">
+		mui.init();
+		var ws = null;
+		var embed = null;
+		mui.plusReady(function() {
+			ws = plus.webview.currentWebview();
+			ws.addEventListener('show', createEmbed, false);
+			document.getElementById("refresh").addEventListener("tap", function(event) {
+				createEmbed();
+			});
+		});
+
+		function _getNetwork() {
+			if(plus.networkinfo.getCurrentType() == plus.networkinfo.CONNECTION_NONE) {
+				return false;
+			} else {
+				return true;
+			}
+		}
+		// 创建子Webview
+		function createEmbed() {
+			if(!_getNetwork()) {
+				document.getElementById("refresh").style.display = "block";
+				return;
+			}
+			var topoffset = '45px';
+			plus.nativeUI.showWaiting('', {
+				style: 'black',
+				modal: false,
+				background: 'rgba(0,0,0,0)'
+			});
+			embed = plus.webview.create('https://m.ly.com/?refid=14671346', 'embed', {
+				top: topoffset,
+				bottom: '0px',
+				//					position: 'dock',
+				//					dock: 'bottom',
+				//					bounce: 'vertical'
+			});
+			ws.append(embed);
+			embed.addEventListener('loaded', function() {
+				plus.nativeUI.closeWaiting();
+			}, false);
+			embed.addEventListener('loading', function() {
+				plus.nativeUI.showWaiting('', {
+					style: 'black',
+					modal: false,
+					background: 'rgba(0,0,0,0)'
+				});
+			}, false);
+		}
+//		// 打开网址
+//		function openUrl() {
+//			embed.loadURL("https://m.ly.com/?refid=14671346");
+//		}
+//		// 页面加载后自动打开
+//		document.addEventListener("DOMContentLoaded", function() {
+//			if(embed) {
+//				openUrl();
+//			} else {
+//				auto = true;
+//			}
+//		}, false);
+//		// 页面跳转完成事件
+//		function onBrowserLoading() {
+//			document.getElementById("url").value = embed.getURL();
+//		}
+	</script>
+
+</html>

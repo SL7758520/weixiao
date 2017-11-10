@@ -44,7 +44,7 @@
 				<span class="mui-icon icon_app_34" id="t1icon"></span>
 				<span class="mui-tab-label">我的订单</span>
 			</a>
-			<a id="t2" class="mui-tab-item" href="https://m.ly.com/?refid=14671346">
+			<a id="t2" class="mui-tab-item" href="travel.html">
 				<span class="mui-icon icon_app_17" id="t2icon"></span>
 				<span class="mui-tab-label">旅游订票</span>
 			</a>
@@ -71,7 +71,7 @@
 			var _article = new Article();
 			var _shop = new Shop();
 			var wgtVer = null;
-			var subpages = ['home.html', 'shop.html', 'html/member/shop_order_list.html', 'https://m.ly.com/?refid=14671346', 'person_center.html'];
+			var subpages = ['home.html', 'shop.html', 'html/member/shop_order_list.html', 'travel.html', 'person_center.html'];
 			var subpage_style = {
 				top: '0px',
 				bottom: '60px'
@@ -82,6 +82,11 @@
 			};
 			// H5 plus事件处理
 			function plusReady() {
+				_appHome.getPhotoUrl(function(datas) {
+				if(datas == "error"){
+					return;
+				}
+			});
 				plus.runtime.setBadgeNumber(0);
 				plus.push.setAutoNotification(true);
 				//监听推送消息接收
@@ -108,6 +113,7 @@
 					//						mui.alert(e.message + "AAAAAAAA", e.message);
 					//					}
 				});
+				
 
 			}
 			if(window.plus) {

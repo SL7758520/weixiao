@@ -105,6 +105,9 @@ var AppHome = (function() {
 				},
 				function() {
 					mui.toast("网络不太好哦~请稍后再试!");
+					if(callback) {
+						callback.call(this,"error");
+					}
 				});
 		};
 		
